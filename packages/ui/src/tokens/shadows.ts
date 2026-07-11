@@ -1,0 +1,14 @@
+export const shadows = {
+  none: 'none',
+  sm: '0 1px 2px 0 hsl(0 0% 0% / 0.05)',
+  md: '0 4px 6px -1px hsl(0 0% 0% / 0.1), 0 2px 4px -2px hsl(0 0% 0% / 0.1)',
+  lg: '0 10px 15px -3px hsl(0 0% 0% / 0.1), 0 4px 6px -4px hsl(0 0% 0% / 0.1)',
+  xl: '0 20px 25px -5px hsl(0 0% 0% / 0.1), 0 8px 10px -6px hsl(0 0% 0% / 0.1)',
+  '2xl': '0 25px 50px -12px hsl(0 0% 0% / 0.25)',
+  inner: 'inset 0 2px 4px 0 hsl(0 0% 0% / 0.05)',
+} as const;
+
+export const shadowColors = {
+  primary: '0 4px 6px -1px hsl(221 83% 53% / 0.2), 0 2px 4px -2px hsl(221 83% 53% / 0.1)',
+  secondary: '0 4px 6px -1px hsl(263 70% 50% / 0.2), 0 2px 4px -2px hsl(263 70% 50% / 0.1)',
+} as const;
