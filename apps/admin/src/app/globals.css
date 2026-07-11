@@ -1,0 +1,35 @@
+@import '@sathus-platform/ui/src/styles/globals.css';
+
+:root {
+  --popover: 0 0% 100%;
+  --popover-foreground: 222 47% 11%;
+}
+
+.dark {
+  --popover: 217 33% 17%;
+  --popover-foreground: 210 40% 98%;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-feature-settings: 'rlig' 1, 'calt' 1;
+}
+
+.admin-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--muted-foreground)) transparent;
+}
+
+.admin-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.admin-scrollbar::-webkit-scrollbar-thumb {
+  background-color: hsl(var(--border));
+  border-radius: 3px;
+}
