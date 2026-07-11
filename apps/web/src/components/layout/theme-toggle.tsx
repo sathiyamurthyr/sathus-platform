@@ -1,9 +1,10 @@
 'use client';
 
-import { useTheme } from '@/components/layout/theme-provider';
-import { Moon, Sun } from 'lucide-react';
+import * as React from 'react';
 import { motion } from 'motion/react';
+import { Sun, Moon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useTheme } from '@/providers/theme-provider';
 
 export function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme();
@@ -14,7 +15,8 @@ export function ThemeToggle() {
       variant="ghost"
       size="icon"
       onClick={() => setTheme(isDark ? 'light' : 'dark')}
-      aria-label="Toggle theme"
+      aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+      title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
     >
       <motion.span
         initial={{ scale: 0.5, opacity: 0, rotate: -90 }}
@@ -22,11 +24,12 @@ export function ThemeToggle() {
         exit={{ scale: 0.5, opacity: 0, rotate: 90 }}
         transition={{ duration: 0.2 }}
         key={resolvedTheme}
+        className="flex items-center justify-center"
       >
         {isDark ? (
-          <Sun className="size-4" aria-hidden="true" />
+          <Sun className="h-[1.2rem] w-[1.2rem]" aria-hidden="true" />
         ) : (
-          <Moon className="size-4" aria-hidden="true" />
+          <Moon className="h-[1.2rem] w-[1.2rem]" aria-hidden="true" />
         )}
       </motion.span>
     </Button>

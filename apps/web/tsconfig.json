@@ -15,7 +15,9 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@sathus-platform/ui": ["../../packages/ui/src/index.ts"],
+      "@sathus-platform/types": ["../../packages/types/src/index.ts"]
     },
     "plugins": [
       {
