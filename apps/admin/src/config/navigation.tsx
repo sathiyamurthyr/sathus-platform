@@ -24,18 +24,13 @@ import type { NavItem } from '@/types/admin';
  */
 export const navItems: NavItem[] = [
   { label: 'Dashboard', href: '/admin/dashboard', icon: LayoutDashboard },
-  { label: 'Products', href: '/admin/products', icon: Package, comingSoon: true },
+  { label: 'Products', href: '/admin/content?contentType=Product', icon: Package },
   { label: 'Services', href: '/admin/services', icon: Briefcase, comingSoon: true },
   { label: 'Sathus Labs', href: '/admin/labs', icon: FlaskConical, comingSoon: true },
   { label: 'Sathus X', href: '/admin/x', icon: Boxes, comingSoon: true },
-  { label: 'Documentation', href: '/admin/docs', icon: BookOpen, comingSoon: true },
-  {
-    label: 'Learning Center',
-    href: '/admin/learning',
-    icon: GraduationCap,
-    comingSoon: true,
-  },
-  { label: 'Blog', href: '/admin/blog', icon: Newspaper, comingSoon: true },
+  { label: 'Documentation', href: '/admin/content?contentType=DocPage', icon: BookOpen },
+  { label: 'Learning Center', href: '/admin/learning', icon: GraduationCap, comingSoon: true },
+  { label: 'Blog', href: '/admin/content?contentType=Article', icon: Newspaper },
   { label: 'Media', href: '/admin/media', icon: Image, comingSoon: true },
   { label: 'SEO', href: '/admin/seo', icon: Search, comingSoon: true },
   { label: 'Analytics', href: '/admin/analytics', icon: BarChart3, comingSoon: true },

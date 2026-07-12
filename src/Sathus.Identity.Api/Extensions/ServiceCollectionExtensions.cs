@@ -13,6 +13,7 @@ using Sathus.Identity.Api.Filters;
 using Sathus.Identity.Application.Commands.Login;
 using Sathus.Identity.Application.Interfaces;
 using Sathus.Identity.Application.Validators;
+using Sathus.Identity.Domain;
 using Sathus.Identity.Infrastructure.Persistence;
 using Sathus.Identity.Infrastructure.Repositories;
 using Sathus.Identity.Infrastructure.Security;
@@ -80,6 +81,10 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IPermissionService, PermissionService>();
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
+        services.AddScoped<Sathus.Identity.Application.Interfaces.IUserRepository, UserRepository>();
+        services.AddScoped<IRoleRepository, RoleRepository>();
+        services.AddScoped<IPermissionRepository, PermissionRepository>();
+
         services.AddScoped<AuditLoggingFilter>();
 
         var secret = configuration["Jwt:Secret"]!;
@@ -111,7 +116,13 @@ public static class ServiceCollectionExtensions
                 };
             });
 
-        services.AddAuthorization();
+        services.AddAuthorization(options =>
+        {
+            foreach (var permission in Permissions.All)
+            {
+                options.AddPolicy(permission, policy => policy.RequireClaim("permission", permission));
+            }
+        });
 
         return services;
     }

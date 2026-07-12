@@ -1,0 +1,38 @@
+using Sathus.Content.Domain.Enums;
+
+namespace Sathus.Content.Application.DTOs;
+
+public sealed record ContentItemDetailResponse(
+    Guid Id,
+    string Title,
+    string Slug,
+    string? Description,
+    string Body,
+    ContentType ContentType,
+    ContentStatus Status,
+    DateTime? PublishedAt,
+    Guid? AuthorId,
+    string? SeoCanonical,
+    string? SeoRobots,
+    bool NoIndex,
+    string? OgImage,
+    string? FocusKeyword,
+    bool Featured,
+    string? NavigationTitle,
+    int? DisplayOrder,
+    Guid? PreviousContentItemId,
+    Guid? NextContentItemId,
+    ContentDifficulty? Difficulty,
+    int? EstimatedReadTime,
+    bool Deprecated,
+    string? Tagline,
+    string? FeaturesJson,
+    Guid? PricingPlanId,
+    string? CoverImage,
+    int? ReadTime,
+    string? HeroImage,
+    string? GalleryJson,
+    IReadOnlyList<string> CategoryNames,
+    IReadOnlyList<string> TagNames,
+    DateTime CreatedAt,
+    DateTime UpdatedAt);

@@ -44,7 +44,12 @@ public sealed class ExceptionHandlingMiddleware
             AuthenticationException => ("AUTHENTICATION_FAILED", StatusCodes.Status401Unauthorized),
             InvalidTokenException => ("INVALID_TOKEN", StatusCodes.Status400BadRequest),
             UserNotFoundException => ("USER_NOT_FOUND", StatusCodes.Status404NotFound),
+            RoleNotFoundException => ("ROLE_NOT_FOUND", StatusCodes.Status404NotFound),
+            PermissionNotFoundException => ("PERMISSION_NOT_FOUND", StatusCodes.Status404NotFound),
             EmailAlreadyExistsException => ("EMAIL_EXISTS", StatusCodes.Status409Conflict),
+            RoleAlreadyExistsException => ("ROLE_EXISTS", StatusCodes.Status409Conflict),
+            PermissionAlreadyExistsException => ("PERMISSION_EXISTS", StatusCodes.Status409Conflict),
+            RoleInUseException => ("ROLE_IN_USE", StatusCodes.Status409Conflict),
             AppException => ("BAD_REQUEST", StatusCodes.Status400BadRequest),
             ValidationException => ("VALIDATION_ERROR", StatusCodes.Status422UnprocessableEntity),
             _ => ("INTERNAL_SERVER_ERROR", StatusCodes.Status500InternalServerError)

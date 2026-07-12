@@ -6,8 +6,10 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Sathus.Identity.Application.DTOs;
 using Sathus.Identity.Application.Interfaces;
 using Sathus.Identity.Domain.Entities;
+using Sathus.Identity.Domain.Enums;
 using Sathus.Identity.Infrastructure.Persistence;
 
 public class UserRepository(IdentityDbContext dbContext) : IUserRepository
@@ -55,5 +57,39 @@ public class UserRepository(IdentityDbContext dbContext) : IUserRepository
             .Select(rp => rp.Permission.Name)
             .Distinct()
             .ToListAsync(cancellationToken);
+    }
+
+    public async Task<PagedResult<User>> GetPagedAsync(
+        int page,
+        int pageSize,
+        string? search,
+        UserStatus? status,
+        CancellationToken cancellationToken = default)
+    {
+        var query = _dbSet.AsNoTracking();
+
+        if (!string.IsNullOrWhiteSpace(search))
+        {
+            var normalized = search.Trim().ToLowerInvariant();
+            query = query.Where(u =>
+                u.Email.ToLower().Contains(normalized) ||
+                u.FirstName.ToLower().Contains(normalized) ||
+                u.LastName.ToLower().Contains(normalized));
+        }
+
+        if (status.HasValue)
+        {
+            query = query.Where(u => u.Status == status.Value);
+        }
+
+        var total = await query.CountAsync(cancellationToken);
+
+        var items = await query
+            .OrderBy(u => u.Email)
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync(cancellationToken);
+
+        return new PagedResult<User>(items, page, pageSize, total);
     }
 }

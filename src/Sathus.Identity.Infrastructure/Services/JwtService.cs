@@ -61,17 +61,7 @@ public class JwtService : IJwtService
         try
         {
             new JwtSecurityTokenHandler()
-                .ValidateToken(token, new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateIssuerSigningKey = true,
-                    ValidateLifetime = true,
-                    ValidIssuer = _options.Issuer,
-                    ValidAudience = _options.Audience,
-                    IssuerSigningKey = _signingKey,
-                    ClockSkew = TimeSpan.Zero
-                }, out _);
+                .ValidateToken(token, CreateValidationParameters(), out _);
 
             return true;
         }
@@ -83,20 +73,11 @@ public class JwtService : IJwtService
 
     public Guid GetUserIdFromToken(string token)
     {
-        var handler = new JwtSecurityTokenHandler();
-        var principal = handler.ValidateToken(token, new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateIssuerSigningKey = true,
-            ValidateLifetime = true,
-            ValidIssuer = _options.Issuer,
-            ValidAudience = _options.Audience,
-            IssuerSigningKey = _signingKey,
-            ClockSkew = TimeSpan.Zero
-        }, out _);
+        var handler = new JwtSecurityTokenHandler { MapInboundClaims = false };
+        var principal = handler.ValidateToken(token, CreateValidationParameters(), out _);
 
         var subClaim = principal.FindFirst(JwtRegisteredClaimNames.Sub)
+            ?? principal.FindFirst(ClaimTypes.NameIdentifier)
             ?? throw new InvalidOperationException("Token does not contain a subject claim.");
 
         return Guid.Parse(subClaim.Value);
@@ -156,18 +137,9 @@ public class JwtService : IJwtService
 
         try
         {
-            var principal = new JwtSecurityTokenHandler()
-                .ValidateToken(token, new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateIssuerSigningKey = true,
-                    ValidateLifetime = true,
-                    ValidIssuer = _options.Issuer,
-                    ValidAudience = _options.Audience,
-                    IssuerSigningKey = _signingKey,
-                    ClockSkew = TimeSpan.Zero
-                }, out _);
+            var handler = new JwtSecurityTokenHandler { MapInboundClaims = false };
+            var principal = handler
+                .ValidateToken(token, CreateValidationParameters(), out _);
 
             var purposeClaim = principal.FindFirst("purpose");
             if (purposeClaim is null || purposeClaim.Value != expectedPurpose)
@@ -175,7 +147,8 @@ public class JwtService : IJwtService
                 return false;
             }
 
-            var subClaim = principal.FindFirst(JwtRegisteredClaimNames.Sub);
+            var subClaim = principal.FindFirst(JwtRegisteredClaimNames.Sub)
+                ?? principal.FindFirst(ClaimTypes.NameIdentifier);
             if (subClaim is null || !Guid.TryParse(subClaim.Value, out userId))
             {
                 return false;
@@ -188,4 +161,17 @@ public class JwtService : IJwtService
             return false;
         }
     }
+
+    private TokenValidationParameters CreateValidationParameters() =>
+        new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateIssuerSigningKey = true,
+            ValidateLifetime = true,
+            ValidIssuer = _options.Issuer,
+            ValidAudience = _options.Audience,
+            IssuerSigningKey = _signingKey,
+            ClockSkew = TimeSpan.Zero
+        };
 }

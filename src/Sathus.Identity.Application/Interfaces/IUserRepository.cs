@@ -1,4 +1,6 @@
+using Sathus.Identity.Application.DTOs;
 using Sathus.Identity.Domain.Entities;
+using Sathus.Identity.Domain.Enums;
 
 namespace Sathus.Identity.Application.Interfaces;
 
@@ -17,4 +19,11 @@ public interface IUserRepository
     Task<IReadOnlyList<string>> GetRoleNamesAsync(Guid userId, CancellationToken cancellationToken = default);
 
     Task<IReadOnlyList<string>> GetPermissionNamesAsync(Guid userId, CancellationToken cancellationToken = default);
+
+    Task<PagedResult<User>> GetPagedAsync(
+        int page,
+        int pageSize,
+        string? search,
+        UserStatus? status,
+        CancellationToken cancellationToken = default);
 }

@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Content editor enhancements (`apps/admin`):
+  - **Editor (10.4.5):** rich text editor with formatting toolbar and keyboard
+    shortcuts, debounced autosave, live preview, global keyboard shortcuts
+    (`Ctrl/Cmd+S`, `Ctrl/Cmd+P`), and unsaved-changes `beforeunload` guard.
+  - **Workflow (10.4.6):** content workflow state machine with approval,
+    publishing, scheduling, and archiving, surfaced via a workflow panel.
+  - **Version History (10.4.7):** version snapshots with compare (LCS diff),
+    restore, diff view, and per-version comments.
+  - **SEO (10.4.8):** OpenGraph, JSON-LD schema (validated), canonical, robots,
+    and legacy-path redirects with a live social preview.
+  - **Quality (10.4.9):** unit + integration tests for slug, markdown,
+    diff, workflow, versioning, content store, and content client; plus
+    performance and accessibility improvements, and `docs/CONTENT_EDITOR.md`.
+
 ## [0.1.0] - 2026-07-11
 
 ### Added

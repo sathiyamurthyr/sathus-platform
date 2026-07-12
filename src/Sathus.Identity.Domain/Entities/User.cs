@@ -94,9 +94,61 @@ public sealed class User : BaseEntity, IAggregateRoot
         UpdatedAt = loginAt;
     }
 
+    public void ConfirmEmail(DateTime updatedAt)
+    {
+        EmailConfirmed = true;
+        UpdatedAt = updatedAt;
+    }
+
     public void Suspend(DateTime updatedAt) => SetStatus(UserStatus.Suspended, updatedAt);
     public void Reactivate(DateTime updatedAt) => SetStatus(UserStatus.Active, updatedAt);
     public void MarkAsPending(DateTime updatedAt) => SetStatus(UserStatus.Pending, updatedAt);
+
+    public void SoftDelete(DateTime updatedAt) => SetStatus(UserStatus.Deleted, updatedAt);
+
+    public bool HasRole(Guid roleId) => UserRoles.Any(ur => ur.RoleId == roleId);
+
+    public void AssignRole(Guid roleId, DateTime updatedAt)
+    {
+        if (roleId == Guid.Empty) throw new ArgumentException("RoleId is required.", nameof(roleId));
+        if (HasRole(roleId)) return;
+
+        UserRoles.Add(new UserRole(Id, roleId));
+        UpdatedAt = updatedAt;
+    }
+
+    public void RemoveRole(Guid roleId, DateTime updatedAt)
+    {
+        if (roleId == Guid.Empty) throw new ArgumentException("RoleId is required.", nameof(roleId));
+
+        var existing = UserRoles.FirstOrDefault(ur => ur.RoleId == roleId);
+        if (existing is null) return;
+
+        UserRoles.Remove(existing);
+        UpdatedAt = updatedAt;
+    }
+
+    public void ReplaceRoles(IEnumerable<Guid> roleIds, DateTime updatedAt)
+    {
+        ArgumentNullException.ThrowIfNull(roleIds);
+
+        var incoming = roleIds
+            .Where(id => id != Guid.Empty)
+            .Distinct()
+            .ToList();
+
+        foreach (var roleId in incoming.Where(id => !HasRole(id)))
+        {
+            UserRoles.Add(new UserRole(Id, roleId));
+        }
+
+        foreach (var existing in UserRoles.Where(ur => !incoming.Contains(ur.RoleId)).ToList())
+        {
+            UserRoles.Remove(existing);
+        }
+
+        UpdatedAt = updatedAt;
+    }
 
     private void SetStatus(UserStatus status, DateTime updatedAt)
     {
