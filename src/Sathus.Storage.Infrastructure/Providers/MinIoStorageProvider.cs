@@ -1,4 +1,5 @@
 using System.IO;
+using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
@@ -52,7 +53,14 @@ public class MinIoStorageProvider : IStorageProvider
 
         try
         {
-            await _client.PutObjectAsync(_options.BucketName ?? "storage", key, data, data.Length, contentType ?? "application/octet-stream");
+            var args = new PutObjectArgs()
+                .WithBucket(_options.BucketName ?? "storage")
+                .WithObject(key)
+                .WithStreamData(data)
+                .WithObjectSize(data.Length)
+                .WithContentType(contentType ?? "application/octet-stream");
+
+            await _client.PutObjectAsync(args, cancellationToken);
             _logger.LogInformation("Uploaded object '{Key}' to MinIO.", key);
             return StorageResult.Success();
         }
@@ -70,11 +78,16 @@ public class MinIoStorageProvider : IStorageProvider
         try
         {
             var memoryStream = new MemoryStream();
-            await _client.GetObjectAsync(_options.BucketName ?? "storage", key, stream => stream.CopyTo(memoryStream), cancellationToken);
+            var args = new GetObjectArgs()
+                .WithBucket(_options.BucketName ?? "storage")
+                .WithObject(key)
+                .WithCallbackStream(stream => stream.CopyTo(memoryStream));
+
+            await _client.GetObjectAsync(args, cancellationToken);
             memoryStream.Position = 0;
             return (memoryStream, StorageResult.Success());
         }
-        catch (ObjectNotFoundException)
+        catch (global::Minio.Exceptions.ObjectNotFoundException)
         {
             throw new global::Sathus.Storage.Domain.Exceptions.ObjectNotFoundException(key);
         }
@@ -91,10 +104,14 @@ public class MinIoStorageProvider : IStorageProvider
 
         try
         {
-            await _client.RemoveObjectAsync(_options.BucketName ?? "storage", key, cancellationToken);
+            var args = new RemoveObjectArgs()
+                .WithBucket(_options.BucketName ?? "storage")
+                .WithObject(key);
+
+            await _client.RemoveObjectAsync(args, cancellationToken);
             return StorageResult.Success();
         }
-        catch (ObjectNotFoundException)
+        catch (global::Minio.Exceptions.ObjectNotFoundException)
         {
             throw new global::Sathus.Storage.Domain.Exceptions.ObjectNotFoundException(key);
         }
@@ -112,7 +129,14 @@ public class MinIoStorageProvider : IStorageProvider
 
         try
         {
-            await _client.CopyObjectAsync(_options.BucketName ?? "storage", destinationKey, $"{_options.BucketName ?? "storage"}/{sourceKey}", cancellationToken);
+            var args = new CopyObjectArgs()
+                .WithBucket(_options.BucketName ?? "storage")
+                .WithObject(destinationKey)
+                .WithCopyObjectSource(new CopySourceObjectArgs()
+                    .WithBucket(_options.BucketName ?? "storage")
+                    .WithObject(sourceKey));
+
+            await _client.CopyObjectAsync(args, cancellationToken);
             return StorageResult.Success();
         }
         catch (MinioException ex)
@@ -140,10 +164,14 @@ public class MinIoStorageProvider : IStorageProvider
 
         try
         {
-            var stats = await _client.StatObjectAsync(_options.BucketName ?? "storage", key, cancellationToken);
-            return stats.ObjectName == key;
+            var args = new StatObjectArgs()
+                .WithBucket(_options.BucketName ?? "storage")
+                .WithObject(key);
+
+            await _client.StatObjectAsync(args, cancellationToken);
+            return true;
         }
-        catch (ObjectNotFoundException)
+        catch (global::Minio.Exceptions.ObjectNotFoundException)
         {
             return false;
         }
@@ -155,7 +183,11 @@ public class MinIoStorageProvider : IStorageProvider
 
         try
         {
-            var stats = await _client.StatObjectAsync(_options.BucketName ?? "storage", key, cancellationToken);
+            var args = new StatObjectArgs()
+                .WithBucket(_options.BucketName ?? "storage")
+                .WithObject(key);
+
+            var stats = await _client.StatObjectAsync(args, cancellationToken);
             return new StorageObjectInfo(
                 StorageKey.Create(key),
                 StorageSize.FromBytes(stats.Size),
@@ -165,9 +197,9 @@ public class MinIoStorageProvider : IStorageProvider
                 stats.LastModified,
                 stats.LastModified,
                 StorageProviderType.MinIO,
-                stats.VersionId != null);
+                !string.IsNullOrEmpty(stats.VersionId));
         }
-        catch (ObjectNotFoundException)
+        catch (global::Minio.Exceptions.ObjectNotFoundException)
         {
             return null;
         }
@@ -178,12 +210,15 @@ public class MinIoStorageProvider : IStorageProvider
         _pathValidator.ValidateKey(key);
         var bucket = _options.BucketName ?? "storage";
         var method = httpMethod ?? "GET";
+        var expiresInSeconds = (int)expiration.TotalSeconds;
 
         try
         {
             string url = method.Equals("GET", StringComparison.OrdinalIgnoreCase)
-                ? await _client.PresignedGetObjectAsync(bucket, key, expiration.TotalSeconds)
-                : await _client.PresignedPutObjectAsync(bucket, key, expiration.TotalSeconds);
+                ? await _client.PresignedGetObjectAsync(
+                    new PresignedGetObjectArgs().WithBucket(bucket).WithObject(key).WithExpiry(expiresInSeconds))
+                : await _client.PresignedPutObjectAsync(
+                    new PresignedPutObjectArgs().WithBucket(bucket).WithObject(key).WithExpiry(expiresInSeconds));
 
             var expiresAt = DateTimeOffset.UtcNow.Add(expiration);
             return new SignedUrl(url, new StorageEndpoint(new Uri(url)), expiresAt, method);
@@ -223,22 +258,26 @@ public class MinIoStorageProvider : IStorageProvider
         _pathValidator.ValidateKey(prefix);
         var results = new List<StorageObjectInfo>();
 
+        var args = new ListObjectsArgs()
+            .WithBucket(_options.BucketName ?? "storage")
+            .WithPrefix(prefix)
+            .WithRecursive(true);
+
         try
         {
-            var observable = _client.ListObjectsAsync(_options.BucketName ?? "storage", prefix);
-            await foreach (var item in observable)
+            foreach (var item in _client.ListObjectsAsync(args, cancellationToken).ToEnumerable())
             {
-                if (item.IsFolder) continue;
                 results.Add(new StorageObjectInfo(
                     StorageKey.Create(item.Key),
-                    StorageSize.FromBytes(item.Size),
+                    StorageSize.FromBytes((long)item.Size),
                     ContentType.Create("application/octet-stream"),
                     item.ETag,
-                    null,
-                    item.LastModified,
-                    item.LastModified,
+                    item.VersionId,
+                    ParseLastModified(item.LastModified),
+                    ParseLastModified(item.LastModified),
                     StorageProviderType.MinIO,
-                    false));
+                    !string.IsNullOrEmpty(item.VersionId)));
+
                 if (results.Count >= maxKeys) break;
             }
         }
@@ -249,5 +288,7 @@ public class MinIoStorageProvider : IStorageProvider
 
         return results;
     }
-}
 
+    private static DateTimeOffset? ParseLastModified(string? value) =>
+        DateTimeOffset.TryParse(value, out var result) ? result : null;
+}

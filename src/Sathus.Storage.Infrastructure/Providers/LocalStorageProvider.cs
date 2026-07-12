@@ -139,8 +139,8 @@ public class LocalStorageProvider : IStorageProvider
         var fileInfo = new FileInfo(fullPath);
         await Task.CompletedTask;
         return new StorageObjectInfo(
-            ValueObjects.StorageKey.Create(key),
-            ValueObjects.StorageSize.FromBytes(fileInfo.Length),
+            StorageKey.Create(key),
+            StorageSize.FromBytes(fileInfo.Length),
             null,
             null,
             null,
@@ -160,7 +160,7 @@ public class LocalStorageProvider : IStorageProvider
             ? $"{_options.PublicUrlBase.TrimEnd('/')}/{key}"
             : new Uri(fullPath).AbsoluteUri;
 
-        return Task.FromResult(new SignedUrl(url, new ValueObjects.StorageEndpoint(new Uri(url)), expiresAt, httpMethod ?? "GET"));
+        return Task.FromResult(new SignedUrl(url, new StorageEndpoint(new Uri(url)), expiresAt, httpMethod ?? "GET"));
     }
 
     public string GeneratePublicUrl(string key)
@@ -215,8 +215,8 @@ public class LocalStorageProvider : IStorageProvider
         {
             var relativePath = Path.GetRelativePath(_options.RootPath, file.FullName).Replace('\\', '/');
             results.Add(new StorageObjectInfo(
-                ValueObjects.StorageKey.Create(relativePath),
-                ValueObjects.StorageSize.FromBytes(file.Length),
+                StorageKey.Create(relativePath),
+                StorageSize.FromBytes(file.Length),
                 null,
                 null,
                 null,

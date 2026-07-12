@@ -16,7 +16,7 @@ public class ValueObjectsTests
 
     [Theory]
     [InlineData("ab")]
-    [InlineData("a".PadRight(64, 'b'))]
+    [InlineData("invalid-bucket-name-that-is-definitely-longer-than-the-sixty-three-character-maximum-allowed-length-1234567890")]
     [InlineData("-invalid")]
     [InlineData("invalid-")]
     public void BucketName_Create_InvalidName_ShouldThrow(string name)
@@ -30,7 +30,7 @@ public class ValueObjectsTests
     public void ObjectPath_Create_ValidPath_ShouldSucceed(string path)
     {
         var objPath = Domain.ValueObjects.ObjectPath.Create(path);
-        objPath.Value.Should().Contain('/');
+        objPath.Value.Should().Be(path);
     }
 
     [Theory]

@@ -69,7 +69,7 @@ public class AzureBlobStorageProvider : IStorageProvider
         try
         {
             var response = await blob.DownloadAsync(cancellationToken);
-            var stream = response.Value.Content.ToStream();
+            var stream = response.Value.Content;
             return (stream, StorageResult.Success());
         }
         catch (RequestFailedException ex) when (ex.Status == 404)
@@ -104,8 +104,8 @@ public class AzureBlobStorageProvider : IStorageProvider
         var sourceBlob = container.GetBlobClient(sourceKey);
         var destBlob = container.GetBlobClient(destinationKey);
 
-        var copyOptions = new BlobCopyFromUriOptions(sourceBlob.Uri);
-        var operation = await destBlob.StartCopyFromUriAsync(copyOptions, cancellationToken);
+        var copyOptions = new BlobCopyFromUriOptions();
+        var operation = await destBlob.StartCopyFromUriAsync(sourceBlob.Uri, copyOptions, cancellationToken);
         await operation.WaitForCompletionAsync(cancellationToken);
         return StorageResult.Success();
     }
@@ -151,12 +151,12 @@ public class AzureBlobStorageProvider : IStorageProvider
 
             return new StorageObjectInfo(
                 StorageKey.Create(key),
-                StorageSize.FromBytes(p.ContentLength ?? 0),
+                StorageSize.FromBytes(p.ContentLength),
                 ContentType.Create(p.ContentType ?? "application/octet-stream"),
                 p.ETag.ToString(),
                 null,
-                p.LastModified?.UtcDateTime,
-                p.CreatedOn?.UtcDateTime,
+                p.LastModified.UtcDateTime,
+                p.CreatedOn.UtcDateTime,
                 StorageProviderType.AzureBlob,
                 false);
         }
@@ -188,7 +188,7 @@ public class AzureBlobStorageProvider : IStorageProvider
 
     public Task<StorageResult> CreateFolderAsync(string path, CancellationToken cancellationToken = default)
     {
-        return StorageResult.Success();
+        return Task.FromResult(StorageResult.Success());
     }
 
     public async Task<StorageResult> DeleteFolderAsync(string path, CancellationToken cancellationToken = default)

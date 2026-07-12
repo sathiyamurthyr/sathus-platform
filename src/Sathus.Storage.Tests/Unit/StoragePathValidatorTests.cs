@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Sathus.Storage.Infrastructure.Security;
 using Xunit;
 
 namespace Sathus.Storage.Tests.Unit;
@@ -17,8 +18,8 @@ public class StoragePathValidatorTests
         var services = new ServiceCollection();
         services.AddLogging();
         var sp = services.BuildServiceProvider();
-        var logger = sp.GetRequiredService<ILogger<Security.StoragePathValidator>>();
-        return new Security.StoragePathValidator(logger);
+        var logger = sp.GetRequiredService<ILogger<StoragePathValidator>>();
+        return new StoragePathValidator(logger);
     }
 
     [Theory]

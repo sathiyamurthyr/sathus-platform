@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Logging;
 using Sathus.Storage.Domain.Enums;
+using Sathus.Storage.Domain.Exceptions;
 using Sathus.Storage.Domain.Interfaces;
 using Sathus.Storage.Domain.Results;
 using Sathus.Storage.Infrastructure.Configuration;

@@ -55,7 +55,10 @@ public class AwsS3StorageProvider : IStorageProvider
         };
 
         if (metadata != null)
-            request.Metadata = new System.Collections.Generic.Dictionary<string, string>(metadata, StringComparer.OrdinalIgnoreCase);
+        {
+            foreach (var kvp in metadata)
+                request.Metadata[kvp.Key] = kvp.Value;
+        }
 
         try
         {
@@ -229,7 +232,7 @@ public class AwsS3StorageProvider : IStorageProvider
 
     public Task<StorageResult> CreateFolderAsync(string path, CancellationToken cancellationToken = default)
     {
-        return StorageResult.Success();
+        return Task.FromResult(StorageResult.Success());
     }
 
     public async Task<StorageResult> DeleteFolderAsync(string path, CancellationToken cancellationToken = default)

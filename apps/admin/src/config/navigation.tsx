@@ -31,7 +31,7 @@ export const navItems: NavItem[] = [
   { label: 'Documentation', href: '/admin/content?contentType=DocPage', icon: BookOpen },
   { label: 'Learning Center', href: '/admin/learning', icon: GraduationCap, comingSoon: true },
   { label: 'Blog', href: '/admin/content?contentType=Article', icon: Newspaper },
-  { label: 'Media', href: '/admin/media', icon: Image, comingSoon: true },
+  { label: 'Media', href: '/admin/media', icon: Image },
   { label: 'SEO', href: '/admin/seo', icon: Search, comingSoon: true },
   { label: 'Analytics', href: '/admin/analytics', icon: BarChart3, comingSoon: true },
   { label: 'Users', href: '/admin/users', icon: Users, comingSoon: true },
