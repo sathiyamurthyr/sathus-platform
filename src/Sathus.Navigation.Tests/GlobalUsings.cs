@@ -1,0 +1,9 @@
+global using Xunit;
+global using FluentAssertions;
+global using Sathus.Navigation.Domain;
+global using Sathus.Navigation.Domain.Entities;
+global using Sathus.Navigation.Domain.Enums;
+global using Sathus.Navigation.Domain.Events;
+global using Sathus.Navigation.Domain.Exceptions;
+global using Sathus.Navigation.Domain.ValueObjects;
+global using Sathus.SharedKernel;

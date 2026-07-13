@@ -1,0 +1,14 @@
+global using Sathus.MediaRelations.Domain;
+global using Sathus.MediaRelations.Domain.Entities;
+global using Sathus.MediaRelations.Domain.Enums;
+global using Sathus.MediaRelations.Domain.Events;
+global using Sathus.MediaRelations.Domain.Exceptions;
+global using Sathus.MediaRelations.Domain.ValueObjects;
+global using Sathus.SharedKernel;
+global using Sathus.SharedKernel.Entities;
+global using Sathus.SharedKernel.Events;
+global using Sathus.SharedKernel.Exceptions;
+global using Sathus.SharedKernel.Paging;
+global using Sathus.SharedKernel.Repositories;
+global using Sathus.SharedKernel.Specifications;
+global using MediatR;

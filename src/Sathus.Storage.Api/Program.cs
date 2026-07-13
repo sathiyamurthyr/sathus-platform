@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Sathus.Storage.Api.Extensions;
+using Sathus.Storage.Api.Filters;
 using Sathus.Storage.Api.Middleware;
 using Sathus.Storage.Application.Queries.GetConfig;
 using Sathus.Storage.Application.Queries.GetHealth;
@@ -37,7 +38,7 @@ public static class Program
 
         builder.Services.AddStorage(builder.Configuration);
         builder.Services.AddStorageProviders(builder.Configuration);
-        builder.Services.AddStorageHealthChecks();
+        builder.Services.AddHealthChecks().AddStorageHealthChecks();
 
         builder.Services.AddMediatR(config =>
         {

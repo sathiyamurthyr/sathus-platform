@@ -12,6 +12,7 @@ import {
   Settings,
   Users,
   Briefcase,
+  Navigation,
 } from 'lucide-react';
 
 import type { NavItem } from '@/types/admin';
@@ -32,6 +33,7 @@ export const navItems: NavItem[] = [
   { label: 'Learning Center', href: '/admin/learning', icon: GraduationCap, comingSoon: true },
   { label: 'Blog', href: '/admin/content?contentType=Article', icon: Newspaper },
   { label: 'Media', href: '/admin/media', icon: Image },
+  { label: 'Navigation', href: '/admin/navigation', icon: Navigation },
   { label: 'SEO', href: '/admin/seo', icon: Search, comingSoon: true },
   { label: 'Analytics', href: '/admin/analytics', icon: BarChart3, comingSoon: true },
   { label: 'Users', href: '/admin/users', icon: Users, comingSoon: true },

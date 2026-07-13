@@ -31,7 +31,7 @@ public static class ServiceCollectionExtensions
 
         services.AddStorage(configuration);
         services.AddStorageProviders(configuration);
-        services.AddStorageHealthChecks();
+        services.AddHealthChecks().AddStorageHealthChecks();
 
         services.AddSingleton<StoragePathValidator>();
 
