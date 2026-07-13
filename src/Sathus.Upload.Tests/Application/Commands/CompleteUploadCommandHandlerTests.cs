@@ -20,7 +20,9 @@ public class CompleteUploadCommandHandlerTests
         var repository = new EfUploadRepository(dbContext, Mock.Of<MediatR.IMediator>());
         var validator = new Mock<IUploadValidator>();
         var virusScan = new Mock<IVirusScanService>();
+        virusScan.Setup(v => v.ScanAsync(It.IsAny<UploadSession>(), It.IsAny<Stream>(), It.IsAny<CancellationToken>())).ReturnsAsync(true);
         var metadataExtractor = new Mock<IMetadataExtractionService>();
+        metadataExtractor.Setup(m => m.ExtractAsync(It.IsAny<UploadSession>(), It.IsAny<Stream>(), It.IsAny<CancellationToken>())).ReturnsAsync([]);
 
         var session = new UploadSession(
             sessionId: "session-2",
