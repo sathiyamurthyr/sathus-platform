@@ -34,6 +34,7 @@ export const navItems: NavItem[] = [
   { label: 'Blog', href: '/admin/content?contentType=Article', icon: Newspaper },
   { label: 'Media', href: '/admin/media', icon: Image },
   { label: 'Navigation', href: '/admin/navigation', icon: Navigation },
+  { label: 'Search', href: '/admin/search', icon: Search },
   { label: 'SEO', href: '/admin/seo', icon: Search, comingSoon: true },
   { label: 'Analytics', href: '/admin/analytics', icon: BarChart3, comingSoon: true },
   { label: 'Users', href: '/admin/users', icon: Users, comingSoon: true },
