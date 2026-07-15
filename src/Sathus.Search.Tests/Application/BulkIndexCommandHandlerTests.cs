@@ -1,3 +1,12 @@
+global using FluentAssertions;
+global using Xunit;
+global using Microsoft.Extensions.Logging;
+global using Moq;
+global using Sathus.Search.Application.Commands.BulkIndex;
+global using Sathus.Search.Application.Interfaces;
+global using Sathus.Search.Domain.Entities;
+global using Sathus.Search.Domain.Enums;
+
 namespace Sathus.Search.Tests.Application;
 
 public class BulkIndexCommandHandlerTests

@@ -15,7 +15,7 @@ public sealed class DeleteDocumentCommandHandler : IRequestHandler<DeleteDocumen
         var document = await _repository.GetByIdAsync(request.DocumentId, cancellationToken)
             ?? throw new SearchDocumentNotFoundException(request.DocumentId);
 
-        document.Archive(request.ActorId);
+        document.Delete(request.ActorId);
         await _repository.SaveChangesAsync(cancellationToken);
 
         return Unit.Value;

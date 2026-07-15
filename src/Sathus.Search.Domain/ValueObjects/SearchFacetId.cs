@@ -1,8 +1,11 @@
+using Sathus.SharedKernel.Entities;
+
 namespace Sathus.Search.Domain.ValueObjects;
 
-public sealed record SearchFacetId(Guid Value)
+public sealed class SearchFacetId : EntityId
 {
-    public static SearchFacetId New() => new(Guid.NewGuid());
-    public static SearchFacetId From(Guid value) => value == Guid.Empty ? throw new ArgumentException("SearchFacetId cannot be empty.", nameof(value)) : new SearchFacetId(value);
-    public override string ToString() => Value.ToString();
+    public SearchFacetId(Guid value) : base(value) { }
+
+    public static SearchFacetId Create(Guid value) => new(value);
+    public static SearchFacetId CreateUnique() => new(Guid.NewGuid());
 }

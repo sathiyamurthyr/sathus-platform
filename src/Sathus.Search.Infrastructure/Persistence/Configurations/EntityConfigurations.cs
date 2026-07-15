@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Sathus.Search.Domain.Entities;
 using Sathus.Search.Domain.Enums;
 
@@ -13,11 +14,9 @@ public sealed class SearchIndexConfiguration : IEntityTypeConfiguration<SearchIn
         builder.HasKey(i => i.Id);
         builder.Property(i => i.Name).HasMaxLength(256).IsRequired();
         builder.Property(i => i.Code).HasMaxLength(128).IsRequired();
-        builder.Property(i => i.IsDefault).IsRequired();
         builder.Property(i => i.IsEnabled).IsRequired();
-        builder.Property(i => i.Provider).HasConversion<string>().IsRequired();
-        builder.Property(i => i.RebuildSchedule).HasMaxLength(128);
-        builder.Property(i => i.LastRebuildAt);
+        builder.Property(i => i.IsRebuilding).IsRequired();
+        builder.Property(i => i.LastBuiltAt);
         builder.Property(i => i.Settings).HasColumnType("jsonb").IsRequired();
         builder.HasQueryFilter(i => !i.IsDeleted);
         builder.HasIndex(i => i.Code).IsUnique();
@@ -72,16 +71,13 @@ public sealed class SearchFieldConfiguration : IEntityTypeConfiguration<SearchFi
     {
         builder.ToTable("fields", "search");
         builder.HasKey(f => f.Id);
+        builder.Property(f => f.Id).HasConversion(
+            v => v.Value,
+            v => new SearchFieldId(v));
         builder.Property(f => f.IndexId).IsRequired();
         builder.Property(f => f.Name).HasMaxLength(256).IsRequired();
         builder.Property(f => f.FieldType).HasConversion<string>().IsRequired();
-        builder.Property(f => f.IsSearchable).IsRequired();
-        builder.Property(f => f.IsFilterable).IsRequired();
-        builder.Property(f => f.IsSortable).IsRequired();
-        builder.Property(f => f.IsFacetable).IsRequired();
-        builder.Property(f => f.IsHighlightable).IsRequired();
-        builder.Property(f => f.Weight).IsRequired();
-        builder.Property(f => f.Properties).HasColumnType("jsonb").IsRequired();
+        builder.Property(f => f.Properties).HasColumnType("jsonb");
         builder.HasQueryFilter(f => !f.IsDeleted);
         builder.HasIndex(f => new { f.IndexId, f.Name }).IsUnique();
     }
@@ -93,14 +89,14 @@ public sealed class SearchFacetConfiguration : IEntityTypeConfiguration<SearchFa
     {
         builder.ToTable("facets", "search");
         builder.HasKey(f => f.Id);
+        builder.Property(f => f.Id).HasConversion(
+            v => v.Value,
+            v => new SearchFacetId(v));
         builder.Property(f => f.IndexId).IsRequired();
         builder.Property(f => f.Name).HasMaxLength(256).IsRequired();
         builder.Property(f => f.FieldName).HasMaxLength(256).IsRequired();
         builder.Property(f => f.FacetType).HasConversion<string>().IsRequired();
-        builder.Property(f => f.IsEnabled).IsRequired();
-        builder.Property(f => f.SortOrder).IsRequired();
-        builder.Property(f => f.Count).IsRequired();
-        builder.Property(f => f.Settings).HasColumnType("jsonb").IsRequired();
+        builder.Property(f => f.Settings).HasColumnType("jsonb");
         builder.HasQueryFilter(f => !f.IsDeleted);
         builder.HasIndex(f => new { f.IndexId, f.FieldName });
     }
@@ -112,10 +108,12 @@ public sealed class SearchSynonymConfiguration : IEntityTypeConfiguration<Search
     {
         builder.ToTable("synonyms", "search");
         builder.HasKey(s => s.Id);
+        builder.Property(s => s.Id).HasConversion(
+            v => v.Value,
+            v => new SearchSynonymId(v));
         builder.Property(s => s.IndexId).IsRequired();
         builder.Property(s => s.From).HasMaxLength(256).IsRequired();
         builder.Property(s => s.To).HasMaxLength(256).IsRequired();
-        builder.Property(s => s.IsEnabled).IsRequired();
         builder.HasQueryFilter(s => !s.IsDeleted);
         builder.HasIndex(s => new { s.IndexId, s.From }).IsUnique();
     }
@@ -127,14 +125,15 @@ public sealed class SearchRankingConfiguration : IEntityTypeConfiguration<Search
     {
         builder.ToTable("rankings", "search");
         builder.HasKey(r => r.Id);
+        builder.Property(r => r.Id).HasConversion(
+            v => v.Value,
+            v => new SearchRankingId(v));
         builder.Property(r => r.IndexId).IsRequired();
         builder.Property(r => r.Name).HasMaxLength(256).IsRequired();
         builder.Property(r => r.Query).HasMaxLength(1024).IsRequired();
         builder.Property(r => r.Boost).IsRequired();
-        builder.Property(r => r.Priority).IsRequired();
-        builder.Property(r => r.IsEnabled).IsRequired();
         builder.HasQueryFilter(r => !r.IsDeleted);
-        builder.HasIndex(r => new { r.IndexId, r.Priority });
+        builder.HasIndex(r => new { r.IndexId, r.Name });
     }
 }
 
@@ -144,11 +143,11 @@ public sealed class SearchSuggestionConfiguration : IEntityTypeConfiguration<Sea
     {
         builder.ToTable("search_suggestions", "search");
         builder.HasKey(s => s.Id);
+        builder.Property(s => s.Id).HasConversion(
+            v => v.Value,
+            v => new SearchSuggestionId(v));
         builder.Property(s => s.IndexId).IsRequired();
         builder.Property(s => s.Text).HasMaxLength(256).IsRequired();
-        builder.Property(s => s.Type).HasMaxLength(32).IsRequired();
-        builder.Property(s => s.Weight).IsRequired();
-        builder.Property(s => s.Contexts).HasColumnType("jsonb").IsRequired();
         builder.HasQueryFilter(s => !s.IsDeleted);
         builder.HasIndex(s => new { s.IndexId, s.Text });
     }
@@ -160,11 +159,12 @@ public sealed class SearchHighlightConfiguration : IEntityTypeConfiguration<Sear
     {
         builder.ToTable("highlights", "search");
         builder.HasKey(h => h.Id);
+        builder.Property(h => h.Id).HasConversion(
+            v => v.Value,
+            v => new SearchHighlightId(v));
         builder.Property(h => h.IndexId).IsRequired();
         builder.Property(h => h.FieldName).HasMaxLength(256).IsRequired();
-        builder.Property(h => h.PreTag).HasMaxLength(64).IsRequired();
-        builder.Property(h => h.PostTag).HasMaxLength(64).IsRequired();
-        builder.Property(h => h.IsEnabled).IsRequired();
+        builder.Property(h => h.Options).HasColumnType("jsonb");
         builder.HasQueryFilter(h => !h.IsDeleted);
         builder.HasIndex(h => new { h.IndexId, h.FieldName }).IsUnique();
     }

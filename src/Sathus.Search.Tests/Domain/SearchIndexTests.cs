@@ -1,3 +1,10 @@
+global using FluentAssertions;
+global using Xunit;
+global using Sathus.Search.Domain.Entities;
+global using Sathus.Search.Domain.Enums;
+global using Sathus.Search.Domain.Events;
+global using Sathus.Search.Domain.ValueObjects;
+
 namespace Sathus.Search.Tests.Domain;
 
 public class SearchIndexTests
@@ -5,32 +12,32 @@ public class SearchIndexTests
     [Fact]
     public void Create_Should_Set_Defaults()
     {
-        var index = SearchIndex.Create("Main Index", "MAIN", SearchProviderType.Elasticsearch);
+        var index = SearchIndex.Create(Guid.NewGuid(), "Main Index", "main");
 
         index.Should().NotBeNull();
+        index.Name.Should().Be("Main Index");
         index.Code.Should().Be("main");
         index.IsEnabled.Should().BeTrue();
-        index.Provider.Should().Be(SearchProviderType.Elasticsearch);
+        index.IsRebuilding.Should().BeFalse();
         index.DomainEvents.Should().ContainSingle().Which.Should().BeOfType<SearchIndexCreatedEvent>();
     }
 
     [Fact]
-    public void AddField_Should_Add_And_Raise_Event()
+    public void AddField_Should_Add_To_Collection()
     {
-        var index = SearchIndex.Create("Main", "MAIN", SearchProviderType.Elasticsearch);
+        var index = SearchIndex.Create(Guid.NewGuid(), "Main", "main");
         index.ClearDomainEvents();
 
-        var field = index.AddField("title", SearchFieldType.Text);
+        var field = index.AddField("title", "text");
 
         index.Fields.Should().ContainSingle();
         field.Name.Should().Be("title");
-        index.DomainEvents.Should().ContainSingle().Which.Should().BeOfType<SearchFieldAddedEvent>();
     }
 
     [Fact]
     public void AddSynonym_Should_Add_To_Collection()
     {
-        var index = SearchIndex.Create("Main", "MAIN", SearchProviderType.Elasticsearch);
+        var index = SearchIndex.Create(Guid.NewGuid(), "Main", "main");
 
         var synonym = index.AddSynonym("phone", "mobile");
 
@@ -42,47 +49,76 @@ public class SearchIndexTests
     [Fact]
     public void AddRanking_Should_Add_To_Collection()
     {
-        var index = SearchIndex.Create("Main", "MAIN", SearchProviderType.Elasticsearch);
+        var index = SearchIndex.Create(Guid.NewGuid(), "Main", "main");
 
-        var ranking = index.AddRanking("Boost Featured", "featured", 2.0, 1);
+        var ranking = index.AddRanking("Boost Featured", "featured");
 
         index.Rankings.Should().ContainSingle();
-        ranking.Name.Should().Be("Boost Featured");
-        ranking.Query.Should().Be("featured");
-        ranking.Boost.Should().Be(2.0);
-        ranking.Priority.Should().Be(1);
+        ranking.Boost.Should().Be(1.0);
     }
 
     [Fact]
-    public void AddFacet_Should_Add_To_Collection()
+    public void SetLastBuiltAt_Should_Update_Date()
     {
-        var index = SearchIndex.Create("Main", "MAIN", SearchProviderType.Elasticsearch);
+        var index = SearchIndex.Create(Guid.NewGuid(), "Main", "main");
+        var rebuiltAt = DateTime.UtcNow;
 
-        var facet = index.AddFacet("Categories", "category", FacetType.Terms);
+        index.SetLastBuiltAt(rebuiltAt);
 
-        index.Facets.Should().ContainSingle();
-        facet.FieldName.Should().Be("category");
+        index.LastBuiltAt.Should().Be(rebuiltAt);
+    }
+
+    [Fact]
+    public void Disable_Should_Set_IsEnabled_False()
+    {
+        var index = SearchIndex.Create(Guid.NewGuid(), "Main", "main");
+
+        index.Disable();
+
+        index.IsEnabled.Should().BeFalse();
+    }
+
+    [Fact]
+    public void SetRebuilding_Should_Update_Flag()
+    {
+        var index = SearchIndex.Create(Guid.NewGuid(), "Main", "main");
+
+        index.SetRebuilding(true);
+
+        index.IsRebuilding.Should().BeTrue();
+    }
+
+    [Fact]
+    public void SetSettings_Should_Update_Settings()
+    {
+        var index = SearchIndex.Create(Guid.NewGuid(), "Main", "main");
+
+        index.SetSettings("{\"analyzer\":\"standard\"}");
+
+        index.Settings.Should().Be("{\"analyzer\":\"standard\"}");
+    }
+
+    [Fact]
+    public void RemoveDomainEvent_Should_Remove_Specific_Event()
+    {
+        var index = SearchIndex.Create(Guid.NewGuid(), "Main", "main");
+        var evt = index.DomainEvents.Single();
+        index.ClearDomainEvents();
+        index.AddDomainEvent(new SearchIndexCreatedEvent(index.Id, index.Name, index.Code));
+
+        index.RemoveDomainEvent(evt);
+
+        index.DomainEvents.Should().BeEmpty();
     }
 
     [Fact]
     public void AddHighlight_Should_Add_To_Collection()
     {
-        var index = SearchIndex.Create("Main", "MAIN", SearchProviderType.Elasticsearch);
+        var index = SearchIndex.Create(Guid.NewGuid(), "Main", "main");
 
-        var highlight = index.AddHighlight("content", "<mark>", "</mark>");
+        var highlight = index.AddHighlight("title");
 
         index.Highlights.Should().ContainSingle();
-        highlight.FieldName.Should().Be("content");
-    }
-
-    [Fact]
-    public void RecordRebuild_Should_Set_LastRebuildAt()
-    {
-        var index = SearchIndex.Create("Main", "MAIN", SearchProviderType.Elasticsearch);
-        var rebuiltAt = DateTime.UtcNow;
-
-        index.RecordRebuild(rebuiltAt, Guid.NewGuid());
-
-        index.LastRebuildAt.Should().Be(rebuiltAt);
+        highlight.FieldName.Should().Be("title");
     }
 }

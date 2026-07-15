@@ -1,5 +1,4 @@
 using Sathus.Search.Domain.Entities;
-using Sathus.Search.Domain.Entities;
 using Sathus.Search.Domain.Enums;
 using Sathus.Search.Domain.ValueObjects;
 

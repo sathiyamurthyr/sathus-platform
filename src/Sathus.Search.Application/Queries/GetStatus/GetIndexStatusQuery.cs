@@ -17,7 +17,7 @@ public sealed class GetIndexStatusQueryHandler : IRequestHandler<GetIndexStatusQ
             var index = await _repository.GetIndexWithDocumentsAsync(request.IndexId.Value, cancellationToken);
             if (index is null) return Array.Empty<SearchIndexStatusResponse>();
             var count = (await _repository.GetByIndexAsync(index.Id, cancellationToken)).Count;
-            return new[] { new SearchIndexStatusResponse(index.Id, index.Code, index.Name, index.IsEnabled, index.LastRebuildAt, count) };
+            return new[] { new SearchIndexStatusResponse(index.Id, index.Code, index.Name, index.IsEnabled, index.LastBuiltAt, count) };
         }
 
         var all = await _repository.GetAllAsync(cancellationToken);
@@ -25,7 +25,7 @@ public sealed class GetIndexStatusQueryHandler : IRequestHandler<GetIndexStatusQ
         foreach (var index in all)
         {
             var count = (await _repository.GetByIndexAsync(index.Id, cancellationToken)).Count;
-            results.Add(new SearchIndexStatusResponse(index.Id, index.Code, index.Name, index.IsEnabled, index.LastRebuildAt, count));
+            results.Add(new SearchIndexStatusResponse(index.Id, index.Code, index.Name, index.IsEnabled, index.LastBuiltAt, count));
         }
         return results;
     }

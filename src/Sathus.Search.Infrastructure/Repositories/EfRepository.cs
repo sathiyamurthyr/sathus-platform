@@ -80,7 +80,10 @@ public class EfRepository<T> : IRepository<T> where T : Entity
             aggregate.ClearDomainEvents();
             foreach (var domainEvent in events)
             {
-                await _mediator.Publish((INotification)domainEvent, cancellationToken);
+                if (domainEvent is INotification notification)
+                {
+                    await _mediator.Publish(notification, cancellationToken);
+                }
             }
         }
     }

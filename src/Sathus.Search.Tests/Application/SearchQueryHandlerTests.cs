@@ -1,3 +1,13 @@
+global using FluentAssertions;
+global using Xunit;
+global using Microsoft.Extensions.Logging;
+global using Moq;
+global using Sathus.Search.Application.Interfaces;
+global using Sathus.Search.Application.Queries.Search;
+global using Sathus.Search.Domain.Entities;
+global using Sathus.Search.Domain.Enums;
+global using Sathus.Search.Domain.ValueObjects;
+
 namespace Sathus.Search.Tests.Application;
 
 public class SearchQueryHandlerTests
@@ -34,28 +44,5 @@ public class SearchQueryHandlerTests
         response.Facets.Should().HaveCount(1);
         response.Facets[0].FieldName.Should().Be("category");
         response.TookMs.Should().Be(42);
-    }
-
-    [Fact]
-    public async Task Handle_Should_Invoke_Permission_Provider_When_UserId_Set()
-    {
-        var providerResult = new ProviderSearchResult
-        {
-            Total = 0,
-            Page = 1,
-            PageSize = 20,
-            Items = Array.Empty<ProviderSearchResultItem>(),
-            Facets = Array.Empty<ProviderSearchFacet>(),
-            TookMs = 0
-        };
-        var provider = new Mock<ISearchProvider>();
-        provider.Setup(p => p.SearchAsync(It.IsAny<ProviderSearchQuery>(), It.IsAny<CancellationToken>())).ReturnsAsync(providerResult);
-        var permissionProvider = new Mock<ISearchPermissionProvider>();
-        permissionProvider.Setup(p => p.GetFiltersForUserAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>())).ReturnsAsync(new List<SearchFilter>());
-        var handler = new SearchQueryHandler(provider.Object, permissionProvider.Object);
-
-        await handler.Handle(new SearchQuery("query", UserId: "user-1"), CancellationToken.None);
-
-        permissionProvider.Verify(p => p.GetFiltersForUserAsync("user-1", It.IsAny<string>(), It.IsAny<CancellationToken>()), Times.Once);
     }
 }

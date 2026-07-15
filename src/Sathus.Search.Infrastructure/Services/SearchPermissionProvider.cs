@@ -20,12 +20,12 @@ public sealed class SearchPermissionProvider : ISearchPermissionProvider
 
         if (!string.IsNullOrWhiteSpace(userId))
         {
-            filters.Add(SearchFilter.Create("allowed_users", userId, "IN"));
+            filters.Add(SearchFilter.Create("allowed_users", userId, FilterOperator.In));
         }
 
         if (!string.IsNullOrWhiteSpace(userRoles))
         {
-            filters.Add(SearchFilter.Create("required_roles", userRoles, "IN"));
+            filters.Add(SearchFilter.Create("required_roles", userRoles, FilterOperator.In));
         }
 
         return Task.FromResult<IReadOnlyList<SearchFilter>>(filters);

@@ -19,13 +19,8 @@ public sealed class SearchRanker : ISearchRanker
     {
         var score = item.Score;
 
-        foreach (var ranking in rankings.OrderByDescending(r => r.Priority))
+        foreach (var ranking in rankings.OrderByDescending(r => r.Boost))
         {
-            if (!ranking.IsEnabled)
-            {
-                continue;
-            }
-
             if (!string.IsNullOrWhiteSpace(query) && !query.Contains(ranking.Query, StringComparison.OrdinalIgnoreCase))
             {
                 continue;

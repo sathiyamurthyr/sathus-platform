@@ -1,3 +1,11 @@
+global using FluentAssertions;
+global using Xunit;
+global using Microsoft.Extensions.Logging;
+global using Moq;
+global using Sathus.Search.Application.Interfaces;
+global using Sathus.Search.Application.Queries.Suggest;
+global using Sathus.Search.Domain.Enums;
+
 namespace Sathus.Search.Tests.Application;
 
 public class SuggestQueryHandlerTests

@@ -1,11 +1,30 @@
+using Sathus.Search.Domain.Enums;
+
 namespace Sathus.Search.Domain.ValueObjects;
 
-public sealed record SearchFilter(string Field, string Value, string? Operator = null)
+public sealed class SearchFilter
 {
-    public static SearchFilter Create(string field, string value, string? op = null)
+    public string Field { get; private set; }
+    public object Value { get; private set; }
+    public FilterOperator Operator { get; private set; }
+
+    public SearchFilter(string field, object value, FilterOperator op = FilterOperator.Equals)
     {
-        if (string.IsNullOrWhiteSpace(field)) throw new ArgumentException("Field cannot be empty.", nameof(field));
-        if (value is null) throw new ArgumentNullException(nameof(value));
-        return new SearchFilter(field.Trim(), value.Trim(), op?.Trim());
+        Field = string.IsNullOrWhiteSpace(field) ? throw new ArgumentException("Field is required.", nameof(field)) : field;
+        Value = value ?? throw new ArgumentNullException(nameof(value));
+        Operator = op;
     }
+
+    public static SearchFilter Create(string field, object value, FilterOperator op = FilterOperator.Equals) => new(field, value, op);
+}
+
+public enum FilterOperator
+{
+    Equals = 0,
+    NotEquals = 1,
+    Contains = 2,
+    GreaterThan = 3,
+    LessThan = 4,
+    In = 5,
+    Between = 6
 }

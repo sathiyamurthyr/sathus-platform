@@ -26,7 +26,7 @@ public sealed class SearchIndexer : ISearchIndexer
         try
         {
             await _provider.IndexDocumentAsync(document, cancellationToken);
-            document.AddDomainEvent(new SearchDocumentIndexedEvent(document.Id, document.ExternalId, document.SourceType));
+            document.AddDomainEvent(new SearchDocumentIndexedEvent(document.Id, document.IndexId, document.ExternalId, document.SourceType));
             await _repository.SaveChangesAsync(cancellationToken);
         }
         catch (Exception ex)
@@ -53,7 +53,7 @@ public sealed class SearchIndexer : ISearchIndexer
         }
 
         await _provider.DeleteDocumentAsync(doc.ExternalId, doc.SourceType.ToString(), cancellationToken);
-        doc.Archive(null);
+        doc.Delete(null);
         await _repository.SaveChangesAsync(cancellationToken);
     }
 
@@ -63,7 +63,7 @@ public sealed class SearchIndexer : ISearchIndexer
         foreach (var doc in docs)
         {
             await _provider.DeleteDocumentAsync(doc.ExternalId, doc.SourceType.ToString(), cancellationToken);
-            doc.Archive(null);
+            doc.Delete(null);
         }
 
         if (docs.Count > 0)

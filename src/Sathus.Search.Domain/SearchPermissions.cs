@@ -6,5 +6,5 @@ public static class SearchPermissions
     public const string Manage = "search.manage";
     public const string Reindex = "search.reindex";
 
-    public static readonly IReadOnlyList<string> All = new[] { Read, Manage, Reindex };
+    public static IEnumerable<string> All => new[] { Read, Manage, Reindex };
 }

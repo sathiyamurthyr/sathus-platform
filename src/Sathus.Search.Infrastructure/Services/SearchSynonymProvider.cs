@@ -31,7 +31,7 @@ public sealed class SearchSynonymProvider : ISearchSynonymProvider
                 return new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
             }
 
-            var synonyms = index.Synonyms.Where(s => s.IsEnabled).ToList();
+            var synonyms = index.Synonyms.ToList();
             return synonyms.ToDictionary(s => s.From, s => s.To, StringComparer.OrdinalIgnoreCase);
         }) ?? new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
     }

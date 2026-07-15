@@ -1,8 +1,11 @@
+using Sathus.SharedKernel.Entities;
+
 namespace Sathus.Search.Domain.ValueObjects;
 
-public sealed record SearchSynonymId(Guid Value)
+public sealed class SearchSynonymId : EntityId
 {
-    public static SearchSynonymId New() => new(Guid.NewGuid());
-    public static SearchSynonymId From(Guid value) => value == Guid.Empty ? throw new ArgumentException("SearchSynonymId cannot be empty.", nameof(value)) : new SearchSynonymId(value);
-    public override string ToString() => Value.ToString();
+    public SearchSynonymId(Guid value) : base(value) { }
+
+    public static SearchSynonymId Create(Guid value) => new(value);
+    public static SearchSynonymId CreateUnique() => new(Guid.NewGuid());
 }

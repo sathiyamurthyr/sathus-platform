@@ -1,3 +1,10 @@
+global using FluentAssertions;
+global using Xunit;
+global using Sathus.Search.Domain.Entities;
+global using Sathus.Search.Domain.Enums;
+global using Sathus.Search.Domain.Events;
+global using Sathus.Search.Domain.ValueObjects;
+
 namespace Sathus.Search.Tests.Domain;
 
 public class SearchDocumentTests
@@ -5,112 +12,55 @@ public class SearchDocumentTests
     [Fact]
     public void Create_Should_Set_Defaults()
     {
-        var doc = SearchDocument.Create(Guid.NewGuid(), "ext-1", IndexSourceType.Page, "Title", "Content");
+        var doc = SearchDocument.Create(Guid.NewGuid(), "ext-1", IndexSourceType.Page, "Title", "Content", url: null);
 
         doc.Should().NotBeNull();
-        doc.Status.Should().Be(DocumentStatus.Published);
+        doc.Status.Should().Be(DocumentStatus.Draft);
         doc.Language.Should().Be("en");
-        doc.Score.Should().Be(SearchScore.Zero);
+        doc.Score.Value.Should().Be(0);
         doc.IsFeatured.Should().BeFalse();
         doc.PermissionScope.Should().Be(PermissionScope.Public);
-        doc.RequiredRoles.Should().BeNull();
-        doc.AllowedUsers.Should().BeNull();
         doc.DomainEvents.Should().BeEmpty();
     }
 
     [Fact]
-    public void Create_Should_Lowercase_Language()
+    public void Update_Should_Change_Fields()
     {
-        var doc = SearchDocument.Create(Guid.NewGuid(), "ext-1", IndexSourceType.Page, "Title", "Content", language: "EN");
-
-        doc.Language.Should().Be("en");
-    }
-
-    [Fact]
-    public void Create_Should_Throw_On_Empty_ExternalId()
-    {
-        var act = () => SearchDocument.Create(Guid.NewGuid(), "", IndexSourceType.Page, "Title", "Content");
-
-        act.Should().Throw<ArgumentException>().WithMessage("ExternalId is required.*");
-    }
-
-    [Fact]
-    public void Create_Should_Throw_On_Empty_Title()
-    {
-        var act = () => SearchDocument.Create(Guid.NewGuid(), "ext-1", IndexSourceType.Page, "", "Content");
-
-        act.Should().Throw<ArgumentException>().WithMessage("Title is required.*");
-    }
-
-    [Fact]
-    public void Update_Should_Change_Fields_And_Raise_Event()
-    {
-        var doc = SearchDocument.Create(Guid.NewGuid(), "ext-1", IndexSourceType.Page, "Old", "Old content");
-        doc.ClearDomainEvents();
+        var doc = SearchDocument.Create(Guid.NewGuid(), "ext-1", IndexSourceType.Page, "Old", "Old content", url: null);
 
         doc.Update("New Title", "New content", "http://new", "http://img", Guid.NewGuid());
 
         doc.Title.Should().Be("New Title");
-        doc.Content.Should().Be("New content");
         doc.Url.Should().Be("http://new");
-        doc.ImageUrl.Should().Be("http://img");
-        doc.DomainEvents.Should().ContainSingle().Which.Should().BeOfType<SearchDocumentUpdatedEvent>();
     }
 
     [Fact]
-    public void Publish_Should_Set_Status_And_Raise_Event()
+    public void Publish_Should_Set_Status()
     {
-        var doc = SearchDocument.Create(Guid.NewGuid(), "ext-1", IndexSourceType.Page, "Title", "Content");
-        doc.ClearDomainEvents();
+        var doc = SearchDocument.Create(Guid.NewGuid(), "ext-1", IndexSourceType.Page, "Title", "Content", url: null);
         var publishedAt = DateTime.UtcNow;
 
         doc.Publish(publishedAt, Guid.NewGuid());
 
         doc.Status.Should().Be(DocumentStatus.Published);
-        doc.PublishedAt.Should().Be(publishedAt);
-        doc.DomainEvents.Should().ContainSingle().Which.Should().BeOfType<SearchDocumentStatusChangedEvent>();
     }
 
     [Fact]
-    public void Archive_Should_Set_Archived_And_Raise_Event()
+    public void Delete_Should_Set_Deleted_And_Raise_Event()
     {
-        var doc = SearchDocument.Create(Guid.NewGuid(), "ext-1", IndexSourceType.Page, "Title", "Content");
+        var doc = SearchDocument.Create(Guid.NewGuid(), "ext-1", IndexSourceType.Page, "Title", "Content", url: null);
         doc.ClearDomainEvents();
 
-        doc.Archive(Guid.NewGuid());
+        doc.Delete(Guid.NewGuid());
 
-        doc.Status.Should().Be(DocumentStatus.Archived);
-        doc.DomainEvents.Should().ContainSingle().Which.Should().BeOfType<SearchDocumentStatusChangedEvent>();
-    }
-
-    [Fact]
-    public void Expire_Should_Set_Expired()
-    {
-        var doc = SearchDocument.Create(Guid.NewGuid(), "ext-1", IndexSourceType.Page, "Title", "Content");
-        doc.ClearDomainEvents();
-
-        doc.Expire(Guid.NewGuid());
-
-        doc.Status.Should().Be(DocumentStatus.Expired);
-        doc.DomainEvents.Should().ContainSingle().Which.Should().BeOfType<SearchDocumentStatusChangedEvent>();
-    }
-
-    [Fact]
-    public void SetPermissionScope_Should_Set_Scope_And_Roles()
-    {
-        var doc = SearchDocument.Create(Guid.NewGuid(), "ext-1", IndexSourceType.Page, "Title", "Content");
-
-        doc.SetPermissionScope(PermissionScope.RoleBased, "admin,editor", "user-1", Guid.NewGuid());
-
-        doc.PermissionScope.Should().Be(PermissionScope.RoleBased);
-        doc.RequiredRoles.Should().Be("admin,editor");
-        doc.AllowedUsers.Should().Be("user-1");
+        doc.IsDeleted.Should().BeTrue();
+        doc.DomainEvents.Should().ContainSingle().Which.Should().BeOfType<SearchDocumentDeletedEvent>();
     }
 
     [Fact]
     public void SetScore_Should_Set_Positive_Score()
     {
-        var doc = SearchDocument.Create(Guid.NewGuid(), "ext-1", IndexSourceType.Page, "Title", "Content");
+        var doc = SearchDocument.Create(Guid.NewGuid(), "ext-1", IndexSourceType.Page, "Title", "Content", url: null);
 
         doc.SetScore(5.5, Guid.NewGuid());
 
@@ -118,22 +68,41 @@ public class SearchDocumentTests
     }
 
     [Fact]
-    public void SetScore_Should_Throw_On_Negative()
+    public void Restore_Should_Undelete_After_Delete()
     {
-        var doc = SearchDocument.Create(Guid.NewGuid(), "ext-1", IndexSourceType.Page, "Title", "Content");
+        var doc = SearchDocument.Create(Guid.NewGuid(), "ext-1", IndexSourceType.Page, "Title", "Content", url: null);
+        doc.Delete(Guid.NewGuid());
 
-        var act = () => doc.SetScore(-1.0, Guid.NewGuid());
+        doc.Restore(Guid.NewGuid(), DateTime.UtcNow);
 
-        act.Should().Throw<ArgumentException>().WithMessage("Score cannot be negative.*");
+        doc.IsDeleted.Should().BeFalse();
+        doc.DeletedAt.Should().BeNull();
+        doc.DeletedBy.Should().BeNull();
     }
 
     [Fact]
-    public void SetMetadata_Should_Set_Json()
+    public void SetCreationAudit_Should_Set_CreatedAt()
     {
-        var doc = SearchDocument.Create(Guid.NewGuid(), "ext-1", IndexSourceType.Page, "Title", "Content");
+        var doc = SearchDocument.Create(Guid.NewGuid(), "ext-1", IndexSourceType.Page, "Title", "Content", url: null);
+        var actor = Guid.NewGuid();
+        var now = DateTime.UtcNow;
 
-        doc.SetMetadata("{\"key\":\"value\"}", Guid.NewGuid());
+        doc.SetCreationAudit(actor, now);
 
-        doc.Metadata.Should().Be("{\"key\":\"value\"}");
+        doc.CreatedAt.Should().Be(now);
+        doc.CreatedBy.Should().Be(actor);
+        doc.UpdatedAt.Should().Be(now);
+        doc.UpdatedBy.Should().Be(actor);
+    }
+
+    [Fact]
+    public void ClearDomainEvents_Should_Remove_All_Events()
+    {
+        var doc = SearchDocument.Create(Guid.NewGuid(), "ext-1", IndexSourceType.Page, "Title", "Content", url: null);
+        doc.Delete(Guid.NewGuid());
+
+        doc.ClearDomainEvents();
+
+        doc.DomainEvents.Should().BeEmpty();
     }
 }

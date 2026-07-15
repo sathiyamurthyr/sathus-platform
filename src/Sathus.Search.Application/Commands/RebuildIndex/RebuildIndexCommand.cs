@@ -24,7 +24,7 @@ public sealed class RebuildIndexCommandHandler : IRequestHandler<RebuildIndexCom
         var documents = await _repository.GetAllAsync(cancellationToken);
         await _provider.RebuildIndexAsync(index, cancellationToken);
 
-        index.RecordRebuild(DateTime.UtcNow, request.ActorId);
+        index.SetLastBuiltAt(DateTime.UtcNow).SetRebuilding(false);
         await _repository.SaveChangesAsync(cancellationToken);
 
         return new RebuildIndexResponse(index.Id, index.Code, documents.Count, DateTime.UtcNow, "completed");

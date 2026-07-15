@@ -1,41 +1,32 @@
-using Sathus.Search.Domain.Events;
-using Sathus.Search.Domain.Exceptions;
-using Sathus.Search.Domain.ValueObjects;
+using Sathus.SharedKernel.Entities;
 
 namespace Sathus.Search.Domain.Entities;
 
-public sealed class SearchHighlight : Entity
+public sealed class SearchHighlight : Entity<SearchHighlightId>
 {
     public Guid IndexId { get; private set; }
-    public string FieldName { get; private set; } = string.Empty;
-    public string PreTag { get; private set; } = "<mark>";
-    public string PostTag { get; private set; } = "</mark>";
-    public bool IsEnabled { get; private set; }
-    public SearchHighlightId HighlightId => new(Id);
+    public string FieldName { get; private set; }
+    public string? Options { get; private set; }
+
+    public SearchHighlight(SearchHighlightId id, Guid indexId, string fieldName, string? options) : base(id)
+    {
+        IndexId = indexId;
+        FieldName = string.IsNullOrWhiteSpace(fieldName) ? throw new ArgumentException("FieldName is required.", nameof(fieldName)) : fieldName;
+        Options = options;
+    }
+
+    public SearchHighlight Update(string fieldName, string? options)
+    {
+        FieldName = string.IsNullOrWhiteSpace(fieldName) ? FieldName : fieldName;
+        Options = options;
+        return this;
+    }
+
+    public static SearchHighlight Create(SearchHighlightId id, Guid indexId, string fieldName, string? options = null)
+        => new(id, indexId, fieldName, options);
+
+    public static SearchHighlight CreateUnique(Guid indexId, string fieldName, string? options = null)
+        => new(SearchHighlightId.CreateUnique(), indexId, fieldName, options);
 
     private SearchHighlight() { }
-
-    public static SearchHighlight Create(Guid indexId, string fieldName, string preTag, string postTag)
-    {
-        if (indexId == Guid.Empty) throw new ArgumentException("IndexId is required.", nameof(indexId));
-        if (string.IsNullOrWhiteSpace(fieldName)) throw new ArgumentException("FieldName is required.", nameof(fieldName));
-
-        return new SearchHighlight
-        {
-            Id = Guid.NewGuid(),
-            IndexId = indexId,
-            FieldName = fieldName.Trim(),
-            PreTag = string.IsNullOrWhiteSpace(preTag) ? "<mark>" : preTag,
-            PostTag = string.IsNullOrWhiteSpace(postTag) ? "</mark>" : postTag,
-            IsEnabled = true
-        };
-    }
-
-    public void Update(string fieldName, string preTag, string postTag, bool isEnabled)
-    {
-        FieldName = string.IsNullOrWhiteSpace(fieldName) ? FieldName : fieldName.Trim();
-        PreTag = string.IsNullOrWhiteSpace(preTag) ? PreTag : preTag;
-        PostTag = string.IsNullOrWhiteSpace(postTag) ? PostTag : postTag;
-        IsEnabled = isEnabled;
-    }
 }

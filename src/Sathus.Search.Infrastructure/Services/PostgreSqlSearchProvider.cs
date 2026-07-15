@@ -184,9 +184,9 @@ public sealed class PostgreSqlSearchProvider : ISearchProvider
 
         foreach (var filter in query.Filters)
         {
-            if (filter.Operator == "IN")
+            if (filter.Operator == FilterOperator.In)
             {
-                var values = filter.Value.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+                var values = filter.Value.ToString()!.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
                 var paramName = $"p_{filter.Field}_{Guid.NewGuid():N}";
                 var placeholders = string.Join(", ", values.Select((_, i) => $"@{paramName}_{i}"));
                 whereConditions.Add($"{filter.Field} IN ({placeholders})");
