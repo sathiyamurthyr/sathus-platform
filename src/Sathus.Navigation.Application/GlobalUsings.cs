@@ -1,0 +1,14 @@
+global using MediatR;
+global using Sathus.SharedKernel;
+global using Sathus.SharedKernel.Entities;
+global using Sathus.SharedKernel.Exceptions;
+global using Sathus.SharedKernel.Paging;
+global using Sathus.SharedKernel.Repositories;
+global using Sathus.SharedKernel.Specifications;
+global using Sathus.Navigation.Domain;
+global using Sathus.Navigation.Domain.Entities;
+global using Sathus.Navigation.Domain.Enums;
+global using Sathus.Navigation.Domain.Events;
+global using Sathus.Navigation.Domain.Exceptions;
+global using Sathus.Navigation.Application.Common;
+global using Sathus.Navigation.Domain.ValueObjects;

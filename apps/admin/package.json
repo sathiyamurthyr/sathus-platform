@@ -14,7 +14,10 @@
   "dependencies": {
     "@hookform/resolvers": "^5.4.0",
     "@radix-ui/react-slot": "^1.1.0",
-    "@sathus-platform/types": "*",
+    "@sathus-platform/config": "*",
+    "@sathus-platform/ui": "*",
+    "@sathus-platform/utils": "*",
+    "@tanstack/react-query": "^5.101.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^1.24.0",

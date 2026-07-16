@@ -1,0 +1,13 @@
+global using MediatR;
+global using Sathus.Search.Application.Commands.IndexDocument;
+global using Sathus.Search.Application.Commands.DeleteDocument;
+global using Sathus.Search.Application.Commands.RebuildIndex;
+global using Sathus.Search.Application.Commands.BulkIndex;
+global using Sathus.Search.Application.DTOs;
+global using Sathus.Search.Application.Interfaces;
+global using Sathus.Search.Domain;
+global using Sathus.Search.Domain.Enums;
+global using Sathus.Search.Domain.Events;
+global using Sathus.Search.Domain.Exceptions;
+global using Sathus.Search.Domain.ValueObjects;
+global using Sathus.SharedKernel;

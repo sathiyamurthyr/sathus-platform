@@ -6,3 +6,4 @@ export * from './feedback';
 export * from './layout';
 export * from './motion';
 export * from './icons';
+export * from './trust';

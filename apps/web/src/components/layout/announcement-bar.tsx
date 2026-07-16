@@ -1,50 +1,85 @@
 'use client';
 
 import * as React from 'react';
-import { X } from 'lucide-react';
+import Link from 'next/link';
+import { X, Megaphone, Briefcase, Sparkles, CalendarDays, Newspaper, ArrowRight } from 'lucide-react';
+import { motion } from 'motion/react';
 import { cn } from '@/lib/utils';
+import { useAnnouncementDismiss } from '@/hooks/use-announcement-dismiss';
+import { announcements } from '@/constants';
+import { Button } from '@/components/ui/button';
 
-const STORAGE_KEY = 'sathus-announcement-dismissed';
+const iconMap: Record<string, React.ElementType> = {
+  Megaphone,
+  Briefcase,
+  Sparkles,
+  CalendarDays,
+  Newspaper,
+};
 
 export function AnnouncementBar() {
-  const [isVisible, setIsVisible] = React.useState(false);
-
-  React.useEffect(() => {
-    const dismissed = localStorage.getItem(STORAGE_KEY);
-    if (!dismissed) {
-      setIsVisible(true);
-    }
-  }, []);
-
-  const dismiss = () => {
-    localStorage.setItem(STORAGE_KEY, 'true');
-    setIsVisible(false);
-  };
+  const { isVisible, index, dismiss, setIndex } = useAnnouncementDismiss(announcements.length);
 
   if (!isVisible) return null;
 
+  const current = announcements[index];
+  const Icon = iconMap[current.icon] || Megaphone;
+
   return (
-    <div className="relative bg-primary text-primary-foreground">
-      <div className="container mx-auto flex h-10 items-center justify-center px-4 text-sm">
-        <p>
-          🚀 Introducing Sathus Platform 2.0 —{' '}
-          <a
-            href="#pricing"
-            className="font-medium underline underline-offset-4 hover:no-underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-foreground rounded"
+    <motion.div
+      initial={{ height: 0, opacity: 0 }}
+      animate={{ height: 40, opacity: 1 }}
+      exit={{ height: 0, opacity: 0 }}
+      transition={{ duration: 0.3, ease: 'easeOut' }}
+      className="relative overflow-hidden bg-gradient-to-r from-primary via-violet-600 to-cyan-600 text-primary-foreground"
+      role="banner"
+      aria-label="Announcements"
+    >
+      <div className="flex h-10 items-center justify-center px-4">
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
+            <Icon className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+            <span className="hidden rounded-full bg-white/15 px-2 py-0.5 text-[0.65rem] font-semibold uppercase tracking-wider sm:inline">
+              {current.tag}
+            </span>
+          </div>
+          <p className="text-sm font-medium truncate max-w-[600px]">
+            {current.text}{' '}
+            <Link
+              href={current.href}
+              className="font-semibold underline underline-offset-4 hover:no-underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-foreground rounded"
+            >
+              Explore <ArrowRight className="inline h-3 w-3 ml-0.5" aria-hidden="true" />
+            </Link>
+          </p>
+        </div>
+
+        <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1">
+          <div className="hidden sm:flex items-center gap-1 mr-2">
+            {announcements.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setIndex(i)}
+                className={cn(
+                  'h-1 rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-foreground',
+                  i === index ? 'w-4 bg-white' : 'w-1 bg-white/40 hover:bg-white/60'
+                )}
+                aria-label={`Show announcement ${i + 1}`}
+                aria-current={i === index ? 'true' : undefined}
+              />
+            ))}
+          </div>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={dismiss}
+            className="h-6 w-6 text-primary-foreground/70 hover:text-primary-foreground hover:bg-white/10"
+            aria-label="Dismiss announcement"
           >
-            Explore new features
-          </a>
-        </p>
-        <button
-          onClick={dismiss}
-          className={cn(
-            'absolute right-4 top-1/2 -translate-y-1/2 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2'
-          )}
-          aria-label="Dismiss announcement"
-        >
-          <X className="h-4 w-4" />
-        </button>
+            <X className="h-3.5 w-3.5" />
+          </Button>
+        </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

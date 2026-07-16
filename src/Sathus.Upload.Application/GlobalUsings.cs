@@ -1,0 +1,17 @@
+global using Sathus.Upload.Domain;
+global using Sathus.Upload.Domain.Entities;
+global using Sathus.Upload.Domain.Enums;
+global using Sathus.Upload.Domain.Events;
+global using Sathus.Upload.Domain.Exceptions;
+global using Sathus.Upload.Domain.Interfaces;
+global using Sathus.Upload.Domain.ValueObjects;
+global using Sathus.SharedKernel;
+global using Sathus.SharedKernel.Entities;
+global using Sathus.SharedKernel.Events;
+global using Sathus.SharedKernel.Exceptions;
+global using Sathus.SharedKernel.Repositories;
+global using Sathus.SharedKernel.Specifications;
+global using Sathus.Media.Domain.ValueObjects;
+global using Sathus.Storage.Domain.ValueObjects;
+global using Sathus.Storage.Domain.Interfaces;
+global using MediatR;

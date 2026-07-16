@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>Sathus.Upload.Infrastructure</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Sathus.Upload.Application\Sathus.Upload.Application.csproj" />
+    <ProjectReference Include="..\Sathus.Upload.Domain\Sathus.Upload.Domain.csproj" />
+    <ProjectReference Include="..\Sathus.SharedKernel\Sathus.SharedKernel.csproj" />
+    <ProjectReference Include="..\Sathus.Media.Infrastructure\Sathus.Media.Infrastructure.csproj" />
+    <ProjectReference Include="..\Sathus.Storage.Infrastructure\Sathus.Storage.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10" />
+  </ItemGroup>
+
+</Project>

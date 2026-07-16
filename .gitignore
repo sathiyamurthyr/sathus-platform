@@ -52,3 +52,12 @@ desktop.ini
 # Misc
 .vercel
 .github/label*
+
+# .NET build artifacts
+bin/
+obj/
+*.user
+*.suo
+.vs/
+_ReSharper*
+*.swp

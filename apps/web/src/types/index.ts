@@ -16,10 +16,34 @@ export interface NavItem {
   children?: NavItem[];
 }
 
+export interface MegaMenuColumn {
+  title: string;
+  icon?: string;
+  description?: string;
+  items: {
+    title: string;
+    description?: string;
+    href: string;
+    icon?: string;
+    badge?: string;
+  }[];
+  featured?: {
+    title: string;
+    description: string;
+    href: string;
+    tag?: string;
+  };
+  recentUpdates?: {
+    title: string;
+    date: string;
+    href: string;
+  }[];
+}
+
 export interface MegaMenuSection {
   title: string;
   description?: string;
-  items: MegaMenuItem[];
+  columns: MegaMenuColumn[];
 }
 
 export interface MegaMenuItem {
@@ -37,4 +61,29 @@ export interface FooterLink {
 export interface FooterSection {
   title: string;
   links: FooterLink[];
+}
+
+export interface NotificationItem {
+  id: string;
+  title: string;
+  description: string;
+  time: string;
+  read: boolean;
+  href: string;
+}
+
+export interface SearchResult {
+  title: string;
+  description: string;
+  href: string;
+  category: string;
+}
+
+export interface CommandAction {
+  id: string;
+  label: string;
+  description: string;
+  icon?: string;
+  shortcut?: string[];
+  action: () => void;
 }

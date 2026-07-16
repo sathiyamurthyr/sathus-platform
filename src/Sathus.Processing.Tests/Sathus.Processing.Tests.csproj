@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <RootNamespace>Sathus.Processing.Tests</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+    <PackageReference Include="xunit" Version="2.9.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Moq" Version="4.20.72" />
+    <PackageReference Include="FluentAssertions" Version="6.12.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.10" />
+    <PackageReference Include="coverlet.collector" Version="6.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="xunit.runner.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Sathus.Processing.Domain\Sathus.Processing.Domain.csproj" />
+    <ProjectReference Include="..\Sathus.Processing.Application\Sathus.Processing.Application.csproj" />
+    <ProjectReference Include="..\Sathus.Processing.Infrastructure\Sathus.Processing.Infrastructure.csproj" />
+    <ProjectReference Include="..\Sathus.SharedKernel\Sathus.SharedKernel.csproj" />
+    <ProjectReference Include="..\Sathus.Media.Domain\Sathus.Media.Domain.csproj" />
+    <ProjectReference Include="..\Sathus.Storage.Domain\Sathus.Storage.Domain.csproj" />
+    <ProjectReference Include="..\Sathus.Upload.Domain\Sathus.Upload.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

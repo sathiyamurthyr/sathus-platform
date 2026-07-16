@@ -8,6 +8,6 @@ export default function robots(): MetadataRoute.Robots {
         allow: '/',
       },
     ],
-    sitemap: 'https://sathusplatform.com/sitemap.xml',
+    sitemap: 'https://sathus.technology/sitemap.xml',
   };
 }

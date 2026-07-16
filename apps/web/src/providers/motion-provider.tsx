@@ -19,6 +19,16 @@ export function MotionProvider({
   );
 }
 
+export function useReducedMotion() {
+  const config = React.useContext(MotionContext);
+  if (config === null) return false;
+  if (typeof config.reducedMotion === 'boolean') return config.reducedMotion;
+  if (config.reducedMotion === 'user') {
+    return typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
+  return false;
+}
+
 export function useMotionConfig() {
   return React.useContext(MotionContext);
 }

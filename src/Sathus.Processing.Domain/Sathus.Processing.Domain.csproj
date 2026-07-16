@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>Sathus.Processing.Domain</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Sathus.SharedKernel\Sathus.SharedKernel.csproj" />
+    <ProjectReference Include="..\Sathus.Media.Domain\Sathus.Media.Domain.csproj" />
+    <ProjectReference Include="..\Sathus.Storage.Domain\Sathus.Storage.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

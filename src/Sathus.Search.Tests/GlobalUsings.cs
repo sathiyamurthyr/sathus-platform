@@ -1,0 +1,11 @@
+global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.Extensions.Logging;
+global using Moq;
+global using Sathus.Search.Application.Interfaces;
+global using Sathus.Search.Domain.Entities;
+global using Sathus.Search.Domain.Enums;
+global using Sathus.Search.Domain.Events;
+global using Sathus.Search.Domain.ValueObjects;
+global using Sathus.Search.Infrastructure.Services;
+global using Sathus.SharedKernel.Entities;
+global using Sathus.SharedKernel.Events;
