@@ -4,22 +4,22 @@ const connectionString = process.env.DATABASE_URL;
 
 declare global {
   // eslint-disable-next-line no-var
-  var __analyticsPool: Pool | undefined;
+  var __dbPool: Pool | undefined;
 }
 
 function getPool(): Pool {
   if (!connectionString) {
     throw new Error('DATABASE_URL is not set. Define it in your environment (.env.local).');
   }
-  if (!global.__analyticsPool) {
-    global.__analyticsPool = new Pool({
+  if (!global.__dbPool) {
+    global.__dbPool = new Pool({
       connectionString,
       max: 10,
       idleTimeoutMillis: 30_000,
       connectionTimeoutMillis: 5_000,
     });
   }
-  return global.__analyticsPool;
+  return global.__dbPool;
 }
 
 export async function query<T = unknown>(
