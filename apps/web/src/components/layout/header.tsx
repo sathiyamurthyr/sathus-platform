@@ -2,14 +2,18 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import { Search, Command, Menu, Mail } from 'lucide-react';
+import { Search, Command, Menu, Bell, ArrowRight } from 'lucide-react';
+import { motion } from 'motion/react';
 import { cn } from '@/lib/utils';
+import { BrandLogo } from '@/components/brand-logo';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/layout/theme-toggle';
 import { Navigation } from '@/components/layout/navigation';
 import { MobileMenu } from '@/components/layout/mobile-menu';
-import { Search as SearchModal } from '@/components/layout/search';
+import { SearchDialog } from '@/components/layout/search';
 import { CommandPalette } from '@/components/layout/command-palette';
+import { Notifications } from '@/components/layout/notifications';
+import { ProfileMenu } from '@/components/layout/profile-menu';
 import { useScroll } from '@/hooks/use-scroll';
 import { useKeyboardShortcut } from '@/hooks/use-keyboard-shortcut';
 
@@ -17,44 +21,70 @@ export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
   const [searchOpen, setSearchOpen] = React.useState(false);
   const [commandOpen, setCommandOpen] = React.useState(false);
+  const [notificationsOpen, setNotificationsOpen] = React.useState(false);
+  const [profileOpen, setProfileOpen] = React.useState(false);
   const { isScrolled } = useScroll();
 
   useKeyboardShortcut('k', () => setCommandOpen((open) => !open), {
     meta: true,
   });
 
+  useKeyboardShortcut('k', () => setCommandOpen((open) => !open), {
+    ctrl: true,
+  });
+
+  const handleSearchClick = () => {
+    setSearchOpen(true);
+    setCommandOpen(false);
+  };
+
+  const handleCommandClick = () => {
+    setCommandOpen(true);
+    setSearchOpen(false);
+  };
+
   return (
     <>
-      <header
+      <motion.header
         className={cn(
           'sticky top-0 z-50 w-full transition-all duration-300',
           isScrolled
-            ? 'bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b'
+            ? 'bg-background/80 backdrop-blur-xl supports-[backdrop-filter]:bg-background/60 border-b shadow-sm'
             : 'bg-transparent'
         )}
+        initial={{ y: -60 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.4, ease: 'easeOut' }}
       >
-        <div className="container mx-auto flex h-16 items-center justify-between px-4">
-          <div className="flex items-center gap-8">
-            <Link
-              href="/"
-              className="flex items-center space-x-2"
-              aria-label="Sathus Platform home"
-            >
-              <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-lg">S</span>
-              </div>
-              <span className="font-bold text-xl hidden sm:inline-block">
-                Sathus
-              </span>
+        <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6">
+          <div className="flex items-center gap-6">
+            <Link href="/" className="flex items-center gap-2.5" aria-label="Sathus Technology home">
+              <motion.div
+                animate={{
+                  scale: isScrolled ? 0.9 : 1,
+                }}
+                transition={{ duration: 0.3, ease: 'easeOut' }}
+              >
+                <BrandLogo showWordmark={false} />
+              </motion.div>
+              <motion.span
+                className={cn(
+                  'text-base font-semibold tracking-tight text-foreground transition-all duration-300',
+                  isScrolled ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-1'
+                )}
+              >
+                Sathus Technology
+              </motion.span>
             </Link>
             <Navigation />
           </div>
-          <div className="flex items-center gap-1 sm:gap-2">
+
+          <div className="flex items-center gap-1 sm:gap-1.5">
             <Button
               variant="ghost"
               size="icon"
-              className="hidden sm:flex"
-              onClick={() => setSearchOpen(true)}
+              className="hidden sm:flex text-muted-foreground hover:text-foreground"
+              onClick={handleSearchClick}
               aria-label="Open search"
             >
               <Search className="h-4 w-4" />
@@ -62,38 +92,92 @@ export function Header() {
             <Button
               variant="ghost"
               size="sm"
-              className="hidden md:flex h-8 gap-1.5 px-2 text-xs"
-              onClick={() => setCommandOpen(true)}
+              className={cn(
+                'hidden md:flex h-8 gap-1.5 px-2.5 text-xs text-muted-foreground hover:text-foreground',
+                isScrolled ? 'border border-border/50' : ''
+              )}
+              onClick={handleCommandClick}
             >
-              <Command className="h-3.5 w-3.5" />
+              <Command className="h-3.5 w-3.5" aria-hidden="true" />
               <span className="hidden lg:inline">Search</span>
-              <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
+              <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded-md border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
                 <span className="text-xs">⌘</span>K
               </kbd>
             </Button>
+
+            <div className="hidden lg:block h-4 w-px bg-border mx-1" aria-hidden="true" />
+
             <Button
-              variant="ghost"
               size="sm"
-              className="hidden lg:flex h-8 gap-2 px-3 text-sm"
+              className={cn(
+                'hidden lg:inline-flex h-8 gap-1.5 px-4 text-sm font-medium',
+                'bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm hover:shadow transition-all duration-200'
+              )}
               asChild
             >
-              <Link href="/contact">
-                <Mail className="h-4 w-4" />
-                Contact
+              <Link href="#final-cta">
+                Request Consultation
+                <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
               </Link>
             </Button>
-            <Button
-              size="sm"
-              className="hidden lg:flex h-8 px-4 text-sm"
-              asChild
-            >
-              <Link href="/demo">Request Demo</Link>
-            </Button>
+
+            <div className="hidden lg:block h-4 w-px bg-border mx-1" aria-hidden="true" />
+
+            <div className="relative">
+              <Button
+                variant="ghost"
+                size="icon"
+                className={cn(
+                  'text-muted-foreground hover:text-foreground relative',
+                  notificationsOpen && 'text-foreground bg-muted/50'
+                )}
+                onClick={() => {
+                  setNotificationsOpen(!notificationsOpen);
+                  setProfileOpen(false);
+                }}
+                aria-label="Open notifications"
+                aria-expanded={notificationsOpen}
+              >
+                <Bell className="h-4 w-4" />
+                <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-primary" aria-label="Unread notifications" />
+              </Button>
+              <Notifications
+                open={notificationsOpen}
+                onClose={() => setNotificationsOpen(false)}
+              />
+            </div>
+
             <ThemeToggle />
+
+            <div className="relative">
+              <Button
+                variant="ghost"
+                size="icon"
+                className={cn(
+                  'hidden sm:flex text-muted-foreground hover:text-foreground',
+                  profileOpen && 'text-foreground bg-muted/50'
+                )}
+                onClick={() => {
+                  setProfileOpen(!profileOpen);
+                  setNotificationsOpen(false);
+                }}
+                aria-label="Open profile menu"
+                aria-expanded={profileOpen}
+              >
+                <div className="flex h-5 w-5 items-center justify-center rounded-full bg-gradient-to-br from-primary to-violet-600 text-primary-foreground text-[10px] font-semibold">
+                  JD
+                </div>
+              </Button>
+              <ProfileMenu
+                open={profileOpen}
+                onClose={() => setProfileOpen(false)}
+              />
+            </div>
+
             <Button
               variant="ghost"
               size="icon"
-              className="sm:hidden"
+              className="lg:hidden text-muted-foreground hover:text-foreground"
               onClick={() => setMobileMenuOpen(true)}
               aria-label="Open menu"
             >
@@ -101,9 +185,9 @@ export function Header() {
             </Button>
           </div>
         </div>
-      </header>
+      </motion.header>
       <MobileMenu open={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} />
-      <SearchModal open={searchOpen} onClose={() => setSearchOpen(false)} />
+      <SearchDialog open={searchOpen} onClose={() => setSearchOpen(false)} />
       <CommandPalette open={commandOpen} onClose={() => setCommandOpen(false)} />
     </>
   );
