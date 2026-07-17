@@ -2,8 +2,12 @@
   "version": 2,
   "builds": [
     {
-      "src": "apps/web/next.config.js",
-      "use": "@vercel/next"
+      "src": "package.json",
+      "use": "@vercel/next",
+      "config": {
+        "installCommand": "npm install",
+        "buildCommand": "npm run build"
+      }
     }
   ]
 }
