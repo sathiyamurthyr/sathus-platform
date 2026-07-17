@@ -9,12 +9,13 @@
   ],
   "scripts": {
     "build": "turbo run build",
-    "build:web": "turbo run build --filter=web",
+    "build:web": "npm run build --filter=web",
     "dev": "turbo run dev --parallel",
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck",
     "test": "turbo run test",
-    "clean": "turbo run clean && rm -rf node_modules"
+    "clean": "turbo run clean && rm -rf node_modules",
+    "postinstall": "turbo run build"
   },
   "devDependencies": {
     "turbo": "^2.0.0"
