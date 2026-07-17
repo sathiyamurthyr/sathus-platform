@@ -19,6 +19,7 @@
     }
   },
   "dependencies": {
+    "@sathus-platform/config": "*",
     "@sathus-platform/types": "*",
     "@sathus-platform/ui": "*",
     "@hookform/resolvers": "^5.4.0",
