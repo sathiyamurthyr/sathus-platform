@@ -1,6 +1,6 @@
 import { MetadataRoute } from 'next';
 
-const SITE_URL = 'https://sathus.technology';
+const SITE_URL = 'https://sathus.in';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
