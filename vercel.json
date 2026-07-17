@@ -2,11 +2,11 @@
   "version": 2,
   "builds": [
     {
-      "src": "package.json",
+      "src": "apps/web/package.json",
       "use": "@vercel/next",
       "config": {
         "installCommand": "npm install",
-        "buildCommand": "npm run build:web"
+        "buildCommand": "npm run build"
       }
     }
   ]
