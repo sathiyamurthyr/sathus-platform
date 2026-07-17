@@ -15,6 +15,7 @@ export interface User {
 
 export interface Session {
   id: string;
+  userId: string;
   ipAddress: string;
   userAgent: string;
   createdAt: string;

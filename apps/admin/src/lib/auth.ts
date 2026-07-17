@@ -100,7 +100,7 @@ export async function validateSession(token: string): Promise<User | null> {
     [session.userId]
   );
 
-  if (users.length === 0 || users[0].status !== 'Active') {
+  if (users.length === 0 || users[0].status !== 'active') {
     return null;
   }
 
