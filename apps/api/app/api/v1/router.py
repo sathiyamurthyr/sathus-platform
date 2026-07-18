@@ -9,6 +9,7 @@ from app.content.api import endpoints as content
 from app.notification.api import endpoints as notification
 from app.workflow.api import endpoints as workflow
 from app.media.api import endpoints as media
+from app.search.api import endpoints as search
 
 api_router = APIRouter()
 
@@ -19,3 +20,4 @@ api_router.include_router(content.router, prefix="/content", tags=["content"])
 api_router.include_router(notification.router, prefix="/notifications", tags=["notifications"])
 api_router.include_router(workflow.router, prefix="/workflows", tags=["workflows"])
 api_router.include_router(media.router, prefix="/media", tags=["media"])
+api_router.include_router(search.router, prefix="/search", tags=["search"])
