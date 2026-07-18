@@ -372,6 +372,63 @@ async def update_preferences(
     )
 
 
+# Category preferences endpoints
+@router.get("/preferences/categories/{category}", response_model=NotificationStatusResponse)
+async def get_category_preference(
+    category: str,
+    user=Depends(get_current_user),
+) -> NotificationStatusResponse:
+    """Get category-specific notification preference."""
+    from app.notification.application.preferences_service import NotificationPreferencesManager
+    manager = NotificationPreferencesManager(NotificationPreferencesRepository(None))
+    cat_pref = await manager.get_category_preference(
+        UUID(user["sub"]),
+        NotificationCategory(category),
+    )
+    return NotificationStatusResponse(success=True, message=cat_pref.to_dict())
+
+
+@router.put("/preferences/categories/{category}", response_model=NotificationStatusResponse)
+async def update_category_preference(
+    category: str,
+    enabled: bool,
+    user=Depends(get_current_user),
+) -> NotificationStatusResponse:
+    """Update category-specific notification preference."""
+    from app.notification.application.preferences_service import NotificationPreferencesManager
+    manager = NotificationPreferencesManager(NotificationPreferencesRepository(None))
+    prefs = await manager.update_category_preference(
+        UUID(user["sub"]),
+        NotificationCategory(category),
+        enabled,
+    )
+    return NotificationStatusResponse(success=True, message="Category preference updated")
+
+
+@router.get("/preferences/check", response_model=NotificationStatusResponse)
+async def check_notification_allowed(
+    category: str,
+    channel: str,
+    user=Depends(get_current_user),
+) -> NotificationStatusResponse:
+    """Check if notification should be sent based on preferences."""
+    from app.notification.application.preferences_service import NotificationPreferencesManager
+    manager = NotificationPreferencesManager(NotificationPreferencesRepository(None))
+    allowed = await manager.should_send_notification(
+        UUID(user["sub"]),
+        NotificationCategory(category),
+        channel,
+    )
+    return NotificationStatusResponse(success=allowed, message="Notification allowed" if allowed else "Notification blocked")
+
+
+@router.get("/preferences/tenant-defaults", response_model=NotificationStatusResponse)
+async def get_tenant_defaults() -> NotificationStatusResponse:
+    """Get default tenant preferences."""
+    from app.notification.application.preferences_service import DEFAULT_TENANT_PREFERENCES
+    return NotificationStatusResponse(success=True, message=DEFAULT_TENANT_PREFERENCES)
+
+
 # Email endpoints
 @router.post("/email/send", response_model=NotificationStatusResponse, status_code=201)
 async def send_email(

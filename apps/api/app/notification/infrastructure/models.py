@@ -159,5 +159,6 @@ class NotificationPreferences(Base):
     timezone = Column(String(50), default="UTC")
     language = Column(String(10), default="en")
     frequency = Column(String(20), default="immediate")  # immediate, digest, daily, weekly
+    category_preferences = Column(Text, nullable=True)  # JSON object for category-specific settings
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
