@@ -4,7 +4,7 @@ import * as React from 'react';
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { BrandLogo } from '@/components/brand-logo';
+import { Logo } from '@/components/common/Logo';
 import { footerSections, socialLinks, siteConfig } from '@/constants';
 
 export function Footer({ className }: { className?: string }) {
@@ -14,9 +14,9 @@ export function Footer({ className }: { className?: string }) {
         <div className="grid gap-12 lg:grid-cols-[1.4fr_2.6fr]">
           {/* Brand */}
           <div className="flex flex-col">
-            <BrandLogo />
+            <Logo size="lg" showWordmark={true} />
             <p className="mt-5 max-w-xs text-sm leading-relaxed text-muted-foreground">
-              Engineering the future of AI, data &amp; enterprise software for
+              Engineering the future of AI, data & enterprise software for
               regulated industries.
             </p>
             <Link
@@ -87,7 +87,7 @@ export function Footer({ className }: { className?: string }) {
           </p>
           <p className="max-w-md text-xs leading-relaxed">
             Built for regulated industries. SOC 2 Type II · ISO 27001-aligned ·
-            GDPR &amp; HIPAA-ready.
+            GDPR & HIPAA-ready.
           </p>
         </div>
       </div>

@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { Search, Command, Menu, Bell, ArrowRight } from 'lucide-react';
 import { motion } from 'motion/react';
 import { cn } from '@/lib/utils';
-import { BrandLogo } from '@/components/brand-logo';
+import { Logo } from '@/components/common/Logo';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/layout/theme-toggle';
 import { Navigation } from '@/components/layout/navigation';
@@ -57,15 +57,15 @@ export function Header() {
         transition={{ duration: 0.4, ease: 'easeOut' }}
       >
         <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6">
-<div className="flex items-center gap-6">
-            <Link href="/" className="flex items-center" aria-label="Sathus Technology home">
+          <div className="flex items-center gap-6">
+            <Link href="/" className="flex items-center" aria-label="Sathus Technology Pvt. Ltd. home">
               <motion.div
                 animate={{
                   scale: isScrolled ? 0.9 : 1,
                 }}
                 transition={{ duration: 0.3, ease: 'easeOut' }}
               >
-                <BrandLogo size="md" />
+                <Logo size="md" showWordmark={true} />
               </motion.div>
             </Link>
             <Navigation />

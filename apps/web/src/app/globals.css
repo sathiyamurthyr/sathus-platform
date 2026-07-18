@@ -164,11 +164,28 @@
       linear-gradient(to right, hsl(var(--border) / 0.6) 1px, transparent 1px),
       linear-gradient(to bottom, hsl(var(--border) / 0.6) 1px, transparent 1px);
     background-size: 56px 56px;
+    background-position: center;
   }
 
   .bg-grid-fade {
     -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
     mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+  }
+
+  /* Platform visualization responsive layout */
+  .platform-stacked {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .platform-stacked .platform-node {
+    position: relative;
+    left: auto !important;
+    top: auto !important;
+    transform: none !important;
   }
 
   /* Gradient text — used on dark immersive surfaces only */

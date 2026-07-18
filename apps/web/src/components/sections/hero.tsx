@@ -12,8 +12,8 @@ const STATS = [
 export function Hero() {
   return (
     <section className="relative flex min-h-[85vh] flex-col overflow-hidden bg-[#070810] text-white">
-      {/* Ambient background */}
-      <div className="pointer-events-none absolute inset-0 bg-grid bg-grid-fade opacity-[0.35]" />
+      {/* Ambient background - centered grid */}
+      <div className="pointer-events-none absolute inset-0 bg-grid opacity-[0.35]" style={{ backgroundPosition: 'center' }} />
       <div className="orb left-[-10%] top-[-10%] h-72 w-72 bg-primary/30" />
       <div className="orb right-[-8%] top-[20%] h-80 w-80 bg-violet-500/20" />
       <div className="orb bottom-[-15%] left-[30%] h-72 w-72 bg-cyan-400/15" />
@@ -32,7 +32,7 @@ export function Hero() {
 
             <h1 className="mt-5 font-display text-5xl leading-[1.05] tracking-tight text-white sm:text-6xl lg:text-7xl">
               Engineering the Future of{' '}
-              <span className="text-gradient">AI, Data &amp; Enterprise Software</span>
+              <span className="text-gradient">AI, Data & Enterprise Software</span>
             </h1>
 
             <p className="mt-5 max-w-xl text-lg leading-relaxed text-white/70">
@@ -73,18 +73,19 @@ export function Hero() {
             </dl>
           </div>
 
-{/* Platform visualization - vertically centered */}
+          {/* Platform visualization - vertically centered */}
           <div className="relative flex items-center justify-center">
             <PlatformVisualization />
           </div>
         </div>
 
-<div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 border-t border-white/10 pt-8 pb-6 text-xs text-white/50 lg:justify-between">
+        {/* Footer - centered with proper spacing */}
+        <div className="flex flex-col items-center justify-center gap-4 border-t border-white/10 pt-8 text-xs text-white/50 sm:flex-row sm:justify-between">
           <span className="inline-flex items-center gap-2">
             <ShieldCheck className="h-4 w-4 text-emerald-400" />
             SOC 2 Type II · GDPR · HIPAA-ready controls
           </span>
-          <span className="lg:ml-auto">Architected for financial services, healthcare & public sector</span>
+          <span className="text-center">Architected for financial services, healthcare & public sector</span>
         </div>
       </div>
     </section>

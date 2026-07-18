@@ -1,13 +1,18 @@
-import { Skeleton } from '@/components/ui/skeleton';
+'use client';
+
+import { motion } from 'motion/react';
+import { Logo } from '@/components/common/Logo';
 
 export default function Loading() {
   return (
-    <div className="container mx-auto px-4 py-8">
-      <Skeleton className="mb-4 h-12 w-3/4" />
-      <Skeleton className="mb-2 h-4 w-full" />
-      <Skeleton className="mb-2 h-4 w-5/6" />
-      <Skeleton className="mb-2 h-4 w-4/6" />
-      <Skeleton className="h-4 w-2/3" />
+    <div className="flex min-h-screen flex-col items-center justify-center bg-background">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5, ease: 'easeOut' }}
+      >
+        <Logo size="lg" showWordmark={true} />
+      </motion.div>
     </div>
   );
 }

@@ -40,6 +40,11 @@ export function BrandLogo({
           priority
         />
       </motion.span>
+      {showWordmark && (
+        <span className={cn('font-display text-lg font-semibold text-foreground hidden sm:inline-block', wordmarkClassName)}>
+          Sathus Technology
+        </span>
+      )}
     </Link>
   );
 }

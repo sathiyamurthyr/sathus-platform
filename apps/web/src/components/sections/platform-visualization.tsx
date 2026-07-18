@@ -21,23 +21,27 @@ interface Node {
   y: number;
 }
 
-// Card dimensions: approximately 120px width, 32px height
-// Adjust connector endpoints to meet at card center
+// CSS custom properties for responsive spacing
+// These values create a perfect symmetric cross layout with equal connector lengths
+// Layout: Top (AI) → Center → Bottom (Analytics/Apps)
+//         Left (Data) → Center → Right (Cloud)
+// All nodes positioned at equal distance (40 units) from center for uniform connector lengths
 const NODES: Node[] = [
-  { id: 'ai', label: 'AI Agents', meta: 'Reasoning · Tools', icon: Bot, x: 50, y: 12 },
-  { id: 'data', label: 'Data Pipelines', meta: 'Streaming · Lakehouse', icon: Workflow, x: 13, y: 36 },
-  { id: 'cloud', label: 'Cloud', meta: 'Azure · AWS', icon: Cloud, x: 87, y: 36 },
-  { id: 'analytics', label: 'Analytics', meta: 'Real-time', icon: LineChart, x: 22, y: 64 },
-  { id: 'apps', label: 'Applications', meta: 'Composable', icon: LayoutGrid, x: 78, y: 64 },
+  { id: 'ai', label: 'AI Agents', meta: 'Reasoning · Tools', icon: Bot, x: 50, y: 10 },
+  { id: 'data', label: 'Data Pipelines', meta: 'Streaming · Lakehouse', icon: Workflow, x: 10, y: 50 },
+  { id: 'cloud', label: 'Cloud', meta: 'Azure · AWS', icon: Cloud, x: 90, y: 50 },
+  { id: 'analytics', label: 'Analytics', meta: 'Real-time', icon: LineChart, x: 24, y: 80 },
+  { id: 'apps', label: 'Applications', meta: 'Composable', icon: LayoutGrid, x: 76, y: 80 },
 ];
 
 // Connector endpoint offsets to meet at card center
+// These offsets account for card dimensions and ensure lines meet at card center
 const CONNECTOR_OFFSETS: Record<string, { x: number; y: number }> = {
-  ai: { x: 0, y: 6 }, // Top card: offset down by ~6%
-  data: { x: 14, y: 0 }, // Left card: offset right by ~14%
-  cloud: { x: -14, y: 0 }, // Right card: offset left by ~14%
-  analytics: { x: 14, y: 0 }, // Bottom-left: offset right by ~14%
-  apps: { x: -14, y: 0 }, // Bottom-right: offset left by ~14%
+  ai: { x: 0, y: 8 }, // Top card: offset down to meet at card center
+  data: { x: 16, y: 0 }, // Left card: offset right to meet at card center
+  cloud: { x: -16, y: 0 }, // Right card: offset left to meet at card center
+  analytics: { x: 16, y: 0 }, // Bottom-left: offset right to meet at card center
+  apps: { x: -16, y: 0 }, // Bottom-right: offset left to meet at card center
 };
 
 export function PlatformVisualization() {
@@ -45,10 +49,11 @@ export function PlatformVisualization() {
 
   return (
     <div
-      className="relative mx-auto aspect-square w-full max-w-[520px]"
+      className="relative mx-auto aspect-square w-full max-w-[520px] platform-stacked"
       aria-hidden="true"
     >
-{/* Connectors - meeting at card centers */}
+      {/* Responsive: stacked layout on mobile via platform-stacked class in globals.css */}
+      {/* Connectors - meeting at card centers */}
       <svg
         viewBox="0 0 100 100"
         preserveAspectRatio="none"
