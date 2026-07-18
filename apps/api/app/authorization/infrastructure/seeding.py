@@ -2,9 +2,7 @@
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.authorization.infrastructure.models import Permission, PermissionAction, Role
 from app.authorization.infrastructure.repositories import PermissionRepository, RoleRepository
-
 
 # Default permissions
 DEFAULT_PERMISSIONS = [

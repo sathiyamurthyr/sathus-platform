@@ -4,6 +4,11 @@ from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException
 
+from app.authorization.api.dependencies import (
+    get_authorization_service,
+    get_permission_service,
+    get_role_service,
+)
 from app.authorization.api.schemas import (
     AssignRolesRequest,
     RoleCreateRequest,
@@ -15,11 +20,6 @@ from app.authorization.application.services import (
     AuthorizationService,
     PermissionService,
     RoleService,
-)
-from app.authorization.api.dependencies import (
-    get_authorization_service,
-    get_permission_service,
-    get_role_service,
 )
 
 router = APIRouter()

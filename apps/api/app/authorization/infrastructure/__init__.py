@@ -1,13 +1,13 @@
 """Authorization infrastructure module."""
 
 from app.authorization.infrastructure.models import (
+    AuthorizationPolicy,
     Permission,
+    PermissionAssignment,
+    PermissionGroup,
     Role,
     role_permissions,
     user_roles,
-    PermissionGroup,
-    AuthorizationPolicy,
-    PermissionAssignment,
 )
 from app.authorization.infrastructure.repositories import (
     PermissionRepository,

@@ -1,10 +1,5 @@
 """Authorization module."""
 
-from app.authorization.application.services import (
-    AuthorizationService,
-    PermissionService,
-    RoleService,
-)
 from app.authorization.application.policies import (
     CanApproveWorkflow,
     CanManageRoles,
@@ -12,6 +7,11 @@ from app.authorization.application.policies import (
     CanPublishContent,
     CanUploadMedia,
     PolicyEvaluator,
+)
+from app.authorization.application.services import (
+    AuthorizationService,
+    PermissionService,
+    RoleService,
 )
 
 __all__ = [
