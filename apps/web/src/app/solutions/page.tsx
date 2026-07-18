@@ -314,7 +314,7 @@ export default function SolutionsPage() {
             <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
               Ready to engineer your next platform?
             </h2>
-<p className="mt-4 text-muted-foreground">
+            <p className="mt-4 text-muted-foreground">
               Let's discuss how our engineering practices can accelerate your business outcomes.
             </p>
             <Link

@@ -25,7 +25,7 @@ export const seoMetadataSchema = z.object({
     description: z.string().optional(),
     image: z.string().url().optional(),
   }).optional(),
-  jsonLd: z.record(z.unknown()).optional(),
+  jsonLd: z.record(z.string(), z.unknown()).optional(),
   focusKeyword: z.string().optional(),
   readingTime: z.number().optional(),
 });
@@ -79,7 +79,7 @@ export const contentBlockSchema = z.object({
     'architecture-diagram', 'feature-grid', 'code-block', 'table', 'json'
   ]),
   order: z.number().int().min(0),
-  data: z.record(z.unknown()),
+  data: z.record(z.string(), z.unknown()),
 });
 
 // Content Section validation
@@ -100,7 +100,7 @@ export const contentTypeSchema = z.object({
     name: z.string().min(1),
     type: z.enum(['text', 'rich-text', 'markdown', 'image', 'reference', 'array', 'object']),
     required: z.boolean().optional(),
-    validation: z.record(z.unknown()).optional(),
+    validation: z.record(z.string(), z.unknown()).optional(),
   })),
   seo: seoMetadataSchema.optional(),
   templates: z.array(z.string()).optional(),
