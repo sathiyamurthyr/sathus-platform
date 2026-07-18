@@ -73,18 +73,18 @@ export function Hero() {
             </dl>
           </div>
 
-          {/* Platform visualization */}
-          <div className="relative">
+{/* Platform visualization - vertically centered */}
+          <div className="relative flex items-center justify-center">
             <PlatformVisualization />
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 border-t border-white/10 py-6 text-xs text-white/50 lg:justify-between">
+<div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 border-t border-white/10 pt-8 pb-6 text-xs text-white/50 lg:justify-between">
           <span className="inline-flex items-center gap-2">
             <ShieldCheck className="h-4 w-4 text-emerald-400" />
             SOC 2 Type II · GDPR · HIPAA-ready controls
           </span>
-          <span>Architected for financial services, healthcare &amp; public sector</span>
+          <span className="lg:ml-auto">Architected for financial services, healthcare & public sector</span>
         </div>
       </div>
     </section>

@@ -21,13 +21,24 @@ interface Node {
   y: number;
 }
 
+// Card dimensions: approximately 120px width, 32px height
+// Adjust connector endpoints to meet at card center
 const NODES: Node[] = [
   { id: 'ai', label: 'AI Agents', meta: 'Reasoning · Tools', icon: Bot, x: 50, y: 12 },
   { id: 'data', label: 'Data Pipelines', meta: 'Streaming · Lakehouse', icon: Workflow, x: 13, y: 36 },
   { id: 'cloud', label: 'Cloud', meta: 'Azure · AWS', icon: Cloud, x: 87, y: 36 },
-  { id: 'analytics', label: 'Analytics', meta: 'Real-time', icon: LineChart, x: 22, y: 82 },
-  { id: 'apps', label: 'Applications', meta: 'Composable', icon: LayoutGrid, x: 78, y: 82 },
+  { id: 'analytics', label: 'Analytics', meta: 'Real-time', icon: LineChart, x: 22, y: 64 },
+  { id: 'apps', label: 'Applications', meta: 'Composable', icon: LayoutGrid, x: 78, y: 64 },
 ];
+
+// Connector endpoint offsets to meet at card center
+const CONNECTOR_OFFSETS: Record<string, { x: number; y: number }> = {
+  ai: { x: 0, y: 6 }, // Top card: offset down by ~6%
+  data: { x: 14, y: 0 }, // Left card: offset right by ~14%
+  cloud: { x: -14, y: 0 }, // Right card: offset left by ~14%
+  analytics: { x: 14, y: 0 }, // Bottom-left: offset right by ~14%
+  apps: { x: -14, y: 0 }, // Bottom-right: offset left by ~14%
+};
 
 export function PlatformVisualization() {
   const reduce = useReducedMotion();
@@ -37,28 +48,31 @@ export function PlatformVisualization() {
       className="relative mx-auto aspect-square w-full max-w-[520px]"
       aria-hidden="true"
     >
-      {/* Connectors */}
+{/* Connectors - meeting at card centers */}
       <svg
         viewBox="0 0 100 100"
         preserveAspectRatio="none"
         className="absolute inset-0 h-full w-full"
         fill="none"
       >
-        {NODES.map((node) => (
-          <line
-            key={node.id}
-            x1="50"
-            y1="50"
-            x2={node.x}
-            y2={node.y}
-            stroke="url(#nodeGradient)"
-            strokeWidth="0.4"
-            strokeDasharray="2 2.4"
-            vectorEffect="non-scaling-stroke"
-            className={reduce ? '' : 'animate-dash'}
-            opacity={0.7}
-          />
-        ))}
+        {NODES.map((node) => {
+          const offset = CONNECTOR_OFFSETS[node.id] || { x: 0, y: 0 };
+          return (
+            <line
+              key={node.id}
+              x1="50"
+              y1="50"
+              x2={node.x + offset.x}
+              y2={node.y + offset.y}
+              stroke="url(#nodeGradient)"
+              strokeWidth="0.4"
+              strokeDasharray="2 2.4"
+              vectorEffect="non-scaling-stroke"
+              className={reduce ? '' : 'animate-dash'}
+              opacity={0.7}
+            />
+          );
+        })}
         <defs>
           <linearGradient id="nodeGradient" x1="0" y1="0" x2="1" y2="1">
             <stop offset="0%" stopColor="#60a5fa" />
@@ -68,7 +82,7 @@ export function PlatformVisualization() {
         </defs>
       </svg>
 
-      {/* Core */}
+      {/* Core - perfectly centered */}
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
         {!reduce && (
           <>
@@ -81,7 +95,7 @@ export function PlatformVisualization() {
         </div>
       </div>
 
-      {/* Nodes */}
+      {/* Nodes - perfectly positioned with center alignment */}
       {NODES.map((node, i) => {
         const Icon = node.icon;
         return (
