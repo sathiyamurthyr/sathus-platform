@@ -3,11 +3,23 @@
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
+from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 
 from app.core.config import get_settings
 from app.core.database import close_db, init_db
+from app.core.exceptions import (
+    http_exception_handler,
+    unknown_exception_handler,
+    validation_exception_handler,
+)
 from app.core.logging import setup_logging
+from app.core.middleware import (
+    CorrelationIDMiddleware,
+    RequestLoggingMiddleware,
+    RequestTimingMiddleware,
+)
 from app.core.redis import close_redis, init_redis
 from app.api.v1.router import api_router
 
@@ -47,6 +59,16 @@ def create_app() -> FastAPI:
         allow_methods=["*"],
         allow_headers=["*"],
     )
+
+    # Custom middleware
+    app.add_middleware(CorrelationIDMiddleware)
+    app.add_middleware(RequestLoggingMiddleware)
+    app.add_middleware(RequestTimingMiddleware)
+
+    # Exception handlers
+    app.add_exception_handler(RequestValidationError, validation_exception_handler)
+    app.add_exception_handler(404, http_exception_handler)
+    app.add_exception_handler(500, unknown_exception_handler)
 
     # API Routes
     app.include_router(api_router, prefix="/api/v1")
