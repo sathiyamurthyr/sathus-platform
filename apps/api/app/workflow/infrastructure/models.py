@@ -155,6 +155,31 @@ class WorkflowAction(Base):
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
 
+class WorkflowStage(Base):
+    """Workflow stage database model."""
+
+    __tablename__ = "workflow_stages"
+    __allow_unmapped__ = True
+
+    id = Column(PostgresUUID(as_uuid=True), primary_key=True, default=func.uuid_generate_v4())
+    workflow_definition_id = Column(
+        PostgresUUID(as_uuid=True),
+        ForeignKey("workflow_definitions.id"),
+        nullable=False,
+    )
+    name = Column(String(255), nullable=False)
+    stage_type = Column(SQLEnum(WorkflowStageType), default=WorkflowStageType.SEQUENTIAL)
+    order = Column(Integer, nullable=False)
+    assignees = Column(Text, nullable=True)  # JSON array of user IDs
+    assignment_type = Column(SQLEnum(AssignmentType), default=AssignmentType.USER)
+    sla_hours = Column(Integer, nullable=True)
+    conditions = Column(Text, nullable=True)  # JSON for conditional logic
+    is_final = Column(Boolean, default=False)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+    workflow = relationship("WorkflowDefinition", backref="stages")
+
+
 class WorkflowComment(Base):
     """Workflow comment database model."""
 

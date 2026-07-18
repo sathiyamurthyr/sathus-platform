@@ -20,15 +20,19 @@ from app.workflow.infrastructure.models import (
     WorkflowInstance,
     WorkflowAction,
     WorkflowComment,
+    WorkflowStage,
     WorkflowStatus,
     WorkflowInstanceStatus,
     ApprovalAction,
+    WorkflowStageType,
+    AssignmentType,
 )
 from app.workflow.infrastructure.repositories import (
     WorkflowDefinitionRepository,
     WorkflowInstanceRepository,
     WorkflowActionRepository,
     WorkflowCommentRepository,
+    WorkflowStageRepository,
 )
 
 
@@ -268,6 +272,74 @@ class WorkflowInstanceService:
     async def get_pending_for_user(self, user_id: UUID) -> list[WorkflowInstance]:
         """Get pending workflow instances for a user."""
         return await self.instance_repo.get_pending_for_user(user_id)
+
+
+class WorkflowStageService:
+    """Workflow stage service."""
+
+    def __init__(self, stage_repo: WorkflowStageRepository):
+        """Initialize service."""
+        self.stage_repo = stage_repo
+
+    async def create_stage(
+        self,
+        workflow_definition_id: UUID,
+        name: str,
+        order: int,
+        stage_type: WorkflowStageType = WorkflowStageType.SEQUENTIAL,
+        assignees: list[UUID] | None = None,
+        assignment_type: AssignmentType = AssignmentType.USER,
+        sla_hours: int | None = None,
+        conditions: dict | None = None,
+        is_final: bool = False,
+    ) -> WorkflowStage:
+        """Create a new workflow stage."""
+        stage = await self.stage_repo.create(
+            workflow_definition_id=workflow_definition_id,
+            name=name,
+            order=order,
+            stage_type=stage_type,
+            assignees=assignees,
+            assignment_type=assignment_type,
+            sla_hours=sla_hours,
+            conditions=conditions,
+            is_final=is_final,
+        )
+        return stage
+
+    async def get_stage(self, stage_id: UUID) -> WorkflowStage | None:
+        """Get workflow stage by ID."""
+        return await self.stage_repo.get_by_id(stage_id)
+
+    async def get_stages(
+        self,
+        workflow_definition_id: UUID,
+        limit: int = 100,
+    ) -> list[WorkflowStage]:
+        """Get stages for a workflow definition."""
+        return await self.stage_repo.get_by_workflow(workflow_definition_id, limit)
+
+    async def update_stage(
+        self,
+        stage_id: UUID,
+        name: str | None = None,
+        order: int | None = None,
+        is_final: bool | None = None,
+    ) -> bool:
+        """Update workflow stage."""
+        stage = await self.stage_repo.get_by_id(stage_id)
+        if not stage:
+            return False
+        await self.stage_repo.update(stage, name, order, is_final)
+        return True
+
+    async def delete_stage(self, stage_id: UUID) -> bool:
+        """Delete workflow stage."""
+        stage = await self.stage_repo.get_by_id(stage_id)
+        if not stage:
+            return False
+        await self.stage_repo.delete(stage)
+        return True
 
 
 class WorkflowCommentService:

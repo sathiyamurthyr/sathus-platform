@@ -41,6 +41,20 @@ class WorkflowCommentCreateRequest(BaseModel):
     mentions: list[UUID] | None = None
 
 
+class WorkflowStageCreateRequest(BaseModel):
+    """Create workflow stage request schema."""
+
+    workflow_definition_id: UUID
+    name: str = Field(..., min_length=1, max_length=255)
+    order: int = Field(..., ge=0)
+    stage_type: str | None = "sequential"
+    assignees: list[UUID] | None = None
+    assignment_type: str | None = "user"
+    sla_hours: int | None = None
+    conditions: dict | None = None
+    is_final: bool = False
+
+
 # Response schemas
 class WorkflowDefinitionResponse(BaseModel):
     """Workflow definition response schema."""
@@ -54,6 +68,22 @@ class WorkflowDefinitionResponse(BaseModel):
     created_by: UUID
     created_at: datetime
     updated_at: datetime | None = None
+
+
+class WorkflowStageResponse(BaseModel):
+    """Workflow stage response schema."""
+
+    id: UUID
+    workflow_definition_id: UUID
+    name: str
+    stage_type: str
+    order: int
+    assignees: list[UUID] | None = None
+    assignment_type: str
+    sla_hours: int | None = None
+    conditions: dict | None = None
+    is_final: bool
+    created_at: datetime
 
 
 class WorkflowInstanceResponse(BaseModel):

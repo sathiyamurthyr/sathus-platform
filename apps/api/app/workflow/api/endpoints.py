@@ -16,22 +16,28 @@ from app.workflow.api.schemas import (
     WorkflowCommentCreateRequest,
     WorkflowCommentResponse,
     WorkflowStatusResponse,
+    WorkflowStageCreateRequest,
+    WorkflowStageResponse,
 )
 from app.workflow.application.services import (
     WorkflowDefinitionService,
     WorkflowInstanceService,
     WorkflowCommentService,
+    WorkflowStageService,
 )
 from app.workflow.infrastructure.models import (
     WorkflowStatus,
     WorkflowInstanceStatus,
     ApprovalAction,
+    WorkflowStageType,
+    AssignmentType,
 )
 from app.workflow.infrastructure.repositories import (
     WorkflowDefinitionRepository,
     WorkflowInstanceRepository,
     WorkflowActionRepository,
     WorkflowCommentRepository,
+    WorkflowStageRepository,
 )
 
 router = APIRouter()
@@ -63,6 +69,13 @@ def get_workflow_comment_service(db=Depends(get_db)) -> WorkflowCommentService:
     """Get workflow comment service."""
     return WorkflowCommentService(
         comment_repo=WorkflowCommentRepository(db),
+    )
+
+
+def get_workflow_stage_service(db=Depends(get_db)) -> WorkflowStageService:
+    """Get workflow stage service."""
+    return WorkflowStageService(
+        stage_repo=WorkflowStageRepository(db),
     )
 
 
@@ -266,6 +279,65 @@ async def cancel_workflow_instance(
     if not success:
         raise HTTPException(status_code=404, detail="Instance not found")
     return WorkflowStatusResponse(success=True, message="Workflow cancelled")
+
+
+# Stage endpoints
+@router.post("/stages", response_model=WorkflowStageResponse, status_code=201)
+async def create_workflow_stage(
+    request: WorkflowStageCreateRequest,
+    user=Depends(get_current_user),
+    service: WorkflowStageService = Depends(get_workflow_stage_service),
+) -> WorkflowStageResponse:
+    """Create a new workflow stage."""
+    stage = await service.create_stage(
+        workflow_definition_id=request.workflow_definition_id,
+        name=request.name,
+        order=request.order,
+        stage_type=request.stage_type,
+        assignees=request.assignees,
+        assignment_type=request.assignment_type,
+        sla_hours=request.sla_hours,
+        conditions=request.conditions,
+        is_final=request.is_final,
+    )
+    return WorkflowStageResponse(
+        id=stage.id,
+        workflow_definition_id=stage.workflow_definition_id,
+        name=stage.name,
+        stage_type=stage.stage_type.value,
+        order=stage.order,
+        assignees=stage.assignees,
+        assignment_type=stage.assignment_type.value,
+        sla_hours=stage.sla_hours,
+        conditions=stage.conditions,
+        is_final=stage.is_final,
+        created_at=stage.created_at,
+    )
+
+
+@router.get("/stages", response_model=list[WorkflowStageResponse])
+async def list_workflow_stages(
+    workflow_definition_id: UUID,
+    service: WorkflowStageService = Depends(get_workflow_stage_service),
+) -> list[WorkflowStageResponse]:
+    """List stages for a workflow definition."""
+    stages = await service.get_stages(workflow_definition_id)
+    return [
+        WorkflowStageResponse(
+            id=s.id,
+            workflow_definition_id=s.workflow_definition_id,
+            name=s.name,
+            stage_type=s.stage_type.value,
+            order=s.order,
+            assignees=s.assignees,
+            assignment_type=s.assignment_type.value,
+            sla_hours=s.sla_hours,
+            conditions=s.conditions,
+            is_final=s.is_final,
+            created_at=s.created_at,
+        )
+        for s in stages
+    ]
 
 
 # Comment endpoints

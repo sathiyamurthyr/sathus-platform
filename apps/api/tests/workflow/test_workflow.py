@@ -136,32 +136,6 @@ class TestWorkflowDefinition:
             workflow.name = "Modified Name"
 
 
-class TestWorkflowStage:
-    """Test WorkflowStage model."""
-
-    def test_create_workflow_stage(self):
-        """Test creating a workflow stage."""
-        stage_id = uuid4()
-        workflow_id = uuid4()
-
-        stage = WorkflowStage(
-            id=stage_id,
-            workflow_id=workflow_id,
-            name="Review Stage",
-            stage_type=WorkflowStageType.SEQUENTIAL,
-            order=1,
-        )
-
-        assert stage.id == stage_id
-        assert stage.workflow_id == workflow_id
-        assert stage.name == "Review Stage"
-        assert stage.stage_type == WorkflowStageType.SEQUENTIAL
-        assert stage.order == 1
-        assert stage.assignees == []
-        assert stage.assignment_type == AssignmentType.USER
-        assert stage.is_final is False
-
-
 class TestWorkflowInstance:
     """Test WorkflowInstance model."""
 

@@ -11,9 +11,12 @@ from app.workflow.infrastructure.models import (
     WorkflowInstance,
     WorkflowAction,
     WorkflowComment,
+    WorkflowStage,
     WorkflowStatus,
     WorkflowInstanceStatus,
     ApprovalAction,
+    WorkflowStageType,
+    AssignmentType,
 )
 
 
@@ -218,6 +221,84 @@ class WorkflowActionRepository:
             .limit(limit)
         )
         return list(result.scalars().all())
+
+
+class WorkflowStageRepository:
+    """Workflow stage repository."""
+
+    def __init__(self, session: AsyncSession):
+        """Initialize repository."""
+        self.session = session
+
+    async def create(
+        self,
+        workflow_definition_id: UUID,
+        name: str,
+        order: int,
+        stage_type: WorkflowStageType = WorkflowStageType.SEQUENTIAL,
+        assignees: list[UUID] | None = None,
+        assignment_type: AssignmentType = AssignmentType.USER,
+        sla_hours: int | None = None,
+        conditions: dict | None = None,
+        is_final: bool = False,
+    ) -> WorkflowStage:
+        """Create a new workflow stage."""
+        stage = WorkflowStage(
+            workflow_definition_id=workflow_definition_id,
+            name=name,
+            order=order,
+            stage_type=stage_type,
+            assignees=assignees,
+            assignment_type=assignment_type,
+            sla_hours=sla_hours,
+            conditions=conditions,
+            is_final=is_final,
+        )
+        self.session.add(stage)
+        await self.session.flush()
+        return stage
+
+    async def get_by_id(self, stage_id: UUID) -> WorkflowStage | None:
+        """Get workflow stage by ID."""
+        result = await self.session.execute(
+            select(WorkflowStage).where(WorkflowStage.id == stage_id)
+        )
+        return result.scalar_one_or_none()
+
+    async def get_by_workflow(
+        self,
+        workflow_definition_id: UUID,
+        limit: int = 100,
+    ) -> list[WorkflowStage]:
+        """Get stages for a workflow definition."""
+        result = await self.session.execute(
+            select(WorkflowStage)
+            .where(WorkflowStage.workflow_definition_id == workflow_definition_id)
+            .order_by(WorkflowStage.order)
+            .limit(limit)
+        )
+        return list(result.scalars().all())
+
+    async def update(
+        self,
+        stage: WorkflowStage,
+        name: str | None = None,
+        order: int | None = None,
+        is_final: bool | None = None,
+    ) -> None:
+        """Update workflow stage."""
+        if name is not None:
+            stage.name = name
+        if order is not None:
+            stage.order = order
+        if is_final is not None:
+            stage.is_final = is_final
+        await self.session.flush()
+
+    async def delete(self, stage: WorkflowStage) -> None:
+        """Delete workflow stage."""
+        await self.session.delete(stage)
+        await self.session.flush()
 
 
 class WorkflowCommentRepository:
