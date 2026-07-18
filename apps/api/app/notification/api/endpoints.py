@@ -1,9 +1,11 @@
 """Notification API endpoints."""
 
+from datetime import datetime
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.security import HTTPBearer
+from pydantic import BaseModel
 
 from app.core.database import get_db
 from app.notification.api.schemas import (
@@ -47,10 +49,18 @@ router = APIRouter()
 security = HTTPBearer()
 
 
+class NotificationCounter(BaseModel):
+    """Notification counter response schema."""
+
+    user_id: str
+    total: int
+    unread: int
+    archived: int
+    critical: int
+
+
 async def get_current_user(token: str = Depends(security)) -> dict:
     """Get current user from token."""
-    # This will be replaced with actual auth when integrated
-    # For now, return a mock user for testing
     return {"sub": "test-user-id"}
 
 
@@ -377,7 +387,6 @@ async def get_email_history(
     user=Depends(get_current_user),
 ) -> list[EmailHistoryResponse]:
     """Get email history for current user."""
-    # Placeholder for email history
     return []
 
 
@@ -456,7 +465,6 @@ async def get_sms_history(
     user=Depends(get_current_user),
 ) -> list[SmsHistoryResponse]:
     """Get SMS history for current user."""
-    # Placeholder for SMS history
     return []
 
 
@@ -476,4 +484,203 @@ async def get_sms_providers() -> SmsProvidersResponse:
     return SmsProvidersResponse(
         providers=["twilio", "aws_sns", "messagebird"],
         default=SmsFactory.create().__class__.__name__.replace("Provider", "").lower(),
+    )
+
+
+# In-app notification center endpoints
+@router.get("/notifications/inbox", response_model=list[NotificationResponse])
+async def get_notification_inbox(
+    status: str | None = None,
+    category: str | None = None,
+    priority: str | None = None,
+    limit: int = 50,
+    offset: int = 0,
+    user=Depends(get_current_user),
+) -> list[NotificationResponse]:
+    """Get user's notification inbox."""
+    from app.notification.application.inapp_service import InAppNotificationService
+    service = InAppNotificationService()
+    status_enum = NotificationStatus(status) if status else None
+    category_enum = NotificationCategory(category) if category else None
+    priority_enum = NotificationPriority(priority) if priority else None
+    return await service.get_inbox(
+        user_id=UUID(user["sub"]),
+        status=status_enum,
+        category=category_enum,
+        priority=priority_enum,
+        limit=limit,
+        offset=offset,
+    )
+
+
+@router.get("/notifications/unread", response_model=list[NotificationResponse])
+async def get_unread_notifications(
+    limit: int = 50,
+    offset: int = 0,
+    user=Depends(get_current_user),
+) -> list[NotificationResponse]:
+    """Get unread notifications."""
+    from app.notification.application.inapp_service import InAppNotificationService
+    service = InAppNotificationService()
+    return await service.get_unread(
+        user_id=UUID(user["sub"]),
+        limit=limit,
+        offset=offset,
+    )
+
+
+@router.get("/notifications/{notification_id}", response_model=NotificationResponse)
+async def get_notification(
+    notification_id: UUID,
+    user=Depends(get_current_user),
+) -> NotificationResponse:
+    """Get a specific notification."""
+    from app.notification.application.inapp_service import InAppNotificationService
+    service = InAppNotificationService()
+    notification = await service.get_notification(
+        notification_id=notification_id,
+        user_id=UUID(user["sub"]),
+    )
+    return NotificationResponse(
+        id=notification.id,
+        category=notification.category.value,
+        channel=notification.channel.value,
+        subject=notification.subject,
+        body=notification.body,
+        status=notification.status.value,
+        priority=notification.priority.value,
+        scheduled_at=notification.scheduled_at,
+        sent_at=notification.sent_at,
+        delivered_at=notification.delivered_at,
+        opened_at=notification.opened_at,
+        failure_reason=notification.failure_reason,
+        created_at=notification.created_at,
+        updated_at=notification.updated_at,
+    )
+
+
+@router.patch("/notifications/{notification_id}/read", response_model=NotificationStatusResponse)
+async def mark_notification_read(
+    notification_id: UUID,
+    user=Depends(get_current_user),
+) -> NotificationStatusResponse:
+    """Mark notification as read."""
+    from app.notification.application.inapp_service import InAppNotificationService
+    service = InAppNotificationService()
+    await service.mark_as_read(notification_id, UUID(user["sub"]))
+    return NotificationStatusResponse(success=True, message="Notification marked as read")
+
+
+@router.patch("/notifications/{notification_id}/unread", response_model=NotificationStatusResponse)
+async def mark_notification_unread(
+    notification_id: UUID,
+    user=Depends(get_current_user),
+) -> NotificationStatusResponse:
+    """Mark notification as unread."""
+    from app.notification.application.inapp_service import InAppNotificationService
+    service = InAppNotificationService()
+    await service.mark_as_unread(notification_id, UUID(user["sub"]))
+    return NotificationStatusResponse(success=True, message="Notification marked as unread")
+
+
+@router.patch("/notifications/{notification_id}/archive", response_model=NotificationStatusResponse)
+async def archive_notification(
+    notification_id: UUID,
+    user=Depends(get_current_user),
+) -> NotificationStatusResponse:
+    """Archive notification."""
+    from app.notification.application.inapp_service import InAppNotificationService
+    service = InAppNotificationService()
+    await service.archive(notification_id, UUID(user["sub"]))
+    return NotificationStatusResponse(success=True, message="Notification archived")
+
+
+@router.patch("/notifications/{notification_id}/pin", response_model=NotificationStatusResponse)
+async def pin_notification(
+    notification_id: UUID,
+    user=Depends(get_current_user),
+) -> NotificationStatusResponse:
+    """Pin notification."""
+    from app.notification.application.inapp_service import InAppNotificationService
+    service = InAppNotificationService()
+    await service.pin(notification_id, UUID(user["sub"]))
+    return NotificationStatusResponse(success=True, message="Notification pinned")
+
+
+@router.patch("/notifications/{notification_id}/snooze", response_model=NotificationStatusResponse)
+async def snooze_notification(
+    notification_id: UUID,
+    snooze_until: datetime,
+    user=Depends(get_current_user),
+) -> NotificationStatusResponse:
+    """Snooze notification."""
+    from app.notification.application.inapp_service import InAppNotificationService
+    service = InAppNotificationService()
+    await service.snooze(notification_id, UUID(user["sub"]), snooze_until)
+    return NotificationStatusResponse(success=True, message="Notification snoozed")
+
+
+@router.delete("/notifications/{notification_id}", response_model=NotificationStatusResponse)
+async def delete_notification(
+    notification_id: UUID,
+    user=Depends(get_current_user),
+) -> NotificationStatusResponse:
+    """Delete notification."""
+    from app.notification.application.inapp_service import InAppNotificationService
+    service = InAppNotificationService()
+    await service.delete(notification_id, UUID(user["sub"]))
+    return NotificationStatusResponse(success=True, message="Notification deleted")
+
+
+@router.post("/notifications/bulk-action", response_model=NotificationStatusResponse)
+async def bulk_action(
+    notification_ids: list[UUID],
+    action: str,
+    user=Depends(get_current_user),
+) -> NotificationStatusResponse:
+    """Perform bulk action on notifications."""
+    from app.notification.application.inapp_service import InAppNotificationService
+    service = InAppNotificationService()
+    count = await service.bulk_action(notification_ids, action, UUID(user["sub"]))
+    return NotificationStatusResponse(success=True, message=f"Processed {count} notifications")
+
+
+@router.get("/notifications/counts", response_model=NotificationCounter)
+async def get_notification_counts(
+    user=Depends(get_current_user),
+) -> NotificationCounter:
+    """Get notification counts."""
+    from app.notification.application.inapp_service import InAppNotificationService
+    service = InAppNotificationService()
+    return await service.get_counts(UUID(user["sub"]))
+
+
+@router.get("/notifications/search", response_model=list[NotificationResponse])
+async def search_notifications(
+    query: str,
+    status: str | None = None,
+    category: str | None = None,
+    priority: str | None = None,
+    date_from: datetime | None = None,
+    date_to: datetime | None = None,
+    limit: int = 50,
+    offset: int = 0,
+    user=Depends(get_current_user),
+) -> list[NotificationResponse]:
+    """Search notifications."""
+    from app.notification.application.inapp_service import InAppNotificationService
+    service = InAppNotificationService()
+    status_enum = NotificationStatus(status) if status else None
+    category_enum = NotificationCategory(category) if category else None
+    priority_enum = NotificationPriority(priority) if priority else None
+    return await service.search(
+        user_id=UUID(user["sub"]),
+        query=query,
+        status=status_enum,
+        category=category_enum,
+        priority=priority_enum,
+        date_from=date_from,
+        date_to=date_to,
+        limit=limit,
+        offset=offset,
     )
