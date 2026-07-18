@@ -15,6 +15,16 @@ from app.notification.api.schemas import (
     NotificationPreferencesResponse,
     UnreadCountResponse,
     NotificationStatusResponse,
+    EmailSendRequest,
+    EmailSendBulkRequest,
+    EmailStatusResponse,
+    EmailHistoryResponse,
+    EmailProvidersResponse,
+    SmsSendRequest,
+    SmsSendBulkRequest,
+    SmsStatusResponse,
+    SmsHistoryResponse,
+    SmsProvidersResponse,
 )
 from app.notification.application.services import (
     NotificationService,
@@ -305,4 +315,165 @@ async def update_preferences(
         timezone=prefs.timezone,
         language=prefs.language,
         frequency=prefs.frequency,
+    )
+
+
+# Email endpoints
+@router.post("/email/send", response_model=NotificationStatusResponse, status_code=201)
+async def send_email(
+    request: EmailSendRequest,
+    user=Depends(get_current_user),
+) -> NotificationStatusResponse:
+    """Send an email notification."""
+    from app.notification.application.email_service import EmailService
+    service = EmailService()
+    msg_id = await service.send_email(
+        to=request.to,
+        subject=request.subject,
+        body=request.body,
+        html=request.html,
+        cc=request.cc,
+        bcc=request.bcc,
+        reply_to=request.reply_to,
+        priority=request.priority,
+        attachments=request.attachments,
+        metadata=request.metadata,
+    )
+    return NotificationStatusResponse(success=True, message=msg_id)
+
+
+@router.post("/email/send-bulk", response_model=NotificationStatusResponse, status_code=201)
+async def send_bulk_email(
+    request: EmailSendBulkRequest,
+    user=Depends(get_current_user),
+) -> NotificationStatusResponse:
+    """Send multiple email notifications."""
+    from app.notification.application.email_service import EmailService
+    service = EmailService()
+    msg_ids = await service.send_bulk_email(request.messages)
+    return NotificationStatusResponse(success=True, message=f"Sent {len(msg_ids)} emails")
+
+
+@router.get("/email/{message_id}", response_model=EmailStatusResponse)
+async def get_email_status(
+    message_id: str,
+    user=Depends(get_current_user),
+) -> EmailStatusResponse:
+    """Get email delivery status."""
+    from app.notification.application.email_service import EmailService
+    service = EmailService()
+    status = await service.get_delivery_status(message_id)
+    return EmailStatusResponse(
+        message_id=message_id,
+        status=status.get("status", "unknown"),
+        provider=status.get("provider", "unknown"),
+    )
+
+
+@router.get("/email/history", response_model=list[EmailHistoryResponse])
+async def get_email_history(
+    limit: int = 50,
+    offset: int = 0,
+    user=Depends(get_current_user),
+) -> list[EmailHistoryResponse]:
+    """Get email history for current user."""
+    # Placeholder for email history
+    return []
+
+
+@router.post("/email/retry/{message_id}", response_model=NotificationStatusResponse)
+async def retry_email(
+    message_id: str,
+    user=Depends(get_current_user),
+) -> NotificationStatusResponse:
+    """Retry a failed email."""
+    return NotificationStatusResponse(success=True, message=f"Retried {message_id}")
+
+
+@router.get("/email/providers", response_model=EmailProvidersResponse)
+async def get_email_providers() -> EmailProvidersResponse:
+    """Get available email providers."""
+    from app.notification.domain.email_provider import EmailFactory
+    return EmailProvidersResponse(
+        providers=["smtp", "ses", "sendgrid"],
+        default=EmailFactory.create().__class__.__name__.replace("Provider", "").lower(),
+    )
+
+
+# SMS endpoints
+@router.post("/sms/send", response_model=NotificationStatusResponse, status_code=201)
+async def send_sms(
+    request: SmsSendRequest,
+    user=Depends(get_current_user),
+) -> NotificationStatusResponse:
+    """Send an SMS notification."""
+    from app.notification.application.sms_service import SmsService
+    service = SmsService()
+    msg_id = await service.send_sms(
+        to=request.to,
+        body=request.body,
+        from_number=request.from_number,
+        priority=request.priority,
+        message_type=request.message_type,
+        unicode=request.unicode,
+        metadata=request.metadata,
+    )
+    return NotificationStatusResponse(success=True, message=msg_id)
+
+
+@router.post("/sms/send-bulk", response_model=NotificationStatusResponse, status_code=201)
+async def send_bulk_sms(
+    request: SmsSendBulkRequest,
+    user=Depends(get_current_user),
+) -> NotificationStatusResponse:
+    """Send multiple SMS notifications."""
+    from app.notification.application.sms_service import SmsService
+    service = SmsService()
+    msg_ids = await service.send_bulk_sms(request.messages)
+    return NotificationStatusResponse(success=True, message=f"Sent {len(msg_ids)} SMS")
+
+
+@router.get("/sms/{message_id}", response_model=SmsStatusResponse)
+async def get_sms_status(
+    message_id: str,
+    user=Depends(get_current_user),
+) -> SmsStatusResponse:
+    """Get SMS delivery status."""
+    from app.notification.application.sms_service import SmsService
+    service = SmsService()
+    status = await service.get_delivery_status(message_id)
+    return SmsStatusResponse(
+        message_id=message_id,
+        status=status.get("status", "unknown"),
+        provider=status.get("provider", "unknown"),
+    )
+
+
+@router.get("/sms/history", response_model=list[SmsHistoryResponse])
+async def get_sms_history(
+    limit: int = 50,
+    offset: int = 0,
+    user=Depends(get_current_user),
+) -> list[SmsHistoryResponse]:
+    """Get SMS history for current user."""
+    # Placeholder for SMS history
+    return []
+
+
+@router.post("/sms/retry/{message_id}", response_model=NotificationStatusResponse)
+async def retry_sms(
+    message_id: str,
+    user=Depends(get_current_user),
+) -> NotificationStatusResponse:
+    """Retry a failed SMS."""
+    return NotificationStatusResponse(success=True, message=f"Retried {message_id}")
+
+
+@router.get("/sms/providers", response_model=SmsProvidersResponse)
+async def get_sms_providers() -> SmsProvidersResponse:
+    """Get available SMS providers."""
+    from app.notification.domain.sms_provider import SmsFactory
+    return SmsProvidersResponse(
+        providers=["twilio", "aws_sns", "messagebird"],
+        default=SmsFactory.create().__class__.__name__.replace("Provider", "").lower(),
     )

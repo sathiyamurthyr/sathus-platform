@@ -10,6 +10,15 @@ from app.core.logging import get_logger
 logger = get_logger(__name__)
 
 
+class BaseAppException(Exception):
+    """Base application exception."""
+
+    def __init__(self, message: str = "Application error", status_code: int = 500):
+        self.message = message
+        self.status_code = status_code
+        super().__init__(self.message)
+
+
 class ProblemDetails(BaseModel):
     """RFC 7807 Problem Details response."""
 

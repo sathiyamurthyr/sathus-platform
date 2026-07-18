@@ -20,13 +20,18 @@ class NotificationChannel(StrEnum):
 class NotificationStatus(StrEnum):
     """Notification status enumeration."""
 
+    DRAFT = "draft"
     PENDING = "pending"
     QUEUED = "queued"
+    SCHEDULED = "scheduled"
+    SENDING = "sending"
     SENT = "sent"
     DELIVERED = "delivered"
-    OPENED = "opened"
+    READ = "read"
     FAILED = "failed"
     CANCELLED = "cancelled"
+    EXPIRED = "expired"
+    ARCHIVED = "archived"
 
 
 class NotificationPriority(StrEnum):
@@ -36,6 +41,21 @@ class NotificationPriority(StrEnum):
     NORMAL = "normal"
     HIGH = "high"
     CRITICAL = "critical"
+
+
+class NotificationType(StrEnum):
+    """Notification type enumeration."""
+
+    SYSTEM = "system"
+    SECURITY = "security"
+    WORKFLOW = "workflow"
+    CONTENT = "content"
+    MEDIA = "media"
+    MARKETING = "marketing"
+    REMINDER = "reminder"
+    ALERT = "alert"
+    ANNOUNCEMENT = "announcement"
+    CUSTOM = "custom"
 
 
 class NotificationCategory(StrEnum):
@@ -56,6 +76,14 @@ class NotificationRecipient(BaseModel):
     destination: str | None = None  # email, phone, device token, webhook URL
 
 
+class NotificationSender(BaseModel):
+    """Notification sender value object."""
+
+    user_id: UUID | None = None
+    name: str | None = None
+    email: str | None = None
+
+
 class NotificationTemplate(BaseModel):
     """Notification template value object."""
 
@@ -74,16 +102,20 @@ class Notification(BaseModel):
 
     id: UUID
     template_id: UUID | None = None
+    type: NotificationType = NotificationType.SYSTEM
     category: NotificationCategory
     priority: NotificationPriority = NotificationPriority.NORMAL
+    sender: NotificationSender | None = None
+    recipient: NotificationRecipient
     subject: str | None = None
     body: str
-    status: NotificationStatus = NotificationStatus.PENDING
-    recipient: NotificationRecipient
+    status: NotificationStatus = NotificationStatus.DRAFT
     scheduled_at: datetime | None = None
     sent_at: datetime | None = None
     delivered_at: datetime | None = None
-    opened_at: datetime | None = None
+    read_at: datetime | None = None
+    expiration: datetime | None = None
+    correlation_id: UUID | None = None
     failure_reason: str | None = None
     retry_count: int = 0
     max_retries: int = 3

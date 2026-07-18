@@ -106,3 +106,98 @@ class NotificationStatusResponse(BaseModel):
 
     success: bool
     message: str
+
+
+# Email schemas
+class EmailSendRequest(BaseModel):
+    """Email send request schema."""
+
+    to: str
+    subject: str
+    body: str
+    html: str | None = None
+    cc: list[str] | None = None
+    bcc: list[str] | None = None
+    reply_to: str | None = None
+    priority: str = "normal"
+    attachments: list[dict] | None = None
+    metadata: dict | None = None
+
+
+class EmailSendBulkRequest(BaseModel):
+    """Email send bulk request schema."""
+
+    messages: list[dict]
+
+
+class EmailStatusResponse(BaseModel):
+    """Email status response schema."""
+
+    message_id: str
+    status: str
+    provider: str
+
+
+class EmailHistoryResponse(BaseModel):
+    """Email history response schema."""
+
+    id: UUID
+    to: str
+    subject: str
+    status: str
+    provider: str
+    created_at: datetime
+    sent_at: datetime | None = None
+
+
+class EmailProvidersResponse(BaseModel):
+    """Email providers response schema."""
+
+    providers: list[str]
+    default: str
+
+
+# SMS schemas
+class SmsSendRequest(BaseModel):
+    """SMS send request schema."""
+
+    to: str
+    body: str
+    from_number: str | None = None
+    priority: str = "normal"
+    message_type: str = "transactional"
+    unicode: bool = True
+    metadata: dict | None = None
+
+
+class SmsSendBulkRequest(BaseModel):
+    """SMS send bulk request schema."""
+
+    messages: list[dict]
+
+
+class SmsStatusResponse(BaseModel):
+    """SMS status response schema."""
+
+    message_id: str
+    status: str
+    provider: str
+
+
+class SmsHistoryResponse(BaseModel):
+    """SMS history response schema."""
+
+    id: UUID
+    to: str
+    body: str
+    status: str
+    provider: str
+    created_at: datetime
+    sent_at: datetime | None = None
+
+
+class SmsProvidersResponse(BaseModel):
+    """SMS providers response schema."""
+
+    providers: list[str]
+    default: str
