@@ -11,6 +11,7 @@ from app.workflow.api import endpoints as workflow
 from app.media.api import endpoints as media
 from app.search.api import endpoints as search
 from app.audit.api import endpoints as audit
+from app.reporting.api import endpoints as reporting
 
 api_router = APIRouter()
 
@@ -23,3 +24,4 @@ api_router.include_router(workflow.router, prefix="/workflows", tags=["workflows
 api_router.include_router(media.router, prefix="/media", tags=["media"])
 api_router.include_router(search.router, prefix="/search", tags=["search"])
 api_router.include_router(audit.router, prefix="/audit", tags=["audit"])
+api_router.include_router(reporting.router, prefix="/reporting", tags=["reporting"])
