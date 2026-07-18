@@ -1,6 +1,5 @@
 """Identity API endpoints."""
 
-from datetime import datetime, timedelta
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException
@@ -12,8 +11,8 @@ from app.identity.api.schemas import (
     LoginRequest,
     RegisterRequest,
     TokenResponse,
-    UserResponse,
     UserProfileResponse,
+    UserResponse,
 )
 from app.identity.application.services import AuthenticationService
 from app.identity.infrastructure.repositories import RefreshTokenRepository, UserRepository

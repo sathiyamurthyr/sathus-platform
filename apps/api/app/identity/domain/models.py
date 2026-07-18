@@ -1,12 +1,12 @@
 """Identity domain models."""
 
-from enum import Enum
+from enum import StrEnum
 from uuid import UUID
 
 from pydantic import BaseModel, EmailStr, Field
 
 
-class UserStatus(str, Enum):
+class UserStatus(StrEnum):
     """User status enumeration."""
 
     PENDING = "pending"

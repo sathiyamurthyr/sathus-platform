@@ -1,17 +1,17 @@
 """Identity database models."""
 
-from datetime import datetime
 from enum import Enum
-from uuid import UUID
 
 from sqlalchemy import (
     Boolean,
     Column,
     DateTime,
-    Enum as SQLEnum,
     ForeignKey,
     String,
     func,
+)
+from sqlalchemy import (
+    Enum as SQLEnum,
 )
 from sqlalchemy.dialects.postgresql import UUID as PostgresUUID
 from sqlalchemy.orm import relationship
@@ -33,51 +33,54 @@ class User(Base):
     """User database model."""
 
     __tablename__ = "users"
+    __allow_unmapped__ = True
 
-    id: UUID = Column(PostgresUUID(as_uuid=True), primary_key=True, default=func.uuid_generate_v4())
-    email: str = Column(String(255), unique=True, nullable=False, index=True)
-    password_hash: str = Column(String(255), nullable=False)
-    status: UserStatus = Column(SQLEnum(UserStatus), default=UserStatus.PENDING)
-    email_verified: bool = Column(Boolean, default=False)
-    created_at: datetime = Column(DateTime(timezone=True), server_default=func.now())
-    updated_at: datetime = Column(DateTime(timezone=True), onupdate=func.now())
-    last_login_at: datetime = Column(DateTime(timezone=True), nullable=True)
+    id = Column(PostgresUUID(as_uuid=True), primary_key=True, default=func.uuid_generate_v4())
+    email = Column(String(255), unique=True, nullable=False, index=True)
+    password_hash = Column(String(255), nullable=False)
+    status = Column(SQLEnum(UserStatus), default=UserStatus.PENDING)
+    email_verified = Column(Boolean, default=False)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+    last_login_at = Column(DateTime(timezone=True), nullable=True)
 
-    profile: "UserProfile" = relationship("UserProfile", back_populates="user", uselist=False)
-    refresh_tokens: list["RefreshToken"] = relationship("RefreshToken", back_populates="user")
+    profile = relationship("UserProfile", back_populates="user", uselist=False)
+    refresh_tokens = relationship("RefreshToken", back_populates="user")
 
 
 class UserProfile(Base):
     """User profile database model."""
 
     __tablename__ = "user_profiles"
+    __allow_unmapped__ = True
 
-    user_id: UUID = Column(
+    user_id = Column(
         PostgresUUID(as_uuid=True), ForeignKey("users.id"), primary_key=True
     )
-    first_name: str = Column(String(100), nullable=True)
-    last_name: str = Column(String(100), nullable=True)
-    avatar: str = Column(String(500), nullable=True)
-    timezone: str = Column(String(50), default="UTC")
-    language: str = Column(String(10), default="en")
-    phone: str = Column(String(50), nullable=True)
-    company: str = Column(String(255), nullable=True)
+    first_name = Column(String(100), nullable=True)
+    last_name = Column(String(100), nullable=True)
+    avatar = Column(String(500), nullable=True)
+    timezone = Column(String(50), default="UTC")
+    language = Column(String(10), default="en")
+    phone = Column(String(50), nullable=True)
+    company = Column(String(255), nullable=True)
 
-    user: User = relationship("User", back_populates="profile")
+    user = relationship("User", back_populates="profile")
 
 
 class RefreshToken(Base):
     """Refresh token database model."""
 
     __tablename__ = "refresh_tokens"
+    __allow_unmapped__ = True
 
-    id: UUID = Column(PostgresUUID(as_uuid=True), primary_key=True, default=func.uuid_generate_v4())
-    user_id: UUID = Column(
+    id = Column(PostgresUUID(as_uuid=True), primary_key=True, default=func.uuid_generate_v4())
+    user_id = Column(
         PostgresUUID(as_uuid=True), ForeignKey("users.id"), nullable=False, index=True
     )
-    token_hash: str = Column(String(255), nullable=False, unique=True, index=True)
-    expires_at: datetime = Column(DateTime(timezone=True), nullable=False)
-    created_at: datetime = Column(DateTime(timezone=True), server_default=func.now())
-    revoked_at: datetime = Column(DateTime(timezone=True), nullable=True)
+    token_hash = Column(String(255), nullable=False, unique=True, index=True)
+    expires_at = Column(DateTime(timezone=True), nullable=False)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    revoked_at = Column(DateTime(timezone=True), nullable=True)
 
-    user: User = relationship("User", back_populates="refresh_tokens")
+    user = relationship("User", back_populates="refresh_tokens")

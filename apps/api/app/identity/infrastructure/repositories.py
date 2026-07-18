@@ -3,10 +3,10 @@
 from datetime import datetime
 from uuid import UUID
 
-from sqlalchemy import func, select
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.identity.infrastructure.models import RefreshToken, User, UserProfile
+from app.identity.infrastructure.models import RefreshToken, User
 
 
 class UserRepository:

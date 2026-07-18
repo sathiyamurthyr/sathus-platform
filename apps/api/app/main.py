@@ -5,8 +5,8 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
 
+from app.api.v1.router import api_router
 from app.core.config import get_settings
 from app.core.database import close_db, init_db
 from app.core.exceptions import (
@@ -21,7 +21,6 @@ from app.core.middleware import (
     RequestTimingMiddleware,
 )
 from app.core.redis import close_redis, init_redis
-from app.api.v1.router import api_router
 
 settings = get_settings()
 

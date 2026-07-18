@@ -13,13 +13,16 @@ dependencies = [
     "alembic>=1.14.0",
     "redis[hiredis]>=5.2.0",
     "python-jose[cryptography]>=3.3.0",
-    "passlib[bcrypt]>=1.7.0",
+    "passlib[argon2]>=1.7.0",
     "structlog>=24.5.0",
     "opentelemetry-api>=1.27.0",
     "opentelemetry-sdk>=1.27.0",
     "opentelemetry-instrumentation-fastapi>=0.47b0",
     "opentelemetry-exporter-otlp>=1.27.0",
 ]
+
+[tool.setuptools]
+packages = ["app"]
 
 [project.optional-dependencies]
 dev = [

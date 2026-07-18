@@ -3,7 +3,12 @@
 from datetime import datetime, timedelta
 from uuid import UUID
 
-from app.core.security import create_access_token, create_refresh_token, hash_password, verify_password
+from app.core.security import (
+    create_access_token,
+    create_refresh_token,
+    hash_password,
+    verify_password,
+)
 from app.identity.infrastructure.models import User, UserStatus
 from app.identity.infrastructure.repositories import RefreshTokenRepository, UserRepository
 
