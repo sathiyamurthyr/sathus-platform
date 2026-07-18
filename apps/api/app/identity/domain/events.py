@@ -1,6 +1,7 @@
 """Identity domain events."""
 
 from datetime import datetime
+from typing import Any, Callable
 from uuid import UUID
 
 from pydantic import BaseModel
@@ -11,7 +12,7 @@ class DomainEvent(BaseModel):
 
     timestamp: datetime
     user_id: UUID
-    metadata: dict = {}
+    metadata: dict[str, Any] = {}
 
 
 class UserRegistered(DomainEvent):
@@ -54,16 +55,16 @@ class EmailVerified(DomainEvent):
 class EventPublisher:
     """Event publisher abstraction."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize publisher."""
-        self._handlers: list[callable] = []
+        self._handlers: list[Callable[[DomainEvent], None]] = []
 
     def publish(self, event: DomainEvent) -> None:
         """Publish an event."""
         for handler in self._handlers:
             handler(event)
 
-    def subscribe(self, handler: callable) -> None:
+    def subscribe(self, handler: Callable[[DomainEvent], None]) -> None:
         """Subscribe to events."""
         self._handlers.append(handler)
 
