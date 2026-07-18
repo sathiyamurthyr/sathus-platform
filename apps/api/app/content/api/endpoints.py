@@ -5,31 +5,31 @@ from uuid import UUID
 from fastapi import APIRouter, Depends, HTTPException
 
 from app.content.api.schemas import (
-    ContentItemResponse,
-    ContentItemCreateRequest,
-    ContentItemUpdateRequest,
-    SeoMetadataResponse,
-    SeoMetadataCreateRequest,
-    ContentTypeResponse,
     CategoryResponse,
-    TagResponse,
+    ContentItemCreateRequest,
+    ContentItemResponse,
+    ContentItemUpdateRequest,
+    ContentTypeResponse,
     ContentVersionResponse,
+    SeoMetadataCreateRequest,
+    SeoMetadataResponse,
+    TagResponse,
 )
 from app.content.application.services import (
-    ContentService,
-    SlugService,
-    SeoService,
-    VersionService,
     CategoryService,
+    ContentService,
+    SeoService,
+    SlugService,
     TagService,
+    VersionService,
 )
 from app.content.infrastructure.repositories import (
-    ContentItemRepository,
-    ContentTypeRepository,
-    SeoMetadataRepository,
-    ContentVersionRepository,
     ContentCategoryRepository,
+    ContentItemRepository,
     ContentTagRepository,
+    ContentTypeRepository,
+    ContentVersionRepository,
+    SeoMetadataRepository,
 )
 from app.core.database import get_db
 

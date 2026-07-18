@@ -1,21 +1,22 @@
 """Content database models."""
 
 from enum import StrEnum
-from uuid import UUID
 
 from sqlalchemy import (
     Boolean,
     Column,
     DateTime,
-    Enum as SQLEnum,
     ForeignKey,
     Integer,
     String,
-    Text,
     Table,
+    Text,
     func,
 )
-from sqlalchemy.dialects.postgresql import UUID as PostgresUUID, JSONB
+from sqlalchemy import (
+    Enum as SQLEnum,
+)
+from sqlalchemy.dialects.postgresql import UUID as PostgresUUID
 from sqlalchemy.orm import relationship
 
 from app.core.database import Base

@@ -1,12 +1,12 @@
 """Content module."""
 
 from app.content.application.services import (
-    ContentService,
-    SlugService,
-    SeoService,
-    VersionService,
     CategoryService,
+    ContentService,
+    SeoService,
+    SlugService,
     TagService,
+    VersionService,
 )
 
 __all__ = [

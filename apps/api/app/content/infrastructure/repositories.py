@@ -6,12 +6,12 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.content.infrastructure.models import (
-    ContentItem,
-    ContentType,
     ContentCategory,
+    ContentItem,
     ContentTag,
-    SeoMetadata,
+    ContentType,
     ContentVersion,
+    SeoMetadata,
 )
 
 

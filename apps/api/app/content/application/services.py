@@ -3,12 +3,12 @@
 from uuid import UUID
 
 from app.content.infrastructure.repositories import (
-    ContentItemRepository,
-    ContentTypeRepository,
-    SeoMetadataRepository,
-    ContentVersionRepository,
     ContentCategoryRepository,
+    ContentItemRepository,
     ContentTagRepository,
+    ContentTypeRepository,
+    ContentVersionRepository,
+    SeoMetadataRepository,
 )
 
 
