@@ -1,6 +1,7 @@
 """Notification API endpoints."""
 
 from datetime import datetime
+from typing import Any
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException
@@ -212,63 +213,106 @@ async def cancel_notification(
     return NotificationStatusResponse(success=True, message="Notification cancelled")
 
 
-# Template endpoints
+# Template management endpoints
 @router.post("/templates", response_model=NotificationTemplateResponse, status_code=201)
 async def create_template(
     request: NotificationTemplateCreateRequest,
-    service: NotificationTemplateService = Depends(get_template_service),
+    user=Depends(get_current_user),
 ) -> NotificationTemplateResponse:
     """Create a new notification template."""
-    try:
-        channel = NotificationChannel(request.channel)
-    except ValueError:
-        raise HTTPException(status_code=400, detail="Invalid channel")
-
-    template = await service.create_template(
+    from app.notification.application.template_service import TemplateLibrary
+    service = TemplateLibrary()
+    result = await service.create_template(
         name=request.name,
         body=request.body,
-        channel=channel,
+        channel=NotificationChannel(request.channel),
         subject=request.subject,
         variables=request.variables,
     )
-
-    return NotificationTemplateResponse(
-        id=template.id,
-        name=template.name,
-        subject=template.subject,
-        body=template.body,
-        channel=template.channel.value,
-        variables=template.variables,
-        version=template.version,
-        is_active=template.is_active,
-        created_at=template.created_at,
-        updated_at=template.updated_at,
-    )
+    return NotificationTemplateResponse(**result)
 
 
 @router.get("/templates", response_model=list[NotificationTemplateResponse])
 async def list_templates(
     limit: int = 100,
     offset: int = 0,
-    service: NotificationTemplateService = Depends(get_template_service),
+    user=Depends(get_current_user),
 ) -> list[NotificationTemplateResponse]:
     """List all notification templates."""
+    from app.notification.application.template_service import TemplateLibrary
+    service = TemplateLibrary()
     templates = await service.list_templates(limit, offset)
     return [
         NotificationTemplateResponse(
-            id=t.id,
-            name=t.name,
-            subject=t.subject,
-            body=t.body,
-            channel=t.channel.value,
-            variables=t.variables,
-            version=t.version,
-            is_active=t.is_active,
-            created_at=t.created_at,
-            updated_at=t.updated_at,
+            id=t["id"],
+            name=t["name"],
+            subject=t["subject"],
+            body=t["body"],
+            channel=t["channel"],
+            variables=t["variables"],
+            version=t["version"],
+            is_active=t["is_active"],
+            created_at=None,
+            updated_at=None,
         )
         for t in templates
     ]
+
+
+@router.get("/templates/{template_id}", response_model=NotificationTemplateResponse)
+async def get_template(
+    template_id: UUID,
+    language: str = "en",
+    user=Depends(get_current_user),
+) -> NotificationTemplateResponse:
+    """Get a specific template."""
+    from app.notification.application.template_service import TemplateLibrary
+    service = TemplateLibrary()
+    result = await service.get_template(template_id, language)
+    return NotificationTemplateResponse(**result)
+
+
+@router.post("/templates/{template_id}/localizations", response_model=NotificationTemplateResponse)
+async def add_template_localization(
+    template_id: UUID,
+    language_code: str,
+    subject: str | None,
+    body: str,
+    user=Depends(get_current_user),
+) -> NotificationTemplateResponse:
+    """Add localization for a template."""
+    from app.notification.application.template_service import TemplateLibrary
+    service = TemplateLibrary()
+    result = await service.add_localization(template_id, language_code, subject, body)
+    return NotificationTemplateResponse(**result)
+
+
+@router.post("/templates/{template_id}/preview", response_model=NotificationStatusResponse)
+async def preview_template(
+    template_id: UUID,
+    variables: dict[str, Any],
+    user=Depends(get_current_user),
+) -> NotificationStatusResponse:
+    """Preview a template with variables."""
+    from app.notification.application.template_service import TemplateLibrary
+    service = TemplateLibrary()
+    result = await service.preview_template(variables.get("body", ""), variables)
+    return NotificationStatusResponse(success=True, message=result)
+
+
+@router.post("/templates/{template_id}/versions", response_model=NotificationTemplateResponse)
+async def create_template_version(
+    template_id: UUID,
+    body: str,
+    subject: str | None = None,
+    variables: list[str] | None = None,
+    user=Depends(get_current_user),
+) -> NotificationTemplateResponse:
+    """Create a new version of a template."""
+    from app.notification.application.template_service import TemplateLibrary
+    service = TemplateLibrary()
+    result = await service.create_new_version(template_id, body, subject, variables)
+    return NotificationTemplateResponse(**result)
 
 
 # Preferences endpoints

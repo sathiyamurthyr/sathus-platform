@@ -119,6 +119,26 @@ class Notification(Base):
     template = relationship("NotificationTemplate", backref="notifications")
 
 
+class NotificationTemplateLocalization(Base):
+    """Notification template localization database model."""
+
+    __tablename__ = "notification_template_localizations"
+    __allow_unmapped__ = True
+
+    id = Column(PostgresUUID(as_uuid=True), primary_key=True, default=func.uuid_generate_v4())
+    template_id = Column(
+        PostgresUUID(as_uuid=True),
+        ForeignKey("notification_templates.id"),
+        nullable=False,
+    )
+    language_code = Column(String(10), nullable=False)
+    subject = Column(String(255), nullable=True)
+    body = Column(Text, nullable=False)
+    is_active = Column(Boolean, default=True)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+
+
 class NotificationPreferences(Base):
     """User notification preferences database model."""
 
