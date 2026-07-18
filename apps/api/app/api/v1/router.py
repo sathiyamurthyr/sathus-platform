@@ -13,6 +13,7 @@ from app.search.api import endpoints as search
 from app.audit.api import endpoints as audit
 from app.reporting.api import endpoints as reporting
 from app.ai.api import endpoints as ai
+from app.integration.api import endpoints as integration
 
 api_router = APIRouter()
 
@@ -27,3 +28,4 @@ api_router.include_router(search.router, prefix="/search", tags=["search"])
 api_router.include_router(audit.router, prefix="/audit", tags=["audit"])
 api_router.include_router(reporting.router, prefix="/reporting", tags=["reporting"])
 api_router.include_router(ai.router, prefix="/ai", tags=["ai"])
+api_router.include_router(integration.router, prefix="/integrations", tags=["integrations"])
