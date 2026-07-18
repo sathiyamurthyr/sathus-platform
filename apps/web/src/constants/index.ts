@@ -13,13 +13,13 @@ export const siteConfig: SiteConfig = {
 };
 
 export const navItems: NavItem[] = [
-  { label: 'Solutions', href: '#solutions', hasMega: true },
-  { label: 'Industries', href: '#industries', hasMega: false },
-  { label: 'Products', href: '#products', hasMega: true },
-  { label: 'Technology', href: '#technology', hasMega: true },
-  { label: 'Resources', href: '#insights', hasMega: true },
-  { label: 'Company', href: '#why', hasMega: true },
-  { label: 'Trust Center', href: '#trust-center', hasMega: false },
+  { label: 'Solutions', href: '/solutions', hasMega: true },
+  { label: 'Industries', href: '/industries', hasMega: false },
+  { label: 'Products', href: '/products', hasMega: true },
+  { label: 'Technology', href: '/solutions', hasMega: true },
+  { label: 'Resources', href: '/resources', hasMega: true },
+  { label: 'Company', href: '/solutions', hasMega: true },
+  { label: 'Trust Center', href: '/trust', hasMega: false },
 ];
 
 export const megaMenuSections: Record<string, MegaMenuSection[]> = {
@@ -325,64 +325,64 @@ export const footerSections: FooterSection[] = [
   {
     title: 'Solutions',
     links: [
-      { title: 'AI Engineering', href: '#solutions' },
-      { title: 'Data Engineering', href: '#platform' },
-      { title: 'Enterprise Applications', href: '#products' },
-      { title: 'Cloud Modernization', href: '#technology' },
+      { title: 'AI Engineering', href: '/solutions/ai-engineering' },
+      { title: 'Data Engineering', href: '/solutions/data-engineering' },
+      { title: 'Enterprise Applications', href: '/solutions/enterprise-applications' },
+      { title: 'Cloud Modernization', href: '/solutions/cloud-modernization' },
     ],
   },
   {
     title: 'Industries',
     links: [
-      { title: 'FinTech', href: '#industries' },
-      { title: 'Financial Services', href: '#industries' },
-      { title: 'Life Sciences', href: '#industries' },
-      { title: 'Healthcare', href: '#industries' },
+      { title: 'FinTech', href: '/industries/fintech' },
+      { title: 'Financial Services', href: '/industries/financial-services' },
+      { title: 'Life Sciences', href: '/industries/life-sciences' },
+      { title: 'Healthcare', href: '/industries/healthcare' },
     ],
   },
   {
     title: 'Products',
     links: [
-      { title: 'Sathus AI', href: '#products' },
-      { title: 'Memomes Cloud', href: '#products' },
-      { title: 'SocialHub MCP', href: '#products' },
-      { title: 'OneHealthID', href: '#products' },
+      { title: 'Sathus AI', href: '/products/sathus-ai' },
+      { title: 'Memomes Cloud', href: '/products/memomes-cloud' },
+      { title: 'SocialHub MCP', href: '/products/socialhub-mcp' },
+      { title: 'OneHealthID', href: '/products/onehealthid' },
     ],
   },
   {
     title: 'Company',
     links: [
-      { title: 'Our Approach', href: '#why' },
-      { title: 'Careers', href: '#why' },
-      { title: 'Newsroom', href: '#insights' },
-      { title: 'Contact', href: '#final-cta' },
+      { title: 'Our Approach', href: '/solutions' },
+      { title: 'Careers', href: '/solutions' },
+      { title: 'Newsroom', href: '/resources' },
+      { title: 'Contact', href: '/contact' },
     ],
   },
   {
     title: 'Resources',
     links: [
-      { title: 'Insights', href: '#insights' },
-      { title: 'Engineering', href: '#insights' },
-      { title: 'Architecture', href: '#insights' },
-      { title: 'Trust Center', href: '#trust-center' },
+      { title: 'Insights', href: '/resources' },
+      { title: 'Engineering', href: '/resources' },
+      { title: 'Architecture', href: '/resources' },
+      { title: 'Trust Center', href: '/trust' },
     ],
   },
   {
     title: 'Trust',
     links: [
-      { title: 'Security', href: '#trust-center' },
-      { title: 'Privacy', href: '#trust-center' },
-      { title: 'Compliance', href: '#trust-center' },
-      { title: 'Responsible AI', href: '#trust-center' },
+      { title: 'Security', href: '/trust/security' },
+      { title: 'Privacy', href: '/trust/privacy' },
+      { title: 'Compliance', href: '/trust/compliance' },
+      { title: 'Responsible AI', href: '/trust/responsible-ai' },
     ],
   },
   {
     title: 'Legal',
     links: [
-      { title: 'Privacy Policy', href: '#' },
-      { title: 'Terms of Service', href: '#' },
-      { title: 'Cookie Policy', href: '#' },
-      { title: 'Accessibility', href: '#' },
+      { title: 'Privacy Policy', href: '/trust/privacy' },
+      { title: 'Terms of Service', href: '/trust/vulnerability-disclosure' },
+      { title: 'Cookie Policy', href: '/trust/privacy' },
+      { title: 'Accessibility', href: '/trust' },
     ],
   },
 ];

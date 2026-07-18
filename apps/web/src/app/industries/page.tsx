@@ -5,13 +5,19 @@ import { Reveal } from '@/components/sections/reveal';
 import { CTA } from '@/features/industries/components/CTA';
 import {
   financialServicesIndustry,
-} from '@/features/industries/data/financial-services';
+  fintechIndustry,
+  lifeSciencesIndustry,
+  healthcareIndustry,
+} from '@/features/industries';
 
 const SITE_URL = 'https://sathus.in';
 
 // Industry registry - will be expanded as more industries are added
 const INDUSTRY_REGISTRY = [
   financialServicesIndustry,
+  fintechIndustry,
+  lifeSciencesIndustry,
+  healthcareIndustry,
 ];
 
 export const metadata: Metadata = {

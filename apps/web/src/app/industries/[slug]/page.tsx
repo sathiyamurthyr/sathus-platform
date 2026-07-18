@@ -10,7 +10,12 @@ import { BusinessOutcomes } from '@/features/industries/components/BusinessOutco
 import { CaseStudies } from '@/features/industries/components/CaseStudies';
 import { FAQ } from '@/features/industries/components/FAQ';
 import { CTA } from '@/features/industries/components/CTA';
-import { financialServicesIndustry } from '@/features/industries/data/financial-services';
+import {
+  financialServicesIndustry,
+  fintechIndustry,
+  lifeSciencesIndustry,
+  healthcareIndustry,
+} from '@/features/industries';
 import type { Industry } from '@/features/industries/types';
 
 const SITE_URL = 'https://sathus.in';
@@ -18,6 +23,9 @@ const SITE_URL = 'https://sathus.in';
 // Industry registry - will be expanded as more industries are added
 const INDUSTRY_REGISTRY: Record<string, Industry> = {
   'financial-services': financialServicesIndustry,
+  'fintech': fintechIndustry,
+  'life-sciences': lifeSciencesIndustry,
+  'healthcare': healthcareIndustry,
 };
 
 interface IndustryPageProps {

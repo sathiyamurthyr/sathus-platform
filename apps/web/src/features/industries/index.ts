@@ -14,6 +14,9 @@ export type {
 
 // Data
 export { financialServicesIndustry } from './data/financial-services';
+export { fintechIndustry } from './data/fintech';
+export { lifeSciencesIndustry } from './data/life-sciences';
+export { healthcareIndustry } from './data/healthcare';
 
 // Components
 export { IndustryHero } from './components/IndustryHero';
