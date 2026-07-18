@@ -57,24 +57,16 @@ export function Header() {
         transition={{ duration: 0.4, ease: 'easeOut' }}
       >
         <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6">
-          <div className="flex items-center gap-6">
-            <Link href="/" className="flex items-center gap-2.5" aria-label="Sathus Technology home">
+<div className="flex items-center gap-6">
+            <Link href="/" className="flex items-center" aria-label="Sathus Technology home">
               <motion.div
                 animate={{
                   scale: isScrolled ? 0.9 : 1,
                 }}
                 transition={{ duration: 0.3, ease: 'easeOut' }}
               >
-                <BrandLogo showWordmark={false} />
+                <BrandLogo size="md" />
               </motion.div>
-              <motion.span
-                className={cn(
-                  'text-base font-semibold tracking-tight text-foreground transition-all duration-300',
-                  isScrolled ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-1'
-                )}
-              >
-                Sathus Technology
-              </motion.span>
             </Link>
             <Navigation />
           </div>
