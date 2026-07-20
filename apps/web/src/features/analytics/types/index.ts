@@ -72,3 +72,48 @@ export interface ExecutiveAnalyticsOverview {
   totalAiTokensFormatted: string;
   cacheStatus: AnalyticsCacheStatus;
 }
+
+// Story 14.2 Executive Analytics Dashboard Types
+
+export interface RevenueByPlan {
+  planTier: 'Starter' | 'Pro' | 'Enterprise Scale';
+  subscriberCount: number;
+  mrrContributionDollars: number;
+  growthPercent: number;
+}
+
+export interface TopPayingCustomer {
+  tenantId: string;
+  name: string;
+  plan: string;
+  mrrDollars: number;
+  userCount: number;
+  joinedDate: string;
+}
+
+export interface CustomerAnalyticsSummary {
+  newSignupsThisMonth: number;
+  churnRatePercent: number;
+  retentionRatePercent: number;
+  avgRevenuePerUserDollars: number;
+}
+
+export interface ProductUsageItem {
+  feature: string;
+  monthlyCount: number;
+  growthPercent: number;
+  unit: string;
+}
+
+export interface ExecutiveDashboardMetrics {
+  mrrDollars: number;
+  arrDollars: number;
+  activeTenants: number;
+  activeUsers: number;
+  retentionRatePercent: number;
+  platformUptimePercent: number;
+  revenueByPlan: RevenueByPlan[];
+  topPayingCustomers: TopPayingCustomer[];
+  customerSummary: CustomerAnalyticsSummary;
+  productUsage: ProductUsageItem[];
+}

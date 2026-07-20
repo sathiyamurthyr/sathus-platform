@@ -33,6 +33,9 @@ import {
 } from '../../data/mock-analytics-data';
 import type { KPIDefinition, AggregationPeriod } from '../../types';
 
+import { Crown } from 'lucide-react';
+import { ExecutiveAnalyticsDashboardView } from '../ExecutiveAnalyticsDashboardView';
+
 export function AnalyticsFoundationView() {
   const [activeTab, setActiveTab] = useState<'overview' | 'kpis' | 'timeseries' | 'widgets' | 'cache'>('overview');
   const [selectedPeriod, setSelectedPeriod] = useState<AggregationPeriod>('month');
@@ -106,112 +109,7 @@ export function AnalyticsFoundationView() {
 
       {/* TAB 1: EXECUTIVE BI OVERVIEW */}
       {activeTab === 'overview' && (
-        <div className="space-y-6">
-          {/* Executive Primary KPI Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {/* Revenue */}
-            <div className="bg-card border border-border rounded-xl p-5 space-y-3 shadow-sm">
-              <div className="flex items-center justify-between text-xs font-semibold text-muted-foreground">
-                <span>Monthly Recurring Revenue</span>
-                <DollarSign className="w-4 h-4 text-emerald-500" />
-              </div>
-              <div className="text-2xl font-extrabold text-foreground">
-                ${mockExecutiveOverview.totalMrrDollars.toLocaleString()}
-              </div>
-              <div className="flex items-center space-x-1 text-xs font-bold text-emerald-500">
-                <TrendingUp className="w-3.5 h-3.5" />
-                <span>+{mockExecutiveOverview.mrrGrowthPercent}% MoM Growth</span>
-              </div>
-            </div>
-
-            {/* Active Users */}
-            <div className="bg-card border border-border rounded-xl p-5 space-y-3 shadow-sm">
-              <div className="flex items-center justify-between text-xs font-semibold text-muted-foreground">
-                <span>Active Workspace Users</span>
-                <Users className="w-4 h-4 text-primary" />
-              </div>
-              <div className="text-2xl font-extrabold text-foreground">
-                {mockExecutiveOverview.totalActiveUsers}
-              </div>
-              <div className="flex items-center space-x-1 text-xs font-bold text-emerald-500">
-                <TrendingUp className="w-3.5 h-3.5" />
-                <span>+{mockExecutiveOverview.userGrowthPercent}% MoM Growth</span>
-              </div>
-            </div>
-
-            {/* Enterprise Tenants */}
-            <div className="bg-card border border-border rounded-xl p-5 space-y-3 shadow-sm">
-              <div className="flex items-center justify-between text-xs font-semibold text-muted-foreground">
-                <span>Active Enterprise Tenants</span>
-                <Building2 className="w-4 h-4 text-purple-500" />
-              </div>
-              <div className="text-2xl font-extrabold text-foreground">
-                {mockExecutiveOverview.totalActiveTenants}
-              </div>
-              <div className="flex items-center space-x-1 text-xs font-bold text-emerald-500">
-                <TrendingUp className="w-3.5 h-3.5" />
-                <span>+{mockExecutiveOverview.tenantGrowthPercent}% MoM Growth</span>
-              </div>
-            </div>
-
-            {/* AI Consumption */}
-            <div className="bg-card border border-border rounded-xl p-5 space-y-3 shadow-sm">
-              <div className="flex items-center justify-between text-xs font-semibold text-muted-foreground">
-                <span>AI Gateway Tokens</span>
-                <Bot className="w-4 h-4 text-blue-500" />
-              </div>
-              <div className="text-2xl font-extrabold text-foreground">
-                {mockExecutiveOverview.totalAiTokensFormatted}
-              </div>
-              <div className="flex items-center space-x-1 text-xs font-bold text-emerald-500">
-                <TrendingUp className="w-3.5 h-3.5" />
-                <span>+42.1% Invocations</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Time Series Preview Chart Card */}
-          <div className="bg-card border border-border rounded-xl p-6 space-y-4 shadow-sm">
-            <div className="flex items-center justify-between">
-              <div>
-                <h3 className="text-sm font-bold text-foreground">Platform Growth & Revenue Trajectory (2026 H1)</h3>
-                <p className="text-xs text-muted-foreground">Aggregated monthly telemetry across subscriptions, active users, and AI requests.</p>
-              </div>
-
-              <div className="flex space-x-1 bg-background border border-border rounded-lg p-1 text-xs font-semibold">
-                {(['month', 'quarter', 'year'] as AggregationPeriod[]).map((p) => (
-                  <button
-                    key={p}
-                    onClick={() => setSelectedPeriod(p)}
-                    className={`px-3 py-1 rounded capitalize transition-all ${
-                      selectedPeriod === p ? 'bg-primary text-primary-foreground font-bold' : 'text-muted-foreground'
-                    }`}
-                  >
-                    {p}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="space-y-3 pt-2">
-              {mockTimeSeriesData.map((dp, idx) => (
-                <div key={idx} className="p-4 rounded-xl bg-background border border-border flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                  <div className="flex items-center space-x-3">
-                    <Calendar className="w-4 h-4 text-primary" />
-                    <span className="text-xs font-bold text-foreground">{dp.period}</span>
-                  </div>
-
-                  <div className="flex items-center space-x-6 font-mono text-xs">
-                    <span>MRR: <strong className="text-emerald-500">${dp.mrrDollars.toLocaleString()}</strong></span>
-                    <span>Users: <strong className="text-foreground">{dp.activeUsers}</strong></span>
-                    <span>AI Req: <strong className="text-primary">{dp.aiRequests.toLocaleString()}</strong></span>
-                    <span>Workflows: <strong className="text-purple-500">{dp.workflowExecutions}</strong></span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+        <ExecutiveAnalyticsDashboardView />
       )}
 
       {/* TAB 2: CONFIGURABLE KPI ENGINE */}
