@@ -144,3 +144,88 @@ export interface TrendPoint {
   aiTokens: number;
   workflows: number;
 }
+
+// Story 13.3 Enterprise Alerting & Incident Management Types
+
+export type AlertSeverity = 'P0_CRITICAL' | 'P1_HIGH' | 'P2_MEDIUM' | 'P3_LOW';
+
+export type AlertCategory =
+  | 'metric'
+  | 'error_rate'
+  | 'latency'
+  | 'availability'
+  | 'database'
+  | 'ai'
+  | 'workflow';
+
+export type IncidentStatus = 'open' | 'acknowledged' | 'investigating' | 'mitigated' | 'resolved' | 'closed';
+
+export interface AlertRule {
+  id: string;
+  name: string;
+  description: string;
+  category: AlertCategory;
+  severity: AlertSeverity;
+  condition: string;
+  threshold: number;
+  unit: string;
+  evaluationWindowMin: number;
+  cooldownMin: number;
+  isEnabled: boolean;
+  tenantScope?: string;
+  channels: Array<'in_app' | 'email' | 'slack' | 'teams' | 'webhook'>;
+}
+
+export interface AlertInstance {
+  id: string;
+  ruleId: string;
+  ruleName: string;
+  severity: AlertSeverity;
+  status: 'firing' | 'acknowledged' | 'resolved' | 'closed';
+  triggeredAt: string;
+  resolvedAt?: string;
+  value: number;
+  threshold: number;
+  affectedService: string;
+  summary: string;
+}
+
+export interface IncidentTimelineEvent {
+  id: string;
+  timestamp: string;
+  action: string;
+  user: string;
+}
+
+export interface Incident {
+  id: string;
+  title: string;
+  severity: AlertSeverity;
+  status: IncidentStatus;
+  owner: string;
+  affectedServices: string[];
+  relatedAlerts: string[];
+  createdAt: string;
+  updatedAt: string;
+  mttaMinutes?: number;
+  mttrMinutes?: number;
+  rootCause?: string;
+  timeline: IncidentTimelineEvent[];
+}
+
+export interface EscalationPolicy {
+  id: string;
+  name: string;
+  level1: string[];
+  level2: string[];
+  level3: string[];
+  timeoutMin: number;
+}
+
+export interface ServiceDependencyNode {
+  id: string;
+  name: string;
+  parentServiceId?: string;
+  status: ServiceHealthStatus;
+  impactedByIncidentId?: string;
+}

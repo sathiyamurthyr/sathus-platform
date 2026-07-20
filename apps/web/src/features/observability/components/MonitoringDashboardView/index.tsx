@@ -34,7 +34,11 @@ import {
 } from '../../data/mock-monitoring-data';
 import type { ServiceHealthStatus, ServiceGridItem, TopIssueItem } from '../../types';
 
+import { Siren } from 'lucide-react';
+import { AlertingIncidentPlatformView } from '../AlertingIncidentPlatformView';
+
 export function MonitoringDashboardView() {
+  const [mainTab, setMainTab] = useState<'overview' | 'alerts_incidents'>('overview');
   const [refreshInterval, setRefreshInterval] = useState<number>(10); // seconds
   const [lastUpdated, setLastUpdated] = useState<string>(new Date().toLocaleTimeString());
   const [serviceSearch, setServiceSearch] = useState('');
@@ -116,7 +120,37 @@ export function MonitoringDashboardView() {
         </div>
       </div>
 
-      {/* Top Health Score Banner & Primary KPIs */}
+      {/* Sub-Navigation Header */}
+      <div className="flex border-b border-border space-x-2">
+        <button
+          onClick={() => setMainTab('overview')}
+          className={`flex items-center space-x-2 px-4 py-2.5 text-xs font-semibold border-b-2 transition-all ${
+            mainTab === 'overview'
+              ? 'border-primary text-primary bg-primary/5'
+              : 'border-transparent text-muted-foreground hover:text-foreground'
+          }`}
+        >
+          <Activity className="w-4 h-4" />
+          <span>Monitoring Overview</span>
+        </button>
+
+        <button
+          onClick={() => setMainTab('alerts_incidents')}
+          className={`flex items-center space-x-2 px-4 py-2.5 text-xs font-semibold border-b-2 transition-all ${
+            mainTab === 'alerts_incidents'
+              ? 'border-primary text-primary bg-primary/5'
+              : 'border-transparent text-muted-foreground hover:text-foreground'
+          }`}
+        >
+          <Siren className="w-4 h-4 text-red-500" />
+          <span>Alerts & Incidents Engine</span>
+        </button>
+      </div>
+
+      {mainTab === 'alerts_incidents' ? (
+        <AlertingIncidentPlatformView />
+      ) : (
+        <>
       <div className="bg-card border border-border rounded-xl p-6 shadow-sm space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 divide-y md:divide-y-0 md:divide-x divide-border">
           {/* Health Score Gauge */}
@@ -333,6 +367,8 @@ export function MonitoringDashboardView() {
           })}
         </div>
       </div>
+      </>
+      )}
     </div>
   );
 }
