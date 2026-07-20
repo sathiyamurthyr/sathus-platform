@@ -4,8 +4,8 @@ import { ArrowUpRight, Bot, Database, Boxes, CloudCog, Rocket, Repeat } from 'lu
 import type { LucideIcon } from 'lucide-react';
 import { Reveal } from '@/components/sections/reveal';
 import { SectionIntro } from '@/components/sections/section-intro';
-
-const SITE_URL = 'https://sathus.in';
+import { Breadcrumb } from '@/components/common/breadcrumb';
+import { siteConfig } from '@/constants';
 
 export const metadata: Metadata = {
   title: 'Solutions',
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     title: 'Solutions — Sathus Technology',
     description:
       'Engineering disciplines delivered as accountable outcomes with reference architectures and production-ready delivery.',
-    url: `${SITE_URL}/solutions`,
+    url: `${siteConfig.url}/solutions`,
     type: 'website',
   },
   twitter: {
@@ -118,10 +118,41 @@ const DELIVERY_STAGES = [
 ];
 
 export default function SolutionsPage() {
+  const serviceJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    serviceType: 'Enterprise Engineering Solutions',
+    provider: {
+      '@type': 'Organization',
+      name: siteConfig.name,
+      url: siteConfig.url,
+    },
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: 'Engineering Practices',
+      itemListElement: SOLUTION_PRACTICES.map((p) => ({
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: p.title,
+          description: p.approach,
+        },
+      })),
+    },
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
+      />
+      <div className="container mx-auto px-4 pt-6">
+        <Breadcrumb items={[{ label: 'Solutions' }]} />
+      </div>
+
       {/* Editorial Hero */}
-      <section id="solutions-hero" className="scroll-mt-24 py-20 sm:py-24">
+      <section id="solutions-hero" className="scroll-mt-24 py-12 sm:py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl">
             <SectionIntro
@@ -148,7 +179,7 @@ export default function SolutionsPage() {
       </section>
 
       {/* Solutions Grid */}
-      <section id="practices" className="scroll-mt-24 py-20 sm:py-24">
+      <section id="practices" className="scroll-mt-24 py-16 sm:py-20">
         <div className="container mx-auto px-4">
           <SectionIntro
             eyebrow="Practices"
@@ -239,7 +270,7 @@ export default function SolutionsPage() {
       </section>
 
       {/* Delivery Methodology */}
-      <section id="methodology" className="scroll-mt-24 py-20 sm:py-24 bg-muted/20">
+      <section id="methodology" className="scroll-mt-24 py-16 sm:py-20 bg-muted/20">
         <div className="container mx-auto px-4">
           <SectionIntro
             eyebrow="Methodology"
@@ -252,12 +283,12 @@ export default function SolutionsPage() {
               <Reveal key={stage.name} delay={i * 0.05}>
                 <div className="rounded-xl border border-border bg-background p-6">
                   <div className="flex items-baseline gap-3">
-                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary font-semibold">
+                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary font-semibold text-xs">
                       {i + 1}
                     </span>
-                    <h3 className="text-lg font-semibold text-foreground">{stage.name}</h3>
+                    <h3 className="text-base font-semibold text-foreground">{stage.name}</h3>
                   </div>
-                  <p className="mt-3 text-sm text-muted-foreground">{stage.description}</p>
+                  <p className="mt-3 text-xs leading-relaxed text-muted-foreground">{stage.description}</p>
                 </div>
               </Reveal>
             ))}
@@ -266,7 +297,7 @@ export default function SolutionsPage() {
       </section>
 
       {/* Why Sathus */}
-      <section id="why" className="scroll-mt-24 py-20 sm:py-24">
+      <section id="why" className="scroll-mt-24 py-16 sm:py-20">
         <div className="container mx-auto px-4">
           <SectionIntro
             eyebrow="Differentiator"
@@ -276,29 +307,29 @@ export default function SolutionsPage() {
 
           <div className="mt-10 grid gap-6 md:grid-cols-2">
             <div className="rounded-xl border border-border bg-background p-6">
-              <h3 className="text-lg font-semibold text-foreground">Engineering-first</h3>
-              <p className="mt-2 text-sm text-muted-foreground">
+              <h3 className="text-base font-semibold text-foreground">Engineering-first</h3>
+              <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
                 We ship production code, not presentations. Every engagement includes source code
                 deliverables, documentation, and knowledge transfer.
               </p>
             </div>
             <div className="rounded-xl border border-border bg-background p-6">
-              <h3 className="text-lg font-semibold text-foreground">Security-first</h3>
-              <p className="mt-2 text-sm text-muted-foreground">
+              <h3 className="text-base font-semibold text-foreground">Security-first</h3>
+              <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
                 Security is built into every layer of our architecture, from secure coding practices
                 to compliance-by-design for regulated industries.
               </p>
             </div>
             <div className="rounded-xl border border-border bg-background p-6">
-              <h3 className="text-lg font-semibold text-foreground">Scalable architecture</h3>
-              <p className="mt-2 text-sm text-muted-foreground">
+              <h3 className="text-base font-semibold text-foreground">Scalable architecture</h3>
+              <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
                 Our reference architectures scale horizontally, integrate cleanly, and adapt to your
                 evolving enterprise requirements.
               </p>
             </div>
             <div className="rounded-xl border border-border bg-background p-6">
-              <h3 className="text-lg font-semibold text-foreground">Long-term partnership</h3>
-              <p className="mt-2 text-sm text-muted-foreground">
+              <h3 className="text-base font-semibold text-foreground">Long-term partnership</h3>
+              <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
                 We stay engaged post-launch to ensure continued success, providing ongoing support,
                 optimization, and evolution of your platform.
               </p>
@@ -308,17 +339,17 @@ export default function SolutionsPage() {
       </section>
 
       {/* Final CTA */}
-      <section id="cta" className="scroll-mt-24 py-20 sm:py-24">
+      <section id="cta" className="scroll-mt-24 py-16 sm:py-20">
         <div className="container mx-auto px-4">
           <div className="rounded-2xl bg-primary/5 p-8 sm:p-12 text-center">
-            <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+            <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
               Ready to engineer your next platform?
             </h2>
-<p className="mt-4 text-muted-foreground">
+            <p className="mt-4 text-xs text-muted-foreground max-w-lg mx-auto">
               Let&apos;s discuss how our engineering practices can accelerate your business outcomes.
             </p>
             <Link
-              href="/contact"
+              href="/book-strategy-session"
               className="mt-8 inline-flex items-center justify-center rounded-md bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               Start the conversation

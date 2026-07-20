@@ -2,23 +2,73 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, Send, Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Logo } from '@/components/common/Logo';
 import { footerSections, socialLinks, siteConfig } from '@/constants';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 
 export function Footer({ className }: { className?: string }) {
+  const [email, setEmail] = React.useState('');
+  const [subscribed, setSubscribed] = React.useState(false);
+
+  const handleSubscribe = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (email.trim() && email.includes('@')) {
+      setSubscribed(true);
+      setEmail('');
+      setTimeout(() => setSubscribed(false), 5000);
+    }
+  };
+
   return (
     <footer className={cn('border-t border-border bg-background', className)}>
       <div className="container mx-auto px-4 py-16">
         <div className="grid gap-12 lg:grid-cols-[1.4fr_2.6fr]">
-          {/* Brand */}
+          {/* Brand & Newsletter */}
           <div className="flex flex-col">
             <Logo size="lg" showWordmark={true} />
             <p className="mt-5 max-w-xs text-sm leading-relaxed text-muted-foreground">
               Engineering the future of AI, data & enterprise software for
               regulated industries.
             </p>
+
+            <form onSubmit={handleSubscribe} className="mt-6 max-w-sm space-y-2">
+              <label htmlFor="footer-email" className="text-xs font-semibold text-foreground">
+                Subscribe to Engineering Briefings
+              </label>
+              <div className="flex items-center gap-2">
+                <Input
+                  id="footer-email"
+                  type="email"
+                  placeholder="enter.name@enterprise.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  className="h-9 text-xs bg-muted/40 border-border"
+                />
+                <Button type="submit" size="sm" className="h-9 px-3 shrink-0 gap-1 text-xs">
+                  {subscribed ? (
+                    <>
+                      <Check className="h-3.5 w-3.5 text-emerald-400" />
+                      Subscribed
+                    </>
+                  ) : (
+                    <>
+                      Subscribe
+                      <Send className="h-3 w-3" />
+                    </>
+                  )}
+                </Button>
+              </div>
+              {subscribed && (
+                <p className="text-[11px] text-emerald-500 font-medium">
+                  ✓ Thank you for subscribing to Sathus Engineering Briefings.
+                </p>
+              )}
+            </form>
+
             <Link
               href="/book-strategy-session"
               className="group mt-6 inline-flex w-fit items-center gap-1.5 text-sm font-medium text-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded"
@@ -26,6 +76,7 @@ export function Footer({ className }: { className?: string }) {
               Book a strategy session
               <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </Link>
+
             <div className="mt-8 flex items-center gap-3">
               {socialLinks.map((link) => (
                 <a
@@ -66,7 +117,7 @@ export function Footer({ className }: { className?: string }) {
                 </h3>
                 <ul className="mt-4 space-y-2.5">
                   {section.links.map((link) => (
-<li key={link.title}>
+                    <li key={link.title}>
                       <Link
                         href={link.href}
                         className="text-sm text-muted-foreground transition-colors hover:text-foreground focus:outline-none focus-visible:underline"

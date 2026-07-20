@@ -2,12 +2,14 @@
 
 import * as React from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { motion } from 'motion/react';
 import { cn } from '@/lib/utils';
 import { MegaMenu } from '@/components/layout/mega-menu';
 import { navItems, megaMenuSections } from '@/constants';
 
 const Navigation = () => {
+  const pathname = usePathname();
   const [activeIndex, setActiveIndex] = React.useState<number | null>(null);
   const [megaOpen, setMegaOpen] = React.useState(false);
   const [hoveredItem, setHoveredItem] = React.useState<string | null>(null);
@@ -36,13 +38,16 @@ const Navigation = () => {
   return (
     <nav
       ref={navRef}
-      className="hidden items-center gap-1 lg:gap-2 xl:gap-4 2xl:gap-6"
+      className="hidden md:flex items-center gap-1 lg:gap-2 xl:gap-4 2xl:gap-6"
       aria-label="Main"
       onKeyDown={handleKeyDown}
     >
       {navItems.map((item, index) => {
         const hasMega = item.hasMega;
-        const isActive = activeIndex === index;
+        const isCurrentRoute =
+          pathname === item.href ||
+          (item.href !== '/' && pathname.startsWith(item.href));
+        const isHovered = activeIndex === index;
         const isFocused = focusedIndex === index;
 
         return (
@@ -67,24 +72,23 @@ const Navigation = () => {
             <Link
               href={item.href}
               className={cn(
-                'relative py-2 text-sm font-medium text-muted-foreground transition-colors duration-200 hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm',
-                isActive && 'text-foreground',
+                'relative py-2 text-sm font-medium transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm',
+                isCurrentRoute ? 'text-primary font-semibold' : 'text-muted-foreground hover:text-foreground',
+                isHovered && 'text-foreground',
                 isFocused && 'text-foreground'
               )}
-              onClick={(e) => {
-                if (hasMega) {
-                  e.preventDefault();
-                }
-              }}
               aria-haspopup={hasMega ? 'true' : undefined}
               aria-expanded={hasMega ? megaOpen : undefined}
               tabIndex={0}
             >
               {item.label}
-              {isActive && (
+              {(isCurrentRoute || isHovered) && (
                 <motion.div
                   layoutId="nav-indicator"
-                  className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary rounded-full"
+                  className={cn(
+                    'absolute -bottom-1 left-0 right-0 h-0.5 rounded-full',
+                    isCurrentRoute ? 'bg-primary' : 'bg-primary/50'
+                  )}
                   transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                 />
               )}
