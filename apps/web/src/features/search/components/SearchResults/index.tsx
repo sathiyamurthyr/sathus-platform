@@ -32,7 +32,7 @@ export function SearchResults({ results, onSelect }: SearchResultsProps) {
           <div className="flex items-center justify-between">
             <span className="text-sm font-medium text-foreground">{result.title}</span>
             <span className="text-xs text-muted-foreground">
-              {CATEGORY_LABELS[result.category] || result.category}
+              {(result.category && CATEGORY_LABELS[result.category]) || result.category || result.entityType}
             </span>
           </div>
           <p className="mt-1 text-xs text-muted-foreground line-clamp-2">

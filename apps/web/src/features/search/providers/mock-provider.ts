@@ -86,7 +86,8 @@ export class MockSearchProvider implements SearchProvider {
       // Text match
       const matchesQuery =
         result.title.toLowerCase().includes(normalizedQuery) ||
-        result.description.toLowerCase().includes(normalizedQuery);
+        (result.description?.toLowerCase().includes(normalizedQuery) ?? false) ||
+        (result.snippet?.toLowerCase().includes(normalizedQuery) ?? false);
 
       // Category filter
       if (filters?.category && result.category !== filters.category) {
