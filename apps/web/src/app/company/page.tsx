@@ -3,7 +3,7 @@ import { SectionIntro } from '@/components/sections/section-intro';
 import { Breadcrumb } from '@/components/common/breadcrumb';
 import { siteConfig } from '@/constants';
 import Link from 'next/link';
-import { ShieldCheck, Target, Users, Briefcase, Mail, Award } from 'lucide-react';
+import { ShieldCheck, Target, Users, Briefcase, Mail, Award, Handshake, Star } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Company Hub',
@@ -20,43 +20,57 @@ export const metadata: Metadata = {
 
 const companySections = [
   {
+    title: 'Why Sathus',
+    description: 'Understand what makes Sathus different from traditional consultancies — principal engineers, open architectures, and contractual SLAs.',
+    href: '/company/why-sathus',
+    icon: Star,
+    badge: 'Start Here',
+  },
+  {
     title: 'About Us & Approach',
-    description: 'Learn about our engineering philosophy, core principles, and track record in regulated industries.',
+    description: 'Our founding story, engineering philosophy, domain expertise, industries served, and delivery methodology.',
     href: '/company/about',
     icon: Target,
     badge: 'Overview',
   },
   {
     title: 'Leadership',
-    description: 'Meet our executive leadership and advisory team shaping enterprise AI and data platforms.',
+    description: 'Meet our executive leadership team — engineers with decades of applied experience in AI, data platforms, and regulated industries.',
     href: '/company/leadership',
     icon: Users,
     badge: 'Team',
   },
   {
     title: 'Careers & Culture',
-    description: 'Join our embedded engineering squads building mission-critical SaaS and AI infrastructure.',
+    description: 'Join our embedded engineering squads. View open roles, our tech stack, hiring process, and engineering culture.',
     href: '/company/careers',
     icon: Briefcase,
-    badge: 'We’re Hiring',
+    badge: "We're Hiring",
   },
   {
     title: 'Investor Relations',
-    description: 'Corporate governance, growth metrics, and investor contact information.',
+    description: 'Corporate governance, market opportunity, product portfolio roadmap, and investor contact process.',
     href: '/company/investors',
     icon: Award,
     badge: 'Corporate',
   },
   {
+    title: 'Technology Partners',
+    description: 'Our alliance ecosystem with AWS, Azure, Databricks, Snowflake, and other enterprise technology leaders.',
+    href: '/company/partners',
+    icon: Handshake,
+    badge: 'Partners',
+  },
+  {
     title: 'Contact Engineering',
-    description: 'Reach our engineering and sales teams directly for consultations and strategy sessions.',
-    href: '/company/contact',
+    description: 'Reach our engineering and sales teams for consultations, partnerships, investor relations, and career inquiries.',
+    href: '/contact',
     icon: Mail,
     badge: 'Connect',
   },
   {
     title: 'Trust Center',
-    description: 'Inspect our security posture, ISO/SOC 2 certifications, and responsible AI guardrails.',
+    description: 'Inspect our security posture, ISO/SOC 2 readiness certifications, and responsible AI governance framework.',
     href: '/trust',
     icon: ShieldCheck,
     badge: 'Security',

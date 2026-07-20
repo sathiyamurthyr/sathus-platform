@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     title: 'AI Engineering — Sathus Technology',
     description:
       'Production-grade agentic systems with evaluation harnesses and enterprise-grade governance.',
-    url: `${SITE_URL}/solutions/ai-engineering`,
+    url: `${siteConfig.url}/solutions/ai-engineering`,
   },
   twitter: {
     card: 'summary_large_image',
