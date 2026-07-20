@@ -80,3 +80,67 @@ export interface ObservabilityConfig {
   serviceVersion: string;
   environment: string;
 }
+
+// Story 13.2 Enterprise Monitoring Dashboard Types
+
+export interface MonitoringOverview {
+  healthScorePercent: number;
+  status: ServiceHealthStatus;
+  activeServices: number;
+  totalServices: number;
+  activeUsers: number;
+  activeWorkspaces: number;
+  activeTenants: number;
+  runningJobs: number;
+  totalAiRequests: number;
+  totalApiRequests: number;
+  errorRatePercent: number;
+  uptimePercent: number;
+  avgResponseTimeMs: number;
+}
+
+export interface SystemInfrastructureMetrics {
+  cpuPercent: number;
+  memoryPercent: number;
+  diskPercent: number;
+  networkInKbps: number;
+  networkOutKbps: number;
+  loadAverage: [number, number, number];
+  dbActiveConnections: number;
+  dbMaxConnections: number;
+  redisMemoryMb: number;
+  redisHitRatioPercent: number;
+  celeryQueueDepth: number;
+}
+
+export interface TopIssueItem {
+  id: string;
+  title: string;
+  category: 'api' | 'workflow' | 'db' | 'memory' | 'security';
+  severity: 'critical' | 'high' | 'medium' | 'low';
+  count: number;
+  impact: string;
+  timestamp: string;
+  endpointOrService: string;
+}
+
+export interface ServiceGridItem {
+  id: string;
+  name: string;
+  category: 'core' | 'ai' | 'automation' | 'data' | 'security';
+  status: ServiceHealthStatus;
+  responseTimeMs: number;
+  uptimePercent: number;
+  version: string;
+  lastDeployment: string;
+  lastHealthCheck: string;
+}
+
+export interface TrendPoint {
+  timestamp: string;
+  requests: number;
+  latencyMs: number;
+  errors: number;
+  aiTokens: number;
+  workflows: number;
+}
