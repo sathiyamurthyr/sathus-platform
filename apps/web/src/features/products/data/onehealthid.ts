@@ -63,11 +63,62 @@ export const oneHealthId: Product = {
   roadmap: [
     { id: 'r1', quarter: 'Q1 2026', title: 'FHIR Bulk Data v2 Support', description: 'High-throughput clinical export.', status: 'completed' },
   ],
+  pricingPreview: {
+    cta: { text: 'Contact Healthcare Team', href: '/contact?inquiry=healthcare' },
+    plans: [
+      {
+        id: 'clinical-standard',
+        name: 'Clinical Starter',
+        price: 'Annual Tier',
+        description: 'For regional clinics and health tech applications needing FHIR connectivity.',
+        features: ['Up to 100,000 Patient MPI Records', 'FHIR R4 Standard Adapter', 'Standard BAA Agreement'],
+      },
+      {
+        id: 'enterprise-health',
+        name: 'Health System Enterprise',
+        price: 'Custom SLA',
+        description: 'For hospital networks, health insurance providers, and national health registries.',
+        features: [
+          'Unlimited Patient Records',
+          'Real-time Consent Token Engine',
+          'HL7 v2 / C-CDA to FHIR Converter',
+          'Dedicated Healthcare Security Audit',
+          '24/7 Priority Support & BAA',
+        ],
+        popular: true,
+      },
+    ],
+  },
+  deploymentModels: [
+    'Dedicated Healthcare VPC (AWS / Azure Health)',
+    'On-Premises Hospital Datacenter Cluster',
+    'HIPAA-Compliant Managed SaaS',
+  ],
+  scalabilityMetrics: [
+    { value: '99.99%', label: 'MPI Match Accuracy', description: 'Deterministic & probabilistic ML patient matching engine.' },
+    { value: '< 50ms', label: 'Consent Enforcement Overhead', description: 'Sub-second permission filtering per FHIR request.' },
+    { value: '10M+', label: 'Active Patient Identities', description: 'Benchmarked capacity across enterprise health networks.' },
+  ],
+  integrations: [
+    { name: 'Epic / Cerner / Allscripts EHR', category: 'Health Systems', description: 'HL7 v2 & SMART-on-FHIR connectors' },
+    { name: 'PostgreSQL / AWS HealthLake', category: 'Clinical Storage', description: 'Encrypted patient database backends' },
+    { name: 'Okta for Healthcare / OAuth2', category: 'Identity', description: 'Patient & Practitioner SAML SSO' },
+  ],
+  relatedSolutions: [
+    { title: 'Enterprise Integration & APIs', href: '/solutions/enterprise-integration' },
+    { title: 'Data Engineering & Analytics', href: '/solutions/data-engineering' },
+    { title: 'RAG Solutions & Knowledge Base', href: '/solutions/rag-solutions' },
+  ],
   faq: [
     {
       id: 'faq-1',
       question: 'Is OneHealthID HIPAA compliant?',
       answer: 'Yes. OneHealthID is designed for full HIPAA compliance, and Sathus Technology signs Business Associate Agreements (BAAs) with all healthcare clients.',
+    },
+    {
+      id: 'faq-2',
+      question: 'Does OneHealthID support SMART-on-FHIR apps?',
+      answer: 'Yes. OneHealthID includes native SMART-on-FHIR OAuth2 authorization flows, allowing third-party clinical decision apps to securely connect to patient records.',
     },
   ],
 };

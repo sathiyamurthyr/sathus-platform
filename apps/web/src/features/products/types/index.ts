@@ -18,6 +18,10 @@ export interface Product {
   security: SecurityFeature[];
   roadmap: RoadmapItem[];
   faq: FAQ[];
+  deploymentModels?: string[];
+  scalabilityMetrics?: { label: string; value: string; description: string }[];
+  integrations?: { name: string; category: string; description: string }[];
+  relatedSolutions?: { title: string; href: string }[];
 }
 
 export interface ProductHero {

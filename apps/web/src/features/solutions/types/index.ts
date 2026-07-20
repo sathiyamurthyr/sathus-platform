@@ -14,6 +14,13 @@ export interface Solution {
   outcomes: Outcome[];
   caseStudies: CaseStudy[];
   faqs: FAQ[];
+  problemStatement?: string;
+  businessImpact?: string[];
+  technicalApproach?: string;
+  idealCustomers?: string[];
+  targetIndustries?: string[];
+  relatedSolutions?: { title: string; href: string; description: string }[];
+  relatedProducts?: { title: string; href: string; description: string }[];
 }
 
 export interface SolutionHero {

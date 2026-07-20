@@ -9,6 +9,7 @@ import { PricingPreview } from '@/features/products/components/PricingPreview';
 import { UseCases } from '@/features/products/components/UseCases';
 import { Security } from '@/features/products/components/Security';
 import { Technology } from '@/features/products/components/Technology';
+import { ProductArchitectureDetails } from '@/features/products/components/ProductArchitectureDetails';
 import { Roadmap } from '@/features/products/components/Roadmap';
 import { Faq } from '@/features/products/components/Faq';
 import { Cta } from '@/features/products/components/Cta';
@@ -87,6 +88,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
       {product.useCases && <UseCases useCases={product.useCases} />}
       {product.security && <Security security={product.security} />}
       {product.technology && <Technology technology={product.technology} />}
+      <ProductArchitectureDetails product={product} />
       {product.roadmap && <Roadmap roadmap={product.roadmap} />}
       {product.faq && <Faq faq={product.faq} />}
       <Cta />

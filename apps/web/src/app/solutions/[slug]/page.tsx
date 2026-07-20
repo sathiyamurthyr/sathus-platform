@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { SolutionHero } from '@/features/solutions/components/SolutionHero';
+import { SolutionOverview } from '@/features/solutions/components/SolutionOverview';
 import { BusinessChallenges } from '@/features/solutions/components/BusinessChallenges';
 import { Capabilities } from '@/features/solutions/components/Capabilities';
 import { ArchitectureDiagram } from '@/features/solutions/components/ArchitectureDiagram';
@@ -79,6 +80,7 @@ export default async function SolutionPage({ params }: SolutionPageProps) {
         />
       </div>
       <SolutionHero hero={solution.hero} />
+      <SolutionOverview solution={solution} />
       {solution.challenges && <BusinessChallenges challenges={solution.challenges} />}
       {solution.capabilities && <Capabilities capabilities={solution.capabilities} />}
       {solution.architecture && <ArchitectureDiagram architecture={solution.architecture} />}

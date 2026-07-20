@@ -232,4 +232,34 @@ export const aiEngineeringSolution: Solution = {
         'Yes, our architectures are designed for seamless integration with existing enterprise systems, APIs, and data sources. We follow your security protocols and integration standards.',
     },
   ],
+  problemStatement:
+    'Enterprise AI initiatives frequently stall in the transition from pilot to production. Challenges include non-deterministic outputs, hallucination risk, lack of evaluation benchmarks, unmonitored model drift, and opaque compliance boundaries.',
+  businessImpact: [
+    'Reduces time-to-production for AI agents by over 50%.',
+    'Eliminates unmonitored hallucination risks in customer-facing workflows.',
+    'Provides 100% auditable model evaluation logs for regulatory reviews.',
+  ],
+  technicalApproach:
+    'We implement a multi-layered agentic framework featuring deterministic evaluation harnesses (Eval-as-Code), multi-agent consensus protocols, real-time input/output guardrails, and automated telemetry tracking via OpenTelemetry.',
+  idealCustomers: [
+    'Enterprise Engineering Leaders',
+    'Heads of AI & Data Innovation',
+    'Chief Risk & Compliance Officers',
+    'SaaS Product Development Teams',
+  ],
+  targetIndustries: [
+    'Financial Services',
+    'Healthcare & Life Sciences',
+    'Enterprise SaaS',
+    'Logistics & Supply Chain',
+  ],
+  relatedSolutions: [
+    { title: 'GenAI & Autonomous Agents', href: '/solutions/genai', description: 'Deploy task-oriented autonomous agent swarms.' },
+    { title: 'RAG Solutions & Knowledge Search', href: '/solutions/rag-solutions', description: 'Enterprise vector index & context grounding.' },
+    { title: 'MCP Development & Tools', href: '/solutions/mcp-development', description: 'Standardized Model Context Protocol gateways.' },
+  ],
+  relatedProducts: [
+    { title: 'Sathus AI Platform', href: '/products/sathus-ai', description: 'Enterprise Agentic AI runtime with built-in guardrails.' },
+    { title: 'SocialHub MCP Gateway', href: '/products/socialhub-mcp', description: 'Standardized MCP connector for enterprise tools.' },
+  ],
 };

@@ -63,11 +63,61 @@ export const socialHubMcp: Product = {
   roadmap: [
     { id: 'r1', quarter: 'Q1 2026', title: 'MCP Spec 1.0 Support', description: 'Full protocol compliance.', status: 'completed' },
   ],
+  pricingPreview: {
+    cta: { text: 'Contact Gateway Team', href: '/contact' },
+    plans: [
+      {
+        id: 'starter',
+        name: 'Developer Hub',
+        price: 'Free Open Source',
+        description: 'Self-hosted MCP server connector for local agent development.',
+        features: ['Standard MCP Tools', 'Local OAuth Token Storage', 'Community Adapters'],
+      },
+      {
+        id: 'enterprise-gateway',
+        name: 'Enterprise Gateway',
+        price: 'Usage Tiered',
+        description: 'Managed high-availability MCP cluster with HSM key storage and central governance.',
+        features: [
+          'Unlimited Tool Connections',
+          'HSM Hardware Token Protection',
+          'Distributed Rate Limiting & Queueing',
+          'SIEM Audit Event Stream',
+        ],
+        popular: true,
+      },
+    ],
+  },
+  deploymentModels: [
+    'Managed Cloud Gateway',
+    'Self-Hosted K8s MCP Sidecar',
+    'Edge API Proxy',
+  ],
+  scalabilityMetrics: [
+    { value: '50k RPS', label: 'Gateway Throughput', description: 'Low-latency Go-based routing engine.' },
+    { value: '< 10ms', label: 'Token Vault Retrieval', description: 'Hardware security module caching layer.' },
+    { value: '100% Spec', label: 'Anthropic MCP Compliance', description: 'Standardized tools, prompts, and resources.' },
+  ],
+  integrations: [
+    { name: 'WhatsApp / Telegram / Slack / Teams', category: 'Messaging Platforms', description: 'Bi-directional agent communication bridges' },
+    { name: 'Salesforce / HubSpot / Zendesk', category: 'Enterprise CRM', description: 'Contextual customer record retrieval & actions' },
+    { name: 'Claude Desktop / Sathus AI Core', category: 'Agent Runtime Hosts', description: 'Direct MCP protocol socket binding' },
+  ],
+  relatedSolutions: [
+    { title: 'MCP Development & Tools', href: '/solutions/mcp-development' },
+    { title: 'AI Agents & Workflows', href: '/solutions/ai-agents' },
+    { title: 'API Engineering & Gateway Design', href: '/solutions/api-development' },
+  ],
   faq: [
     {
       id: 'faq-1',
       question: 'What is MCP?',
       answer: 'Model Context Protocol (MCP) is an open standard that enables secure, bi-directional connectivity between AI applications and data sources or external tools.',
+    },
+    {
+      id: 'faq-2',
+      question: 'How does SocialHub MCP protect sensitive API tokens?',
+      answer: 'Tokens are encrypted using envelope encryption stored in a dedicated Hardware Security Module (HSM) or HashiCorp Vault instance. Raw keys are never exposed to LLMs or client logs.',
     },
   ],
 };

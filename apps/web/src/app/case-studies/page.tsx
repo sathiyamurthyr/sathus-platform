@@ -4,14 +4,13 @@ import { SectionIntro } from '@/components/sections/section-intro';
 import { Reveal } from '@/components/sections/reveal';
 import { CaseStudyCard } from '@/features/case-studies/components/CaseStudyCard';
 import { CTA } from '@/features/case-studies/components/CTA';
+import { siteConfig } from '@/constants';
 import {
   caseStudies,
   getFeaturedCaseStudies,
   getIndustries,
   getTechnologies,
 } from '@/features/case-studies/data';
-
-const SITE_URL = 'https://sathus.in';
 
 export const metadata: Metadata = {
   title: 'Case Studies',
@@ -24,7 +23,7 @@ export const metadata: Metadata = {
     title: 'Case Studies — Sathus Technology',
     description:
       'Enterprise success stories showcasing our engineering solutions and measurable business outcomes.',
-    url: `${SITE_URL}/case-studies`,
+    url: `${siteConfig.url}/case-studies`,
     type: 'website',
   },
   twitter: {

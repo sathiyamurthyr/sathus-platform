@@ -20,9 +20,9 @@ export function FinalCta() {
           </p>
           <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Button asChild size="lg" className="group h-12 px-7 text-base">
-              <Link href="/contact">
+              <Link href="/book-strategy-session">
                 <CalendarClock className="mr-2 h-4 w-4" />
-                Book a Strategy Session
+                Book Strategy Session
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
               </Link>
             </Button>

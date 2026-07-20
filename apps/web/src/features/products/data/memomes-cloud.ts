@@ -199,6 +199,26 @@ export const memomesCloud: Product = {
       status: 'planned',
     },
   ],
+  deploymentModels: [
+    'SaaS Multi-Tenant Cloud (US/EU Regions)',
+    'Dedicated Enterprise Storage Node',
+    'Self-Hosted Hybrid Storage Adapter',
+  ],
+  scalabilityMetrics: [
+    { value: '10 Enterprise PB+', label: 'Storage Bandwidth Core', description: 'Zero-degradation object throughput.' },
+    { value: '256-bit', label: 'Client-Side Key Encryption', description: 'End-to-end zero knowledge cryptographic vault.' },
+    { value: '99.999%', label: 'Data Durability Guarantee', description: 'Multi-region erasure coding redundancy.' },
+  ],
+  integrations: [
+    { name: 'Backblaze B2 / AWS S3 API', category: 'Object Storage', description: 'S3-compatible bucket backends' },
+    { name: 'Azure Active Directory / Okta', category: 'Identity (SSO)', description: 'SAML 2.0 / OIDC enterprise identity syncing' },
+    { name: 'SIEM Log Streamers (Splunk / Datadog)', category: 'Security Observability', description: 'Real-time audit log forwarding' },
+  ],
+  relatedSolutions: [
+    { title: 'Cloud Engineering & Security', href: '/solutions/cloud-engineering' },
+    { title: 'Enterprise Integration & APIs', href: '/solutions/enterprise-integration' },
+    { title: 'Data Platform Modernization', href: '/solutions/data-platform-modernization' },
+  ],
   faq: [
     {
       id: 'encryption',
@@ -208,12 +228,12 @@ export const memomesCloud: Product = {
     {
       id: 'compliance',
       question: 'Is Memomes Cloud compliant?',
-      answer: 'Yes, we are built for HIPAA, GDPR, and SOC 2 compliance with audit logs and data residency controls.',
+      answer: 'Yes, we are built for HIPAA, GDPR, and SOC 2 compliance readiness with audit logs and data residency controls.',
     },
     {
       id: 'storage',
       question: 'Where is my data stored?',
-      answer: 'Files are stored in Backblaze B2 with multiple geographic regions available for data residency requirements.',
+      answer: 'Files are stored in Backblaze B2 and S3-compatible backends with multiple geographic regions available for data residency requirements.',
     },
   ],
 };
