@@ -1,5 +1,5 @@
-import { ComingSoonView } from '@/features/workspace/components/ComingSoonView';
+import { NotificationCenterView } from '@/features/notifications/components/NotificationCenterView';
 
 export default function AppNotificationsPage() {
-  return <ComingSoonView moduleKey="notifications" />;
+  return <NotificationCenterView />;
 }
