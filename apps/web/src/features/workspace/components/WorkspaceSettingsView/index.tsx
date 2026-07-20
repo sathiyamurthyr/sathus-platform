@@ -2,9 +2,10 @@
 
 import React, { useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { User, Settings, Key, Shield, Building2, Save, CheckCircle2, Copy, RefreshCw, Bell } from 'lucide-react';
+import { User, Settings, Key, Shield, Building2, Save, CheckCircle2, Copy, RefreshCw, Bell, CreditCard } from 'lucide-react';
 import { mockCurrentUser, mockWorkspaces } from '../../config/nav-config';
 import { NotificationPreferencesView } from '../../../notifications/components/NotificationPreferencesView';
+import { BillingPlatformView } from '../../../billing/components/BillingPlatformView';
 
 export function WorkspaceSettingsView() {
   const searchParams = useSearchParams();
@@ -16,6 +17,7 @@ export function WorkspaceSettingsView() {
     { id: 'profile', label: 'My Profile', icon: <User className="w-4 h-4" /> },
     { id: 'preferences', label: 'Preferences', icon: <Settings className="w-4 h-4" /> },
     { id: 'notifications', label: 'Notification Preferences', icon: <Bell className="w-4 h-4" /> },
+    { id: 'billing', label: 'Billing & Subscription', icon: <CreditCard className="w-4 h-4" /> },
     { id: 'apikeys', label: 'API Keys', icon: <Key className="w-4 h-4" /> },
     { id: 'sessions', label: 'Active Sessions', icon: <Shield className="w-4 h-4" /> },
     { id: 'organization', label: 'Workspace & Organization', icon: <Building2 className="w-4 h-4" /> },
@@ -189,6 +191,7 @@ export function WorkspaceSettingsView() {
         )}
 
         {activeTab === 'notifications' && <NotificationPreferencesView />}
+        {activeTab === 'billing' && <BillingPlatformView />}
 
         {activeTab === 'preferences' && (
           <form onSubmit={handleSave} className="space-y-6 max-w-xl">
