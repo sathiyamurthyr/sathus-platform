@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { memomesCloud } from '@/features/products/data/memomes-cloud';
+import { getProductBySlug } from '@/features/products/data';
 import { ProductHero } from '@/features/products/components/ProductHero';
 import { ProductOverview } from '@/features/products/components/ProductOverview';
 import { KeyFeatures } from '@/features/products/components/KeyFeatures';
@@ -12,37 +12,46 @@ import { Technology } from '@/features/products/components/Technology';
 import { Roadmap } from '@/features/products/components/Roadmap';
 import { Faq } from '@/features/products/components/Faq';
 import { Cta } from '@/features/products/components/Cta';
+import { Breadcrumb } from '@/components/common/breadcrumb';
+import { siteConfig } from '@/constants';
 
-const SITE_URL = 'https://sathus.in';
+interface ProductPageProps {
+  params: Promise<{ slug: string }>;
+}
 
-export const metadata: Metadata = {
-  title: 'Memomes Cloud',
-  description: 'Secure, encrypted file sharing for the enterprise with zero-knowledge architecture.',
-  alternates: {
-    canonical: '/products/memomes-cloud',
-  },
-  openGraph: {
-    title: 'Memomes Cloud — Sathus Technology',
-    description: 'Secure, encrypted file sharing for the enterprise.',
-    url: `${SITE_URL}/products/memomes-cloud`,
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Memomes Cloud — Sathus Technology',
-    description: 'Secure, encrypted file sharing for the enterprise.',
-  },
-};
-
-export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
+export async function generateMetadata({ params }: ProductPageProps): Promise<Metadata> {
   const { slug } = await params;
+  const product = getProductBySlug(slug);
 
-  // Product registry - future products will be added here
-  const products: Record<string, typeof memomesCloud> = {
-    'memomes-cloud': memomesCloud,
+  if (!product) {
+    return {};
+  }
+
+  const canonicalUrl = `/products/${product.slug}`;
+
+  return {
+    title: product.name,
+    description: product.description,
+    alternates: {
+      canonical: canonicalUrl,
+    },
+    openGraph: {
+      title: `${product.name} — Sathus Technology`,
+      description: product.description,
+      url: `${siteConfig.url}${canonicalUrl}`,
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${product.name} — Sathus Technology`,
+      description: product.description,
+    },
   };
+}
 
-  const product = products[slug];
+export default async function ProductPage({ params }: ProductPageProps) {
+  const { slug } = await params;
+  const product = getProductBySlug(slug);
 
   if (!product) {
     notFound();
@@ -50,16 +59,24 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
   return (
     <>
+      <div className="container mx-auto px-4 pt-6">
+        <Breadcrumb
+          items={[
+            { label: 'Products', href: '/products' },
+            { label: product.name },
+          ]}
+        />
+      </div>
       <ProductHero hero={product.hero} />
       <ProductOverview overview={product.overview} />
       <KeyFeatures features={product.features} />
       <Benefits benefits={product.benefits} />
       {product.pricingPreview && <PricingPreview pricing={product.pricingPreview} />}
-      <UseCases useCases={product.useCases} />
-      <Security security={product.security} />
-      <Technology technology={product.technology} />
-      <Roadmap roadmap={product.roadmap} />
-      <Faq faq={product.faq} />
+      {product.useCases && <UseCases useCases={product.useCases} />}
+      {product.security && <Security security={product.security} />}
+      {product.technology && <Technology technology={product.technology} />}
+      {product.roadmap && <Roadmap roadmap={product.roadmap} />}
+      {product.faq && <Faq faq={product.faq} />}
       <Cta />
     </>
   );

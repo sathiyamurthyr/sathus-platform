@@ -10,20 +10,17 @@ import { BusinessOutcomes } from '@/features/solutions/components/BusinessOutcom
 import { CaseStudies } from '@/features/solutions/components/CaseStudies';
 import { Faq } from '@/features/solutions/components/Faq';
 import { FinalCTA } from '@/features/solutions/components/FinalCTA';
-import { aiEngineeringSolution } from '@/features/solutions/data/ai-engineering';
-import type { Solution } from '@/features/solutions/types';
+import { Breadcrumb } from '@/components/common/breadcrumb';
+import { getSolutionBySlug } from '@/features/solutions/data';
+import { siteConfig } from '@/constants';
 
-const SITE_URL = 'https://sathus.in';
+interface SolutionPageProps {
+  params: Promise<{ slug: string }>;
+}
 
-// Solution registry - will be expanded as more solutions are added
-const SOLUTION_REGISTRY: Record<string, Solution> = {
-  'ai-engineering': aiEngineeringSolution,
-};
-
-// Generate metadata for each solution page
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+export async function generateMetadata({ params }: SolutionPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const solution = SOLUTION_REGISTRY[slug];
+  const solution = getSolutionBySlug(slug);
 
   if (!solution) {
     return {};
@@ -40,7 +37,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     openGraph: {
       title: `${solution.title} — Sathus Technology`,
       description: solution.description,
-      url: `${SITE_URL}${canonicalUrl}`,
+      url: `${siteConfig.url}${canonicalUrl}`,
       type: 'article',
     },
     twitter: {
@@ -51,9 +48,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   };
 }
 
-export default async function SolutionPage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function SolutionPage({ params }: SolutionPageProps) {
   const { slug } = await params;
-  const solution = SOLUTION_REGISTRY[slug];
+  const solution = getSolutionBySlug(slug);
 
   if (!solution) {
     notFound();
@@ -61,15 +58,23 @@ export default async function SolutionPage({ params }: { params: Promise<{ slug:
 
   return (
     <>
+      <div className="container mx-auto px-4 pt-6">
+        <Breadcrumb
+          items={[
+            { label: 'Solutions', href: '/solutions' },
+            { label: solution.title },
+          ]}
+        />
+      </div>
       <SolutionHero hero={solution.hero} />
-      <BusinessChallenges challenges={solution.challenges} />
-      <Capabilities capabilities={solution.capabilities} />
-      <ArchitectureDiagram architecture={solution.architecture} />
-      <TechnologyStack technologies={solution.technologies} />
-      <DeliveryMethodology methodology={solution.methodology} />
-      <BusinessOutcomes outcomes={solution.outcomes} />
-      <CaseStudies caseStudies={solution.caseStudies} />
-      <Faq faqs={solution.faqs} />
+      {solution.challenges && <BusinessChallenges challenges={solution.challenges} />}
+      {solution.capabilities && <Capabilities capabilities={solution.capabilities} />}
+      {solution.architecture && <ArchitectureDiagram architecture={solution.architecture} />}
+      {solution.technologies && <TechnologyStack technologies={solution.technologies} />}
+      {solution.methodology && <DeliveryMethodology methodology={solution.methodology} />}
+      {solution.outcomes && <BusinessOutcomes outcomes={solution.outcomes} />}
+      {solution.caseStudies && <CaseStudies caseStudies={solution.caseStudies} />}
+      {solution.faqs && <Faq faqs={solution.faqs} />}
       <FinalCTA />
     </>
   );

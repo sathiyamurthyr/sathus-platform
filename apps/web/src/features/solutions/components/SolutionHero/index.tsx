@@ -1,3 +1,4 @@
+import React from 'react';
 import Link from 'next/link';
 import { SectionIntro } from '@/components/sections/section-intro';
 import type { SolutionHero as SolutionHeroData } from '../../types';

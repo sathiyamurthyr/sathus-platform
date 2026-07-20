@@ -107,7 +107,7 @@ export function Header() {
               )}
               asChild
             >
-              <Link href="#final-cta">
+              <Link href="/book-strategy-session">
                 Request Consultation
                 <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
               </Link>

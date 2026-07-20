@@ -22,7 +22,9 @@ const instrumentSerif = Instrument_Serif({
   variable: '--font-display',
 });
 
-const SITE_URL = 'https://sathus.in';
+import { siteConfig } from '@/constants';
+
+const SITE_URL = siteConfig.url;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

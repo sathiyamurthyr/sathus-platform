@@ -20,7 +20,7 @@ export function Footer({ className }: { className?: string }) {
               regulated industries.
             </p>
             <Link
-              href="#final-cta"
+              href="/book-strategy-session"
               className="group mt-6 inline-flex w-fit items-center gap-1.5 text-sm font-medium text-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded"
             >
               Book a strategy session
