@@ -9,7 +9,6 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
-import { cn } from '@/lib/utils';
 import { contactFormSchema, step1Schema, step2Schema, step3Schema } from '../../validation';
 import type { ContactFormData, InquiryType } from '../../types';
 import { INDUSTRY_OPTIONS, COMPANY_SIZE_OPTIONS, COUNTRY_OPTIONS, SERVICE_OPTIONS } from '../../types';
@@ -34,7 +33,6 @@ export function ContactForm({ inquiryType = 'general', onSuccess }: ContactFormP
     handleSubmit,
     formState: { errors },
     trigger,
-    watch,
   } = useForm<ContactFormData>({
     resolver: zodResolver(contactFormSchema),
     defaultValues: {
@@ -44,9 +42,8 @@ export function ContactForm({ inquiryType = 'general', onSuccess }: ContactFormP
   });
 
   const nextStep = async () => {
-    const currentSchema = STEPS[currentStep].schema;
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const isStepValid = await trigger(STEPS[currentStep].schema.keyof().parse(undefined) as any);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const isStepValid = await trigger(STEPS[currentStep].schema.keyof().parse(undefined) as any);
     
     if (isStepValid && currentStep < STEPS.length - 1) {
       setCurrentStep(currentStep + 1);
@@ -59,7 +56,7 @@ const isStepValid = await trigger(STEPS[currentStep].schema.keyof().parse(undefi
     }
   };
 
-  const onSubmit = async (data: ContactFormData) => {
+  const onSubmit = async (_data: ContactFormData) => {
     setIsSubmitting(true);
     try {
       // Simulate API call

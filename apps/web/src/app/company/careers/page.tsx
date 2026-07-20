@@ -3,7 +3,7 @@ import { SectionIntro } from '@/components/sections/section-intro';
 import { Breadcrumb } from '@/components/common/breadcrumb';
 import { siteConfig } from '@/constants';
 import Link from 'next/link';
-import { Briefcase, Heart, Gift, Users, ArrowRight } from 'lucide-react';
+import { Heart, Gift, Users, ArrowRight } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Careers',

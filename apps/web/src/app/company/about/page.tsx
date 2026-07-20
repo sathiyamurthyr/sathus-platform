@@ -3,7 +3,7 @@ import { SectionIntro } from '@/components/sections/section-intro';
 import { Breadcrumb } from '@/components/common/breadcrumb';
 import { siteConfig } from '@/constants';
 import Link from 'next/link';
-import { ArrowRight, CheckCircle2, ShieldCheck, Target, Zap } from 'lucide-react';
+import { ArrowRight, ShieldCheck, Target, Zap } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'About Us',
