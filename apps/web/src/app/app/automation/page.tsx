@@ -1,5 +1,5 @@
-import { ComingSoonView } from '@/features/workspace/components/ComingSoonView';
+import { AutomationPlatformView } from '@/features/automation/components/AutomationPlatformView';
 
 export default function AppAutomationPage() {
-  return <ComingSoonView moduleKey="automation" />;
+  return <AutomationPlatformView />;
 }
