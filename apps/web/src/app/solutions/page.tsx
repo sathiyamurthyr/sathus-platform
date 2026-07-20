@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { ArrowUpRight, Bot, Database, Boxes, CloudCog, Rocket, Repeat } from 'lucide-react';
+import { ArrowUpRight, Bot, Database, Boxes, CloudCog, Rocket, Repeat, Sparkles, Network, Cloud, Code2, Server, Activity } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { Reveal } from '@/components/sections/reveal';
 import { SectionIntro } from '@/components/sections/section-intro';
@@ -44,10 +44,8 @@ const SOLUTION_PRACTICES: SolutionPractice[] = [
     icon: Bot,
     title: 'AI Engineering',
     href: '/solutions/ai-engineering',
-    challenge:
-      'Pilot AI projects stall in production — models drift, outputs are not auditable, and teams cannot govern them.',
-    approach:
-      'Production-grade agentic systems with evaluation harnesses, observability, and human-in-the-loop controls from day one.',
+    challenge: 'Pilot AI projects stall in production — models drift, outputs are not auditable, and teams cannot govern them.',
+    approach: 'Production-grade agentic systems with evaluation harnesses, observability, and human-in-the-loop controls from day one.',
     outcome: 'Deploy AI with measurable ROI and enterprise-grade governance.',
     technologies: ['LLM Integration', 'RAG Architecture', 'MLOps', 'Vector Databases'],
   },
@@ -55,43 +53,107 @@ const SOLUTION_PRACTICES: SolutionPractice[] = [
     icon: Database,
     title: 'Data Engineering',
     href: '/solutions/data-engineering',
-    challenge:
-      'Data lives in fragmented silos with no lineage, no quality guarantees, and no real-time access.',
-    approach:
-      'Governed lakehouses and streaming pipelines that turn raw events into trustworthy, query-ready intelligence.',
+    challenge: 'Data lives in fragmented silos with no lineage, no quality guarantees, and no real-time access.',
+    approach: 'Governed lakehouses and streaming pipelines that turn raw events into trustworthy, query-ready intelligence.',
     outcome: 'Unified, governed data platform with real-time analytics capabilities.',
     technologies: ['Lakehouse', 'Streaming', 'Data Quality', 'Lineage'],
   },
   {
-    icon: Boxes,
-    title: 'Enterprise Applications',
-    href: '/solutions/enterprise-applications',
-    challenge:
-      'Off-the-shelf software forces process compromise and creates brittle, hard-to-maintain integrations.',
-    approach:
-      'Domain-driven applications — custom or composable — that fit the way your organization actually works.',
-    outcome: 'Custom applications that scale with your business complexity.',
-    technologies: ['Domain-Driven Design', 'Microservices', 'API Platform', 'Workflow Automation'],
+    icon: Sparkles,
+    title: 'GenAI Solutions',
+    href: '/solutions/genai',
+    challenge: 'Generic LLM prompts produce inconsistent outputs and hallucinations that erode enterprise trust.',
+    approach: 'Custom fine-tuning, RLHF, and enterprise-grade LLM deployment pipelines with automated guardrails.',
+    outcome: 'Domain-specific LLM systems with measurable accuracy and auditability.',
+    technologies: ['Fine-tuning', 'RLHF', 'Prompt Engineering', 'Guardrails'],
+  },
+  {
+    icon: Bot,
+    title: 'AI Agents & Swarms',
+    href: '/solutions/ai-agents',
+    challenge: 'Multi-step enterprise workflows require autonomous coordination across tools, APIs, and human approval queues.',
+    approach: 'Stateful multi-agent swarms with sandboxed tool execution, evaluation harnesses, and human-in-the-loop controls.',
+    outcome: 'Automate complex enterprise workflows with full audit trail and safety guarantees.',
+    technologies: ['Multi-Agent Orchestration', 'Tool Execution', 'MCP', 'Eval Harnesses'],
+  },
+  {
+    icon: Database,
+    title: 'Enterprise RAG Systems',
+    href: '/solutions/rag-solutions',
+    challenge: 'Naive vector search retrieves irrelevant context and exposes unauthorized documents to LLMs.',
+    approach: 'Hybrid BM25 + vector search, semantic reranking, and RBAC permission filtering before prompt injection.',
+    outcome: '98%+ retrieval precision with SOC 2 document access compliance.',
+    technologies: ['Qdrant', 'Milvus', 'Hybrid Search', 'Reranking'],
+  },
+  {
+    icon: Network,
+    title: 'MCP Development',
+    href: '/solutions/mcp-development',
+    challenge: 'AI agents need secure, standardized connectivity to enterprise APIs without credential exposure.',
+    approach: 'Custom Model Context Protocol servers, OAuth2 credential vaults, and enterprise MCP gateways.',
+    outcome: '10x faster agent tool onboarding with 100% audit logging.',
+    technologies: ['TypeScript MCP SDK', 'Python MCP SDK', 'OAuth2', 'Tool Registry'],
+  },
+  {
+    icon: Cloud,
+    title: 'Cloud Engineering',
+    href: '/solutions/cloud-engineering',
+    challenge: 'Ad-hoc cloud provisioning creates environment drift, security gaps, and uncontrolled spending.',
+    approach: 'Terraform IaC, GitOps Kubernetes clusters, and automated FinOps policies on AWS and Azure.',
+    outcome: '99.99% availability with 40% cloud cost reduction through automated governance.',
+    technologies: ['Terraform', 'Kubernetes', 'ArgoCD', 'AWS / Azure'],
   },
   {
     icon: CloudCog,
     title: 'Cloud Modernization',
     href: '/solutions/cloud-modernization',
-    challenge:
-      'Legacy estates are costly, fragile, and difficult to scale securely without business disruption.',
-    approach:
-      'Re-platform to cloud-native architectures on Azure and AWS with zero-downtime migration paths.',
+    challenge: 'Legacy estates are costly, fragile, and difficult to scale securely without business disruption.',
+    approach: 'Re-platform to cloud-native architectures on Azure and AWS with zero-downtime migration paths.',
     outcome: 'Resilient, scalable cloud infrastructure with reduced operational overhead.',
     technologies: ['Azure', 'AWS', 'Kubernetes', 'Infrastructure as Code'],
+  },
+  {
+    icon: Activity,
+    title: 'Enterprise Integration',
+    href: '/solutions/enterprise-integration',
+    challenge: 'Point-to-point APIs and batch ETL create brittle coupling and near-real-time data delays.',
+    approach: 'Kafka event mesh, Change Data Capture (CDC), and standardized API gateways to decouple systems.',
+    outcome: 'Sub-10ms event delivery with 99.999% message guarantee across enterprise services.',
+    technologies: ['Apache Kafka', 'Debezium', 'Kong Gateway', 'RabbitMQ'],
+  },
+  {
+    icon: Code2,
+    title: 'API Engineering',
+    href: '/solutions/api-development',
+    challenge: 'Synchronous legacy APIs bottleneck AI workflows and fail under high-concurrency agentic loads.',
+    approach: 'Async-first Python FastAPI microservices with Pydantic v2, OpenAPI 3.0, and Redis rate limiting.',
+    outcome: '50k+ RPS throughput with sub-5ms P99 latency and 100% OpenAPI compliance.',
+    technologies: ['FastAPI', 'Python 3.13+', 'Pydantic v2', 'Async SQLAlchemy'],
+  },
+  {
+    icon: Server,
+    title: 'Data Platform Modernization',
+    href: '/solutions/data-platform-modernization',
+    challenge: 'Legacy Oracle and Teradata warehouses incur massive licensing costs and cannot support modern AI workloads.',
+    approach: 'Open lakehouse migration to Databricks and Snowflake using Apache Iceberg and dual-run validation.',
+    outcome: '70% TCO reduction and 10x query performance improvement post-migration.',
+    technologies: ['Databricks', 'Apache Iceberg', 'dbt', 'Snowflake'],
+  },
+  {
+    icon: Boxes,
+    title: 'Enterprise Applications',
+    href: '/solutions/enterprise-applications',
+    challenge: 'Off-the-shelf software forces process compromise and creates brittle, hard-to-maintain integrations.',
+    approach: 'Domain-driven applications — custom or composable — that fit the way your organization actually works.',
+    outcome: 'Custom applications that scale with your business complexity.',
+    technologies: ['Domain-Driven Design', 'Microservices', 'API Platform', 'Workflow Automation'],
   },
   {
     icon: Rocket,
     title: 'Product Engineering',
     href: '/solutions/product-engineering',
-    challenge:
-      'Strong ideas die in the gap between prototype and a shipped, supported product.',
-    approach:
-      'Embedded product squads that take concepts from discovery to GA with a real delivery cadence.',
+    challenge: 'Strong ideas die in the gap between prototype and a shipped, supported product.',
+    approach: 'Embedded product squads that take concepts from discovery to GA with a real delivery cadence.',
     outcome: 'Ship products that users adopt with clear product-market fit signals.',
     technologies: ['Product Discovery', 'Agile Delivery', 'Observability', 'User Research'],
   },
@@ -99,10 +161,8 @@ const SOLUTION_PRACTICES: SolutionPractice[] = [
     icon: Repeat,
     title: 'Digital Transformation',
     href: '/solutions/digital-transformation',
-    challenge:
-      'Transformation programs run for years and deliver slide decks rather than measurable outcomes.',
-    approach:
-      'Outcome-based roadmaps and durable platform thinking that drives operating-model change.',
+    challenge: 'Transformation programs run for years and deliver slide decks rather than measurable outcomes.',
+    approach: 'Outcome-based roadmaps and durable platform thinking that drives operating-model change.',
     outcome: 'Measurable transformation with sustainable platform foundations.',
     technologies: ['Change Management', 'Platform Strategy', 'Data Mesh', 'API Economy'],
   },

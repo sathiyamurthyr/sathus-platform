@@ -9,9 +9,11 @@ import { BusinessOutcomes } from '@/features/solutions/components/BusinessOutcom
 import { CaseStudies } from '@/features/solutions/components/CaseStudies';
 import { Faq } from '@/features/solutions/components/Faq';
 import { FinalCTA } from '@/features/solutions/components/FinalCTA';
+import { Breadcrumb } from '@/components/common/breadcrumb';
+import { ServiceJsonLd, FAQPageJsonLd } from '@/components/seo/json-ld';
 import { aiEngineeringSolution } from '@/features/solutions/data/ai-engineering';
+import { siteConfig } from '@/constants';
 
-const SITE_URL = 'https://sathus.in';
 
 // Generate metadata for the page
 export const metadata: Metadata = {
@@ -35,56 +37,14 @@ export const metadata: Metadata = {
   },
 };
 
-// JSON-LD schemas
-const breadcrumbJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
-  itemListElement: [
-    {
-      '@type': 'ListItem',
-      position: 1,
-      name: 'Home',
-      item: SITE_URL,
-    },
-    {
-      '@type': 'ListItem',
-      position: 2,
-      name: 'Solutions',
-      item: `${SITE_URL}/solutions`,
-    },
-    {
-      '@type': 'ListItem',
-      position: 3,
-      name: 'AI Engineering',
-      item: `${SITE_URL}/solutions/ai-engineering`,
-    },
-  ],
-};
-
-const faqJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: aiEngineeringSolution.faqs.map((faq) => ({
-    '@type': 'Question',
-    name: faq.question,
-    acceptedAnswer: {
-      '@type': 'Answer',
-      text: faq.answer,
-    },
-  })),
-};
-
 export default function AIEngineeringPage() {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
+      <ServiceJsonLd solution={aiEngineeringSolution} />
+      <FAQPageJsonLd faqs={aiEngineeringSolution.faqs.map((f) => ({ question: f.question, answer: f.answer }))} />
+      <div className="container mx-auto px-4 pt-6">
+        <Breadcrumb items={[{ label: 'Solutions', href: '/solutions' }, { label: aiEngineeringSolution.title }]} />
+      </div>
       <SolutionHero hero={aiEngineeringSolution.hero} />
       <BusinessChallenges challenges={aiEngineeringSolution.challenges} />
       <Capabilities capabilities={aiEngineeringSolution.capabilities} />
