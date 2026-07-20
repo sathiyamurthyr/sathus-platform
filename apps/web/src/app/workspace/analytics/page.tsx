@@ -1,5 +1,5 @@
-import { ObservabilityPlatformView } from '@/features/observability/components/ObservabilityPlatformView';
+import { AnalyticsFoundationView } from '@/features/analytics/components/AnalyticsFoundationView';
 
 export default function WorkspaceAnalyticsPage() {
-  return <ObservabilityPlatformView />;
+  return <AnalyticsFoundationView />;
 }
