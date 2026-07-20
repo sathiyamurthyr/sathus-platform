@@ -11,6 +11,7 @@ import { CaseStudies } from '@/features/solutions/components/CaseStudies';
 import { Faq } from '@/features/solutions/components/Faq';
 import { FinalCTA } from '@/features/solutions/components/FinalCTA';
 import { Breadcrumb } from '@/components/common/breadcrumb';
+import { ServiceJsonLd, FAQPageJsonLd } from '@/components/seo/json-ld';
 import { getSolutionBySlug } from '@/features/solutions/data';
 import { siteConfig } from '@/constants';
 
@@ -31,6 +32,13 @@ export async function generateMetadata({ params }: SolutionPageProps): Promise<M
   return {
     title: solution.title,
     description: solution.description,
+    keywords: [
+      solution.title,
+      'engineering solution',
+      'enterprise software',
+      'Sathus Technology',
+      ...solution.capabilities.map((c) => c.title),
+    ],
     alternates: {
       canonical: canonicalUrl,
     },
@@ -58,6 +66,10 @@ export default async function SolutionPage({ params }: SolutionPageProps) {
 
   return (
     <>
+      <ServiceJsonLd solution={solution} />
+      {solution.faqs && solution.faqs.length > 0 && (
+        <FAQPageJsonLd faqs={solution.faqs.map((f) => ({ question: f.question, answer: f.answer }))} />
+      )}
       <div className="container mx-auto px-4 pt-6">
         <Breadcrumb
           items={[

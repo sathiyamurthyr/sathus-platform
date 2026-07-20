@@ -3,16 +3,16 @@ import { SectionIntro } from '@/components/sections/section-intro';
 import { Breadcrumb } from '@/components/common/breadcrumb';
 import { siteConfig } from '@/constants';
 import Link from 'next/link';
-import { ShieldCheck, Target, Users, Briefcase, Mail, Award, Globe } from 'lucide-react';
+import { ShieldCheck, Target, Users, Briefcase, Mail, Award } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Company',
-  description: 'About Sathus Technology, our leadership team, careers, and engineering culture.',
+  title: 'Company Hub',
+  description: 'Learn about Sathus Technology, our leadership team, corporate governance, careers, and engineering culture.',
   alternates: {
     canonical: '/company',
   },
   openGraph: {
-    title: 'Company — Sathus Technology',
+    title: 'Company Hub — Sathus Technology',
     description: 'Engineering the future of AI, data & enterprise software for regulated industries.',
     url: `${siteConfig.url}/company`,
   },

@@ -177,7 +177,7 @@ class WorkflowStage(Base):
     is_final = Column(Boolean, default=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
-    workflow = relationship("WorkflowDefinition", backref="stages")
+    workflow = relationship("WorkflowDefinition", backref="workflow_stages")
 
 
 class WorkflowComment(Base):

@@ -13,6 +13,7 @@ import { Roadmap } from '@/features/products/components/Roadmap';
 import { Faq } from '@/features/products/components/Faq';
 import { Cta } from '@/features/products/components/Cta';
 import { Breadcrumb } from '@/components/common/breadcrumb';
+import { SoftwareApplicationJsonLd, FAQPageJsonLd } from '@/components/seo/json-ld';
 import { siteConfig } from '@/constants';
 
 interface ProductPageProps {
@@ -32,6 +33,13 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
   return {
     title: product.name,
     description: product.description,
+    keywords: [
+      product.name,
+      product.tagline,
+      'enterprise software',
+      'Sathus Technology',
+      ...product.features.map((f) => f.title),
+    ],
     alternates: {
       canonical: canonicalUrl,
     },
@@ -59,6 +67,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
   return (
     <>
+      <SoftwareApplicationJsonLd product={product} />
+      {product.faq && product.faq.length > 0 && (
+        <FAQPageJsonLd faqs={product.faq.map((f) => ({ question: f.question, answer: f.answer }))} />
+      )}
       <div className="container mx-auto px-4 pt-6">
         <Breadcrumb
           items={[

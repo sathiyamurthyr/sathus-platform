@@ -1,4 +1,4 @@
-"""Notification domain exceptions."""
+"""Notification domain exceptions and structured error hierarchy."""
 
 from app.core.exceptions import BaseAppException
 
@@ -42,3 +42,46 @@ class NotificationRepositoryError(NotificationError):
 
     def __init__(self, message: str = "Repository operation failed"):
         super().__init__(message)
+
+
+class ProviderError(NotificationError):
+    """Base exception for notification provider errors."""
+
+    def __init__(self, message: str = "Notification provider error", provider_name: str | None = None):
+        self.provider_name = provider_name
+        super().__init__(f"[{provider_name}] {message}" if provider_name else message)
+
+
+class ProviderUnavailableError(ProviderError):
+    """Raised when a notification provider is unreachable or offline."""
+
+    def __init__(self, message: str = "Provider is unavailable", provider_name: str | None = None):
+        super().__init__(message, provider_name)
+
+
+class ProviderTimeoutError(ProviderError):
+    """Raised when provider delivery request times out."""
+
+    def __init__(self, message: str = "Provider operation timed out", provider_name: str | None = None):
+        super().__init__(message, provider_name)
+
+
+class ProviderAuthError(ProviderError):
+    """Raised when provider authentication/API key validation fails."""
+
+    def __init__(self, message: str = "Provider authentication failed", provider_name: str | None = None):
+        super().__init__(message, provider_name)
+
+
+class RateLimitError(ProviderError):
+    """Raised when provider rate limit is exceeded."""
+
+    def __init__(self, message: str = "Provider rate limit exceeded", provider_name: str | None = None):
+        super().__init__(message, provider_name)
+
+
+class QuotaExceededError(ProviderError):
+    """Raised when provider quota or credit limit is exhausted."""
+
+    def __init__(self, message: str = "Provider message quota exceeded", provider_name: str | None = None):
+        super().__init__(message, provider_name)
