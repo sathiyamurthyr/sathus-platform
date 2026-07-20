@@ -1,5 +1,5 @@
-import { ComingSoonView } from '@/features/workspace/components/ComingSoonView';
+import { AIFoundationView } from '@/features/ai/components/AIFoundationView';
 
 export default function WorkspaceAIPage() {
-  return <ComingSoonView moduleKey="ai" />;
+  return <AIFoundationView />;
 }
