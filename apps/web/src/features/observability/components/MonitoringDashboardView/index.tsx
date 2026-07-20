@@ -34,11 +34,12 @@ import {
 } from '../../data/mock-monitoring-data';
 import type { ServiceHealthStatus, ServiceGridItem, TopIssueItem } from '../../types';
 
-import { Siren } from 'lucide-react';
+import { Siren, Gauge } from 'lucide-react';
 import { AlertingIncidentPlatformView } from '../AlertingIncidentPlatformView';
+import { SREOperationsCenterView } from '../SREOperationsCenterView';
 
 export function MonitoringDashboardView() {
-  const [mainTab, setMainTab] = useState<'overview' | 'alerts_incidents'>('overview');
+  const [mainTab, setMainTab] = useState<'overview' | 'alerts_incidents' | 'sre_tracing'>('overview');
   const [refreshInterval, setRefreshInterval] = useState<number>(10); // seconds
   const [lastUpdated, setLastUpdated] = useState<string>(new Date().toLocaleTimeString());
   const [serviceSearch, setServiceSearch] = useState('');
@@ -145,10 +146,24 @@ export function MonitoringDashboardView() {
           <Siren className="w-4 h-4 text-red-500" />
           <span>Alerts & Incidents Engine</span>
         </button>
+
+        <button
+          onClick={() => setMainTab('sre_tracing')}
+          className={`flex items-center space-x-2 px-4 py-2.5 text-xs font-semibold border-b-2 transition-all ${
+            mainTab === 'sre_tracing'
+              ? 'border-primary text-primary bg-primary/5'
+              : 'border-transparent text-muted-foreground hover:text-foreground'
+          }`}
+        >
+          <Gauge className="w-4 h-4 text-purple-500" />
+          <span>SRE Operations & Tracing</span>
+        </button>
       </div>
 
       {mainTab === 'alerts_incidents' ? (
         <AlertingIncidentPlatformView />
+      ) : mainTab === 'sre_tracing' ? (
+        <SREOperationsCenterView />
       ) : (
         <>
       <div className="bg-card border border-border rounded-xl p-6 shadow-sm space-y-6">

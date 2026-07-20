@@ -229,3 +229,69 @@ export interface ServiceDependencyNode {
   status: ServiceHealthStatus;
   impactedByIncidentId?: string;
 }
+
+// Story 13.4 Distributed Tracing, Performance Profiling & SRE Operations Center Types
+
+export interface TraceWaterfallSpan {
+  id: string;
+  name: string;
+  service: string;
+  startOffsetMs: number;
+  durationMs: number;
+  status: 'ok' | 'error';
+  tags: Record<string, string>;
+  hasChildren?: boolean;
+}
+
+export interface TraceDetail {
+  traceId: string;
+  correlationId: string;
+  rootEndpoint: string;
+  totalDurationMs: number;
+  statusCode: number;
+  timestamp: string;
+  tenantId: string;
+  userId: string;
+  spans: TraceWaterfallSpan[];
+}
+
+export interface PerformanceHotspot {
+  id: string;
+  name: string;
+  category: 'api' | 'db_query' | 'workflow' | 'ai_call' | 'redis';
+  p95DurationMs: number;
+  p99DurationMs: number;
+  callCountPerMin: number;
+  errorRatePercent: number;
+  regressionAlert?: string;
+}
+
+export interface LiveRequest {
+  id: string;
+  correlationId: string;
+  endpoint: string;
+  tenantId: string;
+  userId: string;
+  durationSoFarMs: number;
+  currentStage: string;
+  currentSpanService: string;
+  isCancellable: boolean;
+}
+
+export interface SLOTarget {
+  id: string;
+  name: string;
+  targetPercent: number;
+  currentPercent: number;
+  errorBudgetRemainingPercent: number;
+  timeWindow: string;
+  status: 'met' | 'at_risk' | 'breached';
+}
+
+export interface CapacityForecast {
+  resource: string;
+  currentValue: string;
+  projected30Days: string;
+  utilizationPercent: number;
+  recommendation: string;
+}
