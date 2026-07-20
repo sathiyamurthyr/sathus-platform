@@ -117,3 +117,63 @@ export interface ExecutiveDashboardMetrics {
   customerSummary: CustomerAnalyticsSummary;
   productUsage: ProductUsageItem[];
 }
+
+// Story 14.3 Enterprise Report Builder & Scheduled Reporting Types
+
+export type ReportExportFormat = 'pdf' | 'xlsx' | 'csv' | 'json';
+
+export type ReportDistributionChannel = 'email' | 'in_app' | 'download' | 'webhook';
+
+export type ReportScheduleFrequency = 'hourly' | 'daily' | 'weekly' | 'monthly' | 'quarterly';
+
+export type ReportStatus = 'draft' | 'published' | 'archived';
+
+export interface ReportTemplate {
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+  widgetIds: string[];
+  defaultFormat: ReportExportFormat;
+  isBuiltIn: boolean;
+}
+
+export interface ReportSchedule {
+  id: string;
+  frequency: ReportScheduleFrequency;
+  cronExpression: string;
+  timeZone: string;
+  recipients: string[];
+  channels: ReportDistributionChannel[];
+  lastExecutedAt?: string;
+  nextExecutionAt: string;
+  isEnabled: boolean;
+}
+
+export interface ReportDefinition {
+  id: string;
+  title: string;
+  description: string;
+  owner: string;
+  status: ReportStatus;
+  templateId?: string;
+  widgets: AnalyticsWidgetConfig[];
+  schedule?: ReportSchedule;
+  version: string;
+  createdAt: string;
+  updatedAt: string;
+  isFavorite: boolean;
+  tags: string[];
+}
+
+export interface ReportExecutionHistory {
+  id: string;
+  reportId: string;
+  reportTitle: string;
+  executedAt: string;
+  format: ReportExportFormat;
+  status: 'success' | 'failed';
+  fileSizeBytes: number;
+  deliveryChannel: ReportDistributionChannel;
+  downloadUrl: string;
+}

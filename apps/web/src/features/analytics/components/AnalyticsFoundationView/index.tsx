@@ -33,11 +33,12 @@ import {
 } from '../../data/mock-analytics-data';
 import type { KPIDefinition, AggregationPeriod } from '../../types';
 
-import { Crown } from 'lucide-react';
+import { Crown, FileSpreadsheet } from 'lucide-react';
 import { ExecutiveAnalyticsDashboardView } from '../ExecutiveAnalyticsDashboardView';
+import { ReportBuilderPlatformView } from '../ReportBuilderPlatformView';
 
 export function AnalyticsFoundationView() {
-  const [activeTab, setActiveTab] = useState<'overview' | 'kpis' | 'timeseries' | 'widgets' | 'cache'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'reports' | 'kpis' | 'timeseries' | 'widgets' | 'cache'>('overview');
   const [selectedPeriod, setSelectedPeriod] = useState<AggregationPeriod>('month');
   const [kpiList, setKpiList] = useState<KPIDefinition[]>(mockKPIDefinitions);
   const [notice, setNotice] = useState<string | null>(null);
@@ -87,6 +88,7 @@ export function AnalyticsFoundationView() {
       <div className="flex border-b border-border overflow-x-auto space-x-2">
         {[
           { id: 'overview', label: 'Executive BI Overview', icon: <TrendingUp className="w-4 h-4" /> },
+          { id: 'reports', label: 'Visual Report Builder', icon: <FileSpreadsheet className="w-4 h-4 text-emerald-500" /> },
           { id: 'kpis', label: 'Configurable KPI Engine', icon: <Sliders className="w-4 h-4" /> },
           { id: 'timeseries', label: 'Time-Series Aggregation', icon: <Clock className="w-4 h-4" /> },
           { id: 'widgets', label: 'Widget Visualizer Gallery', icon: <BarChart3 className="w-4 h-4" /> },
@@ -94,7 +96,7 @@ export function AnalyticsFoundationView() {
         ].map((t) => (
           <button
             key={t.id}
-            onClick={() => setActiveTab(t.id as 'overview' | 'kpis' | 'timeseries' | 'widgets' | 'cache')}
+            onClick={() => setActiveTab(t.id as 'overview' | 'reports' | 'kpis' | 'timeseries' | 'widgets' | 'cache')}
             className={`flex items-center space-x-2 px-4 py-2.5 text-xs font-semibold border-b-2 transition-all shrink-0 ${
               activeTab === t.id
                 ? 'border-primary text-primary bg-primary/5'
@@ -110,6 +112,11 @@ export function AnalyticsFoundationView() {
       {/* TAB 1: EXECUTIVE BI OVERVIEW */}
       {activeTab === 'overview' && (
         <ExecutiveAnalyticsDashboardView />
+      )}
+
+      {/* TAB 2: VISUAL REPORT BUILDER */}
+      {activeTab === 'reports' && (
+        <ReportBuilderPlatformView />
       )}
 
       {/* TAB 2: CONFIGURABLE KPI ENGINE */}
