@@ -30,7 +30,7 @@ import type {
   AdminSettingCategory,
 } from '../../types';
 
-import { Lock, Code, CreditCard, ShieldAlert, ToggleRight, Palette, Server } from 'lucide-react';
+import { Lock, Code, CreditCard, ShieldAlert, ToggleRight, Palette, Server, Activity as HealthIcon } from 'lucide-react';
 import { OrganizationTenantManagerView } from '../OrganizationTenantManagerView';
 import { WorkspaceManagerView } from '../WorkspaceManagerView';
 import { UserLifecycleManagerView } from '../UserLifecycleManagerView';
@@ -43,9 +43,10 @@ import { FeatureFlagConfigManagerView } from '../FeatureFlagConfigManagerView';
 import { BackupDisasterRecoveryView } from '../BackupDisasterRecoveryView';
 import { WhiteLabelBrandingManagerView } from '../WhiteLabelBrandingManagerView';
 import { SystemMaintenanceOperationsView } from '../SystemMaintenanceOperationsView';
+import { PlatformHealthDiagnosticsView } from '../PlatformHealthDiagnosticsView';
 
 export function PlatformAdminFoundationView() {
-  const [activeTab, setActiveTab] = useState<'dashboard' | 'organizations' | 'workspaces' | 'users' | 'roles' | 'security' | 'developer' | 'licenses' | 'audit' | 'feature_flags' | 'backup' | 'branding' | 'operations' | 'navigation' | 'settings' | 'activity'>('dashboard');
+  const [activeTab, setActiveTab] = useState<'dashboard' | 'organizations' | 'workspaces' | 'users' | 'roles' | 'security' | 'developer' | 'licenses' | 'audit' | 'feature_flags' | 'backup' | 'branding' | 'operations' | 'health' | 'navigation' | 'settings' | 'activity'>('dashboard');
   const [metrics] = useState(mockAdminOverviewMetrics);
   const [settingsList, setSettingsList] = useState<PlatformSettingItem[]>(mockPlatformSettings);
   const [activityFeed] = useState<AdminActivityEvent[]>(mockAdminActivityEvents);
@@ -79,7 +80,7 @@ export function PlatformAdminFoundationView() {
             <span>Platform Administration Suite (EPIC-025 Complete)</span>
           </h1>
           <p className="text-xs text-muted-foreground">
-            Multi-Tenant Governance: Orgs, Tenants, Workspaces, Users, RBAC, Security, Developer Portal, Licensing, Audit, Feature Flags, Backup & DR, White Label, and Operations.
+            Multi-Tenant Governance: Orgs, Tenants, Workspaces, Users, RBAC, Security, Developer Portal, Licensing, Audit, Feature Flags, Backup & DR, White Label, Operations, and Health Diagnostics.
           </p>
         </div>
 
@@ -114,6 +115,7 @@ export function PlatformAdminFoundationView() {
           { id: 'backup', label: 'Backup & DR', icon: <HardDrive className="w-4 h-4 text-blue-500" /> },
           { id: 'branding', label: 'White Label & Branding', icon: <Palette className="w-4 h-4 text-purple-500" /> },
           { id: 'operations', label: 'Maintenance & Operations', icon: <Server className="w-4 h-4 text-emerald-500" /> },
+          { id: 'health', label: 'Health Diagnostics', icon: <HealthIcon className="w-4 h-4 text-rose-500" /> },
           { id: 'settings', label: 'Platform Settings Framework', icon: <Sliders className="w-4 h-4 text-amber-500" /> },
           { id: 'activity', label: 'Centralized Activity Stream', icon: <FileText className="w-4 h-4 text-rose-500" /> },
         ].map((t) => (
@@ -453,6 +455,9 @@ export function PlatformAdminFoundationView() {
 
       {/* TAB 13: MAINTENANCE & OPERATIONS */}
       {activeTab === 'operations' && <SystemMaintenanceOperationsView />}
+
+      {/* TAB 14: PLATFORM HEALTH & DIAGNOSTICS */}
+      {activeTab === 'health' && <PlatformHealthDiagnosticsView />}
     </div>
   );
 }

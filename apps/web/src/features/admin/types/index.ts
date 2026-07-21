@@ -439,6 +439,40 @@ export interface EmergencyBannerConfig {
   updatedAt: string;
 }
 
+// Story 15.14 Platform Health & Diagnostics Center Types
+
+export interface PlatformHealthMetric {
+  cpuUsagePercent: number;
+  memoryUsagePercent: number;
+  diskUsagePercent: number;
+  networkInboundMbps: number;
+  networkOutboundMbps: number;
+  activeDbConnections: number;
+  redisMemoryMB: number;
+  apiRequestsPerSec: number;
+}
+
+export interface ServiceDependencyHealth {
+  id: string;
+  name: string;
+  category: 'database' | 'cache' | 'ai_provider' | 'storage' | 'search' | 'workers';
+  status: 'healthy' | 'degraded' | 'unhealthy';
+  latencyMs: number;
+  uptimePercent: number;
+  lastCheckedAt: string;
+}
+
+// Story 15.16 Production Readiness Types
+
+export interface ProductionReadinessCheck {
+  id: string;
+  category: 'security' | 'database' | 'performance' | 'backup' | 'monitoring' | 'compliance';
+  title: string;
+  status: 'passed' | 'warning' | 'pending';
+  details: string;
+}
+
+
 
 
 
