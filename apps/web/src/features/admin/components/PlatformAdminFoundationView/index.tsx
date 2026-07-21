@@ -30,8 +30,13 @@ import type {
   AdminSettingCategory,
 } from '../../types';
 
+import { OrganizationTenantManagerView } from '../OrganizationTenantManagerView';
+import { WorkspaceManagerView } from '../WorkspaceManagerView';
+import { UserLifecycleManagerView } from '../UserLifecycleManagerView';
+import { RolePermissionManagerView } from '../RolePermissionManagerView';
+
 export function PlatformAdminFoundationView() {
-  const [activeTab, setActiveTab] = useState<'dashboard' | 'navigation' | 'settings' | 'activity'>('dashboard');
+  const [activeTab, setActiveTab] = useState<'dashboard' | 'organizations' | 'workspaces' | 'users' | 'roles' | 'navigation' | 'settings' | 'activity'>('dashboard');
   const [metrics] = useState(mockAdminOverviewMetrics);
   const [settingsList, setSettingsList] = useState<PlatformSettingItem[]>(mockPlatformSettings);
   const [activityFeed] = useState<AdminActivityEvent[]>(mockAdminActivityEvents);
@@ -62,10 +67,10 @@ export function PlatformAdminFoundationView() {
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-foreground flex items-center space-x-2">
             <ShieldCheck className="w-6 h-6 text-primary" />
-            <span>Platform Administration Center Foundation</span>
+            <span>Platform Administration & Tenant Management Center</span>
           </h1>
           <p className="text-xs text-muted-foreground">
-            Sprint 15 — EPIC-025 Shared administration shell, health telemetry, centralized settings framework, and RBAC governance.
+            EPIC-025 Foundation, Organization & Tenant Management, Workspace Lifecycle, User Governance, and Enterprise RBAC.
           </p>
         </div>
 
@@ -87,14 +92,17 @@ export function PlatformAdminFoundationView() {
       {/* Primary Sub-Navigation Tabs */}
       <div className="flex border-b border-border overflow-x-auto space-x-2">
         {[
-          { id: 'dashboard', label: 'Administration Dashboard', icon: <LayoutDashboard className="w-4 h-4" /> },
-          { id: 'navigation', label: 'Admin Navigation Directory', icon: <Building2 className="w-4 h-4 text-primary" /> },
-          { id: 'settings', label: 'Platform Settings Framework', icon: <Sliders className="w-4 h-4 text-emerald-500" /> },
-          { id: 'activity', label: 'Centralized Activity Stream', icon: <FileText className="w-4 h-4 text-amber-500" /> },
+          { id: 'dashboard', label: 'Administration Overview', icon: <LayoutDashboard className="w-4 h-4" /> },
+          { id: 'organizations', label: 'Organizations & Tenants', icon: <Building2 className="w-4 h-4 text-primary" /> },
+          { id: 'workspaces', label: 'Workspaces Directory', icon: <Layers className="w-4 h-4 text-emerald-500" /> },
+          { id: 'users', label: 'Users & Directory', icon: <Users className="w-4 h-4 text-blue-500" /> },
+          { id: 'roles', label: 'Roles & RBAC Matrix', icon: <ShieldCheck className="w-4 h-4 text-purple-500" /> },
+          { id: 'settings', label: 'Platform Settings Framework', icon: <Sliders className="w-4 h-4 text-amber-500" /> },
+          { id: 'activity', label: 'Centralized Activity Stream', icon: <FileText className="w-4 h-4 text-rose-500" /> },
         ].map((t) => (
           <button
             key={t.id}
-            onClick={() => setActiveTab(t.id as 'dashboard' | 'navigation' | 'settings' | 'activity')}
+            onClick={() => setActiveTab(t.id as any)}
             className={`flex items-center space-x-2 px-4 py-2.5 text-xs font-semibold border-b-2 transition-all shrink-0 ${
               activeTab === t.id
                 ? 'border-primary text-primary bg-primary/5'
@@ -107,7 +115,7 @@ export function PlatformAdminFoundationView() {
         ))}
       </div>
 
-      {/* SUB-TAB 1: ADMINISTRATION DASHBOARD OVERVIEW */}
+      {/* TAB 1: ADMINISTRATION DASHBOARD OVERVIEW */}
       {activeTab === 'dashboard' && (
         <div className="space-y-6">
           {/* Executive Metrics Cards Grid */}
@@ -392,6 +400,18 @@ export function PlatformAdminFoundationView() {
           </div>
         </div>
       )}
+
+      {/* TAB 2: ORGANIZATIONS & TENANTS */}
+      {activeTab === 'organizations' && <OrganizationTenantManagerView />}
+
+      {/* TAB 3: WORKSPACES DIRECTORY */}
+      {activeTab === 'workspaces' && <WorkspaceManagerView />}
+
+      {/* TAB 4: USERS & DIRECTORY */}
+      {activeTab === 'users' && <UserLifecycleManagerView />}
+
+      {/* TAB 5: ROLES & RBAC MATRIX */}
+      {activeTab === 'roles' && <RolePermissionManagerView />}
     </div>
   );
 }
