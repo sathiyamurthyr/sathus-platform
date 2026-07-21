@@ -355,5 +355,90 @@ export interface EnvironmentConfigProfile {
   updatedAt: string;
 }
 
+// Story 15.11 Backup, Restore & Disaster Recovery Types
+
+export type BackupType = 'full' | 'incremental' | 'database' | 'object_storage' | 'tenant_selective';
+
+export interface BackupJobItem {
+  id: string;
+  name: string;
+  backupType: BackupType;
+  scope: string;
+  sizeGB: number;
+  durationSeconds: number;
+  status: 'completed' | 'in_progress' | 'failed';
+  location: string;
+  createdAt: string;
+}
+
+export interface RestoreJobItem {
+  id: string;
+  backupId: string;
+  targetEnvironment: string;
+  pointInTime: string;
+  status: 'completed' | 'restoring' | 'failed';
+  requestedBy: string;
+  startedAt: string;
+}
+
+export interface DisasterRecoveryPlan {
+  id: string;
+  primaryRegion: string;
+  drSecondaryRegion: string;
+  rpoMinutes: number;
+  rtoMinutes: number;
+  failoverStatus: 'standby' | 'failover_testing' | 'active_dr';
+  lastValidatedAt: string;
+}
+
+// Story 15.12 White Label & Branding Management Types
+
+export interface BrandingProfileItem {
+  id: string;
+  tenantId: string;
+  tenantName: string;
+  logoUrl: string;
+  darkLogoUrl: string;
+  faviconUrl: string;
+  primaryColor: string;
+  accentColor: string;
+  fontFamily: string;
+  companyName: string;
+  supportEmail: string;
+  loginMessage: string;
+  updatedAt: string;
+}
+
+export interface CustomDomainItem {
+  id: string;
+  domainName: string;
+  tenantName: string;
+  sslStatus: 'active' | 'pending_verification' | 'expired';
+  sslExpiresAt: string;
+  cnameRecord: string;
+}
+
+// Story 15.13 System Maintenance & Operations Types
+
+export interface MaintenanceTaskItem {
+  id: string;
+  title: string;
+  description: string;
+  scheduledStartTime: string;
+  scheduledEndTime: string;
+  affectedServices: string[];
+  status: 'scheduled' | 'in_progress' | 'completed';
+}
+
+export interface EmergencyBannerConfig {
+  id: string;
+  title: string;
+  message: string;
+  severity: 'info' | 'warning' | 'critical';
+  isActive: boolean;
+  updatedAt: string;
+}
+
+
 
 

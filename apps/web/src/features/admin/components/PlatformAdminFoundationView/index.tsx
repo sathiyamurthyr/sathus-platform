@@ -30,7 +30,7 @@ import type {
   AdminSettingCategory,
 } from '../../types';
 
-import { Lock, Code, CreditCard, ShieldAlert, ToggleRight } from 'lucide-react';
+import { Lock, Code, CreditCard, ShieldAlert, ToggleRight, Palette, Server } from 'lucide-react';
 import { OrganizationTenantManagerView } from '../OrganizationTenantManagerView';
 import { WorkspaceManagerView } from '../WorkspaceManagerView';
 import { UserLifecycleManagerView } from '../UserLifecycleManagerView';
@@ -40,9 +40,12 @@ import { DeveloperPortalManagerView } from '../DeveloperPortalManagerView';
 import { LicenseSubscriptionManagerView } from '../LicenseSubscriptionManagerView';
 import { AuditComplianceCenterView } from '../AuditComplianceCenterView';
 import { FeatureFlagConfigManagerView } from '../FeatureFlagConfigManagerView';
+import { BackupDisasterRecoveryView } from '../BackupDisasterRecoveryView';
+import { WhiteLabelBrandingManagerView } from '../WhiteLabelBrandingManagerView';
+import { SystemMaintenanceOperationsView } from '../SystemMaintenanceOperationsView';
 
 export function PlatformAdminFoundationView() {
-  const [activeTab, setActiveTab] = useState<'dashboard' | 'organizations' | 'workspaces' | 'users' | 'roles' | 'security' | 'developer' | 'licenses' | 'audit' | 'feature_flags' | 'navigation' | 'settings' | 'activity'>('dashboard');
+  const [activeTab, setActiveTab] = useState<'dashboard' | 'organizations' | 'workspaces' | 'users' | 'roles' | 'security' | 'developer' | 'licenses' | 'audit' | 'feature_flags' | 'backup' | 'branding' | 'operations' | 'navigation' | 'settings' | 'activity'>('dashboard');
   const [metrics] = useState(mockAdminOverviewMetrics);
   const [settingsList, setSettingsList] = useState<PlatformSettingItem[]>(mockPlatformSettings);
   const [activityFeed] = useState<AdminActivityEvent[]>(mockAdminActivityEvents);
@@ -76,7 +79,7 @@ export function PlatformAdminFoundationView() {
             <span>Platform Administration Suite (EPIC-025 Complete)</span>
           </h1>
           <p className="text-xs text-muted-foreground">
-            Multi-Tenant Governance: Orgs, Tenants, Workspaces, Users, RBAC, Security, Developer Portal, Licensing, Audit Logs, and Feature Flags.
+            Multi-Tenant Governance: Orgs, Tenants, Workspaces, Users, RBAC, Security, Developer Portal, Licensing, Audit, Feature Flags, Backup & DR, White Label, and Operations.
           </p>
         </div>
 
@@ -108,6 +111,9 @@ export function PlatformAdminFoundationView() {
           { id: 'licenses', label: 'Licenses & Subscriptions', icon: <CreditCard className="w-4 h-4 text-emerald-500" /> },
           { id: 'audit', label: 'Audit & Compliance Center', icon: <ShieldAlert className="w-4 h-4 text-indigo-500" /> },
           { id: 'feature_flags', label: 'Feature Flags & Config', icon: <ToggleRight className="w-4 h-4 text-amber-500" /> },
+          { id: 'backup', label: 'Backup & DR', icon: <HardDrive className="w-4 h-4 text-blue-500" /> },
+          { id: 'branding', label: 'White Label & Branding', icon: <Palette className="w-4 h-4 text-purple-500" /> },
+          { id: 'operations', label: 'Maintenance & Operations', icon: <Server className="w-4 h-4 text-emerald-500" /> },
           { id: 'settings', label: 'Platform Settings Framework', icon: <Sliders className="w-4 h-4 text-amber-500" /> },
           { id: 'activity', label: 'Centralized Activity Stream', icon: <FileText className="w-4 h-4 text-rose-500" /> },
         ].map((t) => (
@@ -438,6 +444,15 @@ export function PlatformAdminFoundationView() {
 
       {/* TAB 10: FEATURE FLAGS & CONFIGURATION */}
       {activeTab === 'feature_flags' && <FeatureFlagConfigManagerView />}
+
+      {/* TAB 11: BACKUP & DISASTER RECOVERY */}
+      {activeTab === 'backup' && <BackupDisasterRecoveryView />}
+
+      {/* TAB 12: WHITE LABEL & BRANDING */}
+      {activeTab === 'branding' && <WhiteLabelBrandingManagerView />}
+
+      {/* TAB 13: MAINTENANCE & OPERATIONS */}
+      {activeTab === 'operations' && <SystemMaintenanceOperationsView />}
     </div>
   );
 }
