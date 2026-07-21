@@ -1,5 +1,5 @@
-import { MonitoringDashboardView } from '@/features/observability/components/MonitoringDashboardView';
+import { PlatformAdminFoundationView } from '@/features/admin/components/PlatformAdminFoundationView';
 
 export default function AppAdminPage() {
-  return <MonitoringDashboardView />;
+  return <PlatformAdminFoundationView />;
 }
