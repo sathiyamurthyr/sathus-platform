@@ -28,6 +28,7 @@ import {
   mockAIMetrics,
 } from '../../data/mock-ai-data';
 import type { AIChatMessage, AIAgent, PromptTemplate, RAGKnowledgeSource } from '../../types';
+import { AIAgentsPlatformView } from '@/features/ai-agents/components/AIAgentsPlatformView';
 
 export function AIFoundationView() {
   const [activeTab, setActiveTab] = useState<'copilot' | 'agents' | 'prompts' | 'knowledge' | 'observability'>('copilot');
@@ -285,61 +286,8 @@ export function AIFoundationView() {
         </div>
       )}
 
-      {/* TAB 2: AGENT MANAGER */}
-      {activeTab === 'agents' && (
-        <div className="space-y-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h3 className="text-base font-bold text-foreground">Autonomous Agent Roster</h3>
-              <p className="text-xs text-muted-foreground">Manage and launch specialized agentic workflows across Sathus Cloud.</p>
-            </div>
-            <button className="inline-flex items-center space-x-2 bg-primary text-primary-foreground px-4 py-2 rounded-lg text-xs font-semibold hover:opacity-90">
-              <Plus className="w-4 h-4" />
-              <span>Deploy New Agent</span>
-            </button>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {agents.map((agent) => (
-              <div key={agent.id} className="bg-card border border-border rounded-xl p-6 space-y-4 shadow-sm flex flex-col justify-between">
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className={`px-2.5 py-0.5 rounded text-[10px] font-extrabold uppercase border ${providerBadges[agent.provider]}`}>
-                      {agent.provider}
-                    </span>
-                    <span className="flex items-center space-x-1 text-xs text-emerald-500 font-bold">
-                      <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                      <span className="capitalize">{agent.status}</span>
-                    </span>
-                  </div>
-
-                  <h4 className="text-base font-bold text-foreground">{agent.name}</h4>
-                  <p className="text-xs text-muted-foreground leading-relaxed">{agent.description}</p>
-
-                  <div className="space-y-1.5 pt-2">
-                    <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Attached Tools</div>
-                    <div className="flex flex-wrap gap-1">
-                      {agent.tools.map((t, idx) => (
-                        <span key={idx} className="px-2 py-0.5 rounded bg-muted text-[10px] font-mono text-muted-foreground">
-                          {t}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="pt-4 border-t border-border flex items-center justify-between text-xs text-muted-foreground">
-                  <span>Tasks Completed: <strong className="text-foreground">{agent.totalTasksCompleted}</strong></span>
-                  <button className="text-primary hover:underline font-semibold flex items-center space-x-1">
-                    <Play className="w-3 h-3" />
-                    <span>Run Agent</span>
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
+      {/* TAB 2: AUTONOMOUS AGENTS SUITE (EPIC-027) */}
+      {activeTab === 'agents' && <AIAgentsPlatformView />}
 
       {/* TAB 3: PROMPT LIBRARY */}
       {activeTab === 'prompts' && (
