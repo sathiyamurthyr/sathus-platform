@@ -107,28 +107,9 @@ export const viewport: Viewport = {
   ],
 };
 
-const orgJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'Organization',
-  name: 'Sathus Technology',
-  url: SITE_URL,
-  logo: `${SITE_URL}/icon.svg`,
-  description:
-    'Sathus Technology engineers enterprise AI, data platforms, and cloud-native software for regulated industries.',
-  sameAs: [
-    'https://www.linkedin.com/company/sathustechnology',
-    'https://twitter.com/sathustech',
-    'https://github.com/sathustechnology',
-  ],
-  areaServed: 'Worldwide',
-  knowsAbout: [
-    'Enterprise Artificial Intelligence',
-    'Data Engineering',
-    'Cloud Modernization',
-    'Product Engineering',
-    'Model Context Protocol',
-  ],
-};
+import { companyConfig } from '@/config/company';
+
+const orgJsonLd = companyConfig.getOrganizationSchema();
 
 const websiteJsonLd = {
   '@context': 'https://schema.org',

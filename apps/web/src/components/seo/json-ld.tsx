@@ -1,5 +1,6 @@
 import React from 'react';
 import { siteConfig } from '@/constants';
+import { companyConfig } from '@/config/company';
 import type { Product } from '@/features/products/types';
 import type { Solution } from '@/features/solutions/types';
 
@@ -23,8 +24,8 @@ export function SoftwareApplicationJsonLd({ product }: SoftwareApplicationJsonLd
     },
     publisher: {
       '@type': 'Organization',
-      name: siteConfig.name,
-      url: siteConfig.url,
+      name: companyConfig.name,
+      url: companyConfig.website,
     },
   };
 
@@ -49,10 +50,10 @@ export function ServiceJsonLd({ solution }: ServiceJsonLdProps) {
     serviceType: solution.title,
     provider: {
       '@type': 'Organization',
-      name: siteConfig.name,
-      url: siteConfig.url,
+      name: companyConfig.name,
+      url: companyConfig.website,
     },
-    termsOfService: `${siteConfig.url}/legal/terms`,
+    termsOfService: `${companyConfig.website}/legal/terms`,
   };
 
   return (
@@ -111,7 +112,7 @@ export function ArticleJsonLd({
     '@type': 'Article',
     headline,
     description,
-    url: `${siteConfig.url}${url}`,
+    url: `${companyConfig.website}${url}`,
     datePublished,
     author: {
       '@type': 'Organization',
@@ -119,9 +120,9 @@ export function ArticleJsonLd({
     },
     publisher: {
       '@type': 'Organization',
-      name: siteConfig.name,
-      url: siteConfig.url,
-      logo: `${siteConfig.url}/icon.svg`,
+      name: companyConfig.name,
+      url: companyConfig.website,
+      logo: `${companyConfig.website}/icon.svg`,
     },
   };
 
@@ -139,21 +140,16 @@ interface ContactPageJsonLdProps {
 }
 
 export function ContactPageJsonLd({
-  title = 'Contact Sathus Technology',
-  description = 'Reach out to Sathus Technology engineering, sales, and executive teams.',
+  title = `Contact ${companyConfig.name}`,
+  description = `Reach out to ${companyConfig.name} engineering, sales, and executive teams.`,
 }: ContactPageJsonLdProps) {
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'ContactPage',
     name: title,
     description,
-    url: `${siteConfig.url}/contact`,
-    mainEntity: {
-      '@type': 'Organization',
-      name: siteConfig.name,
-      url: siteConfig.url,
-      email: 'contact@sathus.technology',
-    },
+    url: `${companyConfig.website}/contact`,
+    mainEntity: companyConfig.getOrganizationSchema(),
   };
 
   return (
@@ -163,3 +159,22 @@ export function ContactPageJsonLd({
     />
   );
 }
+
+export function OrganizationJsonLd() {
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(companyConfig.getOrganizationSchema()) }}
+    />
+  );
+}
+
+export function LocalBusinessJsonLd() {
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(companyConfig.getLocalBusinessSchema()) }}
+    />
+  );
+}
+

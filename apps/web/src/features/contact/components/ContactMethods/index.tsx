@@ -1,4 +1,5 @@
 import { Mail, Phone, MessageCircle } from 'lucide-react';
+import { companyConfig } from '@/config/company';
 
 export function ContactMethods() {
   return (
@@ -8,26 +9,24 @@ export function ContactMethods() {
       </h3>
       <div className="space-y-3">
         <a
-          href="mailto:hello@sathus.in"
+          href={`mailto:${companyConfig.email}`}
           className="flex items-center gap-3 text-sm hover:text-primary transition-colors"
         >
-          <Mail className="h-4 w-4" />
-          hello@sathus.in
+          <Mail className="h-4 w-4 text-primary" />
+          {companyConfig.email}
         </a>
         <a
-          href="tel:+1-415-555-0123"
+          href={`tel:${companyConfig.phoneRaw}`}
           className="flex items-center gap-3 text-sm hover:text-primary transition-colors"
         >
-          <Phone className="h-4 w-4" />
-          +1 (415) 555-0123
+          <Phone className="h-4 w-4 text-primary" />
+          {companyConfig.phone}
         </a>
         <a
-          href="https://calendly.com/sathus/strategy-session"
+          href="/book-strategy-session"
           className="flex items-center gap-3 text-sm hover:text-primary transition-colors"
-          target="_blank"
-          rel="noopener noreferrer"
         >
-          <MessageCircle className="h-4 w-4" />
+          <MessageCircle className="h-4 w-4 text-primary" />
           Book a strategy session
         </a>
       </div>

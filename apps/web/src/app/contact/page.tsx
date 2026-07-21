@@ -18,21 +18,23 @@ import {
   ShieldCheck,
 } from 'lucide-react';
 
+import { companyConfig } from '@/config/company';
+
 export const metadata: Metadata = {
   title: 'Contact Us',
   description:
-    'Get in touch with Sathus Technology — sales, partnerships, investor relations, careers, and enterprise support inquiries.',
+    `Get in touch with ${companyConfig.name} — sales, partnerships, investor relations, careers, and enterprise support inquiries.`,
   alternates: { canonical: '/contact' },
   openGraph: {
-    title: 'Contact Us — Sathus Technology',
+    title: `Contact Us — ${companyConfig.name}`,
     description:
       'Connect with our team to discuss your enterprise AI, data, and cloud modernization needs.',
-    url: `${siteConfig.url}/contact`,
+    url: `${companyConfig.website}/contact`,
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Contact Us — Sathus Technology',
+    title: `Contact Us — ${companyConfig.name}`,
     description: 'Connect with our team to discuss your enterprise software needs.',
   },
 };
@@ -180,35 +182,32 @@ export default function ContactPage() {
               <h3 className="text-base font-bold">Direct Contact</h3>
               <div className="space-y-3 text-sm text-muted-foreground">
                 <div>
-                  <p className="text-xs font-bold text-foreground uppercase tracking-wider mb-1">Enterprise Sales & Partnerships</p>
-                  <p>hello@sathus.technology</p>
+                  <p className="text-xs font-bold text-foreground uppercase tracking-wider mb-1">Official Support & General Inquiries</p>
+                  <a href={`mailto:${companyConfig.email}`} className="font-medium text-primary hover:underline">
+                    {companyConfig.email}
+                  </a>
                 </div>
                 <div>
-                  <p className="text-xs font-bold text-foreground uppercase tracking-wider mb-1">Investor Relations</p>
-                  <p>investors@sathus.technology</p>
+                  <p className="text-xs font-bold text-foreground uppercase tracking-wider mb-1">Direct Phone</p>
+                  <a href={`tel:${companyConfig.phoneRaw}`} className="font-medium text-primary hover:underline">
+                    {companyConfig.phone}
+                  </a>
                 </div>
                 <div>
-                  <p className="text-xs font-bold text-foreground uppercase tracking-wider mb-1">Careers & Recruitment</p>
-                  <p>careers@sathus.technology</p>
-                </div>
-                <div>
-                  <p className="text-xs font-bold text-foreground uppercase tracking-wider mb-1">Security & Vulnerability Reports</p>
-                  <p>security@sathus.technology</p>
+                  <p className="text-xs font-bold text-foreground uppercase tracking-wider mb-1">Official Website</p>
+                  <a href={companyConfig.website} target="_blank" rel="noopener noreferrer" className="font-medium text-primary hover:underline">
+                    {companyConfig.website}
+                  </a>
                 </div>
               </div>
             </div>
 
             {/* Office Location */}
             <div className="rounded-xl border border-border bg-card p-6 space-y-4">
-              <h3 className="text-base font-bold">Headquarters</h3>
+              <h3 className="text-base font-bold">Corporate Headquarters</h3>
               <div className="text-sm text-muted-foreground space-y-1">
-                <p className="font-semibold text-foreground">Sathus Technology Pvt. Ltd.</p>
-                <p>Bengaluru, Karnataka 560001</p>
-                <p>India</p>
-              </div>
-              <div className="text-xs text-muted-foreground">
-                <p className="font-semibold text-foreground mb-1">Global Delivery</p>
-                <p>We serve clients in India, UK, UAE, USA, and APAC with distributed delivery squads.</p>
+                <p className="font-semibold text-foreground">{companyConfig.name}</p>
+                <p>{companyConfig.address.formatted}</p>
               </div>
             </div>
 

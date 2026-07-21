@@ -6,6 +6,7 @@ export interface SiteConfig {
     github?: string;
     twitter?: string;
     linkedin?: string;
+    instagram?: string;
   };
 }
 

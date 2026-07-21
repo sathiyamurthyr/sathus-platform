@@ -1,14 +1,14 @@
 import { SiteConfig, NavItem, MegaMenuSection, FooterSection, NotificationItem, SearchResult, CommandAction } from '@/types';
+import { companyConfig } from '@/config/company';
 
 export const siteConfig: SiteConfig = {
-  name: 'Sathus Technology',
-  url: 'https://sathus.technology',
+  name: companyConfig.name,
+  url: companyConfig.website,
   description:
-    'Sathus Technology engineers enterprise AI, data platforms, and cloud-native software for regulated industries.',
+    'Sathus Technology Pvt. Ltd. engineers enterprise AI, data platforms, and cloud-native software for regulated industries.',
   links: {
-    github: 'https://github.com/sathustechnology',
-    twitter: 'https://twitter.com/sathustech',
-    linkedin: 'https://linkedin.com/company/sathustechnology',
+    linkedin: companyConfig.socials.linkedin,
+    instagram: companyConfig.socials.instagram,
   },
 };
 
@@ -402,9 +402,8 @@ export const footerSections: FooterSection[] = [
 ];
 
 export const socialLinks = [
-  { name: 'GitHub', href: siteConfig.links.github, icon: 'GitHub' },
-  { name: 'Twitter', href: siteConfig.links.twitter, icon: 'Twitter' },
-  { name: 'LinkedIn', href: siteConfig.links.linkedin, icon: 'LinkedIn' },
+  { name: 'LinkedIn', href: companyConfig.socials.linkedin, icon: 'LinkedIn' },
+  { name: 'Instagram', href: companyConfig.socials.instagram, icon: 'Instagram' },
 ];
 
 export const announcements = [
