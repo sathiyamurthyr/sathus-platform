@@ -286,4 +286,74 @@ export interface LicenseAssignmentItem {
   status: 'active' | 'unassigned' | 'expired';
 }
 
+// Story 15.9 Audit Logs & Compliance Center Types
+
+export type AuditEventCategory =
+  | 'authentication'
+  | 'security'
+  | 'user_activity'
+  | 'config_change'
+  | 'billing'
+  | 'api'
+  | 'workflow'
+  | 'ai'
+  | 'search'
+  | 'admin_action';
+
+export interface AuditLogEvent {
+  id: string;
+  title: string;
+  description: string;
+  category: AuditEventCategory;
+  severity: 'info' | 'warning' | 'critical';
+  performedBy: string;
+  performedByRole: string;
+  ipAddress: string;
+  tenantName: string;
+  targetResource: string;
+  timestamp: string;
+  hashSignature: string;
+}
+
+export interface ComplianceFrameworkItem {
+  id: string;
+  name: 'ISO 27001' | 'SOC 2 Type II' | 'GDPR' | 'HIPAA Ready';
+  description: string;
+  complianceScorePercent: number;
+  passingControlsCount: number;
+  totalControlsCount: number;
+  lastAuditedAt: string;
+  status: 'compliant' | 'review_required' | 'non_compliant';
+}
+
+// Story 15.10 Feature Flags & Configuration Management Types
+
+export type FeatureFlagTargetingScope = 'platform' | 'organization' | 'tenant' | 'workspace' | 'user' | 'role';
+
+export interface FeatureFlagItem {
+  key: string;
+  name: string;
+  description: string;
+  isEnabled: boolean;
+  scope: FeatureFlagTargetingScope;
+  rolloutPercentage: number;
+  targetUserGroup: string;
+  targetPlanTier: string;
+  isKillSwitchTriggered: boolean;
+  lastModifiedBy: string;
+  updatedAt: string;
+}
+
+export interface EnvironmentConfigProfile {
+  id: string;
+  environment: 'production' | 'staging' | 'development';
+  key: string;
+  value: string;
+  category: string;
+  isEncrypted: boolean;
+  version: number;
+  updatedAt: string;
+}
+
+
 

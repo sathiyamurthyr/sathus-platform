@@ -30,7 +30,7 @@ import type {
   AdminSettingCategory,
 } from '../../types';
 
-import { Lock, Code, CreditCard } from 'lucide-react';
+import { Lock, Code, CreditCard, ShieldAlert, ToggleRight } from 'lucide-react';
 import { OrganizationTenantManagerView } from '../OrganizationTenantManagerView';
 import { WorkspaceManagerView } from '../WorkspaceManagerView';
 import { UserLifecycleManagerView } from '../UserLifecycleManagerView';
@@ -38,9 +38,11 @@ import { RolePermissionManagerView } from '../RolePermissionManagerView';
 import { EnterpriseSecurityCenterView } from '../EnterpriseSecurityCenterView';
 import { DeveloperPortalManagerView } from '../DeveloperPortalManagerView';
 import { LicenseSubscriptionManagerView } from '../LicenseSubscriptionManagerView';
+import { AuditComplianceCenterView } from '../AuditComplianceCenterView';
+import { FeatureFlagConfigManagerView } from '../FeatureFlagConfigManagerView';
 
 export function PlatformAdminFoundationView() {
-  const [activeTab, setActiveTab] = useState<'dashboard' | 'organizations' | 'workspaces' | 'users' | 'roles' | 'security' | 'developer' | 'licenses' | 'navigation' | 'settings' | 'activity'>('dashboard');
+  const [activeTab, setActiveTab] = useState<'dashboard' | 'organizations' | 'workspaces' | 'users' | 'roles' | 'security' | 'developer' | 'licenses' | 'audit' | 'feature_flags' | 'navigation' | 'settings' | 'activity'>('dashboard');
   const [metrics] = useState(mockAdminOverviewMetrics);
   const [settingsList, setSettingsList] = useState<PlatformSettingItem[]>(mockPlatformSettings);
   const [activityFeed] = useState<AdminActivityEvent[]>(mockAdminActivityEvents);
@@ -71,10 +73,10 @@ export function PlatformAdminFoundationView() {
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-foreground flex items-center space-x-2">
             <ShieldCheck className="w-6 h-6 text-primary" />
-            <span>Platform Administration & Security Control Center</span>
+            <span>Platform Administration Suite (EPIC-025 Complete)</span>
           </h1>
           <p className="text-xs text-muted-foreground">
-            EPIC-025 Governance: Orgs, Tenants, Workspaces, Users, RBAC, Security Center, Developer Portal, and Licensing.
+            Multi-Tenant Governance: Orgs, Tenants, Workspaces, Users, RBAC, Security, Developer Portal, Licensing, Audit Logs, and Feature Flags.
           </p>
         </div>
 
@@ -104,6 +106,8 @@ export function PlatformAdminFoundationView() {
           { id: 'security', label: 'Security Center', icon: <Lock className="w-4 h-4 text-red-500" /> },
           { id: 'developer', label: 'Developer Portal & API Keys', icon: <Code className="w-4 h-4 text-cyan-500" /> },
           { id: 'licenses', label: 'Licenses & Subscriptions', icon: <CreditCard className="w-4 h-4 text-emerald-500" /> },
+          { id: 'audit', label: 'Audit & Compliance Center', icon: <ShieldAlert className="w-4 h-4 text-indigo-500" /> },
+          { id: 'feature_flags', label: 'Feature Flags & Config', icon: <ToggleRight className="w-4 h-4 text-amber-500" /> },
           { id: 'settings', label: 'Platform Settings Framework', icon: <Sliders className="w-4 h-4 text-amber-500" /> },
           { id: 'activity', label: 'Centralized Activity Stream', icon: <FileText className="w-4 h-4 text-rose-500" /> },
         ].map((t) => (
@@ -428,6 +432,12 @@ export function PlatformAdminFoundationView() {
 
       {/* TAB 8: LICENSES & SUBSCRIPTIONS */}
       {activeTab === 'licenses' && <LicenseSubscriptionManagerView />}
+
+      {/* TAB 9: AUDIT LOGS & COMPLIANCE CENTER */}
+      {activeTab === 'audit' && <AuditComplianceCenterView />}
+
+      {/* TAB 10: FEATURE FLAGS & CONFIGURATION */}
+      {activeTab === 'feature_flags' && <FeatureFlagConfigManagerView />}
     </div>
   );
 }

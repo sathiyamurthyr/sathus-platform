@@ -1,0 +1,66 @@
+import type { FeatureFlagItem, EnvironmentConfigProfile } from '../types';
+
+export const mockFeatureFlags: FeatureFlagItem[] = [
+  {
+    key: 'enable_ai_executive_copilot',
+    name: 'Executive AI Business Insights Copilot',
+    description: 'Enables Claude 3.5 Sonnet RAG engine for executive BI reporting and predictive forecasting.',
+    isEnabled: true,
+    scope: 'tenant',
+    rolloutPercentage: 100,
+    targetUserGroup: 'Executive Leadership & Admins',
+    targetPlanTier: 'Enterprise Scale',
+    isKillSwitchTriggered: false,
+    lastModifiedBy: 'Sathish Kumar',
+    updatedAt: '2026-07-21T16:00:00Z',
+  },
+  {
+    key: 'canary_billing_v2_stripe_mesh',
+    name: 'Stripe Billing Engine v2 Canary Mesh',
+    description: 'Canary rollout of multi-currency invoice processing and automated usage metering.',
+    isEnabled: true,
+    scope: 'organization',
+    rolloutPercentage: 25,
+    targetUserGroup: 'Beta Enterprise Tenants',
+    targetPlanTier: 'Pro & Enterprise',
+    isKillSwitchTriggered: false,
+    lastModifiedBy: 'Sarah Jenkins',
+    updatedAt: '2026-07-20T11:30:00Z',
+  },
+  {
+    key: 'experimental_vector_rag_pgvector',
+    name: 'pgvector Hybrid Vector RAG Search',
+    description: 'High-throughput HNSW index vector similarity search for document repositories.',
+    isEnabled: true,
+    scope: 'workspace',
+    rolloutPercentage: 50,
+    targetUserGroup: 'AI Research Squads',
+    targetPlanTier: 'All Paid Tiers',
+    isKillSwitchTriggered: false,
+    lastModifiedBy: 'Michael Chen',
+    updatedAt: '2026-07-19T09:15:00Z',
+  },
+];
+
+export const mockEnvironmentConfigs: EnvironmentConfigProfile[] = [
+  {
+    id: 'cfg-1',
+    environment: 'production',
+    key: 'SATHUS_AI_GATEWAY_DEFAULT_MODEL',
+    value: 'claude-3-5-sonnet-20241022',
+    category: 'AI Gateway',
+    isEncrypted: false,
+    version: 4,
+    updatedAt: '2026-07-20T00:00:00Z',
+  },
+  {
+    id: 'cfg-2',
+    environment: 'production',
+    key: 'KAFKA_STREAM_CONCURRENCY_LIMIT',
+    value: '64',
+    category: 'Infrastructure',
+    isEncrypted: false,
+    version: 2,
+    updatedAt: '2026-07-15T00:00:00Z',
+  },
+];
