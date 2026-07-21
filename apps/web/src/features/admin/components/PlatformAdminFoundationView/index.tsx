@@ -30,13 +30,17 @@ import type {
   AdminSettingCategory,
 } from '../../types';
 
+import { Lock, Code, CreditCard } from 'lucide-react';
 import { OrganizationTenantManagerView } from '../OrganizationTenantManagerView';
 import { WorkspaceManagerView } from '../WorkspaceManagerView';
 import { UserLifecycleManagerView } from '../UserLifecycleManagerView';
 import { RolePermissionManagerView } from '../RolePermissionManagerView';
+import { EnterpriseSecurityCenterView } from '../EnterpriseSecurityCenterView';
+import { DeveloperPortalManagerView } from '../DeveloperPortalManagerView';
+import { LicenseSubscriptionManagerView } from '../LicenseSubscriptionManagerView';
 
 export function PlatformAdminFoundationView() {
-  const [activeTab, setActiveTab] = useState<'dashboard' | 'organizations' | 'workspaces' | 'users' | 'roles' | 'navigation' | 'settings' | 'activity'>('dashboard');
+  const [activeTab, setActiveTab] = useState<'dashboard' | 'organizations' | 'workspaces' | 'users' | 'roles' | 'security' | 'developer' | 'licenses' | 'navigation' | 'settings' | 'activity'>('dashboard');
   const [metrics] = useState(mockAdminOverviewMetrics);
   const [settingsList, setSettingsList] = useState<PlatformSettingItem[]>(mockPlatformSettings);
   const [activityFeed] = useState<AdminActivityEvent[]>(mockAdminActivityEvents);
@@ -67,10 +71,10 @@ export function PlatformAdminFoundationView() {
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-foreground flex items-center space-x-2">
             <ShieldCheck className="w-6 h-6 text-primary" />
-            <span>Platform Administration & Tenant Management Center</span>
+            <span>Platform Administration & Security Control Center</span>
           </h1>
           <p className="text-xs text-muted-foreground">
-            EPIC-025 Foundation, Organization & Tenant Management, Workspace Lifecycle, User Governance, and Enterprise RBAC.
+            EPIC-025 Governance: Orgs, Tenants, Workspaces, Users, RBAC, Security Center, Developer Portal, and Licensing.
           </p>
         </div>
 
@@ -97,6 +101,9 @@ export function PlatformAdminFoundationView() {
           { id: 'workspaces', label: 'Workspaces Directory', icon: <Layers className="w-4 h-4 text-emerald-500" /> },
           { id: 'users', label: 'Users & Directory', icon: <Users className="w-4 h-4 text-blue-500" /> },
           { id: 'roles', label: 'Roles & RBAC Matrix', icon: <ShieldCheck className="w-4 h-4 text-purple-500" /> },
+          { id: 'security', label: 'Security Center', icon: <Lock className="w-4 h-4 text-red-500" /> },
+          { id: 'developer', label: 'Developer Portal & API Keys', icon: <Code className="w-4 h-4 text-cyan-500" /> },
+          { id: 'licenses', label: 'Licenses & Subscriptions', icon: <CreditCard className="w-4 h-4 text-emerald-500" /> },
           { id: 'settings', label: 'Platform Settings Framework', icon: <Sliders className="w-4 h-4 text-amber-500" /> },
           { id: 'activity', label: 'Centralized Activity Stream', icon: <FileText className="w-4 h-4 text-rose-500" /> },
         ].map((t) => (
@@ -412,6 +419,15 @@ export function PlatformAdminFoundationView() {
 
       {/* TAB 5: ROLES & RBAC MATRIX */}
       {activeTab === 'roles' && <RolePermissionManagerView />}
+
+      {/* TAB 6: ENTERPRISE SECURITY CENTER */}
+      {activeTab === 'security' && <EnterpriseSecurityCenterView />}
+
+      {/* TAB 7: DEVELOPER PORTAL & API KEYS */}
+      {activeTab === 'developer' && <DeveloperPortalManagerView />}
+
+      {/* TAB 8: LICENSES & SUBSCRIPTIONS */}
+      {activeTab === 'licenses' && <LicenseSubscriptionManagerView />}
     </div>
   );
 }

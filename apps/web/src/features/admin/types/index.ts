@@ -182,3 +182,108 @@ export interface ABACPolicyRule {
   isEnabled: boolean;
 }
 
+// Story 15.6 Enterprise Security Center Types
+
+export interface SecurityMetricOverview {
+  securityHealthScore: number;
+  mfaAdoptionPercent: number;
+  activeSessionsCount: number;
+  blockedLoginAttempts24h: number;
+  trustedDevicesCount: number;
+  suspiciousActivityAlertsCount: number;
+}
+
+export interface IPRuleItem {
+  id: string;
+  ipAddressOrCidr: string;
+  ruleType: 'allow' | 'block';
+  description: string;
+  createdBy: string;
+  createdAt: string;
+}
+
+export interface TrustedDeviceItem {
+  id: string;
+  userId: string;
+  userName: string;
+  deviceName: string;
+  deviceType: 'desktop' | 'mobile' | 'tablet';
+  browser: string;
+  lastUsedAt: string;
+  ipAddress: string;
+  isTrusted: boolean;
+}
+
+// Story 15.7 API Keys & Developer Portal Types
+
+export type APIKeyType = 'server' | 'client' | 'read_only' | 'admin' | 'temporary';
+
+export interface DeveloperApp {
+  id: string;
+  name: string;
+  description: string;
+  environment: 'production' | 'sandbox';
+  keyCount: number;
+  monthlyCalls: number;
+  createdAt: string;
+}
+
+export interface APIKeyItem {
+  id: string;
+  appId: string;
+  appName: string;
+  name: string;
+  keyPrefix: string;
+  maskedKey: string;
+  keyType: APIKeyType;
+  scopes: string[];
+  rateLimitPerMin: number;
+  lastUsedAt: string;
+  expiresAt: string | null;
+  status: 'active' | 'revoked';
+}
+
+export interface WebhookSubscription {
+  id: string;
+  targetUrl: string;
+  subscribedEvents: string[];
+  secretMasked: string;
+  status: 'active' | 'failing';
+  deliverySuccessPercent: number;
+  createdAt: string;
+}
+
+// Story 15.8 License & Subscription Administration Types
+
+export interface LicenseOverviewMetric {
+  totalLicensesCount: number;
+  assignedLicensesCount: number;
+  availableLicensesCount: number;
+  expiringSoonLicensesCount: number;
+  monthlyRecurringRevenueMRR: number;
+  annualRecurringRevenueARR: number;
+  renewalDaysRemaining: number;
+}
+
+export interface SubscriptionPlanItem {
+  id: string;
+  name: 'Free' | 'Starter' | 'Professional' | 'Enterprise' | 'Custom';
+  priceMonthlyDollars: number;
+  includedSeats: number;
+  includedStorageGB: number;
+  includedAiTokensMonthly: number;
+  features: string[];
+  isPopular?: boolean;
+}
+
+export interface LicenseAssignmentItem {
+  id: string;
+  userId: string;
+  userName: string;
+  userEmail: string;
+  planName: string;
+  assignedAt: string;
+  status: 'active' | 'unassigned' | 'expired';
+}
+
+
