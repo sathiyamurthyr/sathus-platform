@@ -177,3 +177,85 @@ export interface ReportExecutionHistory {
   deliveryChannel: ReportDistributionChannel;
   downloadUrl: string;
 }
+
+// Story 14.4 AI-Powered Business Insights & Predictive Analytics Types
+
+export type InsightCategory =
+  | 'revenue'
+  | 'customers'
+  | 'ai_usage'
+  | 'automation'
+  | 'infrastructure'
+  | 'billing'
+  | 'search';
+
+export type InsightPriority = 'critical' | 'high' | 'medium' | 'low';
+
+export interface BusinessInsight {
+  id: string;
+  title: string;
+  summary: string;
+  category: InsightCategory;
+  priority: InsightPriority;
+  confidenceScorePercent: number;
+  businessImpact: 'high_positive' | 'moderate_positive' | 'high_risk' | 'moderate_risk';
+  supportingMetrics: { label: string; value: string; change: string }[];
+  recommendedActions: string[];
+  createdAt: string;
+}
+
+export type ForecastHorizon = '30d' | '90d' | '6m' | '12m';
+
+export interface PredictiveForecastPoint {
+  date: string;
+  projectedValue: number;
+  lowerBound: number;
+  upperBound: number;
+}
+
+export interface PredictiveMetricForecast {
+  metricKey: string;
+  metricName: string;
+  unit: string;
+  horizon: ForecastHorizon;
+  currentValue: number;
+  projectedValue: number;
+  growthPercent: number;
+  confidenceScorePercent: number;
+  forecastPoints: PredictiveForecastPoint[];
+}
+
+export interface AnalyticsAnomaly {
+  id: string;
+  metricName: string;
+  category: InsightCategory;
+  severity: 'critical' | 'warning' | 'info';
+  detectedAt: string;
+  expectedValue: number;
+  actualValue: number;
+  deviationPercent: number;
+  rootCauseSummary: string;
+  status: 'active' | 'acknowledged' | 'resolved';
+}
+
+export interface CopilotQueryResponse {
+  id: string;
+  prompt: string;
+  narrativeAnswer: string;
+  confidenceScorePercent: number;
+  supportingChartType: 'line' | 'bar' | 'pie' | 'metric_card';
+  chartData: { label: string; value: number }[];
+  recommendedDrillDowns: { label: string; targetUrl: string }[];
+  timestamp: string;
+}
+
+export interface AIExecutiveSummary {
+  period: string;
+  generatedAt: string;
+  executiveHeadline: string;
+  summaryParagraphs: string[];
+  keyWins: string[];
+  riskAlerts: string[];
+  growthOpportunities: string[];
+}
+

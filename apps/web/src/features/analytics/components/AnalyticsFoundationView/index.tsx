@@ -33,12 +33,13 @@ import {
 } from '../../data/mock-analytics-data';
 import type { KPIDefinition, AggregationPeriod } from '../../types';
 
-import { Crown, FileSpreadsheet } from 'lucide-react';
+import { Crown, FileSpreadsheet, Sparkles } from 'lucide-react';
 import { ExecutiveAnalyticsDashboardView } from '../ExecutiveAnalyticsDashboardView';
 import { ReportBuilderPlatformView } from '../ReportBuilderPlatformView';
+import { AIInsightsDashboardView } from '../AIInsightsDashboardView';
 
 export function AnalyticsFoundationView() {
-  const [activeTab, setActiveTab] = useState<'overview' | 'reports' | 'kpis' | 'timeseries' | 'widgets' | 'cache'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'ai_insights' | 'reports' | 'kpis' | 'timeseries' | 'widgets' | 'cache'>('overview');
   const [selectedPeriod, setSelectedPeriod] = useState<AggregationPeriod>('month');
   const [kpiList, setKpiList] = useState<KPIDefinition[]>(mockKPIDefinitions);
   const [notice, setNotice] = useState<string | null>(null);
@@ -58,21 +59,17 @@ export function AnalyticsFoundationView() {
             <span>Enterprise Analytics & BI Platform</span>
           </h1>
           <p className="text-xs text-muted-foreground">
-            Story 14.1 Enterprise analytics foundation, KPI engine, time-series aggregations, and Redis-backed cache.
+            Story 14.1 Foundation, 14.2 Executive Dashboard, 14.3 Visual Report Builder, and 14.4 AI Business Insights & Predictive Analytics.
           </p>
         </div>
 
         <div className="flex items-center space-x-3">
-          <div className="flex items-center space-x-1.5 bg-card border border-border px-3 py-1.5 rounded-lg text-xs font-mono text-muted-foreground shadow-sm">
-            <Database className="w-3.5 h-3.5 text-emerald-500" />
-            <span>Cache Hit Ratio: <strong className="text-emerald-500">{mockExecutiveOverview.cacheStatus.hitRatioPercent}%</strong></span>
-          </div>
-
           <button
             onClick={handleClearCache}
-            className="p-2 rounded-lg bg-card border border-border hover:bg-muted/40 text-foreground transition-colors"
+            className="inline-flex items-center space-x-1.5 bg-card border border-border px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-muted/40 transition-all"
           >
-            <RefreshCw className="w-4 h-4" />
+            <RefreshCw className="w-3.5 h-3.5" />
+            <span>Clear Cache</span>
           </button>
         </div>
       </div>
@@ -88,6 +85,7 @@ export function AnalyticsFoundationView() {
       <div className="flex border-b border-border overflow-x-auto space-x-2">
         {[
           { id: 'overview', label: 'Executive BI Overview', icon: <TrendingUp className="w-4 h-4" /> },
+          { id: 'ai_insights', label: 'AI Insights & Copilot', icon: <Sparkles className="w-4 h-4 text-amber-500" /> },
           { id: 'reports', label: 'Visual Report Builder', icon: <FileSpreadsheet className="w-4 h-4 text-emerald-500" /> },
           { id: 'kpis', label: 'Configurable KPI Engine', icon: <Sliders className="w-4 h-4" /> },
           { id: 'timeseries', label: 'Time-Series Aggregation', icon: <Clock className="w-4 h-4" /> },
@@ -96,7 +94,7 @@ export function AnalyticsFoundationView() {
         ].map((t) => (
           <button
             key={t.id}
-            onClick={() => setActiveTab(t.id as 'overview' | 'reports' | 'kpis' | 'timeseries' | 'widgets' | 'cache')}
+            onClick={() => setActiveTab(t.id as 'overview' | 'ai_insights' | 'reports' | 'kpis' | 'timeseries' | 'widgets' | 'cache')}
             className={`flex items-center space-x-2 px-4 py-2.5 text-xs font-semibold border-b-2 transition-all shrink-0 ${
               activeTab === t.id
                 ? 'border-primary text-primary bg-primary/5'
@@ -114,7 +112,12 @@ export function AnalyticsFoundationView() {
         <ExecutiveAnalyticsDashboardView />
       )}
 
-      {/* TAB 2: VISUAL REPORT BUILDER */}
+      {/* TAB 2: AI INSIGHTS & COPILOT */}
+      {activeTab === 'ai_insights' && (
+        <AIInsightsDashboardView />
+      )}
+
+      {/* TAB 3: VISUAL REPORT BUILDER */}
       {activeTab === 'reports' && (
         <ReportBuilderPlatformView />
       )}
