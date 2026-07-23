@@ -2,8 +2,19 @@
 
 import * as React from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'motion/react';
-import { ChevronRight, Settings, HelpCircle, LogOut } from 'lucide-react';
+import {
+  ChevronRight,
+  LayoutDashboard,
+  Grid,
+  Folder,
+  Bell,
+  Settings,
+  CreditCard,
+  HelpCircle,
+  LogOut,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 interface ProfileMenuProps {
@@ -13,6 +24,7 @@ interface ProfileMenuProps {
 
 export function ProfileMenu({ open, onClose }: ProfileMenuProps) {
   const menuRef = React.useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   React.useEffect(() => {
     if (!open) return;
@@ -22,6 +34,25 @@ export function ProfileMenu({ open, onClose }: ProfileMenuProps) {
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [open, onClose]);
+
+  const handleSignOut = () => {
+    // Clear cookies by setting past expires date
+    document.cookie = 'access_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=Lax';
+    document.cookie = 'refresh_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=Lax';
+    onClose();
+    // Redirect to home page
+    window.location.href = '/';
+  };
+
+  const menuItems = [
+    { label: 'Dashboard', href: '/app/dashboard', icon: LayoutDashboard },
+    { label: 'My Workspace', href: '/workspace', icon: Grid },
+    { label: 'Projects', href: '/app/projects', icon: Folder },
+    { label: 'Notifications', href: '/app/notifications', icon: Bell },
+    { label: 'Settings', href: '/app/settings', icon: Settings },
+    { label: 'Billing', href: '/app/settings?tab=billing', icon: CreditCard },
+    { label: 'Help & Support', href: '/app/help', icon: HelpCircle },
+  ];
 
   return (
     <AnimatePresence>
@@ -49,30 +80,28 @@ export function ProfileMenu({ open, onClose }: ProfileMenuProps) {
                 </div>
               </div>
             </div>
-            <div className="py-2">
-              <Link
-                href="#"
-                className="flex items-center gap-3 px-5 py-2.5 text-sm text-foreground hover:bg-muted/40 transition-colors"
-                onClick={onClose}
-              >
-                <Settings className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
-                Settings
-                <ChevronRight className="h-3.5 w-3.5 text-muted-foreground ml-auto" aria-hidden="true" />
-              </Link>
-              <Link
-                href="#"
-                className="flex items-center gap-3 px-5 py-2.5 text-sm text-foreground hover:bg-muted/40 transition-colors"
-                onClick={onClose}
-              >
-                <HelpCircle className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
-                Help & Support
-                <ChevronRight className="h-3.5 w-3.5 text-muted-foreground ml-auto" aria-hidden="true" />
-              </Link>
+            <div className="py-2 max-h-[350px] overflow-y-auto">
+              {menuItems.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <Link
+                    key={item.label}
+                    href={item.href}
+                    className="flex items-center gap-3 px-5 py-2.5 text-sm text-foreground hover:bg-muted/40 transition-colors"
+                    onClick={onClose}
+                  >
+                    <Icon className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
+                    <span>{item.label}</span>
+                    <ChevronRight className="h-3.5 w-3.5 text-muted-foreground ml-auto" aria-hidden="true" />
+                  </Link>
+                );
+              })}
             </div>
             <div className="border-t px-5 py-3">
               <Button
                 variant="ghost"
                 className="w-full justify-start gap-2 text-sm text-destructive hover:text-destructive hover:bg-destructive/5"
+                onClick={handleSignOut}
               >
                 <LogOut className="h-4 w-4" aria-hidden="true" />
                 Sign out

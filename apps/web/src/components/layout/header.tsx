@@ -24,6 +24,18 @@ export function Header() {
   const [commandOpen, setCommandOpen] = React.useState(false);
   const [notificationsOpen, setNotificationsOpen] = React.useState(false);
   const [profileOpen, setProfileOpen] = React.useState(false);
+  const [isAuthenticated, setIsAuthenticated] = React.useState(false);
+
+  React.useEffect(() => {
+    const checkAuth = () => {
+      const authenticated = document.cookie.split(';').some((c) => c.trim().startsWith('access_token='));
+      setIsAuthenticated(authenticated);
+    };
+    checkAuth();
+    window.addEventListener('focus', checkAuth);
+    return () => window.removeEventListener('focus', checkAuth);
+  }, []);
+
   const { isScrolled } = useScroll();
 
   useKeyboardShortcut('k', () => setCommandOpen((open) => !open), {
@@ -112,58 +124,62 @@ export function Header() {
               </Link>
             </Button>
 
-            <div className="hidden lg:block h-4 w-px bg-border mx-1" aria-hidden="true" />
+            {isAuthenticated && (
+              <>
+                <div className="hidden lg:block h-4 w-px bg-border mx-1" aria-hidden="true" />
 
-            <div className="relative">
-              <Button
-                variant="ghost"
-                size="icon"
-                className={cn(
-                  'text-muted-foreground hover:text-foreground relative',
-                  notificationsOpen && 'text-foreground bg-muted/50'
-                )}
-                onClick={() => {
-                  setNotificationsOpen(!notificationsOpen);
-                  setProfileOpen(false);
-                }}
-                aria-label="Open notifications"
-                aria-expanded={notificationsOpen}
-              >
-                <Bell className="h-4 w-4" />
-                <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-primary" aria-label="Unread notifications" />
-              </Button>
-              <Notifications
-                open={notificationsOpen}
-                onClose={() => setNotificationsOpen(false)}
-              />
-            </div>
-
-            <ThemeToggle />
-
-            <div className="relative">
-              <Button
-                variant="ghost"
-                size="icon"
-                className={cn(
-                  'hidden sm:flex text-muted-foreground hover:text-foreground',
-                  profileOpen && 'text-foreground bg-muted/50'
-                )}
-                onClick={() => {
-                  setProfileOpen(!profileOpen);
-                  setNotificationsOpen(false);
-                }}
-                aria-label="Open profile menu"
-                aria-expanded={profileOpen}
-              >
-                <div className="flex h-5 w-5 items-center justify-center rounded-full bg-gradient-to-br from-primary to-violet-600 text-primary-foreground text-[10px] font-semibold">
-                  JD
+                <div className="relative">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className={cn(
+                      'text-muted-foreground hover:text-foreground relative',
+                      notificationsOpen && 'text-foreground bg-muted/50'
+                    )}
+                    onClick={() => {
+                      setNotificationsOpen(!notificationsOpen);
+                      setProfileOpen(false);
+                    }}
+                    aria-label="Open notifications"
+                    aria-expanded={notificationsOpen}
+                  >
+                    <Bell className="h-4 w-4" />
+                    <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-primary" aria-label="Unread notifications" />
+                  </Button>
+                  <Notifications
+                    open={notificationsOpen}
+                    onClose={() => setNotificationsOpen(false)}
+                  />
                 </div>
-              </Button>
-              <ProfileMenu
-                open={profileOpen}
-                onClose={() => setProfileOpen(false)}
-              />
-            </div>
+
+                <ThemeToggle />
+
+                <div className="relative">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className={cn(
+                      'hidden sm:flex text-muted-foreground hover:text-foreground',
+                      profileOpen && 'text-foreground bg-muted/50'
+                    )}
+                    onClick={() => {
+                      setProfileOpen(!profileOpen);
+                      setNotificationsOpen(false);
+                    }}
+                    aria-label="Open profile menu"
+                    aria-expanded={profileOpen}
+                  >
+                    <div className="flex h-5 w-5 items-center justify-center rounded-full bg-gradient-to-br from-primary to-violet-600 text-primary-foreground text-[10px] font-semibold">
+                      JD
+                    </div>
+                  </Button>
+                  <ProfileMenu
+                    open={profileOpen}
+                    onClose={() => setProfileOpen(false)}
+                  />
+                </div>
+              </>
+            )}
 
             <Button
               variant="ghost"

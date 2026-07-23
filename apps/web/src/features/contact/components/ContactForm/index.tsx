@@ -33,6 +33,7 @@ export function ContactForm({ inquiryType = 'general', onSuccess }: ContactFormP
     handleSubmit,
     formState: { errors },
     trigger,
+    reset,
   } = useForm<ContactFormData>({
     resolver: zodResolver(contactFormSchema),
     defaultValues: {
@@ -40,6 +41,25 @@ export function ContactForm({ inquiryType = 'general', onSuccess }: ContactFormP
       consent: false,
     },
   });
+
+  React.useEffect(() => {
+    const authenticated = document.cookie.split(';').some((c) => c.trim().startsWith('access_token='));
+    if (authenticated) {
+      reset({
+        firstName: 'John',
+        lastName: 'Doe',
+        email: 'john.doe@sathus.technology',
+        company: 'Sathus Technology',
+        jobTitle: 'Principal Architect',
+        phone: '+91 90253 81316',
+        country: 'India',
+        industry: 'Technology',
+        companySize: '100-500',
+        inquiryType,
+        consent: true,
+      });
+    }
+  }, [inquiryType, reset]);
 
   const nextStep = async () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

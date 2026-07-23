@@ -25,6 +25,26 @@ export const MobileDrawer = React.memo(function MobileDrawer({
   onSearchClick,
 }: MobileDrawerProps) {
   const [expandedItem, setExpandedItem] = React.useState<string | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = React.useState(false);
+
+  React.useEffect(() => {
+    if (!open) return;
+    const checkAuth = () => {
+      const authenticated = document.cookie.split(';').some((c) => c.trim().startsWith('access_token='));
+      setIsAuthenticated(authenticated);
+    };
+    checkAuth();
+  }, [open]);
+
+  const handleSignOut = React.useCallback(() => {
+    // Clear cookies by setting past expires date
+    document.cookie = 'access_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=Lax';
+    document.cookie = 'refresh_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=Lax';
+    setIsAuthenticated(false);
+    onClose();
+    // Redirect to home page
+    window.location.href = '/';
+  }, [onClose]);
 
   React.useEffect(() => {
     if (open) {
@@ -111,7 +131,7 @@ export const MobileDrawer = React.memo(function MobileDrawer({
                                   column.items.map((subItem) => (
                                     <li key={subItem.title}>
                                       <Link
-                                        href={subItem.href}
+                                        href={subItem.href || '#'}
                                         className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors py-1.5 rounded-md hover:bg-muted/30"
                                         onClick={onClose}
                                       >
@@ -138,6 +158,47 @@ export const MobileDrawer = React.memo(function MobileDrawer({
                 ))}
               </ul>
 
+              {isAuthenticated && (
+                <ul className="mt-6 pt-6 border-t space-y-1">
+                  <span className="px-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider block mb-2">Account</span>
+                  <li>
+                    <Link
+                      href="/app/dashboard"
+                      className="flex items-center justify-between text-base font-medium text-foreground hover:text-primary transition-colors py-2 px-3 rounded-lg hover:bg-muted/50"
+                      onClick={onClose}
+                    >
+                      Dashboard
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/workspace"
+                      className="flex items-center justify-between text-base font-medium text-foreground hover:text-primary transition-colors py-2 px-3 rounded-lg hover:bg-muted/50"
+                      onClick={onClose}
+                    >
+                      My Workspace
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/app/settings"
+                      className="flex items-center justify-between text-base font-medium text-foreground hover:text-primary transition-colors py-2 px-3 rounded-lg hover:bg-muted/50"
+                      onClick={onClose}
+                    >
+                      Settings
+                    </Link>
+                  </li>
+                  <li>
+                    <button
+                      onClick={handleSignOut}
+                      className="flex items-center justify-between w-full text-base font-medium text-destructive hover:text-destructive/90 transition-colors py-2 px-3 rounded-lg hover:bg-destructive/5 text-left"
+                    >
+                      Sign Out
+                    </button>
+                  </li>
+                </ul>
+              )}
+
               <div className="mt-8 pt-6 border-t space-y-4">
                 <Button
                   variant="outline"
@@ -155,10 +216,12 @@ export const MobileDrawer = React.memo(function MobileDrawer({
                     Request Consultation
                   </Link>
                 </Button>
-                <div className="flex items-center justify-between pt-2">
-                  <span className="text-sm text-muted-foreground">Appearance</span>
-                  <ThemeToggle />
-                </div>
+                {isAuthenticated && (
+                  <div className="flex items-center justify-between pt-2">
+                    <span className="text-sm text-muted-foreground">Appearance</span>
+                    <ThemeToggle />
+                  </div>
+                )}
               </div>
             </nav>
           </motion.div>
