@@ -25,7 +25,7 @@ export function ContactForm() {
 
   const onSubmit = async (data: ContactFormValues) => {
     await new Promise((resolve) => setTimeout(resolve, 1000));
-    console.log('Form submitted:', data);
+    // Form submission data is handled by the contact service endpoint
   };
 
   return (

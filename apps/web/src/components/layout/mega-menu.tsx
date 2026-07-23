@@ -66,7 +66,7 @@ export function MegaMenu({ sections, onClose }: MegaMenuProps) {
       <motion.div
         ref={menuRef}
         {...animationProps}
-        className="absolute inset-x-0 top-full z-40 border-b bg-background/95 backdrop-blur-xl supports-[backdrop-filter]:bg-background/80 shadow-lg"
+        className="absolute inset-x-0 top-full z-40 border-b bg-background shadow-lg"
         role="menu"
         aria-label="Mega menu"
       >

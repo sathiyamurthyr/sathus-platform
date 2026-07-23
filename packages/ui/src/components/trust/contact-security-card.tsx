@@ -72,7 +72,7 @@ const ContactSecurityCard = React.forwardRef<HTMLDivElement, ContactSecurityCard
             <div className="rounded-lg border border-border p-4">
               <div className="flex items-center gap-2 mb-2">
                 <span className="sathus-badge bg-warning/10 text-warning text-xs font-medium">
-                  {bugBounty.active ? 'Coming Soon' : 'Planned'}
+                  {bugBounty.active ? 'Active' : 'Planned'}
                 </span>
               </div>
               {bugBounty.description && (

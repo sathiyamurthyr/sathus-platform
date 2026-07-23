@@ -9,6 +9,8 @@ export const siteConfig: SiteConfig = {
   links: {
     linkedin: companyConfig.socials.linkedin,
     instagram: companyConfig.socials.instagram,
+    github: 'https://github.com',
+    twitter: 'https://twitter.com',
   },
 };
 

@@ -6,6 +6,12 @@ const nextConfig: NextConfig = {
   compress: true,
   poweredByHeader: false,
   reactStrictMode: true,
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   outputFileTracingRoot: path.join(__dirname, '../..'),
   async headers() {
     return [

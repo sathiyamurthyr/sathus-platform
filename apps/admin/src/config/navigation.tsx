@@ -39,7 +39,7 @@ export const navItems: NavItem[] = [
   { label: 'Analytics', href: '/admin/analytics', icon: BarChart3, comingSoon: true },
   { label: 'Users', href: '/admin/users', icon: Users, comingSoon: true },
   { label: 'Settings', href: '/admin/settings', icon: Settings, comingSoon: true },
-];
+].filter(item => !item.comingSoon);
 
 /** The dashboard home route used for redirects and active-state roots. */
 export const DASHBOARD_ROUTE = '/admin/dashboard';

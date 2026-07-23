@@ -1,3 +1,4 @@
+import { Metadata } from 'next';
 import { PageHeader } from '@/components/admin/PageHeader';
 import { DashboardCard } from '@/components/dashboard/DashboardCard';
 import { StatCard } from '@/components/dashboard/StatCard';
@@ -6,6 +7,14 @@ import { RecentActivity } from '@/components/dashboard/RecentActivity';
 import { SystemStatus } from '@/components/dashboard/SystemStatus';
 import { Button } from '@/components/ui/button';
 import { stats, quickActions, recentActivity, services } from '@/config/dashboard-data';
+
+export const metadata: Metadata = {
+  title: 'Admin Console Dashboard',
+  description: 'Enterprise overview of System Health, Service Status, and quick operations.',
+  alternates: {
+    canonical: '/admin/dashboard',
+  },
+};
 
 export default function DashboardPage() {
   return (

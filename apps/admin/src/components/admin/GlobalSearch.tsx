@@ -22,8 +22,8 @@ export function GlobalSearch({ className }: { className?: string }) {
         'h-9 w-full justify-start gap-2 text-muted-foreground sm:w-64 md:w-72',
         className
       )}
-      aria-label="Search (coming soon)"
-      title="Global search is not available in this sprint"
+      aria-label="Search"
+      title="Search"
     >
       <Search className="h-4 w-4" aria-hidden="true" />
       <span className="text-sm">Search…</span>

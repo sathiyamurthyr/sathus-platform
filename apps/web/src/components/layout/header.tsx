@@ -8,8 +8,9 @@ import { cn } from '@/lib/utils';
 import { Logo } from '@/components/common/Logo';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/layout/theme-toggle';
-import { Navigation } from '@/components/layout/navigation';
-import { MobileMenu } from '@/components/layout/mobile-menu';
+import { Navbar } from '@/components/navigation/Navbar';
+import { MobileDrawer } from '@/components/navigation/MobileDrawer';
+import { navItems, megaMenuSections } from '@/constants';
 import { SearchDialog } from '@/components/layout/search';
 import { CommandPalette } from '@/components/layout/command-palette';
 import { Notifications } from '@/components/layout/notifications';
@@ -49,7 +50,7 @@ export function Header() {
         className={cn(
           'sticky top-0 z-50 w-full transition-all duration-300',
           isScrolled
-            ? 'bg-background/80 backdrop-blur-xl supports-[backdrop-filter]:bg-background/60 border-b shadow-sm'
+            ? 'bg-background border-b shadow-sm'
             : 'bg-transparent'
         )}
         initial={{ y: -60 }}
@@ -58,17 +59,15 @@ export function Header() {
       >
         <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6">
           <div className="flex items-center gap-6">
-            <Link href="/" className="flex items-center" aria-label="Sathus Technology Pvt. Ltd. home">
-              <motion.div
-                animate={{
-                  scale: isScrolled ? 0.9 : 1,
-                }}
-                transition={{ duration: 0.3, ease: 'easeOut' }}
-              >
-                <Logo size="md" showWordmark={true} />
-              </motion.div>
-            </Link>
-            <Navigation />
+            <motion.div
+              animate={{
+                scale: isScrolled ? 0.9 : 1,
+              }}
+              transition={{ duration: 0.3, ease: 'easeOut' }}
+            >
+              <Logo size="md" showWordmark={true} href="/" className="flex items-center" />
+            </motion.div>
+            <Navbar />
           </div>
 
           <div className="flex items-center gap-1 sm:gap-1.5">
@@ -178,7 +177,13 @@ export function Header() {
           </div>
         </div>
       </motion.header>
-      <MobileMenu open={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} />
+      <MobileDrawer
+        open={mobileMenuOpen}
+        onClose={() => setMobileMenuOpen(false)}
+        navItems={navItems}
+        megaMenuSections={megaMenuSections}
+        onSearchClick={handleSearchClick}
+      />
       <SearchDialog open={searchOpen} onClose={() => setSearchOpen(false)} />
       <CommandPalette open={commandOpen} onClose={() => setCommandOpen(false)} />
     </>

@@ -31,7 +31,7 @@ import { EnterpriseAgentMarketplaceView } from '../EnterpriseAgentMarketplaceVie
 import { AgentSecurityGovernanceCenterView } from '../AgentSecurityGovernanceCenterView';
 import { AgentAnalyticsContinuousLearningView } from '../AgentAnalyticsContinuousLearningView';
 import { EnterpriseAICommandCenterView } from '../EnterpriseAICommandCenterView';
-import { GitMerge, ShieldCheck, Users, Target, Brain, Wrench, Network, TrendingUp, Activity, ShieldAlert, ShoppingBag, Radio, Award, Lock } from 'lucide-react';
+import { GitMerge, ShieldCheck, Users, Target, Brain, Wrench, Network, TrendingUp, ShieldAlert, ShoppingBag, Award, Lock } from 'lucide-react';
 
 export function AIAgentsPlatformView() {
   const [activeTab, setActiveTab] = useState<

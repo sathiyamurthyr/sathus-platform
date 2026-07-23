@@ -1,4 +1,4 @@
-import type { AgentItem, AgentTaskItem, AIAgentsOverviewMetrics } from '../types';
+import type { AgentItem, AgentTaskItem, AIAgentsOverviewMetrics, CollaborationSession, AgentTeam } from '../types';
 
 export const mockAIAgentsOverviewMetrics: AIAgentsOverviewMetrics = {
   totalRegisteredAgents: 12,
@@ -220,7 +220,7 @@ export const mockSafetyGuardrails = [
   },
 ];
 
-export const mockAgentTeams = [
+export const mockAgentTeams: AgentTeam[] = [
   {
     id: 'team-ops-01',
     name: 'Enterprise SRE & Security Incident Response Team',
@@ -237,7 +237,7 @@ export const mockAgentTeams = [
   },
 ];
 
-export const mockCollaborationSessions = [
+export const mockCollaborationSessions: CollaborationSession[] = [
   {
     id: 'collab-701',
     teamId: 'team-ops-01',

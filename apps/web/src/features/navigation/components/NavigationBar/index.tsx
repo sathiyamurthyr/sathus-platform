@@ -12,7 +12,7 @@ export function NavigationBar() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur">
+    <header className="sticky top-0 z-50 w-full border-b border-border backdrop-blur" style={{ backgroundColor: 'hsl(var(--background) / 0.95)' }}>
       <div className="container mx-auto flex h-16 items-center justify-between">
         <Link href="/" className="font-bold text-xl">
           Sathus

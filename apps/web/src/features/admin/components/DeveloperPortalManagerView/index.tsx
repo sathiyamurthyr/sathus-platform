@@ -102,7 +102,7 @@ const client = new SathusClient({
 });
 
 const analytics = await client.analytics.getOverview();
-console.log(analytics);`,
+// Process analytics overview response`,
     go: `package main
 
 import (

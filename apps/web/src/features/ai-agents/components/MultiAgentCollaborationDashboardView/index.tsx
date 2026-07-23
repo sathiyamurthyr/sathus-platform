@@ -13,11 +13,11 @@ import {
   AlertTriangle,
 } from 'lucide-react';
 import { mockAgentTeams, mockCollaborationSessions } from '../../data/mock-agents-data';
-import type { AgentMessage } from '../../types';
+import type { AgentMessage, CollaborationSession } from '../../types';
 
 export function MultiAgentCollaborationDashboardView() {
   const [teams] = useState(mockAgentTeams);
-  const [sessions, setSessions] = useState(mockCollaborationSessions);
+  const [sessions, setSessions] = useState<CollaborationSession[]>(mockCollaborationSessions);
   const [selectedSessionId, setSelectedSessionId] = useState('collab-701');
 
   const [newMessage, setNewMessage] = useState('');
