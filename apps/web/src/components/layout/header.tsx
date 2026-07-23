@@ -56,6 +56,37 @@ export function Header() {
     setSearchOpen(false);
   };
 
+  const handleCommandAction = (actionId: string) => {
+    setCommandOpen(false);
+
+    if (actionId === 'search') {
+      setTimeout(() => {
+        setSearchOpen(true);
+      }, 150);
+      return;
+    }
+
+    if (actionId === 'theme') {
+      const themeBtn = document.querySelector('[aria-label="Toggle theme"]') as HTMLButtonElement | null;
+      if (themeBtn) {
+        themeBtn.click();
+      }
+      return;
+    }
+
+    const routes: Record<string, string> = {
+      products: '/products',
+      solutions: '/solutions',
+      trust: '/trust',
+      contact: '/book-strategy-session',
+    };
+
+    const targetRoute = routes[actionId];
+    if (targetRoute) {
+      window.location.href = targetRoute;
+    }
+  };
+
   return (
     <>
       <motion.header
@@ -201,7 +232,7 @@ export function Header() {
         onSearchClick={handleSearchClick}
       />
       <SearchDialog open={searchOpen} onClose={() => setSearchOpen(false)} />
-      <CommandPalette open={commandOpen} onClose={() => setCommandOpen(false)} />
+      <CommandPalette open={commandOpen} onClose={() => setCommandOpen(false)} onAction={handleCommandAction} />
     </>
   );
 }

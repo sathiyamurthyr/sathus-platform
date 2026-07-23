@@ -9,9 +9,10 @@ import { commandActions } from '@/constants';
 interface CommandPaletteProps {
   open: boolean;
   onClose: () => void;
+  onAction?: (actionId: string) => void;
 }
 
-export function CommandPalette({ open, onClose }: CommandPaletteProps) {
+export function CommandPalette({ open, onClose, onAction }: CommandPaletteProps) {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
 
   React.useEffect(() => {
@@ -37,7 +38,11 @@ export function CommandPalette({ open, onClose }: CommandPaletteProps) {
       setSelectedIndex((prev) => Math.max(prev - 1, 0));
     } else if (e.key === 'Enter') {
       e.preventDefault();
-      commandActions[selectedIndex].action();
+      if (onAction) {
+        onAction(commandActions[selectedIndex].id);
+      } else {
+        commandActions[selectedIndex].action();
+      }
       onClose();
     }
   };
@@ -85,7 +90,11 @@ export function CommandPalette({ open, onClose }: CommandPaletteProps) {
                     i === selectedIndex ? 'bg-muted/80' : 'hover:bg-muted/40'
                   )}
                   onClick={() => {
-                    action.action();
+                    if (onAction) {
+                      onAction(action.id);
+                    } else {
+                      action.action();
+                    }
                     onClose();
                   }}
                   onMouseEnter={() => setSelectedIndex(i)}
