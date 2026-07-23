@@ -34,16 +34,6 @@ const NODES: Node[] = [
   { id: 'apps', label: 'Applications', meta: 'Composable', icon: LayoutGrid, x: 76, y: 80 },
 ];
 
-// Connector endpoint offsets to meet at card center
-// These offsets account for card dimensions and ensure lines meet at card center
-const CONNECTOR_OFFSETS: Record<string, { x: number; y: number }> = {
-  ai: { x: 0, y: 8 }, // Top card: offset down to meet at card center
-  data: { x: 16, y: 0 }, // Left card: offset right to meet at card center
-  cloud: { x: -16, y: 0 }, // Right card: offset left to meet at card center
-  analytics: { x: 16, y: 0 }, // Bottom-left: offset right to meet at card center
-  apps: { x: -16, y: 0 }, // Bottom-right: offset left to meet at card center
-};
-
 export function PlatformVisualization() {
   const reduce = useReducedMotion();
 
@@ -61,16 +51,15 @@ export function PlatformVisualization() {
         fill="none"
       >
         {NODES.map((node) => {
-          const offset = CONNECTOR_OFFSETS[node.id] || { x: 0, y: 0 };
           return (
             <line
               key={node.id}
               x1="50"
               y1="50"
-              x2={node.x + offset.x}
-              y2={node.y + offset.y}
+              x2={node.x}
+              y2={node.y}
               stroke="url(#nodeGradient)"
-              strokeWidth="0.4"
+              strokeWidth="0.5"
               strokeDasharray="2 2.4"
               vectorEffect="non-scaling-stroke"
               className={reduce ? '' : 'animate-dash'}
