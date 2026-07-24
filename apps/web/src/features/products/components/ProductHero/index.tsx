@@ -9,7 +9,7 @@ interface ProductHeroProps {
 
 export function ProductHero({ hero }: ProductHeroProps) {
   return (
-    <div className="py-20">
+    <div className="pt-20 pb-10">
       <div className="container mx-auto px-4">
         <div className="max-w-3xl">
           <div className="flex items-center gap-3 mb-4">

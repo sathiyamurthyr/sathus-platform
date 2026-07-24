@@ -26,56 +26,54 @@ export function EnterpriseCard({
   return (
     <Reveal
       delay={delay}
+      y={0}
       className={cn(
-        "group relative w-full text-left bg-white border border-[#E5E7EB] rounded-[20px] p-8 shadow-sm transition-all duration-200 hover:-translate-y-[6px] hover:border-primary/30 hover:shadow-[0_12px_40px_rgba(0,0,0,0.06)]",
-        "flex flex-col h-auto md:h-[560px]",
-        "md:grid md:grid-cols-1 md:grid-rows-[64px_24px_72px_20px_96px_24px_1px_24px_96px_24px_1px_24px_auto]"
+        "group relative w-full text-left bg-white border border-[#E5E7EB] rounded-[20px] p-6 shadow-sm transition-all duration-200 hover:-translate-y-[6px] hover:border-primary/30 hover:shadow-[0_12px_40px_rgba(0,0,0,0.06)] cursor-pointer",
+        "h-[440px] grid grid-cols-1 grid-rows-[64px_120px_1px_120px_1px_48px]"
       )}
     >
-      {/* Icon Area (Row 1 on tablet/desktop) */}
-      <div className="flex items-center justify-between md:row-start-1 h-16 mb-6 md:mb-0 relative">
-        <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 text-primary ring-1 ring-inset ring-primary/15 transition-all duration-200 group-hover:bg-primary group-hover:text-primary-foreground group-hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] shrink-0">
-          <Icon className="h-7 w-7" />
+      {/* CardHeader (Row 1 - 64px) */}
+      <div className="h-16 flex items-center justify-between gap-2 w-full m-0 p-0">
+        <div className="flex items-center gap-3 min-w-0 m-0 p-0">
+          <div className="h-12 w-12 rounded-xl bg-primary/10 text-primary ring-1 ring-inset ring-primary/15 transition-all duration-200 group-hover:bg-primary group-hover:text-primary-foreground group-hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] shrink-0 flex items-center justify-center">
+            <Icon className="h-6 w-6" />
+          </div>
+          <h3 className="text-xl font-semibold leading-snug line-clamp-2 text-foreground tracking-tight m-0 p-0">
+            {title}
+          </h3>
         </div>
-        <span className="absolute top-0 right-0 font-display text-2xl font-bold text-muted-foreground/30 select-none">
+        <span className="font-display text-xl font-bold text-muted-foreground/30 select-none shrink-0">
           {number}
         </span>
       </div>
 
-      {/* Title Area (Row 3 on tablet/desktop) */}
-      <div className="md:row-start-3 h-[72px] flex items-start mb-5 md:mb-0">
-        <h3 className="text-[32px] font-semibold leading-[36px] line-clamp-2 text-foreground tracking-tight">
-          {title}
-        </h3>
-      </div>
-
-      {/* Problem Section (Row 5 on tablet/desktop) */}
-      <div className="md:row-start-5 h-[96px] overflow-hidden flex flex-col justify-start mb-6 md:mb-0">
-        <h4 className="font-bold text-sm text-[#0066cc] uppercase tracking-wider">The problem.</h4>
-        <p className="text-base text-muted-foreground line-clamp-3 leading-relaxed mt-1">
+      {/* ProblemSection (Row 2 - 120px) */}
+      <div className="h-[120px] overflow-hidden flex flex-col justify-start items-start m-0 p-0 pt-2">
+        <h4 className="font-bold text-xs text-[#0066cc] uppercase tracking-wider m-0 p-0">The problem.</h4>
+        <p className="text-sm text-muted-foreground line-clamp-3 leading-relaxed mt-1 m-0 p-0">
           {problem}
         </p>
       </div>
 
-      {/* Divider 1 (Row 7 on tablet/desktop) */}
-      <div className="md:row-start-7 h-px bg-[#E5E7EB] w-full mb-6 md:mb-0" />
+      {/* Divider (Row 3 - 1px) */}
+      <div className="h-px bg-[#E5E7EB] w-full m-0 p-0" />
 
-      {/* Outcome Section (Row 9 on tablet/desktop) */}
-      <div className="md:row-start-9 h-[96px] overflow-hidden flex flex-col justify-start mb-6 md:mb-0">
-        <h4 className="font-bold text-sm text-[#0066cc] uppercase tracking-wider">The outcome.</h4>
-        <p className="text-base text-muted-foreground line-clamp-3 leading-relaxed mt-1">
+      {/* OutcomeSection (Row 4 - 120px) */}
+      <div className="h-[120px] overflow-hidden flex flex-col justify-start items-start m-0 p-0 pt-2">
+        <h4 className="font-bold text-xs text-[#0066cc] uppercase tracking-wider m-0 p-0">The outcome.</h4>
+        <p className="text-sm text-muted-foreground line-clamp-3 leading-relaxed mt-1 m-0 p-0">
           {outcome}
         </p>
       </div>
 
-      {/* Divider 2 (Row 11 on tablet/desktop) */}
-      <div className="md:row-start-11 h-px bg-[#E5E7EB]/70 w-full mb-6 md:mb-0" />
+      {/* Divider (Row 5 - 1px) */}
+      <div className="h-px bg-[#E5E7EB]/70 w-full m-0 p-0" />
 
-      {/* CTA Button Pinned to Bottom (Row 13 on tablet/desktop) */}
-      <div className="md:row-start-13 mt-auto md:mt-0 flex items-center pt-2">
+      {/* CardFooter (Row 6 - 48px) */}
+      <div className="h-12 flex items-center justify-start m-0 p-0">
         <Link
           href={href}
-          className="inline-flex items-center gap-1.5 text-base font-medium text-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded whitespace-nowrap"
+          className="inline-flex items-center gap-1.5 text-sm font-medium text-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded whitespace-nowrap"
           aria-label={`Learn more about ${title}`}
         >
           Learn more

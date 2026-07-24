@@ -16,9 +16,9 @@ const ICONS: Record<string, React.ReactNode> = {
 
 export function Security({ security }: SecurityProps) {
   return (
-    <div className="py-20 bg-muted/30">
+    <div className="py-10 bg-muted/30">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold mb-12">Security</h2>
+        <h2 className="text-3xl font-bold mb-6">Security</h2>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {security.map((feature) => (
             <div key={feature.id} className="flex gap-4">

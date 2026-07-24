@@ -6,10 +6,10 @@ interface ProductOverviewProps {
 
 export function ProductOverview({ overview }: ProductOverviewProps) {
   return (
-    <div className="py-20 bg-muted/30">
+    <div className="py-10 bg-muted/30">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold mb-12">The Problem & Solution</h2>
+          <h2 className="text-3xl font-bold mb-6">The Problem & Solution</h2>
           <div className="grid gap-8 md:grid-cols-3">
             <div>
               <h3 className="text-lg font-semibold mb-3">The Problem</h3>

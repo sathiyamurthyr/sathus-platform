@@ -98,31 +98,31 @@ export function Products() {
                 key={product.name}
                 delay={(i % 3) * 0.06}
                 className={cn(
-                  'group relative flex flex-col rounded-2xl border border-border bg-background p-7 transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-xl',
-                  product.featured && 'lg:col-span-3 lg:flex-row lg:items-center lg:gap-10'
+                  'group relative flex flex-col rounded-2xl border border-border bg-background p-7 transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-xl justify-between',
+                  product.featured && 'lg:col-span-3'
                 )}
               >
-                <div
-                  className={cn(
-                    'flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary ring-1 ring-inset ring-primary/15',
-                    product.featured && 'lg:h-16 lg:w-16'
-                  )}
-                >
-                  <Icon className={cn('h-6 w-6', product.featured && 'lg:h-8 lg:w-8')} />
-                </div>
-
-                <div className={cn('mt-5 flex-1', product.featured && 'lg:mt-0')}>
-                  <div className="flex flex-wrap items-center gap-3">
-                    <h3 className="text-xl font-semibold tracking-tight text-foreground">
-                      {product.name}
-                    </h3>
-                    <StatusPill status={product.status} />
+                <div>
+                  {/* CardHeader: Icon + Title + StatusPill */}
+                  <div className="flex items-center gap-4 m-0 p-0">
+                    <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary ring-1 ring-inset ring-primary/15 shrink-0">
+                      <Icon className="h-6 w-6" />
+                    </span>
+                    <div className="flex flex-wrap items-center gap-3">
+                      <h3 className="text-xl font-semibold tracking-tight text-foreground m-0 p-0 leading-normal">
+                        {product.name}
+                      </h3>
+                      <StatusPill status={product.status} />
+                    </div>
                   </div>
-                  <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+
+                  {/* Description */}
+                  <p className={cn("mt-4 text-sm leading-relaxed text-muted-foreground", product.featured && "max-w-3xl")}>
                     {product.description}
                   </p>
                 </div>
 
+                {/* Explore Link */}
                 <Link
                   href={product.href}
                   className="mt-5 inline-flex w-fit items-center gap-1.5 text-sm font-medium text-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded"

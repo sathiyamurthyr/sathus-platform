@@ -12,9 +12,9 @@ const STATUS_LABELS: Record<string, string> = {
 
 export function Roadmap({ roadmap }: RoadmapProps) {
   return (
-    <div className="py-20">
+    <div className="py-10">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold mb-12">Roadmap</h2>
+        <h2 className="text-3xl font-bold mb-6">Roadmap</h2>
         <div className="max-w-3xl mx-auto">
           {roadmap.map((item) => (
             <div key={item.id} className="flex gap-4 pb-8 border-l border-border last:pb-0">

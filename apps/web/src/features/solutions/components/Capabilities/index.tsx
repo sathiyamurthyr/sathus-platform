@@ -32,15 +32,17 @@ export function Capabilities({ capabilities }: CapabilitiesProps) {
               delay={(i % 3) * 0.06}
               className="group relative bg-background p-7 transition-colors duration-300 hover:bg-muted/40"
             >
-              {capability.icon && (
-                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary ring-1 ring-inset ring-primary/15 transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
-                  {ICON_MAP[capability.icon] || <Bot className="h-5 w-5" aria-hidden="true" />}
-                </span>
-              )}
-              <h3 className="mt-6 text-xl font-semibold tracking-tight text-foreground">
-                {capability.title}
-              </h3>
-              <p className="mt-3 text-sm leading-relaxed text-foreground/80">
+              <div className="flex items-center gap-4 m-0 p-0">
+                {capability.icon && (
+                  <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary ring-1 ring-inset ring-primary/15 transition-colors group-hover:bg-primary group-hover:text-primary-foreground shrink-0">
+                    {ICON_MAP[capability.icon] || <Bot className="h-5 w-5" aria-hidden="true" />}
+                  </span>
+                )}
+                <h3 className="text-xl font-semibold tracking-tight text-foreground m-0 p-0 leading-normal">
+                  {capability.title}
+                </h3>
+              </div>
+              <p className="mt-4 text-sm leading-relaxed text-foreground/80">
                 {capability.description}
               </p>
             </Reveal>

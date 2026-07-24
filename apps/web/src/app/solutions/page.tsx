@@ -256,18 +256,19 @@ export default function SolutionsPage() {
                   delay={(i % 3) * 0.06}
                   className="group relative bg-background p-7 transition-colors duration-300 hover:bg-muted/40"
                 >
-                  <div className="flex items-center justify-between">
-                    <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary ring-1 ring-inset ring-primary/15 transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
-                      <Icon className="h-5 w-5" aria-hidden="true" />
-                    </span>
-                    <span className="font-display text-2xl text-muted-foreground/40">
+                  <div className="flex items-center justify-between relative m-0 p-0">
+                    <div className="flex items-center gap-4 pr-12 m-0 p-0">
+                      <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary ring-1 ring-inset ring-primary/15 transition-colors group-hover:bg-primary group-hover:text-primary-foreground shrink-0">
+                        <Icon className="h-5 w-5" aria-hidden="true" />
+                      </span>
+                      <h2 className="text-xl font-semibold tracking-tight text-foreground m-0 p-0">
+                        {practice.title}
+                      </h2>
+                    </div>
+                    <span className="absolute top-0 right-0 font-display text-2xl font-bold text-muted-foreground/40 select-none">
                       {String(i + 1).padStart(2, '0')}
                     </span>
                   </div>
-
-                  <h2 className="mt-6 text-xl font-semibold tracking-tight text-foreground">
-                    {practice.title}
-                  </h2>
 
                   <div className="mt-4 space-y-4">
                     <div>

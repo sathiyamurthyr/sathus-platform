@@ -6,9 +6,9 @@ interface BenefitsProps {
 
 export function Benefits({ benefits }: BenefitsProps) {
   return (
-    <div className="py-20 bg-muted/30">
+    <div className="py-10 bg-muted/30">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold mb-12">Benefits</h2>
+        <h2 className="text-3xl font-bold mb-6">Benefits</h2>
         <div className="grid gap-6 md:grid-cols-3">
           {benefits.map((benefit) => (
             <div key={benefit.id} className="text-center">

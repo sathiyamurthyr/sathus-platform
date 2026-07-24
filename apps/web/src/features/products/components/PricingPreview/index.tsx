@@ -8,9 +8,9 @@ interface PricingPreviewProps {
 
 export function PricingPreview({ pricing }: PricingPreviewProps) {
   return (
-    <div className="py-20">
+    <div className="py-10">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold mb-12">Pricing</h2>
+        <h2 className="text-3xl font-bold mb-6">Pricing</h2>
         <div className="grid gap-6 md:grid-cols-3 max-w-4xl mx-auto">
           {pricing.plans.map((plan) => (
             <div

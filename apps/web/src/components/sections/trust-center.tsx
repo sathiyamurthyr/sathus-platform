@@ -71,23 +71,21 @@ export function TrustCenter() {
                 key={item.title}
                 delay={(i % 3) * 0.05}
                 className={cn(
-                  'group flex flex-col rounded-2xl border border-border bg-background p-8 transition-all duration-300 hover:border-primary/30 hover:shadow-xl',
-                  item.featured && 'sm:col-span-2 lg:col-span-2 lg:flex-row lg:items-center lg:gap-8'
+                  'group flex flex-col rounded-2xl border border-border bg-background p-8 transition-all duration-300 hover:border-primary/30 hover:shadow-xl justify-between',
+                  item.featured && 'sm:col-span-2 lg:col-span-2'
                 )}
               >
-                <span
-                  className={cn(
-                    'flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary ring-1 ring-inset ring-primary/15',
-                    item.featured && 'lg:h-16 lg:w-16'
-                  )}
-                >
-                  <Icon className={cn('h-6 w-6', item.featured && 'lg:h-8 lg:w-8')} />
-                </span>
-                <div className={cn('mt-5 flex-1', item.featured && 'lg:mt-0')}>
-                  <h3 className="text-xl font-semibold tracking-tight text-foreground">
-                    {item.title}
-                  </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                <div>
+                  {/* CardHeader */}
+                  <div className="flex items-center gap-4 m-0 p-0">
+                    <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary ring-1 ring-inset ring-primary/15">
+                      <Icon className="h-6 w-6" />
+                    </span>
+                    <h3 className="text-xl font-semibold tracking-tight text-foreground m-0 p-0 leading-normal">
+                      {item.title}
+                    </h3>
+                  </div>
+                  <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
                     {item.text}
                   </p>
                 </div>

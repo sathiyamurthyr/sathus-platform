@@ -11,9 +11,9 @@ export function FeaturedContent({ featured }: FeaturedContentProps) {
   const cardFeatured = featured.filter(f => f.variant === 'card');
 
   return (
-    <div className="py-20 bg-muted/30">
+    <div className="py-10 bg-muted/30">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold mb-12">Featured Resources</h2>
+        <h2 className="text-3xl font-bold mb-6">Featured Resources</h2>
 
         {heroFeatured && (
           <div className="rounded-lg border border-border bg-background p-8 mb-8">

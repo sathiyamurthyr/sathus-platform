@@ -17,7 +17,7 @@ export function ArchitectureDiagram({ architecture }: ArchitectureDiagramProps) 
         />
         <div className="mt-12">
           <div className="rounded-2xl border border-border bg-background p-6">
-            <div className="aspect-video w-full overflow-hidden rounded-lg bg-muted/30">
+            <div className="relative aspect-video w-full overflow-hidden rounded-lg bg-muted/30">
               <Image
                 src={architecture.imageUrl}
                 alt={architecture.imageAlt}

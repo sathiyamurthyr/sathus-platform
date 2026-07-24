@@ -6,9 +6,9 @@ interface UseCasesProps {
 
 export function UseCases({ useCases }: UseCasesProps) {
   return (
-    <div className="py-20">
+    <div className="py-10">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold mb-12">Use Cases</h2>
+        <h2 className="text-3xl font-bold mb-6">Use Cases</h2>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {useCases.map((useCase) => (
             <div key={useCase.id} className="rounded-lg border border-border p-6">

@@ -56,18 +56,20 @@ export function WhySathus() {
             return (
               <Reveal as="li" key={step.title} delay={i * 0.05} className="relative">
                 <div className="flex h-full flex-col rounded-2xl border border-border bg-background p-6">
-                  <div className="flex items-center justify-between">
-                    <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary ring-1 ring-inset ring-primary/15">
-                      <Icon className="h-5 w-5" />
-                    </span>
-                    <span className="font-display text-xl text-muted-foreground/40">
+                  <div className="flex items-center justify-between relative m-0 p-0">
+                    <div className="flex items-center gap-3 pr-10 m-0 p-0">
+                      <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary ring-1 ring-inset ring-primary/15 shrink-0">
+                        <Icon className="h-5 w-5" />
+                      </span>
+                      <h3 className="text-lg font-semibold tracking-tight text-foreground m-0 p-0">
+                        {step.title}
+                      </h3>
+                    </div>
+                    <span className="absolute top-0 right-0 font-display text-xl text-muted-foreground/40 select-none">
                       {String(i + 1).padStart(2, '0')}
                     </span>
                   </div>
-                  <h3 className="mt-4 text-lg font-semibold tracking-tight text-foreground">
-                    {step.title}
-                  </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
                     {step.text}
                   </p>
                 </div>
@@ -89,13 +91,15 @@ export function WhySathus() {
                 delay={i * 0.06}
                 className="rounded-2xl border border-border bg-background p-8"
               >
-                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary ring-1 ring-inset ring-primary/15">
-                  <Icon className="h-5 w-5" />
-                </span>
-                <h3 className="mt-5 text-xl font-semibold tracking-tight text-foreground">
-                  {pillar.title}
-                </h3>
-                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                <div className="flex items-center gap-3 m-0 p-0">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary ring-1 ring-inset ring-primary/15 shrink-0">
+                    <Icon className="h-5 w-5" />
+                  </span>
+                  <h3 className="text-xl font-semibold tracking-tight text-foreground m-0 p-0">
+                    {pillar.title}
+                  </h3>
+                </div>
+                <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
                   {pillar.text}
                 </p>
                 <p className="mt-5 inline-flex items-center gap-2 border-t border-border pt-4 text-sm font-medium text-foreground">

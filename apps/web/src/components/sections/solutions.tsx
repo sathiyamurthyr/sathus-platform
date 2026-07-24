@@ -78,7 +78,7 @@ export function Solutions() {
           description="We do not sell workshops. Each discipline is a delivery practice with accountable outcomes, reference architectures, and a path to production."
         />
 
-        <div className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-6 lg:grid-cols-3 lg:gap-8">
+        <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-6 lg:grid-cols-3 lg:gap-8">
           {SOLUTIONS.map((solution, i) => (
             <EnterpriseCard
               key={solution.title}
