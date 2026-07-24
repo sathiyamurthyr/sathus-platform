@@ -31,7 +31,7 @@ export function AnnouncementBar() {
       animate={{ height: 40, opacity: 1 }}
       exit={{ height: 0, opacity: 0 }}
       transition={{ duration: 0.3, ease: 'easeOut' }}
-      className="relative overflow-hidden bg-gradient-to-r from-[#94003A] via-[#B5004A] to-[#4F7CFF] text-white border-b border-[#40202C]"
+      className="relative z-50 overflow-hidden bg-gradient-to-r from-[#94003A] via-[#B5004A] to-[#4F7CFF] text-white border-b border-[#40202C]"
       role="banner"
       aria-label="Announcements"
     >
