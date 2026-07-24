@@ -24,6 +24,7 @@
     "@sathus-platform/config": "*",
     "@sathus-platform/types": "*",
     "@sathus-platform/ui": "*",
+    "@types/three": "^0.185.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^1.24.0",
@@ -34,6 +35,7 @@
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.81.0",
     "tailwind-merge": "^2.6.1",
+    "three": "^0.185.1",
     "zod": "^4.4.3"
   },
   "devDependencies": {
