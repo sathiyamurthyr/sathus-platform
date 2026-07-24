@@ -31,25 +31,25 @@ export function AnnouncementBar() {
       animate={{ height: 40, opacity: 1 }}
       exit={{ height: 0, opacity: 0 }}
       transition={{ duration: 0.3, ease: 'easeOut' }}
-      className="relative overflow-hidden bg-gradient-to-r from-primary via-violet-600 to-cyan-600 text-primary-foreground"
+      className="relative overflow-hidden bg-gradient-to-r from-[#94003A] via-[#B5004A] to-[#4F7CFF] text-white border-b border-[#40202C]"
       role="banner"
       aria-label="Announcements"
     >
       <div className="flex h-10 items-center justify-center px-4">
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-2">
-            <Icon className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-            <span className="hidden rounded-full bg-white/15 px-2 py-0.5 text-[0.65rem] font-semibold uppercase tracking-wider sm:inline">
+            <Icon className="h-3.5 w-3.5 shrink-0 text-[#E7B631]" aria-hidden="true" />
+            <span className="hidden rounded-full bg-[rgba(231,182,49,0.2)] border border-[rgba(231,182,49,0.3)] text-[#E7B631] px-2 py-0.5 text-[0.65rem] font-semibold uppercase tracking-wider sm:inline">
               {current.tag}
             </span>
           </div>
-          <p className="text-sm font-medium truncate max-w-[600px]">
+          <p className="text-sm font-medium truncate max-w-[600px] text-white">
             {current.text}{' '}
             <Link
               href={current.href}
-              className="font-semibold underline underline-offset-4 hover:no-underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-foreground rounded"
+              className="font-semibold text-[#E7B631] underline underline-offset-4 hover:no-underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E7B631] rounded"
             >
-              Explore <ArrowRight className="inline h-3 w-3 ml-0.5" aria-hidden="true" />
+              Explore <ArrowRight className="inline h-3 w-3 ml-0.5 text-[#E7B631]" aria-hidden="true" />
             </Link>
           </p>
         </div>
