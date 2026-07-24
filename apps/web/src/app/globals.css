@@ -4,56 +4,56 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222 47% 11%;
-    --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
-    --primary: 221 83% 53%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 222 47% 11%;
-    --muted: 210 40% 96%;
-    --muted-foreground: 215 16% 47%;
-    --accent: 210 40% 96%;
-    --accent-foreground: 222 47% 11%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
-    --success: 142 71% 45%;
-    --success-foreground: 0 0% 100%;
-    --warning: 38 92% 50%;
-    --warning-foreground: 0 0% 100%;
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --ring: 221 83% 53%;
-    --radius-lg: 0.75rem;
-    --radius-md: 0.5rem;
-    --radius-sm: 0.25rem;
+    --background: 264 18% 5%; /* #0D0B10 */
+    --foreground: 0 0% 100%; /* #FFFFFF */
+    --card: 320 13% 9%; /* #1A1418 */
+    --card-foreground: 0 0% 100%; /* #FFFFFF */
+    --primary: 336 100% 29%; /* #94003A */
+    --primary-foreground: 0 0% 100%; /* #FFFFFF */
+    --secondary: 320 13% 9%; /* #1A1418 */
+    --secondary-foreground: 43 78% 55%; /* #E7B631 */
+    --muted: 320 13% 9%; /* #1A1418 */
+    --muted-foreground: 0 0% 72%; /* #B7B7B7 */
+    --accent: 47 85% 52%; /* #EDC11E */
+    --accent-foreground: 0 0% 100%; /* #FFFFFF */
+    --destructive: 0 62% 50%; /* #D64545 */
+    --destructive-foreground: 0 0% 100%; /* #FFFFFF */
+    --success: 142 71% 45%; /* #2ECC71 */
+    --success-foreground: 0 0% 100%; /* #FFFFFF */
+    --warning: 47 85% 52%; /* #EDC11E */
+    --warning-foreground: 0 0% 100%; /* #FFFFFF */
+    --border: 338 33% 19%; /* #40202C */
+    --input: 338 33% 19%; /* #40202C */
+    --ring: 43 78% 55%; /* #E7B631 */
+    --radius-lg: 1.25rem; /* 20px */
+    --radius-md: 0.75rem;
+    --radius-sm: 0.5rem;
     --font-inter: 'Inter', system-ui, sans-serif;
     --font-jetbrains-mono: 'JetBrains Mono', monospace;
   }
 
   .dark {
-    --background: 222 47% 11%;
-    --foreground: 210 40% 98%;
-    --card: 217 33% 17%;
-    --card-foreground: 210 40% 98%;
-    --primary: 217 91% 60%;
-    --primary-foreground: 222 47% 11%;
-    --secondary: 217 33% 17%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217 33% 17%;
-    --muted-foreground: 215 20% 65%;
-    --accent: 217 33% 17%;
-    --accent-foreground: 210 40% 98%;
+    --background: 264 18% 5%;
+    --foreground: 0 0% 100%;
+    --card: 320 13% 9%;
+    --card-foreground: 0 0% 100%;
+    --primary: 336 100% 29%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 320 13% 9%;
+    --secondary-foreground: 43 78% 55%;
+    --muted: 320 13% 9%;
+    --muted-foreground: 0 0% 72%;
+    --accent: 47 85% 52%;
+    --accent-foreground: 0 0% 100%;
     --destructive: 0 62% 50%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 100%;
     --success: 142 71% 45%;
     --success-foreground: 0 0% 100%;
-    --warning: 38 92% 50%;
+    --warning: 47 85% 52%;
     --warning-foreground: 0 0% 100%;
-    --border: 217 33% 24%;
-    --input: 217 33% 24%;
-    --ring: 217 91% 60%;
+    --border: 338 33% 19%;
+    --input: 338 33% 19%;
+    --ring: 43 78% 55%;
   }
 
   .high-contrast {
@@ -61,7 +61,7 @@
     --foreground: 0 0% 100%;
     --card: 0 0% 0%;
     --card-foreground: 0 0% 100%;
-    --primary: 217 91% 60%;
+    --primary: 43 78% 55%;
     --primary-foreground: 0 0% 0%;
     --secondary: 0 0% 0%;
     --secondary-foreground: 0 0% 100%;
@@ -73,11 +73,11 @@
     --destructive-foreground: 0 0% 100%;
     --success: 142 71% 45%;
     --success-foreground: 0 0% 0%;
-    --warning: 38 92% 50%;
+    --warning: 47 85% 52%;
     --warning-foreground: 0 0% 0%;
     --border: 0 0% 100%;
     --input: 0 0% 100%;
-    --ring: 217 91% 60%;
+    --ring: 43 78% 55%;
   }
 
   * {
@@ -92,23 +92,23 @@
 
 @layer components {
   .sathus-card {
-    @apply rounded-lg border bg-card text-card-foreground shadow-sm;
+    @apply rounded-[20px] border border-[#40202C] bg-[#1A1418] text-foreground shadow-sm;
   }
 
   .sathus-input {
-    @apply flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50;
+    @apply flex h-9 w-full rounded-md border border-[#40202C] bg-[#1A1418] px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-[#8F8F8F] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#E7B631] disabled:cursor-not-allowed disabled:opacity-50;
   }
 
   .sathus-badge {
-    @apply inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2;
+    @apply inline-flex items-center rounded-md border border-[rgba(231,182,49,0.20)] bg-[rgba(148,0,58,0.15)] px-2.5 py-0.5 text-xs font-semibold text-[#E7B631] transition-colors focus:outline-none focus:ring-2 focus:ring-[#E7B631] focus:ring-offset-2;
   }
 
   .sathus-skeleton {
-    @apply animate-pulse rounded-md bg-muted;
+    @apply animate-pulse rounded-md bg-[#1A1418];
   }
 
   .sathus-focus {
-    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E7B631] focus-visible:ring-offset-2;
   }
 }
 
@@ -145,8 +145,8 @@
   }
 
   ::selection {
-    background-color: hsl(var(--primary) / 0.18);
-    color: hsl(var(--foreground));
+    background-color: rgba(148, 0, 58, 0.4);
+    color: #ffffff;
   }
 }
 
@@ -161,8 +161,8 @@
   /* Subtle architectural grid used behind immersive sections */
   .bg-grid {
     background-image:
-      linear-gradient(to right, hsl(var(--border) / 0.6) 1px, transparent 1px),
-      linear-gradient(to bottom, hsl(var(--border) / 0.6) 1px, transparent 1px);
+      linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
     background-size: 56px 56px;
     background-position: center;
   }
@@ -188,13 +188,29 @@
     transform: none !important;
   }
 
+  /* AI Technology Gradient (Blue -> Cyan) */
+  .text-ai-gradient {
+    background-image: linear-gradient(135deg, #4F7CFF 0%, #37D5FF 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Premium Gold Gradient */
+  .text-gold-gradient {
+    background-image: linear-gradient(135deg, #E7B631 0%, #EDC11E 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
   /* Gradient text — used on dark immersive surfaces only */
   .text-gradient {
     background-image: linear-gradient(
       100deg,
-      hsl(217 91% 68%),
-      hsl(280 83% 70%),
-      hsl(190 90% 60%)
+      #4F7CFF 0%,
+      #37D5FF 50%,
+      #E7B631 100%
     );
     -webkit-background-clip: text;
     background-clip: text;

@@ -25,34 +25,34 @@ export function Footer({ className }: { className?: string }) {
   };
 
   return (
-    <footer className={cn('border-t border-border bg-background', className)}>
+    <footer className={cn('border-t border-[#94003A]/40 bg-[#08070A] text-white', className)}>
       <div className="container mx-auto px-4 py-16">
         <div className="grid gap-12 lg:grid-cols-[1.4fr_2.6fr]">
           {/* Brand & Contact Info */}
           <div className="flex flex-col">
             <Logo size="lg" showWordmark={true} />
-            <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">
+            <p className="mt-4 max-w-xs text-sm leading-relaxed text-[#B7B7B7]">
               Engineering the future of AI, data & enterprise software for regulated industries.
             </p>
 
             {/* Official Company Address & Contact Details */}
-            <div className="mt-4 space-y-1.5 text-xs text-muted-foreground leading-relaxed">
-              <p className="font-semibold text-foreground">{companyConfig.name}</p>
+            <div className="mt-4 space-y-1.5 text-xs text-[#B7B7B7] leading-relaxed">
+              <p className="font-semibold text-white">{companyConfig.name}</p>
               <p>{companyConfig.address.formatted}</p>
               <p className="pt-1">
                 Email:{' '}
-                <a href={`mailto:${companyConfig.email}`} className="font-medium text-primary hover:underline">
+                <a href={`mailto:${companyConfig.email}`} className="font-medium text-[#E7B631] hover:underline">
                   {companyConfig.email}
                 </a>{' '}
                 • Phone:{' '}
-                <a href={`tel:${companyConfig.phoneRaw}`} className="font-medium text-primary hover:underline">
+                <a href={`tel:${companyConfig.phoneRaw}`} className="font-medium text-[#E7B631] hover:underline">
                   {companyConfig.phone}
                 </a>
               </p>
             </div>
 
             <form onSubmit={handleSubscribe} className="mt-6 max-w-sm space-y-2">
-              <label htmlFor="footer-email" className="text-xs font-semibold text-foreground">
+              <label htmlFor="footer-email" className="text-xs font-semibold text-white">
                 Subscribe to Engineering Briefings
               </label>
               <div className="flex items-center gap-2">
@@ -63,9 +63,9 @@ export function Footer({ className }: { className?: string }) {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="h-9 text-xs bg-muted/40 border-border"
+                  className="h-9 text-xs bg-[#1A1418] border-[#40202C] text-white placeholder:text-[#8F8F8F] focus-visible:ring-[#E7B631]"
                 />
-                <Button type="submit" size="sm" className="h-9 px-3 shrink-0 gap-1 text-xs">
+                <Button type="submit" size="sm" className="h-9 px-3 shrink-0 gap-1 text-xs bg-[#94003A] text-white hover:bg-[#B5004A]">
                   {subscribed ? (
                     <>
                       <Check className="h-3.5 w-3.5 text-emerald-400" />
@@ -74,7 +74,7 @@ export function Footer({ className }: { className?: string }) {
                   ) : (
                     <>
                       Subscribe
-                      <Send className="h-3 w-3" />
+                      <Send className="h-3 w-3 text-[#E7B631]" />
                     </>
                   )}
                 </Button>
@@ -88,10 +88,10 @@ export function Footer({ className }: { className?: string }) {
 
             <Link
               href="/book-strategy-session"
-              className="group mt-6 inline-flex w-fit items-center gap-1.5 text-sm font-medium text-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded"
+              className="group mt-6 inline-flex w-fit items-center gap-1.5 text-sm font-medium text-white transition-colors hover:text-[#E7B631] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E7B631] focus-visible:ring-offset-2 rounded"
             >
               Book a strategy session
-              <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              <ArrowUpRight className="h-4 w-4 text-[#E7B631] transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </Link>
 
             <div className="mt-6 flex items-center gap-3">
@@ -99,7 +99,7 @@ export function Footer({ className }: { className?: string }) {
                 <a
                   key={link.name}
                   href={link.href}
-                  className="flex h-9 w-9 items-center justify-center rounded-lg border border-border text-muted-foreground transition-colors hover:border-primary/40 hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  className="flex h-9 w-9 items-center justify-center rounded-lg border border-[#40202C] text-[#B7B7B7] transition-colors hover:border-[#E7B631] hover:text-[#E7B631] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E7B631]"
                   aria-label={link.name}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -124,7 +124,7 @@ export function Footer({ className }: { className?: string }) {
           <nav className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-4" aria-label="Footer">
             {footerSections.map((section) => (
               <div key={section.title}>
-                <h3 className="text-sm font-semibold text-foreground">
+                <h3 className="text-sm font-semibold text-white">
                   {section.title}
                 </h3>
                 <ul className="mt-4 space-y-2.5">
@@ -132,7 +132,7 @@ export function Footer({ className }: { className?: string }) {
                     <li key={link.title}>
                       <Link
                         href={link.href}
-                        className="text-sm text-muted-foreground transition-colors hover:text-foreground focus:outline-none focus-visible:underline"
+                        className="text-sm text-[#B7B7B7] transition-colors hover:text-[#E7B631] focus:outline-none focus-visible:underline"
                       >
                         {link.title}
                       </Link>
@@ -144,11 +144,11 @@ export function Footer({ className }: { className?: string }) {
           </nav>
         </div>
 
-        <div className="mt-14 flex flex-col gap-4 border-t border-border pt-8 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-14 flex flex-col gap-4 border-t border-[#40202C] pt-8 text-sm text-[#B7B7B7] sm:flex-row sm:items-center sm:justify-between">
           <p>
             © {new Date().getFullYear()} {companyConfig.name}. All rights reserved.
           </p>
-          <p className="max-w-md text-xs leading-relaxed">
+          <p className="max-w-md text-xs leading-relaxed text-[#8F8F8F]">
             Built for regulated industries. SOC 2 Type II · ISO 27001-aligned ·
             GDPR & HIPAA-ready.
           </p>

@@ -74,8 +74,8 @@ export function Solutions() {
       <div className="container mx-auto px-4">
         <SectionIntro
           eyebrow="Solutions"
-          title="Engineering disciplines, delivered as outcomes"
-          description="We do not sell workshops. Each discipline is a delivery practice with accountable outcomes, reference architectures, and a path to production."
+          title={<span className="text-[#FFFFFF]">Engineering disciplines, delivered as outcomes</span>}
+          description={<span className="text-[rgba(255,255,255,0.88)]">We do not sell workshops. Each discipline is a delivery practice with accountable outcomes, reference architectures, and a path to production.</span>}
         />
 
         <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-6 lg:grid-cols-3 lg:gap-8">

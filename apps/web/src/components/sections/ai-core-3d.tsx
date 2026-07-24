@@ -38,15 +38,15 @@ export function AICore3D({ className }: AICore3DProps) {
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
     scene.add(ambientLight);
 
-    const pointLight1 = new THREE.PointLight(0x3b82f6, 3, 10);
+    const pointLight1 = new THREE.PointLight(0x4f7cff, 3.5, 10);
     pointLight1.position.set(2, 2, 3);
     scene.add(pointLight1);
 
-    const pointLight2 = new THREE.PointLight(0x8b5cf6, 2.5, 10);
+    const pointLight2 = new THREE.PointLight(0x37d5ff, 3, 10);
     pointLight2.position.set(-2, -2, 2);
     scene.add(pointLight2);
 
-    const pointLight3 = new THREE.PointLight(0x06b6d4, 2, 10);
+    const pointLight3 = new THREE.PointLight(0xe7b631, 2.5, 10);
     pointLight3.position.set(0, 3, -1);
     scene.add(pointLight3);
 
@@ -54,24 +54,24 @@ export function AICore3D({ className }: AICore3DProps) {
     const coreGroup = new THREE.Group();
     scene.add(coreGroup);
 
-    // Inner Glowing Sphere Core
+    // Inner Glowing Sphere Core (Burgundy Center)
     const innerGeo = new THREE.SphereGeometry(0.65, 32, 32);
     const innerMat = new THREE.MeshStandardMaterial({
-      color: 0x3b82f6,
-      emissive: 0x1d4ed8,
-      emissiveIntensity: 0.8,
+      color: 0x94003a,
+      emissive: 0xb5004a,
+      emissiveIntensity: 0.9,
       roughness: 0.2,
       metalness: 0.8,
     });
     const innerCore = new THREE.Mesh(innerGeo, innerMat);
     coreGroup.add(innerCore);
 
-    // Outer Geodesic Wireframe Shell
+    // Outer Geodesic Wireframe Shell (AI Blue Outer Glow)
     const outerGeo = new THREE.IcosahedronGeometry(1.05, 1);
     const outerWireMat = new THREE.MeshStandardMaterial({
-      color: 0x60a5fa,
-      emissive: 0x8b5cf6,
-      emissiveIntensity: 0.4,
+      color: 0x4f7cff,
+      emissive: 0x37d5ff,
+      emissiveIntensity: 0.6,
       wireframe: true,
       transparent: true,
       opacity: 0.85,
@@ -79,28 +79,28 @@ export function AICore3D({ className }: AICore3DProps) {
     const outerCore = new THREE.Mesh(outerGeo, outerWireMat);
     coreGroup.add(outerCore);
 
-    // Orbital Ring 1
+    // Orbital Ring 1 (AI Blue)
     const ring1Geo = new THREE.TorusGeometry(1.35, 0.015, 16, 64);
     const ring1Mat = new THREE.MeshStandardMaterial({
-      color: 0x38bdf8,
-      emissive: 0x0284c7,
+      color: 0x4f7cff,
+      emissive: 0x37d5ff,
       emissiveIntensity: 0.6,
       transparent: true,
-      opacity: 0.6,
+      opacity: 0.7,
     });
     const ring1 = new THREE.Mesh(ring1Geo, ring1Mat);
     ring1.rotation.x = Math.PI / 3;
     ring1.rotation.y = Math.PI / 6;
     coreGroup.add(ring1);
 
-    // Orbital Ring 2
+    // Orbital Ring 2 (Gold + Burgundy Accent)
     const ring2Geo = new THREE.TorusGeometry(1.5, 0.012, 16, 64);
     const ring2Mat = new THREE.MeshStandardMaterial({
-      color: 0xc084fc,
-      emissive: 0x7e22ce,
-      emissiveIntensity: 0.5,
+      color: 0xe7b631,
+      emissive: 0x94003a,
+      emissiveIntensity: 0.6,
       transparent: true,
-      opacity: 0.5,
+      opacity: 0.6,
     });
     const ring2 = new THREE.Mesh(ring2Geo, ring2Mat);
     ring2.rotation.x = -Math.PI / 4;

@@ -77,9 +77,9 @@ export function PlatformVisualization() {
       >
         <defs>
           <linearGradient id="nodeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#60a5fa" stopOpacity="0.7" />
-            <stop offset="50%" stopColor="#a78bfa" stopOpacity="0.7" />
-            <stop offset="100%" stopColor="#22d3ee" stopOpacity="0.7" />
+            <stop offset="0%" stopColor="#4F7CFF" stopOpacity="0.8" />
+            <stop offset="60%" stopColor="#37D5FF" stopOpacity="0.8" />
+            <stop offset="100%" stopColor="#E7B631" stopOpacity="0.7" />
           </linearGradient>
         </defs>
 
@@ -88,7 +88,7 @@ export function PlatformVisualization() {
           cx="50"
           cy="50"
           r={RADIUS}
-          stroke="#3b82f6"
+          stroke="#4F7CFF"
           strokeWidth="0.25"
           strokeDasharray="1 2"
           opacity="0.25"
@@ -108,12 +108,12 @@ export function PlatformVisualization() {
               strokeDasharray="2 2.4"
               vectorEffect="non-scaling-stroke"
               className={reduce ? '' : 'animate-dash'}
-              opacity={0.6}
+              opacity={0.7}
             />
 
-            {/* Particle Streaming Effect from Core (50, 50) to Card Center (node.x, node.y) */}
+            {/* Particle Streaming Effect (Blue, Cyan & Gold) */}
             {!reduce && (
-              <circle r="0.8" fill="#38bdf8" opacity="0.9">
+              <circle r="0.8" fill={i % 2 === 0 ? "#4F7CFF" : "#37D5FF"} opacity="0.9">
                 <animateMotion
                   path={`M 50 50 L ${node.x} ${node.y}`}
                   dur={`${2.2 + (i % 3) * 0.4}s`}
@@ -124,7 +124,7 @@ export function PlatformVisualization() {
             )}
 
             {!reduce && (
-              <circle r="0.6" fill="#c084fc" opacity="0.8">
+              <circle r="0.6" fill={i % 3 === 0 ? "#E7B631" : "#37D5FF"} opacity="0.85">
                 <animateMotion
                   path={`M ${node.x} ${node.y} L 50 50`}
                   dur={`${2.6 + (i % 2) * 0.5}s`}
@@ -141,11 +141,11 @@ export function PlatformVisualization() {
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 flex items-center justify-center">
         {!reduce && (
           <>
-            <span className="absolute left-1/2 top-1/2 h-36 w-36 -translate-x-1/2 -translate-y-1/2 rounded-full border border-primary/20 [animation:pulse-ring_3.5s_ease-out_infinite]" />
-            <span className="absolute left-1/2 top-1/2 h-36 w-36 -translate-x-1/2 -translate-y-1/2 rounded-full border border-violet-400/15 [animation:pulse-ring_3.5s_ease-out_infinite_1.5s]" />
+            <span className="absolute left-1/2 top-1/2 h-36 w-36 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#4F7CFF]/40 [animation:pulse-ring_3.5s_ease-out_infinite]" />
+            <span className="absolute left-1/2 top-1/2 h-36 w-36 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#E7B631]/25 [animation:pulse-ring_3.5s_ease-out_infinite_1.5s]" />
           </>
         )}
-        <div className="relative flex items-center justify-center rounded-3xl bg-slate-950/40 p-2 backdrop-blur-md border border-white/10 shadow-[0_0_40px_rgba(59,130,246,0.25)]">
+        <div className="relative flex items-center justify-center rounded-3xl bg-[#0D0B10]/85 p-2 backdrop-blur-md border border-[#40202C] shadow-[0_0_40px_rgba(79,124,255,0.35)]">
           <AICore3D className="h-28 w-28 sm:h-32 sm:w-32" />
         </div>
       </div>
@@ -171,23 +171,23 @@ export function PlatformVisualization() {
             >
               {/* Arrival Pulse Ring */}
               {!reduce && (
-                <span className="absolute inset-0 rounded-xl border border-primary/40 animate-ping opacity-25 pointer-events-none" />
+                <span className="absolute inset-0 rounded-xl border border-[#4F7CFF]/50 animate-ping opacity-25 pointer-events-none" />
               )}
 
               <div
                 className={reduce ? '' : 'animate-float-soft'}
                 style={{ animationDelay: `${i * 0.7}s` }}
               >
-                {/* Fixed identical card size (h-11 w-44) so visual center is always exact */}
-                <div className="group flex h-11 w-44 items-center gap-2.5 rounded-xl border border-white/15 bg-slate-900/60 px-3 shadow-xl backdrop-blur-md transition-all duration-300 hover:border-primary/50 hover:bg-slate-900/80 hover:shadow-[0_0_25px_rgba(59,130,246,0.3)]">
-                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-primary/80 to-violet-500/80 text-white ring-1 ring-inset ring-white/15 transition-transform duration-300 group-hover:scale-110">
+                {/* Node Card: bg #171419, border #40202C, hover border #E7B631, hover glow Blue */}
+                <div className="group flex h-11 w-44 items-center gap-2.5 rounded-xl border border-[#40202C] bg-[#171419] px-3 shadow-xl backdrop-blur-md transition-all duration-300 hover:border-[#E7B631] hover:bg-[#1F1A20] hover:shadow-[0_0_25px_rgba(79,124,255,0.35)]">
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[rgba(148,0,58,0.25)] text-[#E7B631] ring-1 ring-inset ring-[rgba(231,182,49,0.25)] transition-all duration-300 group-hover:bg-[#E7B631] group-hover:text-[#94003A] group-hover:scale-110">
                     <Icon className="h-3.5 w-3.5" />
                   </span>
                   <span className="flex flex-col leading-tight min-w-0">
                     <span className="text-[0.76rem] font-semibold text-white tracking-tight truncate">
                       {node.label}
                     </span>
-                    <span className="text-[0.60rem] text-white/60 truncate">{node.meta}</span>
+                    <span className="text-[0.60rem] text-[#D6D6D6] truncate">{node.meta}</span>
                   </span>
                 </div>
               </div>
