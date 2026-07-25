@@ -35,15 +35,15 @@ export function AnnouncementBar() {
       role="banner"
       aria-label="Announcements"
     >
-      <div className="flex h-10 items-center justify-center px-4">
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2">
+      <div className="flex h-10 items-center justify-center px-3 pr-9 sm:px-4 sm:pr-4">
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
             <Icon className="h-3.5 w-3.5 shrink-0 text-[#E7B631]" aria-hidden="true" />
             <span className="hidden rounded-full bg-[rgba(231,182,49,0.2)] border border-[rgba(231,182,49,0.3)] text-[#E7B631] px-2 py-0.5 text-[0.65rem] font-semibold uppercase tracking-wider sm:inline">
               {current.tag}
             </span>
           </div>
-          <p className="text-sm font-medium truncate max-w-[600px] text-white">
+          <p className="text-xs sm:text-sm font-medium truncate max-w-[250px] xs:max-w-[340px] sm:max-w-[600px] text-white">
             {current.text}{' '}
             <Link
               href={current.href}

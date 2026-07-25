@@ -141,12 +141,12 @@ export function PlatformVisualization() {
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 flex items-center justify-center">
         {!reduce && (
           <>
-            <span className="absolute left-1/2 top-1/2 h-36 w-36 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#4F7CFF]/40 [animation:pulse-ring_3.5s_ease-out_infinite]" />
-            <span className="absolute left-1/2 top-1/2 h-36 w-36 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#E7B631]/25 [animation:pulse-ring_3.5s_ease-out_infinite_1.5s]" />
+            <span className="absolute left-1/2 top-1/2 h-24 w-24 sm:h-36 sm:w-36 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#4F7CFF]/40 [animation:pulse-ring_3.5s_ease-out_infinite]" />
+            <span className="absolute left-1/2 top-1/2 h-24 w-24 sm:h-36 sm:w-36 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#E7B631]/25 [animation:pulse-ring_3.5s_ease-out_infinite_1.5s]" />
           </>
         )}
-        <div className="relative flex items-center justify-center rounded-3xl bg-[#0D0B10]/85 p-2 backdrop-blur-md border border-[#40202C] shadow-[0_0_40px_rgba(79,124,255,0.35)]">
-          <AICore3D className="h-28 w-28 sm:h-32 sm:w-32" />
+        <div className="relative flex items-center justify-center rounded-2xl sm:rounded-3xl bg-[#0D0B10]/85 p-1.5 sm:p-2 backdrop-blur-md border border-[#40202C] shadow-[0_0_40px_rgba(79,124,255,0.35)]">
+          <AICore3D className="h-20 w-20 xs:h-24 xs:w-24 sm:h-32 sm:w-32" />
         </div>
       </div>
 
@@ -179,15 +179,15 @@ export function PlatformVisualization() {
                 style={{ animationDelay: `${i * 0.7}s` }}
               >
                 {/* Node Card: bg #171419, border #40202C, hover border #E7B631, hover glow Blue */}
-                <div className="group flex h-11 w-44 items-center gap-2.5 rounded-xl border border-[#40202C] bg-[#171419] px-3 shadow-xl backdrop-blur-md transition-all duration-300 hover:border-[#E7B631] hover:bg-[#1F1A20] hover:shadow-[0_0_25px_rgba(79,124,255,0.35)]">
-                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[rgba(148,0,58,0.25)] text-[#E7B631] ring-1 ring-inset ring-[rgba(231,182,49,0.25)] transition-all duration-300 group-hover:bg-[#E7B631] group-hover:text-[#94003A] group-hover:scale-110">
-                    <Icon className="h-3.5 w-3.5" />
+                <div className="group flex h-9 w-28 xs:w-32 sm:h-11 sm:w-44 items-center gap-1.5 sm:gap-2.5 rounded-lg sm:rounded-xl border border-[#40202C] bg-[#171419] px-2 sm:px-3 shadow-xl backdrop-blur-md transition-all duration-300 hover:border-[#E7B631] hover:bg-[#1F1A20] hover:shadow-[0_0_25px_rgba(79,124,255,0.35)]">
+                  <span className="flex h-5 w-5 sm:h-7 sm:w-7 shrink-0 items-center justify-center rounded bg-[rgba(148,0,58,0.25)] text-[#E7B631] ring-1 ring-inset ring-[rgba(231,182,49,0.25)] transition-all duration-300 group-hover:bg-[#E7B631] group-hover:text-[#94003A] group-hover:scale-110">
+                    <Icon className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
                   </span>
                   <span className="flex flex-col leading-tight min-w-0">
-                    <span className="text-[0.76rem] font-semibold text-white tracking-tight truncate">
+                    <span className="text-[0.65rem] sm:text-[0.76rem] font-semibold text-white tracking-tight truncate">
                       {node.label}
                     </span>
-                    <span className="text-[0.60rem] text-[#D6D6D6] truncate">{node.meta}</span>
+                    <span className="text-[0.52rem] sm:text-[0.60rem] text-[#D6D6D6] truncate">{node.meta}</span>
                   </span>
                 </div>
               </div>

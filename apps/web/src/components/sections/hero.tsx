@@ -161,14 +161,14 @@ export function Hero() {
               initial={reduce ? false : { opacity: 0, y: 20 }}
               animate={reduce ? undefined : { opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.5 }}
-              className="mt-10 grid max-w-xl grid-cols-3 gap-6 border-t border-[#40202C] pt-6"
+              className="mt-8 sm:mt-10 grid max-w-xl grid-cols-3 gap-2 sm:gap-6 border-t border-[#40202C] pt-6"
             >
               {STATS.map((stat) => (
                 <div key={stat.label} className="group/stat relative pb-2 transition-all duration-300">
-                  <dt className="font-display text-2xl text-[#E7B631] sm:text-3xl transition-transform duration-300 group-hover/stat:-translate-y-0.5">
+                  <dt className="font-display text-lg xs:text-xl sm:text-3xl text-[#E7B631] transition-transform duration-300 group-hover/stat:-translate-y-0.5">
                     <CountUp value={stat.value} />
                   </dt>
-                  <dd className="mt-1 text-xs leading-snug text-[#D6D6D6]">
+                  <dd className="mt-1 text-[0.68rem] xs:text-[0.72rem] sm:text-xs leading-tight sm:leading-snug text-[#D6D6D6]">
                     {stat.label}
                   </dd>
                   <span className="absolute bottom-0 left-0 h-0.5 w-0 bg-gradient-to-r from-[#4F7CFF] to-[#37D5FF] transition-all duration-300 group-hover/stat:w-full" />
