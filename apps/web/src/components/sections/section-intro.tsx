@@ -40,7 +40,7 @@ export function SectionIntro({
       )}
       <h2
         className={cn(
-          'max-w-3xl font-display text-4xl leading-[1.08] tracking-tight sm:text-5xl',
+          'max-w-3xl text-balance font-display text-3xl leading-[1.08] tracking-tight sm:text-4xl lg:text-5xl',
           isDark ? 'text-white' : 'text-foreground'
         )}
       >
@@ -49,7 +49,7 @@ export function SectionIntro({
       {description && (
         <p
           className={cn(
-            'max-w-2xl text-base leading-relaxed sm:text-lg',
+            'max-w-2xl text-pretty text-base leading-relaxed sm:text-lg',
             isDark ? 'text-white/60' : 'text-muted-foreground'
           )}
         >

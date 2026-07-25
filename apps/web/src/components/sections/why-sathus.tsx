@@ -50,7 +50,7 @@ export function WhySathus() {
         />
 
         {/* Engineering process */}
-        <ol className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+        <ol className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
           {PROCESS.map((step, i) => {
             const Icon = step.icon;
             return (
@@ -61,7 +61,7 @@ export function WhySathus() {
                       <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary ring-1 ring-inset ring-primary/15 shrink-0">
                         <Icon className="h-5 w-5" />
                       </span>
-                      <h3 className="text-lg font-semibold tracking-tight text-foreground m-0 p-0">
+                      <h3 className="text-lg font-semibold tracking-tight text-balance text-foreground m-0 p-0">
                         {step.title}
                       </h3>
                     </div>
@@ -69,7 +69,7 @@ export function WhySathus() {
                       {String(i + 1).padStart(2, '0')}
                     </span>
                   </div>
-                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                  <p className="mt-3 text-sm leading-relaxed text-pretty text-muted-foreground">
                     {step.text}
                   </p>
                 </div>
@@ -82,7 +82,7 @@ export function WhySathus() {
         </ol>
 
         {/* Pillars */}
-        <div className="mt-5 grid gap-5 md:grid-cols-3">
+        <div className="mt-5 grid grid-cols-1 gap-5 md:grid-cols-3">
           {PILLARS.map((pillar, i) => {
             const Icon = pillar.icon;
             return (

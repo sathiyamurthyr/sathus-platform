@@ -110,7 +110,7 @@ export function Hero() {
               initial={reduce ? false : { opacity: 0, y: 20 }}
               animate={reduce ? undefined : { opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="mt-5 font-display text-5xl leading-[1.05] tracking-tight text-white sm:text-6xl lg:text-7xl"
+              className="mt-5 text-balance font-display text-4xl leading-[1.08] tracking-tight text-white sm:text-5xl lg:text-6xl xl:text-7xl"
             >
               Engineering the Future of{' '}
               <span className="text-ai-gradient font-semibold">AI</span>,{' '}
@@ -121,7 +121,7 @@ export function Hero() {
               initial={reduce ? false : { opacity: 0, y: 20 }}
               animate={reduce ? undefined : { opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="mt-5 max-w-xl text-lg leading-relaxed text-[#D6D6D6]"
+              className="mt-5 max-w-xl text-pretty text-base leading-relaxed text-[#D6D6D6] sm:text-lg"
             >
               Sathus Technology helps enterprises design, build and modernize
               AI-powered products, intelligent data platforms and cloud-native

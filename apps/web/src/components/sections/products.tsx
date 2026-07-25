@@ -90,7 +90,7 @@ export function Products() {
           description="Production systems our clients run on, plus research that defines what comes next."
         />
 
-        <div className="mt-10 grid gap-5 lg:grid-cols-3">
+        <div className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
           {PRODUCTS.map((product, i) => {
             const Icon = product.icon;
             return (
@@ -99,7 +99,7 @@ export function Products() {
                 delay={(i % 3) * 0.06}
                 className={cn(
                   'group relative flex flex-col rounded-2xl border border-border bg-background p-7 transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-xl justify-between',
-                  product.featured && 'lg:col-span-3'
+                  product.featured && 'md:col-span-2 lg:col-span-3'
                 )}
               >
                 <div>
@@ -109,7 +109,7 @@ export function Products() {
                       <Icon className="h-6 w-6" />
                     </span>
                     <div className="flex flex-wrap items-center gap-3">
-                      <h3 className="text-xl font-semibold tracking-tight text-foreground m-0 p-0 leading-normal">
+                      <h3 className="text-xl font-semibold tracking-tight text-balance text-foreground m-0 p-0 leading-normal">
                         {product.name}
                       </h3>
                       <StatusPill status={product.status} />
@@ -117,7 +117,7 @@ export function Products() {
                   </div>
 
                   {/* Description */}
-                  <p className={cn("mt-4 text-sm leading-relaxed text-muted-foreground", product.featured && "max-w-3xl")}>
+                  <p className={cn("mt-4 text-sm leading-relaxed text-pretty text-muted-foreground", product.featured && "max-w-3xl")}>
                     {product.description}
                   </p>
                 </div>

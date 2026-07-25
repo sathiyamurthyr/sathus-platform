@@ -38,7 +38,7 @@ export function EnterpriseCard({
           <div className="h-12 w-12 rounded-xl bg-[#2A1620] border border-[rgba(237,193,30,0.35)] text-[#EDC11E] transition-all duration-200 group-hover:bg-[#E7B631] group-hover:text-[#94003A] group-hover:shadow-[0_0_20px_rgba(231,182,49,0.3)] shrink-0 flex items-center justify-center">
             <Icon className="h-6 w-6 text-[#EDC11E] group-hover:text-[#94003A] transition-colors" />
           </div>
-          <h3 className="text-xl font-bold leading-snug line-clamp-2 text-[#FFFFFF] tracking-tight m-0 p-0">
+          <h3 className="text-xl font-bold leading-snug text-balance line-clamp-2 text-[#FFFFFF] tracking-tight m-0 p-0">
             {title}
           </h3>
         </div>
@@ -50,7 +50,7 @@ export function EnterpriseCard({
       {/* ProblemSection (Row 2 - 120px) */}
       <div className="h-[120px] overflow-hidden flex flex-col justify-start items-start m-0 p-0 pt-2">
         <h4 className="font-bold text-xs text-[#EDC11E] uppercase tracking-[0.08em] m-0 p-0">The problem.</h4>
-        <p className="text-sm text-[rgba(255,255,255,0.88)] line-clamp-3 leading-relaxed mt-1 m-0 p-0">
+        <p className="text-sm text-[rgba(255,255,255,0.88)] text-pretty line-clamp-3 leading-relaxed mt-1 m-0 p-0">
           {problem}
         </p>
       </div>
@@ -61,7 +61,7 @@ export function EnterpriseCard({
       {/* OutcomeSection (Row 4 - 120px) */}
       <div className="h-[120px] overflow-hidden flex flex-col justify-start items-start m-0 p-0 pt-2">
         <h4 className="font-bold text-xs text-[#EDC11E] uppercase tracking-[0.08em] m-0 p-0">The outcome.</h4>
-        <p className="text-sm text-[rgba(255,255,255,0.88)] line-clamp-3 leading-relaxed mt-1 m-0 p-0">
+        <p className="text-sm text-[rgba(255,255,255,0.88)] text-pretty line-clamp-3 leading-relaxed mt-1 m-0 p-0">
           {outcome}
         </p>
       </div>

@@ -87,10 +87,10 @@ export function Insights() {
                 <span className="inline-flex items-center rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
                   {FEATURED.category}
                 </span>
-                <h3 className="mt-5 font-display text-3xl leading-tight tracking-tight text-foreground transition-colors group-hover:text-primary sm:text-4xl">
+                <h3 className="mt-5 font-display text-3xl leading-tight tracking-tight text-balance text-foreground transition-colors group-hover:text-primary sm:text-4xl">
                   {FEATURED.title}
                 </h3>
-                <p className="mt-4 max-w-xl text-base leading-relaxed text-muted-foreground">
+                <p className="mt-4 max-w-xl text-base leading-relaxed text-pretty text-muted-foreground">
                   {FEATURED.excerpt}
                 </p>
               </div>
@@ -117,10 +117,10 @@ export function Insights() {
                     <span className="h-1 w-1 rounded-full bg-muted-foreground/50" />
                     <span>{article.readTime}</span>
                   </div>
-                  <h3 className="text-lg font-semibold leading-snug tracking-tight text-foreground transition-colors group-hover:text-primary">
+                  <h3 className="text-lg font-semibold leading-snug tracking-tight text-balance text-foreground transition-colors group-hover:text-primary">
                     {article.title}
                   </h3>
-                  <p className="text-sm leading-relaxed text-muted-foreground">
+                  <p className="text-sm leading-relaxed text-pretty text-muted-foreground">
                     {article.excerpt}
                   </p>
                 </Link>

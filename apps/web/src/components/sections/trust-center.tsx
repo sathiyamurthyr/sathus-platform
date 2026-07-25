@@ -63,7 +63,7 @@ export function TrustCenter() {
           </Link>
         </div>
 
-        <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {ITEMS.map((item, i) => {
             const Icon = item.icon;
             return (
@@ -81,11 +81,11 @@ export function TrustCenter() {
                     <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary ring-1 ring-inset ring-primary/15">
                       <Icon className="h-6 w-6" />
                     </span>
-                    <h3 className="text-xl font-semibold tracking-tight text-foreground m-0 p-0 leading-normal">
+                    <h3 className="text-xl font-semibold tracking-tight text-balance text-foreground m-0 p-0 leading-normal">
                       {item.title}
                     </h3>
                   </div>
-                  <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+                  <p className="mt-4 text-sm leading-relaxed text-pretty text-muted-foreground">
                     {item.text}
                   </p>
                 </div>
