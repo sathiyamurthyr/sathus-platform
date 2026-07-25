@@ -93,8 +93,8 @@ export function Header() {
         className={cn(
           'sticky top-0 z-50 w-full transition-all duration-300',
           isScrolled
-            ? 'bg-background border-b shadow-sm'
-            : 'bg-transparent'
+            ? 'bg-[#0D0B10]/95 backdrop-blur-md border-b border-[#40202C] shadow-lg'
+            : 'bg-[#0D0B10] border-b border-[#40202C]/40'
         )}
         initial={{ y: -60 }}
         animate={{ y: 0 }}
