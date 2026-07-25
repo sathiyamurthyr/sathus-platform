@@ -21,9 +21,9 @@ const SIZE_CLASSES = {
 
 const WORDMARK_SIZE_CLASSES = {
   sm: 'text-sm',
-  md: 'text-lg',
-  lg: 'text-xl',
-  xl: 'text-2xl',
+  md: 'text-base sm:text-lg',
+  lg: 'text-lg sm:text-xl',
+  xl: 'text-xl sm:text-2xl',
 };
 
 export function Logo({
@@ -34,7 +34,7 @@ export function Logo({
   href = '/',
 }: LogoProps) {
   return (
-    <Link href={href} className={cn('inline-flex items-center gap-2.5', className)} aria-label="Sathus Technology Pvt. Ltd. home">
+    <Link href={href} className={cn('inline-flex items-center gap-2 sm:gap-2.5', className)} aria-label="Sathus Technology Pvt. Ltd. home">
       <motion.span
         className="inline-flex items-center"
         whileHover={{ scale: 1.02 }}
@@ -51,8 +51,9 @@ export function Logo({
         />
       </motion.span>
       {showWordmark && (
-        <span className={cn('font-display font-semibold text-foreground hidden sm:inline-block', WORDMARK_SIZE_CLASSES[size], wordmarkClassName)}>
-          Sathus Technology
+        <span className={cn('font-display font-semibold text-foreground inline-block tracking-tight', WORDMARK_SIZE_CLASSES[size], wordmarkClassName)}>
+          <span className="inline xs:inline sm:hidden">Sathus</span>
+          <span className="hidden sm:inline">Sathus Technology</span>
         </span>
       )}
     </Link>
