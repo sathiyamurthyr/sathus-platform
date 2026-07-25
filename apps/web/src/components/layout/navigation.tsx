@@ -46,7 +46,7 @@ const Navigation = () => {
         const hasMega = item.hasMega;
         const isCurrentRoute =
           pathname === item.href ||
-          (item.href !== '/' && pathname.startsWith(item.href));
+          (item.href !== '/' && Boolean(pathname?.startsWith(item.href)));
         const isHovered = activeIndex === index;
         const isFocused = focusedIndex === index;
 

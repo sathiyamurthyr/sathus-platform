@@ -1,7 +1,21 @@
 import React from 'react';
+import { vi } from 'vitest';
 import '@testing-library/jest-dom';
 
 (globalThis as unknown as { React: typeof React }).React = React;
+
+vi.mock('next/navigation', () => ({
+  useRouter: () => ({
+    push: vi.fn(),
+    replace: vi.fn(),
+    prefetch: vi.fn(),
+    back: vi.fn(),
+    forward: vi.fn(),
+    refresh: vi.fn(),
+  }),
+  usePathname: () => '/',
+  useSearchParams: () => new URLSearchParams(),
+}));
 
 Object.defineProperty(window, 'matchMedia', {
   writable: true,

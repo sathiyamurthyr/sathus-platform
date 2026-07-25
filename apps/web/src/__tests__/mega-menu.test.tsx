@@ -31,12 +31,12 @@ describe('MegaMenu', () => {
     expect(screen.getByText('AI Engineering')).toBeInTheDocument();
     expect(screen.getByText('Data Engineering')).toBeInTheDocument();
     expect(screen.getByText('Enterprise Applications')).toBeInTheDocument();
-    expect(screen.getByText('Recent Updates')).toBeInTheDocument();
+    expect(screen.getByText('Cloud & Systems Engineering')).toBeInTheDocument();
   });
 
   it('renders featured cards', () => {
     renderWithProviders(<MegaMenu sections={testSections} onClose={() => {}} />);
-    expect(screen.getByText('Sathus AI 2.0')).toBeInTheDocument();
+    expect(screen.getByText('Sathus AI Platform')).toBeInTheDocument();
   });
 
   it('calls onClose on Escape', () => {

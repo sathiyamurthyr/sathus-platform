@@ -30,7 +30,7 @@ describe('MobileMenu', () => {
     renderWithProviders(<MobileMenu open={true} onClose={() => {}} />);
     const solutionsButton = screen.getByText('Solutions');
     fireEvent.click(solutionsButton);
-    expect(screen.getByText('Agent Platforms')).toBeInTheDocument();
+    expect(screen.getByText('AI Engineering')).toBeInTheDocument();
   });
 
   it('closes on Escape', () => {
