@@ -1,22 +1,22 @@
 import { Metadata } from 'next';
 import { SectionIntro } from '@/components/sections/section-intro';
 import { Breadcrumb } from '@/components/common/breadcrumb';
-import { siteConfig } from '@/constants';
+import { BreadcrumbJsonLd } from '@/components/seo/json-ld';
+import { generatePageMetadata } from '@/lib/seo/metadata-builder';
 import Link from 'next/link';
 import { Shield, FileText, Cookie, ExternalLink } from 'lucide-react';
 
-export const metadata: Metadata = {
-  title: 'Legal & Compliance',
-  description: 'Legal terms, privacy policies, cookie disclaimers, and regulatory compliance at Sathus Technology.',
-  alternates: {
-    canonical: '/legal',
-  },
-  openGraph: {
-    title: 'Legal & Compliance — Sathus Technology',
-    description: 'Legal terms, privacy policies, cookie disclaimers, and regulatory compliance.',
-    url: `${siteConfig.url}/legal`,
-  },
-};
+export const metadata: Metadata = generatePageMetadata({
+  title: 'Legal Hub — Terms, Privacy & Cookies',
+  description: 'Legal terms, privacy policies, cookie disclosures, and regulatory compliance frameworks at Sathus Technology.',
+  path: '/legal',
+  keywords: [
+    'Sathus legal hub',
+    'Sathus privacy policy',
+    'Sathus terms of service',
+    'Sathus cookie policy',
+  ],
+});
 
 const legalDocs = [
   {
@@ -41,37 +41,40 @@ const legalDocs = [
 
 export default function LegalHubPage() {
   return (
-    <div className="container mx-auto px-4 pt-3 pb-12 space-y-6">
-      <Breadcrumb items={[{ label: 'Legal' }]} />
-      <SectionIntro
-        eyebrow="Legal & Governance"
-        title="Terms, Privacy & Legal Policies"
-        description="Review our legal agreements, privacy disclosures, and compliance frameworks governing Sathus Technology services."
-      />
+    <>
+      <BreadcrumbJsonLd items={[{ name: 'Legal', url: '/legal' }]} />
+      <div className="container mx-auto px-4 pt-3 pb-12 space-y-6">
+        <Breadcrumb items={[{ label: 'Legal' }]} />
+        <SectionIntro
+          eyebrow="Legal & Governance"
+          title="Terms, Privacy & Legal Policies"
+          description="Review our legal agreements, privacy disclosures, and compliance frameworks governing Sathus Technology services."
+        />
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-        {legalDocs.map((doc) => {
-          const Icon = doc.icon;
-          return (
-            <div key={doc.title} className="rounded-xl border border-border bg-card p-6 flex flex-col justify-between">
-              <div>
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary mb-4">
-                  <Icon className="h-5 w-5" />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          {legalDocs.map((doc) => {
+            const Icon = doc.icon;
+            return (
+              <div key={doc.title} className="rounded-xl border border-border bg-card p-6 flex flex-col justify-between">
+                <div>
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary mb-4">
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <h2 className="text-lg font-bold text-foreground mb-2">{doc.title}</h2>
+                  <p className="text-xs text-muted-foreground leading-relaxed mb-6">{doc.description}</p>
                 </div>
-                <h2 className="text-lg font-bold text-foreground mb-2">{doc.title}</h2>
-                <p className="text-xs text-muted-foreground leading-relaxed mb-6">{doc.description}</p>
+                <Link
+                  href={doc.href}
+                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:underline underline-offset-4"
+                >
+                  Read Policy
+                  <ExternalLink className="h-3 w-3" />
+                </Link>
               </div>
-              <Link
-                href={doc.href}
-                className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:underline underline-offset-4"
-              >
-                Read Policy
-                <ExternalLink className="h-3 w-3" />
-              </Link>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
