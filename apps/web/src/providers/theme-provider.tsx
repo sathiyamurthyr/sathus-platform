@@ -31,10 +31,21 @@ export function ThemeProvider({
   defaultTheme?: Theme;
   storageKey?: string;
 }) {
-  const [theme, setTheme] = React.useState<Theme>(defaultTheme);
+  const [theme, setThemeState] = React.useState<Theme>(defaultTheme);
   const [resolvedTheme, setResolvedTheme] = React.useState<'light' | 'dark'>(
     getSystemTheme()
   );
+
+  React.useEffect(() => {
+    try {
+      const savedTheme = localStorage.getItem(storageKey) as Theme | null;
+      if (savedTheme) {
+        setThemeState(savedTheme);
+      }
+    } catch {
+      // localStorage unavailable
+    }
+  }, [storageKey]);
 
   React.useEffect(() => {
     const root = window.document.documentElement;
@@ -59,7 +70,7 @@ export function ThemeProvider({
       } catch {
         // localStorage unavailable
       }
-      setTheme(t);
+      setThemeState(t);
     },
     resolvedTheme,
   };

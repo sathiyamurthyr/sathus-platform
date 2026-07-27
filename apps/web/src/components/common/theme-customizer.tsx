@@ -14,9 +14,23 @@ export function ThemeCustomizer() {
   const [density, setDensity] = React.useState<'comfortable' | 'compact'>('comfortable');
 
   React.useEffect(() => {
+    try {
+      const savedAccent = localStorage.getItem('sathus-accent') as any;
+      if (savedAccent) setAccentColor(savedAccent);
+    } catch {
+      // localStorage unavailable
+    }
+  }, []);
+
+  React.useEffect(() => {
     const root = document.documentElement;
     root.setAttribute('data-accent', accentColor);
     root.setAttribute('data-density', density);
+    try {
+      localStorage.setItem('sathus-accent', accentColor);
+    } catch {
+      // localStorage unavailable
+    }
   }, [accentColor, density]);
 
   const accentOptions = [
