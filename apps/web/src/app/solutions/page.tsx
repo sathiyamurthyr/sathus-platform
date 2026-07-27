@@ -7,6 +7,7 @@ import { SectionIntro } from '@/components/sections/section-intro';
 import { Breadcrumb } from '@/components/common/breadcrumb';
 import { generatePageMetadata } from '@/lib/seo/metadata-builder';
 import { BreadcrumbJsonLd } from '@/components/seo/json-ld';
+import { ApiPlayground } from '@/components/interactive/api-playground';
 import { siteConfig } from '@/constants';
 
 export const metadata: Metadata = generatePageMetadata({
@@ -230,6 +231,10 @@ export default function SolutionsPage() {
                 Explore Practices
               </Link>
             </div>
+          </div>
+
+          <div className="mt-10">
+            <ApiPlayground />
           </div>
         </div>
       </section>
