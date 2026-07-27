@@ -51,7 +51,7 @@ export const companyConfig: CompanyConfig = {
   email: 'admin@sathus.in',
   phone: '+91 90253 81316',
   phoneRaw: '+919025381316',
-  website: 'https://sathus.in',
+  website: 'https://www.sathus.in',
   socials: {
     linkedin: 'https://www.linkedin.com/in/sathus-technology-b81801332',
     instagram: 'https://www.instagram.com/sathus.technology/',
@@ -60,18 +60,18 @@ export const companyConfig: CompanyConfig = {
     return {
       '@context': 'https://schema.org',
       '@type': 'Organization',
-      '@id': 'https://sathus.in/#organization',
+      '@id': 'https://www.sathus.in/#organization',
       name: this.name,
       legalName: this.legalName,
       alternateName: ['Sathus', 'Sathus Technology', 'Sathus.in', 'Sathus Platform'],
       url: this.website,
       logo: {
         '@type': 'ImageObject',
-        url: 'https://sathus.in/icon.svg',
+        url: 'https://www.sathus.in/icon.svg',
         width: '512',
         height: '512',
       },
-      image: 'https://sathus.in/icon.svg',
+      image: 'https://www.sathus.in/icon.svg',
       email: this.email,
       telephone: this.phone,
       address: {
@@ -98,9 +98,9 @@ export const companyConfig: CompanyConfig = {
     return {
       '@context': 'https://schema.org',
       '@type': 'ProfessionalService',
-      '@id': 'https://sathus.in/#localbusiness',
+      '@id': 'https://www.sathus.in/#localbusiness',
       name: this.name,
-      image: 'https://sathus.in/icon.svg',
+      image: 'https://www.sathus.in/icon.svg',
       url: this.website,
       telephone: this.phone,
       email: this.email,
