@@ -9,6 +9,7 @@ import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { AnnouncementBar } from '@/components/layout/announcement-bar';
 import { siteConfig } from '@/constants';
+import { companyConfig } from '@/config/company';
 import './globals.css';
 
 const inter = Inter({
@@ -29,24 +30,34 @@ const SITE_URL = siteConfig.url;
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: 'Sathus Technology — Engineering the Future of AI, Data & Enterprise Software',
+    default: 'Sathus Technology — AI Engineering, Enterprise Data & Cloud Modernization',
     template: '%s | Sathus Technology',
   },
   description:
-    'Sathus Technology helps enterprises design, build and modernize AI-powered products, intelligent data platforms and cloud-native applications for regulated industries.',
+    'Sathus Technology (sathus.in) is an enterprise engineering company specializing in production AI agents, data lakehouses, and cloud-native software for regulated industries.',
   keywords: [
-    'enterprise AI',
-    'data engineering',
-    'product engineering',
-    'cloud modernization',
-    'AI agents',
-    'lakehouse',
-    'regulated industries',
+    'Sathus',
     'Sathus Technology',
-    'FastAPI',
-    'Next.js 15',
+    'sathus.in',
+    'Sathus Platform',
+    'enterprise AI engineering',
+    'data platform engineering',
+    'cloud modernization',
+    'AI agents & swarms',
+    'lakehouse architecture',
+    'FastAPI MLOps',
     'Model Context Protocol',
+    'Chennai software company',
+    'India AI engineering',
   ],
+  authors: [{ name: 'Sathus Technology', url: SITE_URL }],
+  creator: 'Sathus Technology Pvt. Ltd.',
+  publisher: 'Sathus Technology Pvt. Ltd.',
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
   alternates: {
     canonical: '/',
   },
@@ -55,9 +66,9 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: SITE_URL,
     siteName: 'Sathus Technology',
-    title: 'Sathus Technology — Engineering the Future of AI, Data & Enterprise Software',
+    title: 'Sathus Technology — AI Engineering, Enterprise Data & Cloud Modernization',
     description:
-      'Enterprise AI, data platforms, and cloud-native software engineered for regulated industries.',
+      'Sathus Technology (sathus.in) engineers enterprise AI, data platforms, and cloud-native applications for regulated industries.',
     images: [
       {
         url: '/opengraph-image',
@@ -69,7 +80,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Sathus Technology — Engineering the Future of AI, Data & Enterprise Software',
+    title: 'Sathus Technology — AI Engineering, Enterprise Data & Cloud Modernization',
     description:
       'Enterprise AI, data platforms, and cloud-native software engineered for regulated industries.',
     creator: '@sathustech',
@@ -78,16 +89,18 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
+    nocache: false,
     googleBot: {
       index: true,
       follow: true,
+      noimageindex: false,
       'max-video-preview': -1,
       'max-image-preview': 'large',
       'max-snippet': -1,
     },
   },
   verification: {
-    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || 'google-site-verification-sathus-tech',
     other: {
       'msvalidate.01': process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION || '',
     },
@@ -107,15 +120,19 @@ export const viewport: Viewport = {
   ],
 };
 
-import { companyConfig } from '@/config/company';
-
 const orgJsonLd = companyConfig.getOrganizationSchema();
+const localBusinessJsonLd = companyConfig.getLocalBusinessSchema();
 
 const websiteJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
+  '@id': 'https://sathus.in/#website',
   name: 'Sathus Technology',
+  alternateName: ['Sathus', 'Sathus.in', 'Sathus Platform'],
   url: SITE_URL,
+  publisher: {
+    '@id': 'https://sathus.in/#organization',
+  },
   potentialAction: {
     '@type': 'SearchAction',
     target: `${SITE_URL}/search?q={search_term_string}`,
@@ -166,6 +183,10 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
         />
         <script
           type="application/ld+json"
