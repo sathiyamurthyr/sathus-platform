@@ -18,7 +18,7 @@ export const navItems: NavItem[] = [
   { label: 'Solutions', href: '/solutions', hasMega: true },
   { label: 'Industries', href: '/industries', hasMega: false },
   { label: 'Products', href: '/products', hasMega: true },
-  { label: 'Technology', href: '/solutions', hasMega: true },
+  { label: 'Technology', href: '/solutions#technology', hasMega: true },
   { label: 'Resources', href: '/resources', hasMega: true },
   { label: 'Company', href: '/company', hasMega: true },
   { label: 'Trust Center', href: '/trust', hasMega: false },
