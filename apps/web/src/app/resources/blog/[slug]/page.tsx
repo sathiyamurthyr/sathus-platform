@@ -1,13 +1,13 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { resources } from '@/features/resources/data';
-import { SectionIntro } from '@/components/sections/section-intro';
 import { Breadcrumb } from '@/components/common/breadcrumb';
 import { BreadcrumbJsonLd, ArticleJsonLd } from '@/components/seo/json-ld';
 import { AISummaryBlock } from '@/components/seo/ai-summary-block';
+import { PdfDownloadButton } from '@/components/common/pdf-download-button';
 import { generatePageMetadata } from '@/lib/seo/metadata-builder';
 import Link from 'next/link';
-import { Calendar, User, Clock, ArrowLeft, ArrowRight, ShieldCheck, CheckCircle2, FileText, Code2, BarChart2 } from 'lucide-react';
+import { User, Clock, ArrowLeft, ArrowRight, FileText, Code2, BarChart2 } from 'lucide-react';
 
 interface ArticlePageProps {
   params: Promise<{ slug: string }>;
@@ -55,7 +55,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
       <ArticleJsonLd article={resource} />
 
       <div className="container mx-auto px-4 py-8 space-y-10 max-w-5xl">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-wrap items-center justify-between gap-4">
           <Breadcrumb
             items={[
               { label: 'Resources', href: '/resources' },
@@ -63,13 +63,16 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
               { label: resource.title },
             ]}
           />
-          <Link
-            href="/resources/blog"
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-muted-foreground hover:text-primary transition-colors"
-          >
-            <ArrowLeft className="h-3.5 w-3.5" />
-            Back to Blog
-          </Link>
+          <div className="flex items-center gap-3">
+            <PdfDownloadButton title={resource.title} />
+            <Link
+              href="/resources/blog"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-muted-foreground hover:text-primary transition-colors"
+            >
+              <ArrowLeft className="h-3.5 w-3.5" />
+              Back to Blog
+            </Link>
+          </div>
         </div>
 
         {/* Hero Header */}
