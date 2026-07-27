@@ -5,41 +5,46 @@ import { CategoryGrid } from '@/features/resources/components/CategoryGrid';
 import { ResourceCard } from '@/features/resources/components/ResourceCard';
 import { NewsletterCTA } from '@/features/resources/components/NewsletterCTA';
 import { Breadcrumb } from '@/components/common/breadcrumb';
-import { siteConfig } from '@/constants';
+import { BreadcrumbJsonLd } from '@/components/seo/json-ld';
+import { AISummaryBlock } from '@/components/seo/ai-summary-block';
+import { generatePageMetadata } from '@/lib/seo/metadata-builder';
 import {
   categories,
   resources,
   featuredContent,
 } from '@/features/resources/data';
 
-const SITE_URL = siteConfig.url;
-
-export const metadata: Metadata = {
-  title: 'Resources & Insights',
-  description: 'Explore technical architecture guides, whitepapers, case studies, and engineering benchmarks.',
-  alternates: {
-    canonical: '/resources',
-  },
-  openGraph: {
-    title: 'Resources & Insights — Sathus Technology',
-    description: 'Explore technical architecture guides, whitepapers, case studies, and engineering benchmarks.',
-    url: `${SITE_URL}/resources`,
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Resources & Insights — Sathus Technology',
-    description: 'Explore technical architecture guides, whitepapers, case studies, and engineering benchmarks.',
-  },
-};
+export const metadata: Metadata = generatePageMetadata({
+  title: 'Technical Resources, Whitepapers & Insights',
+  description: 'Explore enterprise AI architecture guides, data lakehouse whitepapers, MCP protocols, and engineering benchmarks.',
+  path: '/resources',
+  keywords: [
+    'Sathus technical resources',
+    'AI architecture whitepapers',
+    'Data lakehouse engineering benchmarks',
+    'Model Context Protocol documentation',
+  ],
+});
 
 export default function ResourcesPage() {
   return (
     <>
+      <BreadcrumbJsonLd items={[{ name: 'Resources', url: '/resources' }]} />
       <div className="container mx-auto px-4 pt-2">
         <Breadcrumb items={[{ label: 'Resources' }]} />
       </div>
+
       <ResourcesHero />
+
+      {/* Generative Engine Optimization Block */}
+      <div className="container mx-auto px-4 py-8">
+        <AISummaryBlock
+          topic="Enterprise AI & Data Architecture Knowledge Base"
+          definition="Sathus Technology publishes peer-reviewed engineering whitepapers, reference architectures, and benchmark reports for enterprise AI, data platforms, and cloud modernization."
+          keyTakeaways={resources.slice(0, 4).map((r) => `${r.title}: ${r.description}`)}
+        />
+      </div>
+
       <FeaturedContent featured={featuredContent} />
       <CategoryGrid categories={categories} />
       <div className="py-16">
