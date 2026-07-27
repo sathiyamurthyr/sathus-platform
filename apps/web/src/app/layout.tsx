@@ -8,6 +8,7 @@ import { MotionProvider } from '@/providers/motion-provider';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { AnnouncementBar } from '@/components/layout/announcement-bar';
+import { ThemeCustomizer } from '@/components/common/theme-customizer';
 import { siteConfig } from '@/constants';
 import { companyConfig } from '@/config/company';
 import './globals.css';
@@ -208,6 +209,7 @@ export default function RootLayout({
                   {children}
                 </main>
                 <Footer />
+                <ThemeCustomizer />
               </ToastProvider>
             </TooltipProvider>
           </ThemeProvider>
