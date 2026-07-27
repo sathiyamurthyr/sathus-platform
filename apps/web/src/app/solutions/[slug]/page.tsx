@@ -12,9 +12,10 @@ import { CaseStudies } from '@/features/solutions/components/CaseStudies';
 import { Faq } from '@/features/solutions/components/Faq';
 import { FinalCTA } from '@/features/solutions/components/FinalCTA';
 import { Breadcrumb } from '@/components/common/breadcrumb';
-import { ServiceJsonLd, FAQPageJsonLd } from '@/components/seo/json-ld';
+import { ServiceJsonLd, FAQPageJsonLd, BreadcrumbJsonLd } from '@/components/seo/json-ld';
+import { AISummaryBlock } from '@/components/seo/ai-summary-block';
 import { getSolutionBySlug } from '@/features/solutions/data';
-import { siteConfig } from '@/constants';
+import { generatePageMetadata } from '@/lib/seo/metadata-builder';
 
 interface SolutionPageProps {
   params: Promise<{ slug: string }>;
@@ -28,11 +29,10 @@ export async function generateMetadata({ params }: SolutionPageProps): Promise<M
     return {};
   }
 
-  const canonicalUrl = `/solutions/${solution.slug}`;
-
-  return {
+  return generatePageMetadata({
     title: solution.title,
     description: solution.description,
+    path: `/solutions/${solution.slug}`,
     keywords: [
       solution.title,
       'engineering solution',
@@ -40,21 +40,7 @@ export async function generateMetadata({ params }: SolutionPageProps): Promise<M
       'Sathus Technology',
       ...solution.capabilities.map((c) => c.title),
     ],
-    alternates: {
-      canonical: canonicalUrl,
-    },
-    openGraph: {
-      title: `${solution.title} — Sathus Technology`,
-      description: solution.description,
-      url: `${siteConfig.url}${canonicalUrl}`,
-      type: 'article',
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: `${solution.title} — Sathus Technology`,
-      description: solution.description,
-    },
-  };
+  });
 }
 
 export default async function SolutionPage({ params }: SolutionPageProps) {
@@ -65,12 +51,19 @@ export default async function SolutionPage({ params }: SolutionPageProps) {
     notFound();
   }
 
+  const breadcrumbItems = [
+    { name: 'Solutions', url: '/solutions' },
+    { name: solution.title, url: `/solutions/${solution.slug}` },
+  ];
+
   return (
     <>
       <ServiceJsonLd solution={solution} />
+      <BreadcrumbJsonLd items={breadcrumbItems} />
       {solution.faqs && solution.faqs.length > 0 && (
         <FAQPageJsonLd faqs={solution.faqs.map((f) => ({ question: f.question, answer: f.answer }))} />
       )}
+
       <div className="container mx-auto px-4 pt-6">
         <Breadcrumb
           items={[
@@ -79,8 +72,20 @@ export default async function SolutionPage({ params }: SolutionPageProps) {
           ]}
         />
       </div>
+
       <SolutionHero hero={solution.hero} />
       <SolutionOverview solution={solution} />
+
+      {/* AI Search Engine Block */}
+      <div className="container mx-auto px-4 py-8">
+        <AISummaryBlock
+          topic={solution.title}
+          definition={solution.description}
+          keyTakeaways={solution.capabilities ? solution.capabilities.map((c) => `${c.title}: ${c.description}`) : []}
+          faqs={solution.faqs ? solution.faqs.slice(0, 5).map((f) => ({ question: f.question, answer: f.answer })) : []}
+        />
+      </div>
+
       {solution.challenges && <BusinessChallenges challenges={solution.challenges} />}
       {solution.capabilities && <Capabilities capabilities={solution.capabilities} />}
       {solution.architecture && <ArchitectureDiagram architecture={solution.architecture} />}

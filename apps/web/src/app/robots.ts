@@ -1,15 +1,35 @@
 import { MetadataRoute } from 'next';
-import { siteConfig } from '@/constants';
 
 export default function robots(): MetadataRoute.Robots {
+  const baseUrl = 'https://www.sathus.in';
+
   return {
     rules: [
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/api/', '/admin/', '/_next/', '/auth/', '/workspace/', '/app/'],
+        disallow: [
+          '/admin',
+          '/dashboard',
+          '/api',
+          '/private',
+          '/auth',
+          '/temp',
+          '/_next/',
+          '/workspace/',
+        ],
+      },
+      {
+        userAgent: 'Googlebot',
+        allow: '/',
+        disallow: ['/admin', '/dashboard', '/api', '/private', '/auth', '/temp'],
+      },
+      {
+        userAgent: 'Bingbot',
+        allow: '/',
+        disallow: ['/admin', '/dashboard', '/api', '/private', '/auth', '/temp'],
       },
     ],
-    sitemap: `${siteConfig.url}/sitemap.xml`,
+    sitemap: `${baseUrl}/sitemap.xml`,
   };
 }

@@ -14,8 +14,9 @@ import { Roadmap } from '@/features/products/components/Roadmap';
 import { Faq } from '@/features/products/components/Faq';
 import { Cta } from '@/features/products/components/Cta';
 import { Breadcrumb } from '@/components/common/breadcrumb';
-import { SoftwareApplicationJsonLd, FAQPageJsonLd } from '@/components/seo/json-ld';
-import { siteConfig } from '@/constants';
+import { SoftwareApplicationJsonLd, FAQPageJsonLd, BreadcrumbJsonLd } from '@/components/seo/json-ld';
+import { AISummaryBlock } from '@/components/seo/ai-summary-block';
+import { generatePageMetadata } from '@/lib/seo/metadata-builder';
 
 interface ProductPageProps {
   params: Promise<{ slug: string }>;
@@ -29,33 +30,18 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
     return {};
   }
 
-  const canonicalUrl = `/products/${product.slug}`;
-
-  return {
-    title: product.name,
+  return generatePageMetadata({
+    title: `${product.name} — ${product.tagline}`,
     description: product.description,
+    path: `/products/${product.slug}`,
     keywords: [
       product.name,
       product.tagline,
-      'enterprise software',
+      'enterprise software application',
       'Sathus Technology',
       ...product.features.map((f) => f.title),
     ],
-    alternates: {
-      canonical: canonicalUrl,
-    },
-    openGraph: {
-      title: `${product.name} — Sathus Technology`,
-      description: product.description,
-      url: `${siteConfig.url}${canonicalUrl}`,
-      type: 'website',
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: `${product.name} — Sathus Technology`,
-      description: product.description,
-    },
-  };
+  });
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {
@@ -66,12 +52,19 @@ export default async function ProductPage({ params }: ProductPageProps) {
     notFound();
   }
 
+  const breadcrumbItems = [
+    { name: 'Products', url: '/products' },
+    { name: product.name, url: `/products/${product.slug}` },
+  ];
+
   return (
     <>
       <SoftwareApplicationJsonLd product={product} />
+      <BreadcrumbJsonLd items={breadcrumbItems} />
       {product.faq && product.faq.length > 0 && (
         <FAQPageJsonLd faqs={product.faq.map((f) => ({ question: f.question, answer: f.answer }))} />
       )}
+
       <div className="container mx-auto px-4 pt-6">
         <Breadcrumb
           items={[
@@ -80,8 +73,20 @@ export default async function ProductPage({ params }: ProductPageProps) {
           ]}
         />
       </div>
+
       <ProductHero hero={product.hero} />
       <ProductOverview overview={product.overview} />
+
+      {/* AI Search Optimization Engine Block */}
+      <div className="container mx-auto px-4 py-8">
+        <AISummaryBlock
+          topic={`${product.name} Enterprise Platform`}
+          definition={product.description}
+          keyTakeaways={product.features ? product.features.map((f) => `${f.title}: ${f.description}`) : []}
+          faqs={product.faq ? product.faq.slice(0, 5).map((f) => ({ question: f.question, answer: f.answer })) : []}
+        />
+      </div>
+
       <KeyFeatures features={product.features} />
       <Benefits benefits={product.benefits} />
       {product.pricingPreview && <PricingPreview pricing={product.pricingPreview} />}

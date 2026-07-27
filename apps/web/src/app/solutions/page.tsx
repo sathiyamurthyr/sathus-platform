@@ -5,29 +5,23 @@ import type { LucideIcon } from 'lucide-react';
 import { Reveal } from '@/components/sections/reveal';
 import { SectionIntro } from '@/components/sections/section-intro';
 import { Breadcrumb } from '@/components/common/breadcrumb';
+import { generatePageMetadata } from '@/lib/seo/metadata-builder';
+import { BreadcrumbJsonLd } from '@/components/seo/json-ld';
 import { siteConfig } from '@/constants';
 
-export const metadata: Metadata = {
-  title: 'Solutions',
+export const metadata: Metadata = generatePageMetadata({
+  title: 'Enterprise Engineering Solutions',
   description:
     'Engineering solutions that deliver business outcomes. AI Engineering, Data Engineering, Enterprise Applications, Cloud Modernization, Product Engineering, and Digital Transformation.',
-  alternates: {
-    canonical: '/solutions',
-  },
-  openGraph: {
-    title: 'Solutions — Sathus Technology',
-    description:
-      'Engineering disciplines delivered as accountable outcomes with reference architectures and production-ready delivery.',
-    url: `${siteConfig.url}/solutions`,
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Solutions — Sathus Technology',
-    description:
-      'Engineering disciplines delivered as accountable outcomes with reference architectures and production-ready delivery.',
-  },
-};
+  path: '/solutions',
+  keywords: [
+    'Enterprise AI Engineering',
+    'Data Lakehouse Solutions',
+    'Cloud Platform Modernization',
+    'API Engineering',
+    'GenAI Swarms',
+  ],
+});
 
 interface SolutionPractice {
   icon: LucideIcon;
@@ -207,6 +201,8 @@ export default function SolutionsPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
       />
+      <BreadcrumbJsonLd items={[{ name: 'Solutions', url: '/solutions' }]} />
+
       <div className="container mx-auto px-4 pt-2">
         <Breadcrumb items={[{ label: 'Solutions' }]} />
       </div>

@@ -2,31 +2,26 @@ import { Metadata } from 'next';
 import { SectionIntro } from '@/components/sections/section-intro';
 import { Breadcrumb } from '@/components/common/breadcrumb';
 import { allProducts } from '@/features/products/data';
-import { siteConfig } from '@/constants';
+import { generatePageMetadata } from '@/lib/seo/metadata-builder';
+import { BreadcrumbJsonLd } from '@/components/seo/json-ld';
 import Link from 'next/link';
 
-export const metadata: Metadata = {
-  title: 'Products',
-  description: 'Enterprise software products built for regulated industries.',
-  alternates: {
-    canonical: '/products',
-  },
-  openGraph: {
-    title: 'Products — Sathus Technology',
-    description: 'Enterprise software products built for regulated industries.',
-    url: `${siteConfig.url}/products`,
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Products — Sathus Technology',
-    description: 'Enterprise software products built for regulated industries.',
-  },
-};
+export const metadata: Metadata = generatePageMetadata({
+  title: 'Enterprise Software Products Portfolio',
+  description: 'Enterprise software products built for regulated industries. Svora, Memomes, and Sathus AI agentic swarms.',
+  path: '/products',
+  keywords: [
+    'Svora SaaS',
+    'Memomes AI',
+    'Sathus AI Platform',
+    'Enterprise Software Products',
+  ],
+});
 
 export default function ProductsPage() {
   return (
     <div className="container mx-auto px-4 pt-3 pb-12 space-y-6">
+      <BreadcrumbJsonLd items={[{ name: 'Products', url: '/products' }]} />
       <Breadcrumb items={[{ label: 'Products' }]} />
       <SectionIntro
         eyebrow="Products"

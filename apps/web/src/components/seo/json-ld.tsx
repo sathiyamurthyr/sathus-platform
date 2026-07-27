@@ -1,103 +1,43 @@
 import React from 'react';
-import { siteConfig } from '@/constants';
-import { companyConfig } from '@/config/company';
+import { SchemaBuilder, FAQItem } from '@/lib/seo/schema-builder';
 import type { Product } from '@/features/products/types';
 import type { Solution } from '@/features/solutions/types';
 
-interface SoftwareApplicationJsonLdProps {
-  product: Product;
-}
-
-export function SoftwareApplicationJsonLd({ product }: SoftwareApplicationJsonLdProps) {
-  const schema = {
-    '@context': 'https://schema.org',
-    '@type': 'SoftwareApplication',
-    name: product.name,
-    description: product.description,
-    applicationCategory: 'Enterprise Application',
-    operatingSystem: 'Cloud / Cross-platform',
-    offers: {
-      '@type': 'Offer',
-      price: '0',
-      priceCurrency: 'USD',
-      availability: 'https://schema.org/InStock',
-    },
-    publisher: {
-      '@type': 'Organization',
-      name: companyConfig.name,
-      url: companyConfig.website,
-    },
-  };
-
+export function JsonLdScript({ data }: { data: object }) {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
     />
   );
 }
 
-interface ServiceJsonLdProps {
-  solution: Solution;
+export function SoftwareApplicationJsonLd({ product }: { product: Product }) {
+  const schema = SchemaBuilder.getSoftwareApplication({
+    name: product.name,
+    slug: product.slug,
+    description: product.description,
+    category: 'Enterprise Software',
+    features: product.features ? product.features.map((f) => f.title) : [product.tagline],
+  });
+  return <JsonLdScript data={schema} />;
 }
 
-export function ServiceJsonLd({ solution }: ServiceJsonLdProps) {
-  const schema = {
-    '@context': 'https://schema.org',
-    '@type': 'Service',
+export function ServiceJsonLd({ solution }: { solution: Solution }) {
+  const schema = SchemaBuilder.getService({
     name: solution.title,
+    slug: solution.slug,
     description: solution.description,
     serviceType: solution.title,
-    provider: {
-      '@type': 'Organization',
-      name: companyConfig.name,
-      url: companyConfig.website,
-    },
-    termsOfService: `${companyConfig.website}/legal/terms`,
-  };
-
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-    />
-  );
+    offers: solution.capabilities ? solution.capabilities.map((c) => ({ name: c.name, description: c.description })) : [],
+  });
+  return <JsonLdScript data={schema} />;
 }
 
-interface FAQPageJsonLdProps {
-  faqs: Array<{ question: string; answer: string }>;
-}
-
-export function FAQPageJsonLd({ faqs }: FAQPageJsonLdProps) {
+export function FAQPageJsonLd({ faqs }: { faqs: FAQItem[] }) {
   if (!faqs || faqs.length === 0) return null;
-
-  const schema = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: faqs.map((faq) => ({
-      '@type': 'Question',
-      name: faq.question,
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: faq.answer,
-      },
-    })),
-  };
-
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-    />
-  );
-}
-
-interface ArticleJsonLdProps {
-  headline: string;
-  description: string;
-  url: string;
-  datePublished?: string;
-  authorName?: string;
+  const schema = SchemaBuilder.getFAQ(faqs);
+  return <JsonLdScript data={schema} />;
 }
 
 export function ArticleJsonLd({
@@ -105,76 +45,36 @@ export function ArticleJsonLd({
   description,
   url,
   datePublished = '2026-01-01',
-  authorName = 'Sathus Engineering Team',
-}: ArticleJsonLdProps) {
-  const schema = {
-    '@context': 'https://schema.org',
-    '@type': 'Article',
+  authorName = 'Sathus Technology Principal Engineering',
+}: {
+  headline: string;
+  description: string;
+  url: string;
+  datePublished?: string;
+  authorName?: string;
+}) {
+  const schema = SchemaBuilder.getArticle({
     headline,
     description,
-    url: `${companyConfig.website}${url}`,
+    url,
     datePublished,
-    author: {
-      '@type': 'Organization',
-      name: authorName,
-    },
-    publisher: {
-      '@type': 'Organization',
-      name: companyConfig.name,
-      url: companyConfig.website,
-      logo: `${companyConfig.website}/icon.svg`,
-    },
-  };
-
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-    />
-  );
-}
-
-interface ContactPageJsonLdProps {
-  title?: string;
-  description?: string;
-}
-
-export function ContactPageJsonLd({
-  title = `Contact ${companyConfig.name}`,
-  description = `Reach out to ${companyConfig.name} engineering, sales, and executive teams.`,
-}: ContactPageJsonLdProps) {
-  const schema = {
-    '@context': 'https://schema.org',
-    '@type': 'ContactPage',
-    name: title,
-    description,
-    url: `${companyConfig.website}/contact`,
-    mainEntity: companyConfig.getOrganizationSchema(),
-  };
-
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-    />
-  );
+    authorName,
+  });
+  return <JsonLdScript data={schema} />;
 }
 
 export function OrganizationJsonLd() {
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(companyConfig.getOrganizationSchema()) }}
-    />
-  );
+  return <JsonLdScript data={SchemaBuilder.getOrganization()} />;
 }
 
 export function LocalBusinessJsonLd() {
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(companyConfig.getLocalBusinessSchema()) }}
-    />
-  );
+  return <JsonLdScript data={SchemaBuilder.getLocalBusiness()} />;
 }
 
+export function WebSiteJsonLd() {
+  return <JsonLdScript data={SchemaBuilder.getWebSite()} />;
+}
+
+export function BreadcrumbJsonLd({ items }: { items: { name: string; url: string }[] }) {
+  return <JsonLdScript data={SchemaBuilder.getBreadcrumbs(items)} />;
+}
