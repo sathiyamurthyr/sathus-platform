@@ -2,7 +2,7 @@ import { BookOpen } from 'lucide-react';
 
 export function ResourcesHero() {
   return (
-    <div className="pt-20 pb-10">
+    <div className="pt-4 pb-8">
       <div className="container mx-auto px-4">
         <div className="max-w-3xl">
           <div className="flex items-center gap-3">

@@ -42,7 +42,7 @@ export default function CaseStudiesPage() {
   return (
     <>
       {/* Hero */}
-      <section id="case-studies-hero" className="scroll-mt-24 py-20 sm:py-24">
+      <section id="case-studies-hero" className="scroll-mt-24 pt-6 pb-10 sm:pb-12">
         <div className="container mx-auto px-4">
           <SectionIntro
             eyebrow="Case Studies"

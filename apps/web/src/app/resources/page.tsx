@@ -36,7 +36,7 @@ export const metadata: Metadata = {
 export default function ResourcesPage() {
   return (
     <>
-      <div className="container mx-auto px-4 pt-6">
+      <div className="container mx-auto px-4 pt-2">
         <Breadcrumb items={[{ label: 'Resources' }]} />
       </div>
       <ResourcesHero />

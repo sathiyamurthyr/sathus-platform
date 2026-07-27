@@ -7,7 +7,7 @@ interface CaseStudyHeroProps {
 
 export function CaseStudyHero({ caseStudy }: CaseStudyHeroProps) {
   return (
-    <section id="case-study-hero" className="scroll-mt-24 py-20 sm:py-24">
+    <section id="case-study-hero" className="scroll-mt-24 pt-4 pb-8 sm:pb-10">
       <div className="container mx-auto px-4">
         <div className="max-w-3xl">
           <SectionIntro

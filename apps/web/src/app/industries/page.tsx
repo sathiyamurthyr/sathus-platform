@@ -46,7 +46,7 @@ export default function IndustriesPage() {
   return (
     <>
       {/* Hero */}
-      <section id="industries-hero" className="scroll-mt-24 py-24 sm:py-32">
+      <section id="industries-hero" className="scroll-mt-24 pt-6 pb-12 sm:pb-16">
         <div className="container mx-auto px-4">
           <SectionIntro
             eyebrow="Industries"

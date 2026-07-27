@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 
 export default function PrivacyPolicyPage() {
   return (
-    <div className="container mx-auto px-4 py-12 max-w-4xl space-y-8">
+    <div className="container mx-auto px-4 pt-3 pb-12 max-w-4xl space-y-6">
       <Breadcrumb items={[{ label: 'Legal', href: '/legal' }, { label: 'Privacy Policy' }]} />
       <SectionIntro
         eyebrow="Legal Policy"

@@ -79,7 +79,7 @@ const companySections = [
 
 export default function CompanyHubPage() {
   return (
-    <div className="container mx-auto px-4 py-12">
+    <div className="container mx-auto px-4 pt-3 pb-12 space-y-6">
       <Breadcrumb items={[{ label: 'Company' }]} />
       <SectionIntro
         eyebrow="Company"

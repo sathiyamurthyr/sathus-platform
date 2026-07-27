@@ -106,11 +106,11 @@ export default function ContactPage() {
   return (
     <>
       <ContactPageJsonLd />
-      <div className="container mx-auto px-4 pt-6">
+      <div className="container mx-auto px-4 pt-2">
         <Breadcrumb items={[{ label: 'Contact' }]} />
       </div>
 
-      <div className="container mx-auto px-4 py-12 space-y-16">
+      <div className="container mx-auto px-4 pt-2 pb-12 space-y-10">
         {/* Header */}
         <SectionIntro
           eyebrow="Contact"

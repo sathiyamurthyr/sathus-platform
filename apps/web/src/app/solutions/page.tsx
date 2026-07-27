@@ -207,12 +207,12 @@ export default function SolutionsPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
       />
-      <div className="container mx-auto px-4 pt-6">
+      <div className="container mx-auto px-4 pt-2">
         <Breadcrumb items={[{ label: 'Solutions' }]} />
       </div>
 
       {/* Editorial Hero */}
-      <section id="solutions-hero" className="scroll-mt-24 py-12 sm:py-16">
+      <section id="solutions-hero" className="scroll-mt-24 pt-2 pb-10 sm:pb-12">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl">
             <SectionIntro

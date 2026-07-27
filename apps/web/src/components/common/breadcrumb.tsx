@@ -41,7 +41,7 @@ export function Breadcrumb({ items, className, showHome = true }: BreadcrumbProp
       />
       <nav
         aria-label="Breadcrumb"
-        className={cn('flex items-center space-x-1.5 text-xs text-muted-foreground py-4', className)}
+        className={cn('flex items-center space-x-1.5 text-xs text-muted-foreground pt-1.5 pb-1', className)}
       >
         <ol className="flex items-center space-x-1.5 flex-wrap">
           {allItems.map((item, index) => {
