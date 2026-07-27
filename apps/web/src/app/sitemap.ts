@@ -2,6 +2,7 @@ import { MetadataRoute } from 'next';
 import { allProducts } from '@/features/products/data';
 import { allSolutions } from '@/features/solutions/data';
 import { caseStudies } from '@/features/case-studies/data';
+import { resources } from '@/features/resources/data';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
@@ -14,6 +15,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { route: '/industries', priority: 0.95, changeFreq: 'weekly' },
     { route: '/products', priority: 0.95, changeFreq: 'weekly' },
     { route: '/resources', priority: 0.90, changeFreq: 'daily' },
+    { route: '/resources/blog', priority: 0.90, changeFreq: 'daily' },
+    { route: '/resources/documentation', priority: 0.85, changeFreq: 'weekly' },
+    { route: '/resources/faqs', priority: 0.85, changeFreq: 'monthly' },
+    { route: '/resources/insights', priority: 0.85, changeFreq: 'weekly' },
     { route: '/company', priority: 0.90, changeFreq: 'weekly' },
     { route: '/company/about', priority: 0.90, changeFreq: 'monthly' },
     { route: '/company/why-sathus', priority: 0.90, changeFreq: 'monthly' },
@@ -70,5 +75,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.90,
   }));
 
-  return [...staticEntries, ...productEntries, ...solutionEntries, ...caseStudyEntries];
+  const resourceEntries: MetadataRoute.Sitemap = resources.map((r) => ({
+    url: `${baseUrl}/resources/blog/${r.slug}`,
+    lastModified: now,
+    changeFrequency: 'weekly',
+    priority: 0.85,
+  }));
+
+  return [...staticEntries, ...productEntries, ...solutionEntries, ...caseStudyEntries, ...resourceEntries];
 }

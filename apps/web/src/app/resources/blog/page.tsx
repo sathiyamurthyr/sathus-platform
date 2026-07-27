@@ -6,7 +6,7 @@ import { AISummaryBlock } from '@/components/seo/ai-summary-block';
 import { generatePageMetadata } from '@/lib/seo/metadata-builder';
 import { resources } from '@/features/resources/data';
 import Link from 'next/link';
-import { Calendar, User, ArrowRight, Clock, FileText, Shield } from 'lucide-react';
+import { Calendar, User, ArrowRight, Clock, FileText } from 'lucide-react';
 
 export const metadata: Metadata = generatePageMetadata({
   title: 'Engineering Blog, Whitepapers & Technical Deep Dives',
@@ -68,7 +68,9 @@ export default function BlogHubPage() {
             </div>
 
             <h2 className="text-2xl md:text-3xl font-extrabold text-foreground mb-4 leading-tight">
-              {featuredArticle.title}
+              <Link href={`/resources/blog/${featuredArticle.slug}`} className="hover:text-primary transition-colors">
+                {featuredArticle.title}
+              </Link>
             </h2>
 
             <p className="text-sm md:text-base text-muted-foreground leading-relaxed mb-6 max-w-4xl">
@@ -81,7 +83,7 @@ export default function BlogHubPage() {
                 {featuredArticle.author.name} — <span className="text-muted-foreground font-normal">{featuredArticle.author.role}</span>
               </div>
               <Link
-                href="/resources/insights"
+                href={`/resources/blog/${featuredArticle.slug}`}
                 className="inline-flex items-center gap-2 text-xs font-bold text-primary hover:underline underline-offset-4"
               >
                 Read Whitepaper
@@ -110,7 +112,11 @@ export default function BlogHubPage() {
                       {post.readingTime} min
                     </span>
                   </div>
-                  <h4 className="text-base font-bold text-foreground mb-2 leading-snug">{post.title}</h4>
+                  <h4 className="text-base font-bold text-foreground mb-2 leading-snug">
+                    <Link href={`/resources/blog/${post.slug}`} className="hover:text-primary transition-colors">
+                      {post.title}
+                    </Link>
+                  </h4>
                   <p className="text-xs text-muted-foreground leading-relaxed mb-6 line-clamp-3">
                     {post.excerpt || post.description}
                   </p>
@@ -118,7 +124,7 @@ export default function BlogHubPage() {
                 <div className="pt-4 border-t border-border/60 flex items-center justify-between">
                   <span className="text-[11px] text-muted-foreground">{post.author.name}</span>
                   <Link
-                    href="/resources/insights"
+                    href={`/resources/blog/${post.slug}`}
                     className="inline-flex items-center gap-1 text-xs font-semibold text-primary hover:underline underline-offset-4"
                   >
                     Read

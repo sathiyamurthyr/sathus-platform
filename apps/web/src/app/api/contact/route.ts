@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { contactFormSchema } from '@/features/contact/validation';
+import { dispatchAllLeadNotifications, LeadPayload } from '@/lib/notifications/webhook-dispatcher';
 import fs from 'fs/promises';
 import path from 'path';
 
@@ -42,16 +43,20 @@ export async function POST(request: Request) {
     const body = await request.json();
     const validatedData = contactFormSchema.parse(body);
 
-    const leadRecord = {
+    const leadRecord: LeadPayload = {
       id: crypto.randomUUID(),
       ...validatedData,
       status: 'new',
       createdAt: new Date().toISOString(),
     };
 
+    // Save lead to persistent leads.json
     await saveLead(leadRecord);
 
-    console.log('[Contact Submission Received]', {
+    // Dispatch async webhook notifications to Slack, Email (Resend/SendGrid), and CRM
+    await dispatchAllLeadNotifications(leadRecord);
+
+    console.log('[Contact Submission Processed & Dispatched]', {
       id: leadRecord.id,
       email: validatedData.email,
       name: `${validatedData.firstName} ${validatedData.lastName}`,
@@ -62,7 +67,7 @@ export async function POST(request: Request) {
     return NextResponse.json({
       success: true,
       leadId: leadRecord.id,
-      message: 'Strategy session request received successfully',
+      message: 'Strategy session request received and notifications dispatched successfully',
     });
   } catch (error) {
     console.error('Contact API Error:', error);
