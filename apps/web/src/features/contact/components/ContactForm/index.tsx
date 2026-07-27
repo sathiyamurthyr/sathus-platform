@@ -45,31 +45,21 @@ export function ContactForm({ inquiryType = 'general', onSuccess }: ContactFormP
   } = useForm<ContactFormData>({
     resolver: zodResolver(contactFormSchema),
     defaultValues: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      phone: '',
+      company: '',
+      jobTitle: '',
+      country: '',
+      industry: '',
+      companySize: '',
+      message: '',
       inquiryType,
       consent: false,
       serviceInterested: 'AI Engineering',
     },
   });
-
-  React.useEffect(() => {
-    const authenticated = typeof document !== 'undefined' && document.cookie.split(';').some((c) => c.trim().startsWith('access_token='));
-    if (authenticated) {
-      reset({
-        firstName: 'John',
-        lastName: 'Doe',
-        email: 'john.doe@sathus.technology',
-        company: 'Sathus Technology',
-        jobTitle: 'Principal Architect',
-        phone: '+91 90253 81316',
-        country: 'India',
-        industry: 'Technology',
-        companySize: '100-500',
-        serviceInterested: 'AI Engineering',
-        inquiryType,
-        consent: true,
-      });
-    }
-  }, [inquiryType, reset]);
 
   const nextStep = async () => {
     const fieldsToValidate = STEP_FIELDS[currentStep];
