@@ -4,43 +4,34 @@ import { SectionIntro } from '@/components/sections/section-intro';
 import { Reveal } from '@/components/sections/reveal';
 import { CaseStudyCard } from '@/features/case-studies/components/CaseStudyCard';
 import { CTA } from '@/features/case-studies/components/CTA';
-import { siteConfig } from '@/constants';
+import { generatePageMetadata } from '@/lib/seo/metadata-builder';
+import { BreadcrumbJsonLd } from '@/components/seo/json-ld';
 import {
   caseStudies,
   getFeaturedCaseStudies,
   getIndustries,
-  getTechnologies,
 } from '@/features/case-studies/data';
 
-export const metadata: Metadata = {
-  title: 'Case Studies',
-  description:
-    'Real-world examples of how we have delivered measurable outcomes for enterprise clients across industries.',
-  alternates: {
-    canonical: '/case-studies',
-  },
-  openGraph: {
-    title: 'Case Studies — Sathus Technology',
-    description:
-      'Enterprise success stories showcasing our engineering solutions and measurable business outcomes.',
-    url: `${siteConfig.url}/case-studies`,
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Case Studies — Sathus Technology',
-    description:
-      'Enterprise success stories showcasing our engineering solutions and measurable business outcomes.',
-  },
-};
+export const metadata: Metadata = generatePageMetadata({
+  title: 'Enterprise Case Studies & Client Success Stories',
+  description: 'Real-world examples of how Sathus Technology delivers measurable AI, data platform, and cloud modernization outcomes for enterprise clients.',
+  path: '/case-studies',
+  keywords: [
+    'Sathus case studies',
+    'Core banking modernization case study',
+    'Clinical data lakehouse case study',
+    'Enterprise AI agent platform case study',
+  ],
+});
 
 export default function CaseStudiesPage() {
   const featured = getFeaturedCaseStudies();
   const industries = getIndustries();
-  const technologies = getTechnologies();
 
   return (
     <>
+      <BreadcrumbJsonLd items={[{ name: 'Case Studies', url: '/case-studies' }]} />
+
       {/* Hero */}
       <section id="case-studies-hero" className="scroll-mt-24 pt-6 pb-10 sm:pb-12">
         <div className="container mx-auto px-4">

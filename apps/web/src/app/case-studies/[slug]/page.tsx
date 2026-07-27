@@ -11,15 +11,15 @@ import { OutcomeSection } from '@/features/case-studies/components/OutcomeSectio
 import { QuoteSection } from '@/features/case-studies/components/QuoteSection';
 import { RelatedSolutions } from '@/features/case-studies/components/RelatedSolutions';
 import { CTA } from '@/features/case-studies/components/CTA';
+import { BreadcrumbJsonLd, ArticleJsonLd } from '@/components/seo/json-ld';
+import { AISummaryBlock } from '@/components/seo/ai-summary-block';
 import { getCaseStudyBySlug } from '@/features/case-studies/data';
-
-const SITE_URL = 'https://sathus.in';
+import { generatePageMetadata } from '@/lib/seo/metadata-builder';
 
 interface CaseStudyPageProps {
   params: Promise<{ slug: string }>;
 }
 
-// Generate metadata for each case study page
 export async function generateMetadata({ params }: CaseStudyPageProps): Promise<Metadata> {
   const { slug } = await params;
   const caseStudy = getCaseStudyBySlug(slug);
@@ -28,27 +28,19 @@ export async function generateMetadata({ params }: CaseStudyPageProps): Promise<
     return {};
   }
 
-  const canonicalUrl = `/case-studies/${caseStudy.slug}`;
-
-  return {
-    title: caseStudy.seo.title,
+  return generatePageMetadata({
+    title: `${caseStudy.title} — Enterprise Case Study`,
     description: caseStudy.seo.description,
-    alternates: {
-      canonical: canonicalUrl,
-    },
-    openGraph: {
-      title: caseStudy.seo.title,
-      description: caseStudy.seo.description,
-      url: `${SITE_URL}${canonicalUrl}`,
-      type: 'article',
-      publishedTime: caseStudy.publishedAt,
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: caseStudy.seo.title,
-      description: caseStudy.seo.description,
-    },
-  };
+    path: `/case-studies/${caseStudy.slug}`,
+    ogType: 'article',
+    publishedTime: caseStudy.publishedAt,
+    keywords: [
+      caseStudy.title,
+      caseStudy.client.industry,
+      'Sathus Technology case study',
+      ...caseStudy.techStack.map((t) => t.name),
+    ],
+  });
 }
 
 export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
@@ -59,54 +51,34 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
     notFound();
   }
 
-  // JSON-LD schemas
-  const breadcrumbJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        name: 'Home',
-        item: SITE_URL,
-      },
-      {
-        '@type': 'ListItem',
-        position: 2,
-        name: 'Case Studies',
-        item: `${SITE_URL}/case-studies`,
-      },
-      {
-        '@type': 'ListItem',
-        position: 3,
-        name: caseStudy.title,
-        item: `${SITE_URL}/case-studies/${caseStudy.slug}`,
-      },
-    ],
-  };
-
-  const articleJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Article',
-    headline: caseStudy.title,
-    description: caseStudy.seo.description,
-    datePublished: caseStudy.publishedAt,
-    industry: caseStudy.industry,
-  };
+  const breadcrumbItems = [
+    { name: 'Case Studies', url: '/case-studies' },
+    { name: caseStudy.title, url: `/case-studies/${caseStudy.slug}` },
+  ];
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      <BreadcrumbJsonLd items={breadcrumbItems} />
+      <ArticleJsonLd
+        headline={caseStudy.title}
+        description={caseStudy.seo.description}
+        url={`/case-studies/${caseStudy.slug}`}
+        datePublished={caseStudy.publishedAt}
       />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
-      />
+
       <CaseStudyHero caseStudy={caseStudy} />
       <ChallengeSection caseStudy={caseStudy} />
       <SolutionSection caseStudy={caseStudy} />
+
+      {/* AI Overview Block */}
+      <div className="container mx-auto px-4 py-8">
+        <AISummaryBlock
+          topic={caseStudy.title}
+          definition={caseStudy.summary}
+          keyTakeaways={caseStudy.outcomes ? caseStudy.outcomes.map((o) => `${o.title}: ${o.metric}`) : []}
+        />
+      </div>
+
       <ArchitectureSection caseStudy={caseStudy} />
       <TechnologySection caseStudy={caseStudy} />
       <MetricsSection caseStudy={caseStudy} />
