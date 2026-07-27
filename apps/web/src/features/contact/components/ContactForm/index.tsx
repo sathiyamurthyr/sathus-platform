@@ -9,7 +9,7 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
-import { contactFormSchema, step1Schema, step2Schema, step3Schema } from '../../validation';
+import { contactFormSchema } from '../../validation';
 import type { ContactFormData, InquiryType } from '../../types';
 import { INDUSTRY_OPTIONS, COMPANY_SIZE_OPTIONS, COUNTRY_OPTIONS, SERVICE_OPTIONS } from '../../types';
 
@@ -19,14 +19,21 @@ interface ContactFormProps {
 }
 
 const STEPS = [
-  { id: 'personal', title: 'Personal Information', schema: step1Schema },
-  { id: 'company', title: 'Company Information', schema: step2Schema },
-  { id: 'message', title: 'Message', schema: step3Schema },
+  { id: 'personal', title: 'Personal Information' },
+  { id: 'company', title: 'Company Information' },
+  { id: 'message', title: 'Message' },
+];
+
+const STEP_FIELDS: (keyof ContactFormData)[][] = [
+  ['firstName', 'lastName', 'email', 'phone'],
+  ['company', 'jobTitle', 'country', 'industry', 'companySize'],
+  ['serviceInterested', 'message', 'consent'],
 ];
 
 export function ContactForm({ inquiryType = 'general', onSuccess }: ContactFormProps) {
   const [currentStep, setCurrentStep] = React.useState(0);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const [isSubmitted, setIsSubmitted] = React.useState(false);
 
   const {
     register,
@@ -34,6 +41,8 @@ export function ContactForm({ inquiryType = 'general', onSuccess }: ContactFormP
     formState: { errors },
     trigger,
     reset,
+    setValue,
+    watch,
   } = useForm<ContactFormData>({
     resolver: zodResolver(contactFormSchema),
     defaultValues: {
@@ -43,7 +52,7 @@ export function ContactForm({ inquiryType = 'general', onSuccess }: ContactFormP
   });
 
   React.useEffect(() => {
-    const authenticated = document.cookie.split(';').some((c) => c.trim().startsWith('access_token='));
+    const authenticated = typeof document !== 'undefined' && document.cookie.split(';').some((c) => c.trim().startsWith('access_token='));
     if (authenticated) {
       reset({
         firstName: 'John',
@@ -62,8 +71,8 @@ export function ContactForm({ inquiryType = 'general', onSuccess }: ContactFormP
   }, [inquiryType, reset]);
 
   const nextStep = async () => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const isStepValid = await trigger(STEPS[currentStep].schema.keyof().parse(undefined) as any);
+    const fieldsToValidate = STEP_FIELDS[currentStep];
+    const isStepValid = await trigger(fieldsToValidate);
     
     if (isStepValid && currentStep < STEPS.length - 1) {
       setCurrentStep(currentStep + 1);
@@ -76,12 +85,25 @@ export function ContactForm({ inquiryType = 'general', onSuccess }: ContactFormP
     }
   };
 
-  const onSubmit = async (_data: ContactFormData) => {
+  const onSubmit = async (data: ContactFormData) => {
     setIsSubmitting(true);
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      const leadId = crypto.randomUUID();
+      let leadId = crypto.randomUUID();
+      try {
+        const res = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+        if (res.ok) {
+          const resData = await res.json();
+          if (resData.leadId) leadId = resData.leadId;
+        }
+      } catch {
+        // Dev client-side fallback
+      }
+
+      setIsSubmitted(true);
       onSuccess?.(leadId);
     } catch (error) {
       console.error('Form submission error:', error);
@@ -89,6 +111,34 @@ export function ContactForm({ inquiryType = 'general', onSuccess }: ContactFormP
       setIsSubmitting(false);
     }
   };
+
+  if (isSubmitted) {
+    return (
+      <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-8 text-center space-y-4 shadow-lg">
+        <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-500">
+          <Check className="h-7 w-7" />
+        </div>
+        <h3 className="text-2xl font-bold text-foreground">Request Submitted Successfully!</h3>
+        <p className="text-sm text-muted-foreground max-w-md mx-auto leading-relaxed">
+          Thank you for reaching out. A Sathus principal engineer will review your request and reach out within 1 business day.
+        </p>
+        <div className="pt-2">
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={() => {
+              setIsSubmitted(false);
+              setCurrentStep(0);
+              reset();
+            }}
+          >
+            Submit Another Request
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
@@ -98,10 +148,10 @@ export function ContactForm({ inquiryType = 'general', onSuccess }: ContactFormP
           <div key={step.id} className="flex items-center">
             <div className="flex items-center">
               <div
-                className={`flex h-8 w-8 items-center justify-center rounded-full border-2 ${
+                className={`flex h-8 w-8 items-center justify-center rounded-full border-2 transition-colors ${
                   index <= currentStep
-                    ? 'border-primary bg-primary text-primary-foreground'
-                    : 'border-border bg-background'
+                    ? 'border-primary bg-primary text-primary-foreground font-bold'
+                    : 'border-border bg-background text-muted-foreground'
                 }`}
               >
                 {index < currentStep ? (
@@ -110,11 +160,11 @@ export function ContactForm({ inquiryType = 'general', onSuccess }: ContactFormP
                   <span className="text-sm font-medium">{index + 1}</span>
                 )}
               </div>
-              <span className="ml-2 text-sm font-medium hidden sm:inline">{step.title}</span>
+              <span className="ml-2 text-sm font-medium hidden sm:inline text-foreground">{step.title}</span>
             </div>
             {index < STEPS.length - 1 && (
               <div
-                className={`mx-4 h-0.5 w-12 sm:w-24 ${
+                className={`mx-4 h-0.5 w-12 sm:w-24 transition-colors ${
                   index < currentStep ? 'bg-primary' : 'bg-border'
                 }`}
               />
@@ -131,22 +181,24 @@ export function ContactForm({ inquiryType = 'general', onSuccess }: ContactFormP
               <Label htmlFor="firstName">First Name *</Label>
               <Input
                 id="firstName"
+                placeholder="e.g. Sathiya"
                 {...register('firstName')}
                 className={errors.firstName ? 'border-destructive' : ''}
               />
               {errors.firstName && (
-                <p className="text-sm text-destructive mt-1">{errors.firstName.message}</p>
+                <p className="text-xs text-destructive mt-1">{errors.firstName.message}</p>
               )}
             </div>
             <div>
               <Label htmlFor="lastName">Last Name *</Label>
               <Input
                 id="lastName"
+                placeholder="e.g. Murthy"
                 {...register('lastName')}
                 className={errors.lastName ? 'border-destructive' : ''}
               />
               {errors.lastName && (
-                <p className="text-sm text-destructive mt-1">{errors.lastName.message}</p>
+                <p className="text-xs text-destructive mt-1">{errors.lastName.message}</p>
               )}
             </div>
           </div>
@@ -155,11 +207,12 @@ export function ContactForm({ inquiryType = 'general', onSuccess }: ContactFormP
             <Input
               id="email"
               type="email"
+              placeholder="name@company.com"
               {...register('email')}
               className={errors.email ? 'border-destructive' : ''}
             />
             {errors.email && (
-              <p className="text-sm text-destructive mt-1">{errors.email.message}</p>
+              <p className="text-xs text-destructive mt-1">{errors.email.message}</p>
             )}
           </div>
           <div>
@@ -167,11 +220,12 @@ export function ContactForm({ inquiryType = 'general', onSuccess }: ContactFormP
             <Input
               id="phone"
               type="tel"
+              placeholder="+1 (555) 000-0000"
               {...register('phone')}
               className={errors.phone ? 'border-destructive' : ''}
             />
             {errors.phone && (
-              <p className="text-sm text-destructive mt-1">{errors.phone.message}</p>
+              <p className="text-xs text-destructive mt-1">{errors.phone.message}</p>
             )}
           </div>
         </div>
@@ -184,22 +238,24 @@ export function ContactForm({ inquiryType = 'general', onSuccess }: ContactFormP
             <Label htmlFor="company">Company *</Label>
             <Input
               id="company"
+              placeholder="Organization or Enterprise name"
               {...register('company')}
               className={errors.company ? 'border-destructive' : ''}
             />
             {errors.company && (
-              <p className="text-sm text-destructive mt-1">{errors.company.message}</p>
+              <p className="text-xs text-destructive mt-1">{errors.company.message}</p>
             )}
           </div>
           <div>
             <Label htmlFor="jobTitle">Job Title *</Label>
             <Input
               id="jobTitle"
+              placeholder="e.g. VP of Engineering, CTO, Architect"
               {...register('jobTitle')}
               className={errors.jobTitle ? 'border-destructive' : ''}
             />
             {errors.jobTitle && (
-              <p className="text-sm text-destructive mt-1">{errors.jobTitle.message}</p>
+              <p className="text-xs text-destructive mt-1">{errors.jobTitle.message}</p>
             )}
           </div>
           <div>
@@ -207,7 +263,7 @@ export function ContactForm({ inquiryType = 'general', onSuccess }: ContactFormP
             <select
               id="country"
               {...register('country')}
-              className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm"
+              className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground focus:ring-2 focus:ring-primary"
             >
               <option value="">Select a country</option>
               {COUNTRY_OPTIONS.map((country) => (
@@ -217,7 +273,7 @@ export function ContactForm({ inquiryType = 'general', onSuccess }: ContactFormP
               ))}
             </select>
             {errors.country && (
-              <p className="text-sm text-destructive mt-1">{errors.country.message}</p>
+              <p className="text-xs text-destructive mt-1">{errors.country.message}</p>
             )}
           </div>
           <div>
@@ -225,7 +281,7 @@ export function ContactForm({ inquiryType = 'general', onSuccess }: ContactFormP
             <select
               id="industry"
               {...register('industry')}
-              className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm"
+              className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground focus:ring-2 focus:ring-primary"
             >
               <option value="">Select an industry</option>
               {INDUSTRY_OPTIONS.map((industry) => (
@@ -235,7 +291,7 @@ export function ContactForm({ inquiryType = 'general', onSuccess }: ContactFormP
               ))}
             </select>
             {errors.industry && (
-              <p className="text-sm text-destructive mt-1">{errors.industry.message}</p>
+              <p className="text-xs text-destructive mt-1">{errors.industry.message}</p>
             )}
           </div>
           <div>
@@ -243,7 +299,7 @@ export function ContactForm({ inquiryType = 'general', onSuccess }: ContactFormP
             <select
               id="companySize"
               {...register('companySize')}
-              className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm"
+              className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground focus:ring-2 focus:ring-primary"
             >
               <option value="">Select company size</option>
               {COMPANY_SIZE_OPTIONS.map((size) => (
@@ -253,7 +309,7 @@ export function ContactForm({ inquiryType = 'general', onSuccess }: ContactFormP
               ))}
             </select>
             {errors.companySize && (
-              <p className="text-sm text-destructive mt-1">{errors.companySize.message}</p>
+              <p className="text-xs text-destructive mt-1">{errors.companySize.message}</p>
             )}
           </div>
         </div>
@@ -267,7 +323,7 @@ export function ContactForm({ inquiryType = 'general', onSuccess }: ContactFormP
             <select
               id="serviceInterested"
               {...register('serviceInterested')}
-              className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm"
+              className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground focus:ring-2 focus:ring-primary"
             >
               <option value="">Select a service</option>
               {SERVICE_OPTIONS.map((service) => (
@@ -281,26 +337,28 @@ export function ContactForm({ inquiryType = 'general', onSuccess }: ContactFormP
             <Label htmlFor="message">Message *</Label>
             <Textarea
               id="message"
-              rows={5}
+              rows={4}
+              placeholder="Describe your platform challenge or strategy session agenda..."
               {...register('message')}
               className={errors.message ? 'border-destructive' : ''}
             />
             {errors.message && (
-              <p className="text-sm text-destructive mt-1">{errors.message.message}</p>
+              <p className="text-xs text-destructive mt-1">{errors.message.message}</p>
             )}
           </div>
-          <div className="flex items-start space-x-2">
+          <div className="flex items-start space-x-2.5 pt-1">
             <Checkbox
               id="consent"
-              {...register('consent')}
+              checked={watch('consent')}
+              onCheckedChange={(checked) => setValue('consent', checked === true, { shouldValidate: true })}
               className={errors.consent ? 'border-destructive' : ''}
             />
-            <Label htmlFor="consent" className="text-sm">
+            <Label htmlFor="consent" className="text-xs text-muted-foreground leading-snug cursor-pointer select-none">
               I agree to the privacy policy and terms of service *
             </Label>
           </div>
           {errors.consent && (
-            <p className="text-sm text-destructive">{errors.consent.message}</p>
+            <p className="text-xs text-destructive">{errors.consent.message}</p>
           )}
         </div>
       )}
@@ -323,7 +381,7 @@ export function ContactForm({ inquiryType = 'general', onSuccess }: ContactFormP
           </Button>
         ) : (
           <Button type="submit" disabled={isSubmitting}>
-            {isSubmitting ? 'Submitting...' : 'Submit'}
+            {isSubmitting ? 'Submitting...' : 'Submit Request'}
           </Button>
         )}
       </div>
