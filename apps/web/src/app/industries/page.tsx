@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { SectionIntro } from '@/components/sections/section-intro';
 import { Reveal } from '@/components/sections/reveal';
 import { CTA } from '@/features/industries/components/CTA';
+import { generatePageMetadata } from '@/lib/seo/metadata-builder';
+import { BreadcrumbJsonLd } from '@/components/seo/json-ld';
 import {
   financialServicesIndustry,
   fintechIndustry,
@@ -10,9 +12,6 @@ import {
   healthcareIndustry,
 } from '@/features/industries';
 
-const SITE_URL = 'https://sathus.in';
-
-// Industry registry - will be expanded as more industries are added
 const INDUSTRY_REGISTRY = [
   financialServicesIndustry,
   fintechIndustry,
@@ -20,31 +19,23 @@ const INDUSTRY_REGISTRY = [
   healthcareIndustry,
 ];
 
-export const metadata: Metadata = {
-  title: 'Industries',
-  description:
-    'Enterprise solutions tailored for financial services, healthcare, manufacturing, retail, and other industries.',
-  alternates: {
-    canonical: '/industries',
-  },
-  openGraph: {
-    title: 'Industries — Sathus Technology',
-    description:
-      'Industry-specific solutions engineered for measurable business outcomes.',
-    url: `${SITE_URL}/industries`,
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Industries — Sathus Technology',
-    description:
-      'Industry-specific solutions engineered for measurable business outcomes.',
-  },
-};
+export const metadata: Metadata = generatePageMetadata({
+  title: 'Industries — Sathus Technology',
+  description: 'Enterprise solutions tailored for financial services, fintech, healthcare, and life sciences industries.',
+  path: '/industries',
+  keywords: [
+    'FinTech software solutions',
+    'Financial Services technology',
+    'Healthcare data engineering',
+    'Life Sciences AI platform',
+  ],
+});
 
 export default function IndustriesPage() {
   return (
     <>
+      <BreadcrumbJsonLd items={[{ name: 'Industries', url: '/industries' }]} />
+
       {/* Hero */}
       <section id="industries-hero" className="scroll-mt-24 pt-6 pb-12 sm:pb-16">
         <div className="container mx-auto px-4">

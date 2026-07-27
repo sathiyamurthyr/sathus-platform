@@ -2,8 +2,8 @@ import { Metadata } from 'next';
 import { SectionIntro } from '@/components/sections/section-intro';
 import { Breadcrumb } from '@/components/common/breadcrumb';
 import { ContactForm } from '@/features/contact/components/ContactForm';
-import { ContactPageJsonLd } from '@/components/seo/json-ld';
-import { siteConfig } from '@/constants';
+import { ContactPageJsonLd, BreadcrumbJsonLd } from '@/components/seo/json-ld';
+import { generatePageMetadata } from '@/lib/seo/metadata-builder';
 import Link from 'next/link';
 import {
   Briefcase,
@@ -17,27 +17,19 @@ import {
   Clock,
   ShieldCheck,
 } from 'lucide-react';
-
 import { companyConfig } from '@/config/company';
 
-export const metadata: Metadata = {
-  title: 'Contact Us',
-  description:
-    `Get in touch with ${companyConfig.name} — sales, partnerships, investor relations, careers, and enterprise support inquiries.`,
-  alternates: { canonical: '/contact' },
-  openGraph: {
-    title: `Contact Us — ${companyConfig.name}`,
-    description:
-      'Connect with our team to discuss your enterprise AI, data, and cloud modernization needs.',
-    url: `${companyConfig.website}/contact`,
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: `Contact Us — ${companyConfig.name}`,
-    description: 'Connect with our team to discuss your enterprise software needs.',
-  },
-};
+export const metadata: Metadata = generatePageMetadata({
+  title: `Contact Us — ${companyConfig.name}`,
+  description: `Get in touch with ${companyConfig.name} — sales, strategy sessions, partnerships, investor relations, careers, and support.`,
+  path: '/contact',
+  keywords: [
+    'Contact Sathus Technology',
+    'Book Strategy Session',
+    'Sathus Technology Sales',
+    'Sathus Chennai HQ Address',
+  ],
+});
 
 const contactRoutes = [
   {
@@ -106,6 +98,7 @@ export default function ContactPage() {
   return (
     <>
       <ContactPageJsonLd />
+      <BreadcrumbJsonLd items={[{ name: 'Contact', url: '/contact' }]} />
       <div className="container mx-auto px-4 pt-2">
         <Breadcrumb items={[{ label: 'Contact' }]} />
       </div>

@@ -10,6 +10,9 @@ import { BusinessOutcomes } from '@/features/industries/components/BusinessOutco
 import { CaseStudies } from '@/features/industries/components/CaseStudies';
 import { FAQ } from '@/features/industries/components/FAQ';
 import { CTA } from '@/features/industries/components/CTA';
+import { BreadcrumbJsonLd, FAQPageJsonLd } from '@/components/seo/json-ld';
+import { AISummaryBlock } from '@/components/seo/ai-summary-block';
+import { generatePageMetadata } from '@/lib/seo/metadata-builder';
 import {
   financialServicesIndustry,
   fintechIndustry,
@@ -18,9 +21,6 @@ import {
 } from '@/features/industries';
 import type { Industry } from '@/features/industries/types';
 
-const SITE_URL = 'https://sathus.in';
-
-// Industry registry - will be expanded as more industries are added
 const INDUSTRY_REGISTRY: Record<string, Industry> = {
   'financial-services': financialServicesIndustry,
   'fintech': fintechIndustry,
@@ -32,7 +32,6 @@ interface IndustryPageProps {
   params: Promise<{ slug: string }>;
 }
 
-// Generate metadata for each industry page
 export async function generateMetadata({ params }: IndustryPageProps): Promise<Metadata> {
   const { slug } = await params;
   const industry = INDUSTRY_REGISTRY[slug];
@@ -41,26 +40,17 @@ export async function generateMetadata({ params }: IndustryPageProps): Promise<M
     return {};
   }
 
-  const canonicalUrl = `/industries/${industry.slug}`;
-
-  return {
-    title: industry.seo?.title || industry.name,
-    description: industry.seo?.description || industry.description,
-    alternates: {
-      canonical: canonicalUrl,
-    },
-    openGraph: {
-      title: industry.seo?.title || industry.name,
-      description: industry.seo?.description || industry.description,
-      url: `${SITE_URL}${canonicalUrl}`,
-      type: 'article',
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: industry.seo?.title || industry.name,
-      description: industry.seo?.description || industry.description,
-    },
-  };
+  return generatePageMetadata({
+    title: `${industry.name} Engineering Solutions`,
+    description: industry.description,
+    path: `/industries/${industry.slug}`,
+    keywords: [
+      industry.name,
+      'enterprise technology solutions',
+      'Sathus Technology',
+      ...industry.solutions.map((s) => s.title),
+    ],
+  });
 }
 
 export default async function IndustryPage({ params }: IndustryPageProps) {
@@ -71,51 +61,31 @@ export default async function IndustryPage({ params }: IndustryPageProps) {
     notFound();
   }
 
-  // JSON-LD schemas
-  const breadcrumbJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        name: 'Home',
-        item: SITE_URL,
-      },
-      {
-        '@type': 'ListItem',
-        position: 2,
-        name: 'Industries',
-        item: `${SITE_URL}/industries`,
-      },
-      {
-        '@type': 'ListItem',
-        position: 3,
-        name: industry.name,
-        item: `${SITE_URL}/industries/${industry.slug}`,
-      },
-    ],
-  };
-
-  const industryJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Industry',
-    name: industry.name,
-    description: industry.description,
-  };
+  const breadcrumbItems = [
+    { name: 'Industries', url: '/industries' },
+    { name: industry.name, url: `/industries/${industry.slug}` },
+  ];
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(industryJsonLd) }}
-      />
+      <BreadcrumbJsonLd items={breadcrumbItems} />
+      {industry.faqs && industry.faqs.length > 0 && (
+        <FAQPageJsonLd faqs={industry.faqs.map((f) => ({ question: f.question, answer: f.answer }))} />
+      )}
+
       <IndustryHero hero={industry.hero} />
       <IndustryOverview overview={industry.overview} />
+
+      {/* AI Search Engine Overview Block */}
+      <div className="container mx-auto px-4 py-8">
+        <AISummaryBlock
+          topic={`${industry.name} Enterprise Architecture`}
+          definition={industry.description}
+          keyTakeaways={industry.solutions ? industry.solutions.map((s) => `${s.title}: ${s.description}`) : []}
+          faqs={industry.faqs ? industry.faqs.slice(0, 5).map((f) => ({ question: f.question, answer: f.answer })) : []}
+        />
+      </div>
+
       <IndustryChallenges challenges={industry.challenges} />
       <SolutionsGrid solutions={industry.solutions} />
       <ReferenceArchitecture architecture={industry.architecture} />
