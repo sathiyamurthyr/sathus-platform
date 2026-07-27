@@ -1,26 +1,28 @@
 import { Metadata } from 'next';
 import { SectionIntro } from '@/components/sections/section-intro';
 import { Breadcrumb } from '@/components/common/breadcrumb';
+import { McpPlayground } from '@/components/interactive/mcp-playground';
 import { allProducts } from '@/features/products/data';
 import { generatePageMetadata } from '@/lib/seo/metadata-builder';
 import { BreadcrumbJsonLd } from '@/components/seo/json-ld';
 import Link from 'next/link';
 
 export const metadata: Metadata = generatePageMetadata({
-  title: 'Enterprise Software Products Portfolio',
-  description: 'Enterprise software products built for regulated industries. Svora, Memomes, and Sathus AI agentic swarms.',
+  title: 'Enterprise Software Products Portfolio & AI Agent Simulator',
+  description: 'Enterprise software products built for regulated industries. Sathus AI, Memomes Cloud, SocialHub MCP, and OneHealthID.',
   path: '/products',
   keywords: [
-    'Svora SaaS',
-    'Memomes AI',
     'Sathus AI Platform',
-    'Enterprise Software Products',
+    'Memomes Cloud',
+    'SocialHub MCP',
+    'OneHealthID',
+    'Model Context Protocol Simulator',
   ],
 });
 
 export default function ProductsPage() {
   return (
-    <div className="container mx-auto px-4 pt-3 pb-12 space-y-6">
+    <div className="container mx-auto px-4 pt-3 pb-12 space-y-10">
       <BreadcrumbJsonLd items={[{ name: 'Products', url: '/products' }]} />
       <Breadcrumb items={[{ label: 'Products' }]} />
       <SectionIntro
@@ -29,7 +31,10 @@ export default function ProductsPage() {
         description="Built for regulated industries with security, compliance, and enterprise scale."
       />
 
-      <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
+      {/* Interactive Model Context Protocol Live Simulator Widget */}
+      <McpPlayground />
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {allProducts.map((product) => (
           <div key={product.id} className="rounded-xl border border-border bg-card p-8 flex flex-col justify-between hover:border-primary/40 transition-colors shadow-sm">
             <div>
