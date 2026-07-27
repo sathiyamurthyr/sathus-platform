@@ -1,22 +1,22 @@
 import { Metadata } from 'next';
 import { SectionIntro } from '@/components/sections/section-intro';
 import { Breadcrumb } from '@/components/common/breadcrumb';
-import { siteConfig } from '@/constants';
+import { generatePageMetadata } from '@/lib/seo/metadata-builder';
+import { BreadcrumbJsonLd, OrganizationJsonLd, LocalBusinessJsonLd } from '@/components/seo/json-ld';
 import Link from 'next/link';
 import { ShieldCheck, Target, Users, Briefcase, Mail, Award, Handshake, Star } from 'lucide-react';
 
-export const metadata: Metadata = {
-  title: 'Company Hub',
+export const metadata: Metadata = generatePageMetadata({
+  title: 'Company Hub — Sathus Technology',
   description: 'Learn about Sathus Technology, our leadership team, corporate governance, careers, and engineering culture.',
-  alternates: {
-    canonical: '/company',
-  },
-  openGraph: {
-    title: 'Company Hub — Sathus Technology',
-    description: 'Engineering the future of AI, data & enterprise software for regulated industries.',
-    url: `${siteConfig.url}/company`,
-  },
-};
+  path: '/company',
+  keywords: [
+    'Sathus Technology company',
+    'Sathus leadership',
+    'Sathus careers',
+    'Chennai software firm',
+  ],
+});
 
 const companySections = [
   {
@@ -80,6 +80,9 @@ const companySections = [
 export default function CompanyHubPage() {
   return (
     <div className="container mx-auto px-4 pt-3 pb-12 space-y-6">
+      <OrganizationJsonLd />
+      <LocalBusinessJsonLd />
+      <BreadcrumbJsonLd items={[{ name: 'Company', url: '/company' }]} />
       <Breadcrumb items={[{ label: 'Company' }]} />
       <SectionIntro
         eyebrow="Company"

@@ -7,6 +7,8 @@ import { ResponsibleAI } from '@/features/trust/components/ResponsibleAI';
 import { BusinessContinuity } from '@/features/trust/components/BusinessContinuity';
 import { Faq } from '@/features/trust/components/Faq';
 import { Cta } from '@/features/trust/components/Cta';
+import { BreadcrumbJsonLd, FAQPageJsonLd } from '@/components/seo/json-ld';
+import { generatePageMetadata } from '@/lib/seo/metadata-builder';
 import {
   securityControls,
   complianceFrameworks,
@@ -16,30 +18,27 @@ import {
   trustFAQ,
 } from '@/features/trust/data';
 
-const SITE_URL = 'https://sathus.in';
-
-export const metadata: Metadata = {
-  title: 'Trust Center',
-  description: 'Our commitment to security, privacy, and compliance for enterprise customers.',
-  alternates: {
-    canonical: '/trust',
-  },
-  openGraph: {
-    title: 'Trust Center — Sathus Technology',
-    description: 'Our commitment to security, privacy, and compliance for enterprise customers.',
-    url: `${SITE_URL}/trust`,
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Trust Center — Sathus Technology',
-    description: 'Our commitment to security, privacy, and compliance for enterprise customers.',
-  },
-};
+export const metadata: Metadata = generatePageMetadata({
+  title: 'Trust Center — Security, Privacy & Compliance',
+  description: 'Our commitment to security posture, SOC 2 Type II, ISO 27001, HIPAA compliance, and responsible AI governance.',
+  path: '/trust',
+  keywords: [
+    'Sathus Trust Center',
+    'SOC 2 Type II',
+    'ISO 27001',
+    'HIPAA compliance',
+    'Responsible AI framework',
+    'Zero-trust security',
+  ],
+});
 
 export default function TrustPage() {
   return (
     <>
+      <BreadcrumbJsonLd items={[{ name: 'Trust Center', url: '/trust' }]} />
+      {trustFAQ && trustFAQ.length > 0 && (
+        <FAQPageJsonLd faqs={trustFAQ.map((f) => ({ question: f.question, answer: f.answer }))} />
+      )}
       <TrustHero />
       <SecurityOverview controls={securityControls} />
       <ComplianceGrid frameworks={complianceFrameworks} />
