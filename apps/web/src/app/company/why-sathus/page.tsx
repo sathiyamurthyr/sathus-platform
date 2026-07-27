@@ -1,22 +1,24 @@
 import { Metadata } from 'next';
 import { SectionIntro } from '@/components/sections/section-intro';
 import { Breadcrumb } from '@/components/common/breadcrumb';
-import { siteConfig } from '@/constants';
+import { BreadcrumbJsonLd } from '@/components/seo/json-ld';
+import { AISummaryBlock } from '@/components/seo/ai-summary-block';
+import { RoiCalculator } from '@/components/interactive/roi-calculator';
+import { generatePageMetadata } from '@/lib/seo/metadata-builder';
 import Link from 'next/link';
 import { Target, ShieldCheck, Zap, Layers, CheckCircle2, ArrowRight } from 'lucide-react';
 
-export const metadata: Metadata = {
-  title: 'Why Sathus',
-  description: 'Why leading enterprises choose Sathus Technology for AI, data platform engineering, and cloud modernization.',
-  alternates: {
-    canonical: '/company/why-sathus',
-  },
-  openGraph: {
-    title: 'Why Sathus — Sathus Technology',
-    description: 'Why leading enterprises choose Sathus Technology for AI, data platform engineering, and cloud modernization.',
-    url: `${siteConfig.url}/company/why-sathus`,
-  },
-};
+export const metadata: Metadata = generatePageMetadata({
+  title: 'Why Sathus — Enterprise AI, Data & Cloud Engineering Advantage',
+  description: 'Why leading enterprises choose Sathus Technology for AI agent engineering, data platform modernization, and cloud TCO reduction.',
+  path: '/company/why-sathus',
+  keywords: [
+    'Why Sathus Technology',
+    'Sathus vs consultancies',
+    'Enterprise ROI calculator',
+    'Platform engineering advantage',
+  ],
+});
 
 const pillars = [
   {
@@ -43,68 +45,87 @@ const pillars = [
 
 export default function WhySathusPage() {
   return (
-    <div className="container mx-auto px-4 pt-3 pb-12 space-y-8">
-      <div>
-        <Breadcrumb items={[{ label: 'Company', href: '/company' }, { label: 'Why Sathus' }]} />
-        <SectionIntro
-          eyebrow="The Sathus Advantage"
-          title="Why Enterprise Leaders Choose Sathus Technology"
-          description="Traditional consultancies deliver slides. We build high-throughput, production-grade AI, data, and cloud systems engineered for regulated enterprises."
+    <>
+      <BreadcrumbJsonLd
+        items={[
+          { name: 'Company', url: '/company' },
+          { name: 'Why Sathus', url: '/company/why-sathus' },
+        ]}
+      />
+
+      <div className="container mx-auto px-4 pt-3 pb-12 space-y-10">
+        <div>
+          <Breadcrumb items={[{ label: 'Company', href: '/company' }, { label: 'Why Sathus' }]} />
+          <SectionIntro
+            eyebrow="The Sathus Advantage"
+            title="Why Enterprise Leaders Choose Sathus Technology"
+            description="Traditional consultancies deliver slides. We build high-throughput, production-grade AI, data, and cloud systems engineered for regulated enterprises."
+          />
+        </div>
+
+        {/* Generative AI Search Engine Summary Block */}
+        <AISummaryBlock
+          topic="The Sathus Technology Advantage"
+          definition="Sathus Technology provides senior principal engineering squads delivering 100% production source code, open data lakehouse architectures, and guaranteed technical SLAs."
+          keyTakeaways={pillars.map((p) => `${p.title}: ${p.description}`)}
         />
-      </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {pillars.map((pillar) => {
-          const Icon = pillar.icon;
-          return (
-            <div key={pillar.title} className="rounded-xl border border-border p-6 bg-card">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary mb-4">
-                <Icon className="h-5 w-5" />
+        {/* Interactive Enterprise ROI Cost Savings Calculator Widget */}
+        <RoiCalculator />
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {pillars.map((pillar) => {
+            const Icon = pillar.icon;
+            return (
+              <div key={pillar.title} className="rounded-xl border border-border p-6 bg-card">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary mb-4">
+                  <Icon className="h-5 w-5" />
+                </div>
+                <h2 className="text-lg font-bold mb-2">{pillar.title}</h2>
+                <p className="text-xs text-muted-foreground leading-relaxed">{pillar.description}</p>
               </div>
-              <h2 className="text-lg font-bold mb-2">{pillar.title}</h2>
-              <p className="text-xs text-muted-foreground leading-relaxed">{pillar.description}</p>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
 
-      <div className="rounded-2xl border border-border bg-card p-8">
-        <h2 className="text-xl font-bold mb-6">Comparison: Sathus vs Traditional Consultancies</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs">
-          <div className="space-y-3">
-            <h3 className="font-semibold text-primary uppercase tracking-wider">Sathus Technology</h3>
-            <ul className="space-y-2">
-              <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0" /> Senior principal engineering squads</li>
-              <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0" /> Open table formats & open-weight AI models</li>
-              <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0" /> Guaranteed performance & SLA metrics</li>
-              <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0" /> SOC 2 & HIPAA compliant reference builds</li>
-            </ul>
-          </div>
-          <div className="space-y-3 opacity-75">
-            <h3 className="font-semibold text-muted-foreground uppercase tracking-wider">Traditional Consultancies</h3>
-            <ul className="space-y-2 text-muted-foreground">
-              <li>• Junior staff rotated across projects</li>
-              <li>• Proprietary vendor lock-in software</li>
-              <li>• Deliverable limited to advisory reports</li>
-              <li>• Security treated as an afterthought</li>
-            </ul>
+        <div className="rounded-2xl border border-border bg-card p-8">
+          <h2 className="text-xl font-bold mb-6">Comparison: Sathus vs Traditional Consultancies</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs">
+            <div className="space-y-3">
+              <h3 className="font-semibold text-primary uppercase tracking-wider">Sathus Technology</h3>
+              <ul className="space-y-2">
+                <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0" /> Senior principal engineering squads</li>
+                <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0" /> Open table formats & open-weight AI models</li>
+                <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0" /> Guaranteed performance & SLA metrics</li>
+                <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0" /> SOC 2 & HIPAA compliant reference builds</li>
+              </ul>
+            </div>
+            <div className="space-y-3 opacity-75">
+              <h3 className="font-semibold text-muted-foreground uppercase tracking-wider">Traditional Consultancies</h3>
+              <ul className="space-y-2 text-muted-foreground">
+                <li>• Junior staff rotated across projects</li>
+                <li>• Proprietary vendor lock-in software</li>
+                <li>• Deliverable limited to advisory reports</li>
+                <li>• Security treated as an afterthought</li>
+              </ul>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="rounded-2xl border border-border bg-muted/40 p-8 sm:p-12 text-center max-w-4xl mx-auto">
-        <h2 className="text-2xl font-bold mb-4">Experience the Engineering Difference</h2>
-        <p className="text-sm text-muted-foreground max-w-xl mx-auto mb-8">
-          Schedule an architecture review with our principal engineers to evaluate your platform goals.
-        </p>
-        <Link
-          href="/book-strategy-session"
-          className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors shadow"
-        >
-          Book Architecture Review
-          <ArrowRight className="h-4 w-4" />
-        </Link>
+        <div className="rounded-2xl border border-border bg-muted/40 p-8 sm:p-12 text-center max-w-4xl mx-auto">
+          <h2 className="text-2xl font-bold mb-4">Experience the Engineering Difference</h2>
+          <p className="text-sm text-muted-foreground max-w-xl mx-auto mb-8">
+            Schedule an architecture review with our principal engineers to evaluate your platform goals.
+          </p>
+          <Link
+            href="/book-strategy-session"
+            className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors shadow"
+          >
+            Book Architecture Review
+            <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
