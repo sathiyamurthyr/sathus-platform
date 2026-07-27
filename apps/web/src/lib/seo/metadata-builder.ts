@@ -101,7 +101,7 @@ export function generatePageMetadata({
     verification: {
       google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || 'google-site-verification-sathus-tech',
       other: {
-        'msvalidate.01': process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION || '',
+        'msvalidate.01': process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION || '9EFF30B76BF1119CD257D4E864713973',
       },
     },
     icons: {
