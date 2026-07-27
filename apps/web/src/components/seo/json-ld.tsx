@@ -2,6 +2,7 @@ import React from 'react';
 import { SchemaBuilder, FAQItem } from '@/lib/seo/schema-builder';
 import type { Product } from '@/features/products/types';
 import type { Solution } from '@/features/solutions/types';
+import { companyConfig } from '@/config/company';
 
 export function JsonLdScript({ data }: { data: object }) {
   return (
@@ -77,4 +78,16 @@ export function WebSiteJsonLd() {
 
 export function BreadcrumbJsonLd({ items }: { items: { name: string; url: string }[] }) {
   return <JsonLdScript data={SchemaBuilder.getBreadcrumbs(items)} />;
+}
+
+export function ContactPageJsonLd() {
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'ContactPage',
+    name: `Contact Us — ${companyConfig.name}`,
+    description: `Connect with ${companyConfig.name} for enterprise sales, partnerships, and technical inquiries.`,
+    url: `${companyConfig.website}/contact`,
+    mainEntity: SchemaBuilder.getOrganization(),
+  };
+  return <JsonLdScript data={schema} />;
 }
