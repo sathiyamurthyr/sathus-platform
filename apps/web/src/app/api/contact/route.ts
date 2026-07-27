@@ -3,26 +3,16 @@ import { contactFormSchema } from '@/features/contact/validation';
 import fs from 'fs/promises';
 import path from 'path';
 
-const DATA_DIR = path.join(process.cwd(), 'data');
-const LEADS_FILE = path.join(DATA_DIR, 'leads.json');
-
-async function ensureLeadsFile() {
-  try {
-    await fs.mkdir(DATA_DIR, { recursive: true });
-    try {
-      await fs.access(LEADS_FILE);
-    } catch {
-      await fs.writeFile(LEADS_FILE, JSON.stringify([], null, 2), 'utf-8');
-    }
-  } catch (error) {
-    console.error('Error ensuring leads file:', error);
-  }
+function getLeadsFilePath() {
+  const rootData = path.join(process.cwd(), 'data', 'leads.json');
+  const webData = path.join(process.cwd(), 'apps', 'web', 'data', 'leads.json');
+  return fs.access(webData).then(() => webData).catch(() => rootData);
 }
 
 async function getLeads() {
-  await ensureLeadsFile();
   try {
-    const data = await fs.readFile(LEADS_FILE, 'utf-8');
+    const filePath = await getLeadsFilePath();
+    const data = await fs.readFile(filePath, 'utf-8');
     return JSON.parse(data);
   } catch {
     return [];
@@ -30,9 +20,12 @@ async function getLeads() {
 }
 
 async function saveLead(lead: Record<string, unknown>) {
+  const filePath = await getLeadsFilePath();
+  const dirPath = path.dirname(filePath);
+  await fs.mkdir(dirPath, { recursive: true });
   const leads = await getLeads();
   leads.unshift(lead);
-  await fs.writeFile(LEADS_FILE, JSON.stringify(leads, null, 2), 'utf-8');
+  await fs.writeFile(filePath, JSON.stringify(leads, null, 2), 'utf-8');
 }
 
 export async function GET() {
