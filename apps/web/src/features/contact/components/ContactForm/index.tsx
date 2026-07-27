@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ChevronLeft, ChevronRight, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -38,16 +38,16 @@ export function ContactForm({ inquiryType = 'general', onSuccess }: ContactFormP
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
     trigger,
     reset,
-    setValue,
-    watch,
   } = useForm<ContactFormData>({
     resolver: zodResolver(contactFormSchema),
     defaultValues: {
       inquiryType,
       consent: false,
+      serviceInterested: 'AI Engineering',
     },
   });
 
@@ -64,6 +64,7 @@ export function ContactForm({ inquiryType = 'general', onSuccess }: ContactFormP
         country: 'India',
         industry: 'Technology',
         companySize: '100-500',
+        serviceInterested: 'AI Engineering',
         inquiryType,
         consent: true,
       });
@@ -346,20 +347,47 @@ export function ContactForm({ inquiryType = 'general', onSuccess }: ContactFormP
               <p className="text-xs text-destructive mt-1">{errors.message.message}</p>
             )}
           </div>
-          <div className="flex items-start space-x-2.5 pt-1">
-            <Checkbox
-              id="consent"
-              checked={watch('consent')}
-              onCheckedChange={(checked) => setValue('consent', checked === true, { shouldValidate: true })}
-              className={errors.consent ? 'border-destructive' : ''}
-            />
-            <Label htmlFor="consent" className="text-xs text-muted-foreground leading-snug cursor-pointer select-none">
-              I agree to the privacy policy and terms of service *
-            </Label>
-          </div>
-          {errors.consent && (
-            <p className="text-xs text-destructive">{errors.consent.message}</p>
-          )}
+          <Controller
+            name="consent"
+            control={control}
+            render={({ field }) => (
+              <div className="flex flex-col space-y-1">
+                <div
+                  className="flex items-center space-x-2.5 pt-1 cursor-pointer select-none"
+                  onClick={() => {
+                    const newValue = !field.value;
+                    field.onChange(newValue);
+                    trigger('consent');
+                  }}
+                >
+                  <Checkbox
+                    id="consent"
+                    checked={field.value === true}
+                    onCheckedChange={(checked) => {
+                      field.onChange(checked === true);
+                      trigger('consent');
+                    }}
+                    className={errors.consent ? 'border-destructive' : ''}
+                  />
+                  <Label
+                    htmlFor="consent"
+                    className="text-xs text-muted-foreground leading-snug cursor-pointer select-none"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      const newValue = !field.value;
+                      field.onChange(newValue);
+                      trigger('consent');
+                    }}
+                  >
+                    I agree to the privacy policy and terms of service *
+                  </Label>
+                </div>
+                {errors.consent && (
+                  <p className="text-xs text-destructive mt-1">{errors.consent.message}</p>
+                )}
+              </div>
+            )}
+          />
         </div>
       )}
 
