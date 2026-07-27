@@ -56,37 +56,6 @@ export function Header() {
     setSearchOpen(false);
   };
 
-  const handleCommandAction = (actionId: string) => {
-    setCommandOpen(false);
-
-    if (actionId === 'search') {
-      setTimeout(() => {
-        setSearchOpen(true);
-      }, 150);
-      return;
-    }
-
-    if (actionId === 'theme') {
-      const themeBtn = document.querySelector('[aria-label="Toggle theme"]') as HTMLButtonElement | null;
-      if (themeBtn) {
-        themeBtn.click();
-      }
-      return;
-    }
-
-    const routes: Record<string, string> = {
-      products: '/products',
-      solutions: '/solutions',
-      trust: '/trust',
-      contact: '/book-strategy-session',
-    };
-
-    const targetRoute = routes[actionId];
-    if (targetRoute) {
-      window.location.href = targetRoute;
-    }
-  };
-
   return (
     <>
       <motion.header
@@ -117,7 +86,7 @@ export function Header() {
             <Button
               variant="ghost"
               size="icon"
-              className="hidden sm:flex text-muted-foreground hover:text-foreground"
+              className="flex text-muted-foreground hover:text-foreground"
               onClick={handleSearchClick}
               aria-label="Open search"
             >
@@ -200,8 +169,9 @@ export function Header() {
                     aria-label="Open profile menu"
                     aria-expanded={profileOpen}
                   >
-                    <div className="flex h-5 w-5 items-center justify-center rounded-full bg-gradient-to-br from-primary to-violet-600 text-primary-foreground text-[10px] font-semibold">
-                      JD
+                    <span className="sr-only">Open profile menu</span>
+                    <div className="h-7 w-7 rounded-full bg-primary/20 text-primary flex items-center justify-center font-bold text-xs">
+                      S
                     </div>
                   </Button>
                   <ProfileMenu
@@ -212,18 +182,26 @@ export function Header() {
               </>
             )}
 
+            {!isAuthenticated && (
+              <div className="hidden lg:block">
+                <ThemeToggle />
+              </div>
+            )}
+
             <Button
               variant="ghost"
               size="icon"
               className="lg:hidden text-muted-foreground hover:text-foreground"
               onClick={() => setMobileMenuOpen(true)}
               aria-label="Open menu"
+              aria-expanded={mobileMenuOpen}
             >
               <Menu className="h-5 w-5" />
             </Button>
           </div>
         </div>
       </motion.header>
+
       <MobileDrawer
         open={mobileMenuOpen}
         onClose={() => setMobileMenuOpen(false)}
@@ -231,8 +209,16 @@ export function Header() {
         megaMenuSections={megaMenuSections}
         onSearchClick={handleSearchClick}
       />
-      <SearchDialog open={searchOpen} onClose={() => setSearchOpen(false)} />
-      <CommandPalette open={commandOpen} onClose={() => setCommandOpen(false)} onAction={handleCommandAction} />
+
+      <SearchDialog
+        open={searchOpen}
+        onClose={() => setSearchOpen(false)}
+      />
+
+      <CommandPalette
+        open={commandOpen}
+        onClose={() => setCommandOpen(false)}
+      />
     </>
   );
 }
