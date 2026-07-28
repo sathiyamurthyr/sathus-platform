@@ -1,0 +1,23 @@
+[
+  {
+    "id": "sub-101",
+    "email": "alex.rivers@techcorp.io",
+    "source": "Engineering Blog Newsletter",
+    "status": "active",
+    "createdAt": "2026-07-28T10:15:00.000Z"
+  },
+  {
+    "id": "sub-102",
+    "email": "sarah.chen@fintechpulse.com",
+    "source": "Whitepaper PDF Download",
+    "status": "active",
+    "createdAt": "2026-07-27T16:42:00.000Z"
+  },
+  {
+    "id": "sub-103",
+    "email": "dev.ops@cloudnexus.net",
+    "source": "AI Agent Swarm Guide",
+    "status": "active",
+    "createdAt": "2026-07-26T09:20:00.000Z"
+  }
+]
