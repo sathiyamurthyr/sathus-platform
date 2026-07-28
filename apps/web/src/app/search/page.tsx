@@ -1,54 +1,44 @@
 import { Metadata } from 'next';
 import { SectionIntro } from '@/components/sections/section-intro';
-import { SearchInput } from '@/features/search/components/SearchInput';
-import { SearchResults } from '@/features/search/components/SearchResults';
-import { SearchEmpty } from '@/features/search/components/SearchEmpty';
-import { SearchLoading } from '@/features/search/components/SearchLoading';
-import { MockSearchProvider } from '@/features/search/providers/mock-provider';
-import type { SearchResult } from '@/features/search/types';
+import { LiveSearch } from '@/features/search/components/LiveSearch';
+import { Suspense } from 'react';
 
 const SITE_URL = 'https://sathus.in';
-const searchProvider = new MockSearchProvider();
 
 export const metadata: Metadata = {
-  title: 'Search',
-  description: 'Search across solutions, industries, products, and documentation.',
+  title: 'Platform Search — Sathus Technology',
+  description: 'Search across engineering solutions, industry platforms, technical whitepapers, pricing, and compliance docs.',
   alternates: {
     canonical: '/search',
   },
   openGraph: {
-    title: 'Search — Sathus Technology',
-    description: 'Find what you are looking for across our platform.',
+    title: 'Platform Search — Sathus Technology',
+    description: 'Find solutions, engineering research, and platform resources across Sathus Technology.',
     url: `${SITE_URL}/search`,
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Search — Sathus Technology',
-    description: 'Find what you are looking for across our platform.',
+    title: 'Platform Search — Sathus Technology',
+    description: 'Find solutions, engineering research, and platform resources across Sathus Technology.',
   },
 };
 
-interface SearchPageProps {
-  searchParams: Promise<{ q?: string }>;
-}
-
-export default async function SearchPage({ searchParams }: SearchPageProps) {
-  const { q = '' } = await searchParams;
-  const query = q;
-
-  // For server-side rendering, we would use the provider
-  // For now, we render the client-side search
+export default function SearchPage() {
   return (
-    <div className="container mx-auto px-4 py-20">
+    <div className="container mx-auto px-4 pt-3 pb-12 space-y-8">
       <SectionIntro
-        eyebrow="Search"
-        title="Search Results"
-        description="Find solutions, industries, and resources across our platform."
+        eyebrow="Enterprise Knowledge Base"
+        title="Search Sathus Platform"
+        description="Instant site-wide search across engineering whitepapers, solutions, pricing models, and compliance standards."
       />
-      <div className="mt-8 max-w-2xl">
-        <SearchInput value={query} onChange={() => {}} placeholder="Search..." />
-      </div>
+      <Suspense fallback={
+        <div className="max-w-4xl mx-auto h-32 rounded-2xl border border-border bg-card/50 animate-pulse flex items-center justify-center text-xs text-muted-foreground">
+          Loading search engine...
+        </div>
+      }>
+        <LiveSearch />
+      </Suspense>
     </div>
   );
-}
+}

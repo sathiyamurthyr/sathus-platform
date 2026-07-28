@@ -11,6 +11,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // Core static routes with required priority rules
   const staticRoutes: Array<{ route: string; priority: number; changeFreq: 'daily' | 'weekly' | 'monthly' }> = [
     { route: '', priority: 1.0, changeFreq: 'daily' },
+    { route: '/pricing', priority: 0.95, changeFreq: 'weekly' },
     { route: '/solutions', priority: 0.95, changeFreq: 'weekly' },
     { route: '/industries', priority: 0.95, changeFreq: 'weekly' },
     { route: '/products', priority: 0.95, changeFreq: 'weekly' },

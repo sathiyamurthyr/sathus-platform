@@ -4,6 +4,7 @@ import { SectionIntro } from '@/components/sections/section-intro';
 import { Reveal } from '@/components/sections/reveal';
 import { CaseStudyCard } from '@/features/case-studies/components/CaseStudyCard';
 import { CTA } from '@/features/case-studies/components/CTA';
+import { TestimonialShowcase } from '@/components/sections/testimonial-showcase';
 import { generatePageMetadata } from '@/lib/seo/metadata-builder';
 import { BreadcrumbJsonLd } from '@/components/seo/json-ld';
 import {
@@ -44,15 +45,18 @@ export default function CaseStudiesPage() {
         </div>
       </section>
 
+      {/* Verified Client Testimonials Showcase */}
+      <TestimonialShowcase />
+
       {/* Featured Case Studies */}
-      <section id="featured" className="scroll-mt-24 py-20 sm:py-24 bg-muted/20">
+      <section id="featured" className="scroll-mt-24 py-16 sm:py-20 bg-muted/20">
         <div className="container mx-auto px-4">
           <SectionIntro
             eyebrow="Featured"
             title="Featured Case Studies"
             description="Highlighted success stories from our portfolio."
           />
-          <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {featured.map((caseStudy) => (
               <CaseStudyCard key={caseStudy.id} caseStudy={caseStudy} />
             ))}
@@ -61,14 +65,14 @@ export default function CaseStudiesPage() {
       </section>
 
       {/* All Case Studies */}
-      <section id="all-case-studies" className="scroll-mt-24 py-20 sm:py-24">
+      <section id="all-case-studies" className="scroll-mt-24 py-16 sm:py-20">
         <div className="container mx-auto px-4">
           <SectionIntro
             eyebrow="All Studies"
             title="All Case Studies"
             description="Browse our complete portfolio of enterprise solutions."
           />
-          <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {caseStudies.map((caseStudy) => (
               <CaseStudyCard key={caseStudy.id} caseStudy={caseStudy} />
             ))}
@@ -77,7 +81,7 @@ export default function CaseStudiesPage() {
       </section>
 
       {/* Filters */}
-      <section id="filters" className="scroll-mt-24 py-20 sm:py-24 bg-muted/20">
+      <section id="filters" className="scroll-mt-24 py-16 sm:py-20 bg-muted/20">
         <div className="container mx-auto px-4">
           <SectionIntro
             eyebrow="Filters"

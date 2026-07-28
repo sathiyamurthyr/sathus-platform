@@ -20,6 +20,7 @@ export const navItems: NavItem[] = [
   { label: 'Products', href: '/products', hasMega: true },
   { label: 'Technology', href: '/solutions#technology', hasMega: true },
   { label: 'Resources', href: '/resources', hasMega: true },
+  { label: 'Pricing', href: '/pricing', hasMega: false },
   { label: 'Company', href: '/company', hasMega: true },
   { label: 'Trust Center', href: '/trust', hasMega: false },
   { label: 'Legal', href: '/legal', hasMega: false },
@@ -288,6 +289,7 @@ export const megaMenuSections: Record<string, MegaMenuSection[]> = {
           description: 'Investor relations and engagement.',
           items: [
             { title: 'Investor Relations', description: 'Growth & corporate governance', href: '/company/investors', icon: 'Award' },
+            { title: 'Pricing', description: 'Engagement models & SLAs', href: '/pricing', icon: 'DollarSign' },
             { title: 'Book Strategy Call', description: 'Working session', href: '/book-strategy-session', icon: 'Calendar' },
             { title: 'Trust Center', description: 'Security posture', href: '/trust', icon: 'ShieldCheck' },
             { title: 'Contact Engineering', description: 'Reach the team', href: '/company/contact', icon: 'Mail' },
@@ -365,6 +367,7 @@ export const footerSections: FooterSection[] = [
     links: [
       { title: 'About Us', href: '/company/about' },
       { title: 'Why Sathus', href: '/company/why-sathus' },
+      { title: 'Pricing', href: '/pricing' },
       { title: 'Partner Network', href: '/company/partners' },
       { title: 'Leadership', href: '/company/leadership' },
       { title: 'Investors', href: '/company/investors' },
