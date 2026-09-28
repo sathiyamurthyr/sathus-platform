@@ -25,7 +25,9 @@ const DEFAULT_KEYWORDS = [
   'lakehouse architecture',
   'FastAPI MLOps',
   'Model Context Protocol',
-  'Svora SaaS',
+  'enterprise software engineering',
+  'Apache Iceberg lakehouse',
+  'Chennai AI company',
 ];
 
 export function generatePageMetadata({
@@ -44,9 +46,21 @@ export function generatePageMetadata({
   const canonicalUrl = `${baseUrl}${cleanPath === '/' ? '' : cleanPath}`;
   const combinedKeywords = Array.from(new Set([...keywords, ...DEFAULT_KEYWORDS]));
 
+  // Strip any existing branding suffix to avoid double branding (e.g. "Title | Sathus Technology | Sathus Technology")
+  const cleanTitle = title
+    .replace(/\s*\|\s*Sathus Technology Pvt\. Ltd\./gi, '')
+    .replace(/\s*\|\s*Sathus Technology/gi, '')
+    .replace(/\s*—\s*Sathus Technology Pvt\. Ltd\./gi, '')
+    .replace(/\s*—\s*Sathus Technology/gi, '')
+    .trim();
+
+  // Root layout has template: '%s | Sathus Technology'. For subpages, returning cleanTitle produces
+  // "CleanTitle | Sathus Technology". For home ('/'), return full title directly.
+  const pageTitle = cleanPath === '/' ? `${cleanTitle} | Sathus Technology` : cleanTitle;
+
   return {
     metadataBase: new URL(baseUrl),
-    title: `${title} | Sathus Technology`,
+    title: pageTitle,
     description,
     keywords: combinedKeywords,
     authors: authors ? authors.map((name) => ({ name })) : [{ name: 'Sathus Technology', url: baseUrl }],
@@ -75,14 +89,14 @@ export function generatePageMetadata({
       locale: 'en_US',
       url: canonicalUrl,
       siteName: 'Sathus Technology',
-      title: `${title} | Sathus Technology`,
+      title: `${cleanTitle} | Sathus Technology`,
       description,
       images: [
         {
           url: `${baseUrl}/opengraph-image`,
           width: 1200,
           height: 630,
-          alt: `${title} — Sathus Technology Enterprise Platform`,
+          alt: `${cleanTitle} — Sathus Technology Enterprise Platform`,
         },
       ],
       ...(ogType === 'article' && {
@@ -93,7 +107,7 @@ export function generatePageMetadata({
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${title} | Sathus Technology`,
+      title: `${cleanTitle} | Sathus Technology`,
       description,
       creator: '@sathustech',
       images: [`${baseUrl}/twitter-image`],

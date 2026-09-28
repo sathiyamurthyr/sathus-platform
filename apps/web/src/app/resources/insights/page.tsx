@@ -45,6 +45,7 @@ export default function InsightsPage() {
       <Breadcrumb items={[{ label: 'Resources', href: '/resources' }, { label: 'Insights & Research' }]} />
       <SectionIntro
         eyebrow="Insights & Research"
+        headingLevel="h1"
         title="Whitepapers & Industry Benchmarks"
         description="Explore research papers and actionable guides on AI governance, lakehouse performance, and regulatory compliance."
       />

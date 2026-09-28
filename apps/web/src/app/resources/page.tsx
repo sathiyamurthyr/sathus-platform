@@ -29,7 +29,6 @@ export const metadata: Metadata = generatePageMetadata({
 export default function ResourcesPage() {
   return (
     <>
-      <BreadcrumbJsonLd items={[{ name: 'Resources', url: '/resources' }]} />
       <div className="container mx-auto px-4 pt-2">
         <Breadcrumb items={[{ label: 'Resources' }]} />
       </div>

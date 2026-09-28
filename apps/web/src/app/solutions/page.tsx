@@ -214,6 +214,7 @@ export default function SolutionsPage() {
           <div className="max-w-3xl">
             <SectionIntro
               eyebrow="Solutions"
+              headingLevel="h1"
               title="Engineering Solutions That Deliver Business Outcomes"
               description="We engineer enterprise-grade platforms that solve complex business challenges. Each solution combines deep technical expertise with proven delivery methodologies to ensure measurable impact."
             />

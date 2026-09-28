@@ -38,6 +38,7 @@ export default function CaseStudiesPage() {
         <div className="container mx-auto px-4">
           <SectionIntro
             eyebrow="Case Studies"
+            headingLevel="h1"
             title="Success Stories"
             description="Real-world examples of how we have delivered measurable outcomes for enterprise clients across industries."
             align="center"

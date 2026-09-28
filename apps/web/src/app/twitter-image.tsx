@@ -47,7 +47,7 @@ export default function TwitterImage() {
           </div>
         </div>
 
-        <div style={{ display: 'flex', justifyBetween: 'space-between', alignItems: 'center', borderTop: '1px solid rgba(255,255,255,0.15)', paddingTop: 24 }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid rgba(255,255,255,0.15)', paddingTop: 24 }}>
           <span style={{ fontSize: 20, color: '#E7B631', fontWeight: 600 }}>https://www.sathus.in</span>
           <div style={{ display: 'flex', gap: 20, fontSize: 18, color: 'rgba(255,255,255,0.6)' }}>
             <span>AI Swarms</span>

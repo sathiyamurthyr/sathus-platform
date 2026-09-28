@@ -30,7 +30,7 @@ export function ServiceJsonLd({ solution }: { solution: Solution }) {
     slug: solution.slug,
     description: solution.description,
     serviceType: solution.title,
-    offers: solution.capabilities ? solution.capabilities.map((c) => ({ name: c.name, description: c.description })) : [],
+    offers: solution.capabilities ? solution.capabilities.map((c) => ({ name: c.title, description: c.description })) : [],
   });
   return <JsonLdScript data={schema} />;
 }

@@ -46,18 +46,12 @@ const pillars = [
 export default function WhySathusPage() {
   return (
     <>
-      <BreadcrumbJsonLd
-        items={[
-          { name: 'Company', url: '/company' },
-          { name: 'Why Sathus', url: '/company/why-sathus' },
-        ]}
-      />
-
       <div className="container mx-auto px-4 pt-3 pb-12 space-y-10">
         <div>
           <Breadcrumb items={[{ label: 'Company', href: '/company' }, { label: 'Why Sathus' }]} />
           <SectionIntro
             eyebrow="The Sathus Advantage"
+            headingLevel="h1"
             title="Why Enterprise Leaders Choose Sathus Technology"
             description="Traditional consultancies deliver slides. We build high-throughput, production-grade AI, data, and cloud systems engineered for regulated enterprises."
           />

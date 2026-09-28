@@ -43,7 +43,6 @@ export function Navbar() {
 
     document.addEventListener('mousedown', handleDocumentClick);
     return () => {
-      document.removeMouseDownListener?.('mousedown', handleDocumentClick);
       document.removeEventListener('mousedown', handleDocumentClick);
     };
   }, [state, handleOutsideClick]);
@@ -98,7 +97,7 @@ export function Navbar() {
         return (
           <MenuItem
             key={item.label}
-            triggerRef={(el) => {
+            triggerRef={(el: HTMLAnchorElement | null) => {
               triggerRefs.current[index] = el;
             }}
             label={item.label}

@@ -76,6 +76,7 @@ export default function FaqsPage() {
           <Breadcrumb items={[{ label: 'Resources', href: '/resources' }, { label: 'FAQs' }]} />
           <SectionIntro
             eyebrow="Knowledge Base"
+            headingLevel="h1"
             title="Frequently Asked Questions"
             description="Find answers to common questions about our AI platform, data lakehouse architectures, cloud security, and embedded engineering squads."
           />

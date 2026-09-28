@@ -128,12 +128,12 @@ const localBusinessJsonLd = companyConfig.getLocalBusinessSchema();
 const websiteJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
-  '@id': 'https://sathus.in/#website',
+  '@id': `${SITE_URL}/#website`,
   name: 'Sathus Technology',
   alternateName: ['Sathus', 'Sathus.in', 'Sathus Platform'],
   url: SITE_URL,
   publisher: {
-    '@id': 'https://sathus.in/#organization',
+    '@id': `${SITE_URL}/#organization`,
   },
   potentialAction: {
     '@type': 'SearchAction',

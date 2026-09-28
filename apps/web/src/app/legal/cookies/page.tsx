@@ -22,6 +22,7 @@ export default function CookiesPage() {
       <Breadcrumb items={[{ label: 'Legal', href: '/legal' }, { label: 'Cookie Policy' }]} />
       <SectionIntro
         eyebrow="Legal Policy"
+        headingLevel="h1"
         title="Cookie Policy"
         description="Effective Date: July 2026. Disclosures regarding session cookies, essential tokens, and local storage usage."
       />

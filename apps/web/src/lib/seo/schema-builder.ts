@@ -85,11 +85,14 @@ export class SchemaBuilder {
   }
 
   static getWebPage(title: string, description: string, url: string) {
+    const fullUrl = url
+      ? (url.startsWith('http') ? url : `${BASE_URL}${url.startsWith('/') ? '' : '/'}${url}`)
+      : BASE_URL;
     return {
       '@context': 'https://schema.org',
       '@type': 'WebPage',
-      '@id': `${url}/#webpage`,
-      url,
+      '@id': `${fullUrl}/#webpage`,
+      url: fullUrl,
       name: title,
       description,
       isPartOf: {
@@ -223,14 +226,21 @@ export class SchemaBuilder {
     dateModified,
     authorName = 'Sathus Technology Principal Engineering',
   }: ArticleSchemaProps) {
+    const fullUrl = url
+      ? (url.startsWith('http') ? url : `${BASE_URL}${url.startsWith('/') ? '' : '/'}${url}`)
+      : BASE_URL;
+    const fullImage = image
+      ? (image.startsWith('http') ? image : `${BASE_URL}${image.startsWith('/') ? '' : '/'}${image}`)
+      : `${BASE_URL}/opengraph-image`;
+
     return {
       '@context': 'https://schema.org',
       '@type': 'TechArticle',
-      '@id': `${url}/#article`,
+      '@id': `${fullUrl}/#article`,
       headline,
       description,
-      url,
-      image,
+      url: fullUrl,
+      image: fullImage,
       datePublished,
       dateModified: dateModified || datePublished,
       author: {
@@ -249,7 +259,7 @@ export class SchemaBuilder {
       },
       mainEntityOfPage: {
         '@type': 'WebPage',
-        '@id': url,
+        '@id': fullUrl,
       },
     };
   }

@@ -25,6 +25,7 @@ export default function PrivacyPage() {
       <Breadcrumb items={[{ label: 'Trust Center', href: '/trust' }, { label: 'Privacy' }]} />
       <SectionIntro
         eyebrow="Trust Center"
+        headingLevel="h1"
         title="Data Privacy Framework"
         description="We process enterprise data under strict zero-knowledge and zero-retention architectures."
       />

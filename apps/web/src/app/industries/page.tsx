@@ -41,6 +41,7 @@ export default function IndustriesPage() {
         <div className="container mx-auto px-4">
           <SectionIntro
             eyebrow="Industries"
+            headingLevel="h1"
             title="Industries We Serve"
             description="Enterprise solutions tailored for your industry's unique challenges and opportunities."
             align="center"

@@ -26,14 +26,15 @@ export default function BlogHubPage() {
 
   return (
     <>
-      <BreadcrumbJsonLd
-        items={[
-          { name: 'Resources', url: '/resources' },
-          { name: 'Engineering Blog', url: '/resources/blog' },
-        ]}
-      />
       {resources.slice(0, 3).map((res) => (
-        <ArticleJsonLd key={res.id} article={res} />
+        <ArticleJsonLd
+          key={res.id}
+          headline={res.title}
+          description={res.description}
+          url={`/resources/blog/${res.slug}`}
+          datePublished={res.publishedAt}
+          authorName={res.author.name}
+        />
       ))}
 
       <div className="container mx-auto px-4 py-8 space-y-10">
@@ -41,6 +42,7 @@ export default function BlogHubPage() {
 
         <SectionIntro
           eyebrow="Engineering Blog & Whitepapers"
+          headingLevel="h1"
           title="Perspectives & Deep Dives from Our Architects"
           description="Technical breakdowns, benchmark reports, and reference architectures written by Sathus principal engineers."
         />

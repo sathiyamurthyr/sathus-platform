@@ -41,7 +41,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { route: '/legal/privacy-policy', priority: 0.60, changeFreq: 'monthly' },
     { route: '/legal/terms', priority: 0.60, changeFreq: 'monthly' },
     { route: '/legal/cookies', priority: 0.60, changeFreq: 'monthly' },
-    { route: '/search', priority: 0.50, changeFreq: 'monthly' },
     { route: '/industries/fintech', priority: 0.90, changeFreq: 'monthly' },
     { route: '/industries/financial-services', priority: 0.90, changeFreq: 'monthly' },
     { route: '/industries/life-sciences', priority: 0.90, changeFreq: 'monthly' },

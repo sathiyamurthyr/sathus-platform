@@ -6,12 +6,12 @@ export const metadata: Metadata = {
   title: 'Resource Case Studies',
   description: 'Explore client success stories, technical architectures, and impact metrics.',
   alternates: {
-    canonical: '/resources/case-studies',
+    canonical: '/case-studies',
   },
   openGraph: {
-    title: 'Resource Case Studies — Sathus Technology',
+    title: 'Resource Case Studies',
     description: 'Explore client success stories, technical architectures, and impact metrics.',
-    url: `${siteConfig.url}/resources/case-studies`,
+    url: `${siteConfig.url}/case-studies`,
   },
 };
 

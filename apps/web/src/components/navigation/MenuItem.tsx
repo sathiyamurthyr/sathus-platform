@@ -18,7 +18,7 @@ interface MenuItemProps {
   onFocus: () => void;
   onKeyDown?: (e: React.KeyboardEvent<HTMLAnchorElement>) => void;
   controlsId?: string;
-  triggerRef?: React.RefObject<HTMLAnchorElement | null>;
+  triggerRef?: React.Ref<HTMLAnchorElement>;
 }
 
 export const MenuItem = React.memo(function MenuItem({

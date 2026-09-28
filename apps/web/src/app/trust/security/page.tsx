@@ -25,6 +25,7 @@ export default function SecurityPage() {
       <Breadcrumb items={[{ label: 'Trust Center', href: '/trust' }, { label: 'Security' }]} />
       <SectionIntro
         eyebrow="Trust Center"
+        headingLevel="h1"
         title="Security Architecture & Controls"
         description="Our multi-layered security controls, encryption protocols, and SOC 2 Type II compliance standards for enterprise data."
       />

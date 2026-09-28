@@ -76,7 +76,7 @@ export type SearchCategory = SearchEntityType;
 export type SearchResult = SearchResultItem;
 
 export interface SearchFilters {
-  category?: SearchCategory;
+  category?: SearchCategory | 'all';
   contentType?: string;
   tags?: string[];
   featured?: boolean;

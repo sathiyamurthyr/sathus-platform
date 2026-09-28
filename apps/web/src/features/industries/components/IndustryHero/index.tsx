@@ -16,6 +16,7 @@ export function IndustryHero({ hero }: IndustryHeroProps) {
             eyebrow="Industry"
             title={hero.title}
             description={hero.description}
+            headingLevel="h1"
           />
           <div className="mt-8 flex flex-col gap-4 sm:flex-row">
             <Link

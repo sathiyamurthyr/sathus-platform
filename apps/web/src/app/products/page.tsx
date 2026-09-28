@@ -23,10 +23,10 @@ export const metadata: Metadata = generatePageMetadata({
 export default function ProductsPage() {
   return (
     <div className="container mx-auto px-4 pt-3 pb-12 space-y-10">
-      <BreadcrumbJsonLd items={[{ name: 'Products', url: '/products' }]} />
       <Breadcrumb items={[{ label: 'Products' }]} />
       <SectionIntro
         eyebrow="Products"
+        headingLevel="h1"
         title="Enterprise Software Portfolio"
         description="Built for regulated industries with security, compliance, and enterprise scale."
       />

@@ -43,6 +43,7 @@ export default function PartnersPage() {
         <Breadcrumb items={[{ label: 'Company', href: '/company' }, { label: 'Partners' }]} />
         <SectionIntro
           eyebrow="Global Ecosystem"
+          headingLevel="h1"
           title="Enterprise Technology Alliance & Partners"
           description="We partner with the world's leading cloud, data platform, and frontier AI providers to deliver production-ready solutions for regulated enterprises."
         />

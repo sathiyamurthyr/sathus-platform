@@ -8,6 +8,7 @@ interface SectionIntroProps {
   align?: 'left' | 'center';
   className?: string;
   tone?: 'light' | 'dark';
+  headingLevel?: 'h1' | 'h2';
 }
 
 export function SectionIntro({
@@ -17,8 +18,11 @@ export function SectionIntro({
   align = 'left',
   className,
   tone = 'light',
+  headingLevel = 'h2',
 }: SectionIntroProps) {
   const isDark = tone === 'dark';
+  const Heading = headingLevel;
+
   return (
     <div
       className={cn(
@@ -38,14 +42,14 @@ export function SectionIntro({
           {eyebrow}
         </span>
       )}
-      <h2
+      <Heading
         className={cn(
           'max-w-3xl text-balance font-display text-3xl leading-[1.08] tracking-tight sm:text-4xl lg:text-5xl',
           isDark ? 'text-white' : 'text-foreground'
         )}
       >
         {title}
-      </h2>
+      </Heading>
       {description && (
         <p
           className={cn(

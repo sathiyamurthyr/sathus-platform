@@ -14,7 +14,9 @@ export interface LeadPayload {
   teamSize?: string;
   inquiryType: string;
   message: string;
-  privacyConsent: boolean;
+  consent?: boolean;
+  privacyConsent?: boolean;
+  status?: string;
   createdAt: string;
 }
 

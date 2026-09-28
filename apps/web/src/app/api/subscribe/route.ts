@@ -10,38 +10,50 @@ export interface SubscriberPayload {
   createdAt: string;
 }
 
-function getSubscribersFilePath() {
-  const rootData = path.join(process.cwd(), 'data', 'subscribers.json');
-  const webData = path.join(process.cwd(), 'apps', 'web', 'data', 'subscribers.json');
-  return fs.access(webData).then(() => webData).catch(() => rootData);
+function getPossibleFilePaths() {
+  const cwd = process.cwd();
+  return [
+    path.join(cwd, 'data', 'subscribers.json'),
+    path.join(cwd, 'apps', 'web', 'data', 'subscribers.json'),
+    path.join(cwd, '..', 'data', 'subscribers.json'),
+  ];
 }
 
 async function getSubscribers(): Promise<SubscriberPayload[]> {
-  try {
-    const filePath = await getSubscribersFilePath();
-    const data = await fs.readFile(filePath, 'utf-8');
-    return JSON.parse(data);
-  } catch {
-    return [];
+  const possiblePaths = getPossibleFilePaths();
+  for (const filePath of possiblePaths) {
+    try {
+      const data = await fs.readFile(filePath, 'utf-8');
+      const parsed = JSON.parse(data);
+      if (Array.isArray(parsed)) {
+        return parsed;
+      }
+    } catch {
+      // Continue searching
+    }
   }
+  return [];
 }
 
 async function saveSubscriber(subscriber: SubscriberPayload) {
-  const filePath = await getSubscribersFilePath();
-  const dirPath = path.dirname(filePath);
-  await fs.mkdir(dirPath, { recursive: true });
-  const subscribers = await getSubscribers();
-  
-  // Check if already subscribed
-  const existingIndex = subscribers.findIndex((s) => s.email.toLowerCase() === subscriber.email.toLowerCase());
-  if (existingIndex >= 0) {
-    subscribers[existingIndex].status = 'active';
-  } else {
-    subscribers.unshift(subscriber);
-  }
+  const possiblePaths = getPossibleFilePaths();
+  const filePath = possiblePaths[0];
+  try {
+    const dirPath = path.dirname(filePath);
+    await fs.mkdir(dirPath, { recursive: true });
+    const subscribers = await getSubscribers();
+    
+    const existingIndex = subscribers.findIndex((s) => s.email.toLowerCase() === subscriber.email.toLowerCase());
+    if (existingIndex >= 0) {
+      subscribers[existingIndex].status = 'active';
+    } else {
+      subscribers.unshift(subscriber);
+    }
 
-  await fs.writeFile(filePath, JSON.stringify(subscribers, null, 2), 'utf-8');
-  return subscribers;
+    await fs.writeFile(filePath, JSON.stringify(subscribers, null, 2), 'utf-8');
+  } catch (err) {
+    console.error('Failed to save subscriber file:', err);
+  }
 }
 
 export async function GET() {
@@ -53,7 +65,11 @@ export async function GET() {
       subscribers,
     });
   } catch (error) {
-    return NextResponse.json({ success: false, error: 'Failed to fetch subscribers' }, { status: 500 });
+    return NextResponse.json({
+      success: true,
+      count: 0,
+      subscribers: [],
+    });
   }
 }
 

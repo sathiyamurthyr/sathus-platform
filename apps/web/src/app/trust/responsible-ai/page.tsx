@@ -25,6 +25,7 @@ export default function ResponsibleAIPage() {
       <Breadcrumb items={[{ label: 'Trust Center', href: '/trust' }, { label: 'Responsible AI' }]} />
       <SectionIntro
         eyebrow="Trust Center"
+        headingLevel="h1"
         title="Responsible AI Principles"
         description="Our core commitments to AI transparency, automated evaluation harnesses, human oversight, and safety guardrails."
       />

@@ -10,7 +10,7 @@ import {
 describe('Resources Data', () => {
   describe('categories', () => {
     it('has all resource categories', () => {
-      expect(categories.length).toBe(7);
+      expect(categories.length).toBe(6);
       expect(categories.find(c => c.id === 'blog')).toBeDefined();
       expect(categories.find(c => c.id === 'docs')).toBeDefined();
       expect(categories.find(c => c.id === 'learning')).toBeDefined();

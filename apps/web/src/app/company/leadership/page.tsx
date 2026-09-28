@@ -61,6 +61,7 @@ export default function LeadershipPage() {
         <Breadcrumb items={[{ label: 'Company', href: '/company' }, { label: 'Leadership' }]} />
         <SectionIntro
           eyebrow="Leadership"
+          headingLevel="h1"
           title="Guided by Engineers Who Have Shipped Enterprise Systems"
           description="Our leadership team brings decades of applied engineering experience in AI, data platforms, and regulated enterprise software — not just advisory roles. Every leader at Sathus has shipped production systems in the industries we serve."
         />

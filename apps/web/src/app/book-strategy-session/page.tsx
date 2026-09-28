@@ -111,6 +111,7 @@ export default function StrategySessionPage() {
         {/* Header */}
         <SectionIntro
           eyebrow="Strategy Session"
+          headingLevel="h1"
           title="Book a 30-Minute Architecture Review"
           description="Talk directly with a Sathus principal engineer about your platform challenges. No sales pitch. No account managers. Just an honest engineering conversation."
         />

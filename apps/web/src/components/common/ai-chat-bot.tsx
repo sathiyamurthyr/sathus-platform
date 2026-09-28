@@ -171,19 +171,19 @@ function MarkdownText({ text }: { text: string }) {
     // Links
     line = line.replace(
       /\[([^\]]+)\]\(([^)]+)\)/g,
-      '<a href="$2" class="text-primary underline underline-offset-2 hover:opacity-75">$1</a>'
+      '<a href="$2" class="text-primary underline underline-offset-2 hover:opacity-80">$1</a>'
     );
-    // Bullets — use a small styled dot, not the primary-colored large bullet
+    // Bullets — use a small styled dot
     if (line.startsWith('• ') || line.startsWith('* ')) {
       return (
         <div key={i} className="flex gap-2 mt-0.5 items-start">
-          <span className="mt-1.5 h-1 w-1 rounded-full bg-muted-foreground shrink-0" />
-          <span className="text-xs leading-relaxed" dangerouslySetInnerHTML={{ __html: line.replace(/^[•*]\s/, '') }} />
+          <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary shrink-0" />
+          <span className="text-xs leading-relaxed text-foreground" dangerouslySetInnerHTML={{ __html: line.replace(/^[•*]\s/, '') }} />
         </div>
       );
     }
     if (!line.trim()) return <div key={i} className="h-1" />;
-    return <div key={i} className="text-xs leading-relaxed" dangerouslySetInnerHTML={{ __html: line }} />;
+    return <div key={i} className="text-xs leading-relaxed text-foreground" dangerouslySetInnerHTML={{ __html: line }} />;
   });
   return <div className="space-y-0.5">{parts}</div>;
 }
@@ -245,40 +245,40 @@ function LeadFormMessage({
 
   if (error) {
     return (
-      <div className="text-xs text-red-500 mt-2 bg-red-500/10 p-2 rounded-md border border-red-500/20">
-        Something went wrong. Please <a href="/book-strategy-session" className="underline font-medium hover:text-red-600 transition-colors">book a session here</a>.
+      <div className="text-xs text-red-400 mt-2 bg-red-950/60 p-2.5 rounded-lg border border-red-500/30">
+        Something went wrong. Please <a href="/book-strategy-session" className="underline font-medium hover:text-red-300">book a session here</a>.
       </div>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-2 mt-3 pt-3 border-t border-border/50">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-2 mt-3 pt-3 border-t border-border/80">
       <input 
         required 
         name="name" 
-        placeholder="Name" 
-        className="h-8 text-xs border border-border/60 bg-muted/50 rounded-lg px-2.5 focus:outline-none focus:ring-1 focus:ring-primary/40 text-foreground" 
+        placeholder="Full Name" 
+        className="h-8 text-xs border border-border bg-background rounded-lg px-2.5 focus:outline-none focus:ring-1 focus:ring-primary text-foreground placeholder:text-muted-foreground" 
       />
       <input 
         required 
         type="email" 
         name="email" 
         placeholder="Work Email" 
-        className="h-8 text-xs border border-border/60 bg-muted/50 rounded-lg px-2.5 focus:outline-none focus:ring-1 focus:ring-primary/40 text-foreground" 
+        className="h-8 text-xs border border-border bg-background rounded-lg px-2.5 focus:outline-none focus:ring-1 focus:ring-primary text-foreground placeholder:text-muted-foreground" 
       />
       <input 
         required 
         name="company" 
-        placeholder="Company" 
-        className="h-8 text-xs border border-border/60 bg-muted/50 rounded-lg px-2.5 focus:outline-none focus:ring-1 focus:ring-primary/40 text-foreground" 
+        placeholder="Company Name" 
+        className="h-8 text-xs border border-border bg-background rounded-lg px-2.5 focus:outline-none focus:ring-1 focus:ring-primary text-foreground placeholder:text-muted-foreground" 
       />
       <Button 
         type="submit" 
         disabled={loading} 
         size="sm" 
-        className="w-full h-8 text-xs mt-1"
+        className="w-full h-8 text-xs font-bold mt-1 shadow-md"
       >
-        {loading ? 'Submitting...' : 'Request Session'}
+        {loading ? 'Submitting...' : 'Request Strategy Session'}
       </Button>
     </form>
   );
@@ -357,9 +357,9 @@ export function AiChatBot() {
           setMessages(prev => [...prev, leadMsg]);
           setIsLoading(false);
           if (!isOpen) setUnread(u => u + 1);
-        }, 1500);
+        }, 1200);
       }
-    }, 900 + Math.random() * 500);
+    }, 800 + Math.random() * 400);
   };
 
   const handleReset = () => {
@@ -381,14 +381,13 @@ export function AiChatBot() {
     ));
   };
 
-  // Panel height: clamp between 400px and 70vh so it never goes off-screen
-  const panelHeight = isMinimized ? '56px' : 'min(520px, calc(100vh - 120px))';
+  // Panel height: clamp between 400px and 75vh
+  const panelHeight = isMinimized ? '56px' : 'min(530px, calc(100vh - 110px))';
 
   return (
-    // z-[60] sits above ThemeCustomizer (z-50). Positioned at bottom-6 right-20
-    // so it sits LEFT of the ThemeCustomizer FAB (which is at right-6).
-    <div className="fixed bottom-6 right-20 z-[60] flex flex-col items-end gap-3">
-      {/* Chat Panel — opens upward above the FAB */}
+    // High z-index z-[9999] so floating chat box is 100% opaque and sits cleanly above all page elements
+    <div className="fixed bottom-6 right-20 z-[9999] flex flex-col items-end gap-3 pointer-events-auto">
+      {/* Chat Panel */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -396,18 +395,18 @@ export function AiChatBot() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 16, scale: 0.96 }}
             transition={{ type: 'spring', damping: 28, stiffness: 320 }}
-            className="w-[340px] sm:w-[380px] rounded-2xl border border-border bg-card shadow-2xl flex flex-col overflow-hidden"
+            className="w-[340px] sm:w-[390px] rounded-2xl border border-[#40202C] bg-[#0D0B10] shadow-[0_25px_60px_-15px_rgba(0,0,0,0.95)] flex flex-col overflow-hidden ring-1 ring-white/10 opacity-100"
             style={{ height: panelHeight }}
           >
-            {/* Header */}
-            <div className="flex items-center justify-between px-4 py-3 bg-primary text-primary-foreground shrink-0">
+            {/* Solid Header */}
+            <div className="flex items-center justify-between px-4 py-3 bg-primary text-primary-foreground shrink-0 shadow-md">
               <div className="flex items-center gap-2.5">
                 <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/20 shrink-0">
                   <Bot className="h-4 w-4" />
                 </div>
                 <div>
                   <div className="text-xs font-extrabold tracking-tight">Sathus AI Assistant</div>
-                  <div className="flex items-center gap-1.5 text-[10px] text-white/75 mt-0.5">
+                  <div className="flex items-center gap-1.5 text-[10px] text-white/80 mt-0.5 font-medium">
                     <span className="h-1.5 w-1.5 rounded-full bg-emerald-300 animate-pulse" />
                     Online — Enterprise AI Expert
                   </div>
@@ -440,34 +439,34 @@ export function AiChatBot() {
 
             {!isMinimized && (
               <>
-                {/* Messages */}
-                <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-background/50">
+                {/* Messages Container — SOLID 100% OPAQUE DARK BACKGROUND */}
+                <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-[#0D0B10] border-b border-[#331C28] opacity-100">
                   {messages.map((msg) => (
                     <div
                       key={msg.id}
                       className={`flex gap-2 ${msg.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}
                     >
                       <div
-                        className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full ${
+                        className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full ${
                           msg.role === 'assistant'
-                            ? 'bg-primary/10 text-primary'
-                            : 'bg-muted text-muted-foreground'
+                            ? 'bg-primary/20 text-primary border border-primary/30'
+                            : 'bg-[#1A1418] text-white border border-[#40202C]'
                         }`}
                       >
-                        {msg.role === 'assistant' ? <Bot className="h-3 w-3" /> : <User className="h-3 w-3" />}
+                        {msg.role === 'assistant' ? <Bot className="h-3.5 w-3.5" /> : <User className="h-3.5 w-3.5" />}
                       </div>
                       <div
-                        className={`max-w-[80%] rounded-2xl px-3 py-2 ${
+                        className={`max-w-[82%] rounded-2xl px-3.5 py-2.5 shadow-md opacity-100 ${
                           msg.role === 'assistant'
-                            ? 'bg-card border border-border/60 text-foreground rounded-tl-sm shadow-sm'
-                            : 'bg-primary text-primary-foreground rounded-tr-sm'
+                            ? 'bg-[#1A1418] border border-[#40202C] text-white rounded-tl-xs'
+                            : 'bg-primary text-primary-foreground font-medium rounded-tr-xs'
                         }`}
                       >
                         {msg.role === 'assistant' ? (
                           <>
                             {msg.type === 'lead-success' ? (
-                              <div className="flex flex-col gap-2 bg-emerald-500/10 p-2.5 rounded-lg border border-emerald-500/20 text-emerald-700 dark:text-emerald-400 mb-1">
-                                <div className="flex items-center gap-2 font-medium">
+                              <div className="flex flex-col gap-2 bg-emerald-500/10 p-2.5 rounded-lg border border-emerald-500/20 text-emerald-400 mb-1">
+                                <div className="flex items-center gap-2 font-bold text-xs">
                                   <CheckCircle2 className="h-4 w-4" />
                                   Session Requested
                                 </div>
@@ -485,9 +484,9 @@ export function AiChatBot() {
                             )}
                           </>
                         ) : (
-                          <p className="text-xs">{msg.content}</p>
+                          <p className="text-xs leading-relaxed">{msg.content}</p>
                         )}
-                        <div className={`text-[9px] mt-1.5 ${msg.role === 'assistant' ? 'text-muted-foreground' : 'text-white/50'}`}>
+                        <div className={`text-[9px] mt-1 ${msg.role === 'assistant' ? 'text-zinc-400' : 'text-primary-foreground/70'}`}>
                           {msg.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                         </div>
                       </div>
@@ -496,14 +495,14 @@ export function AiChatBot() {
 
                   {isLoading && (
                     <div className="flex gap-2">
-                      <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
-                        <Bot className="h-3 w-3" />
+                      <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary/20 text-primary border border-primary/30">
+                        <Bot className="h-3.5 w-3.5" />
                       </div>
-                      <div className="bg-card border border-border/60 rounded-2xl rounded-tl-sm px-3.5 py-3 shadow-sm">
-                        <div className="flex items-center gap-1">
-                          <span className="h-1.5 w-1.5 rounded-full bg-primary/60 animate-bounce" style={{ animationDelay: '0ms' }} />
-                          <span className="h-1.5 w-1.5 rounded-full bg-primary/60 animate-bounce" style={{ animationDelay: '160ms' }} />
-                          <span className="h-1.5 w-1.5 rounded-full bg-primary/60 animate-bounce" style={{ animationDelay: '320ms' }} />
+                      <div className="bg-[#1A1418] border border-[#40202C] rounded-2xl rounded-tl-xs px-4 py-3 shadow-sm">
+                        <div className="flex items-center gap-1.5">
+                          <span className="h-1.5 w-1.5 rounded-full bg-primary animate-bounce" style={{ animationDelay: '0ms' }} />
+                          <span className="h-1.5 w-1.5 rounded-full bg-primary animate-bounce" style={{ animationDelay: '160ms' }} />
+                          <span className="h-1.5 w-1.5 rounded-full bg-primary animate-bounce" style={{ animationDelay: '320ms' }} />
                         </div>
                       </div>
                     </div>
@@ -511,14 +510,14 @@ export function AiChatBot() {
                   <div ref={messagesEndRef} />
                 </div>
 
-                {/* Suggested prompts — shown only on first message */}
+                {/* Suggested Prompt Chips — SOLID 100% OPAQUE BACKGROUND */}
                 {messages.length === 1 && (
-                  <div className="px-3 pb-2 flex flex-wrap gap-1.5 bg-background/50">
+                  <div className="px-3 py-2 flex flex-wrap gap-1.5 bg-[#0D0B10] border-b border-[#331C28] opacity-100">
                     {SUGGESTED_PROMPTS.map((p) => (
                       <button
                         key={p}
                         onClick={() => handleSend(p)}
-                        className="text-[10px] font-medium px-2.5 py-1 rounded-full border border-border bg-muted/60 hover:border-primary/40 hover:bg-primary/5 transition-all text-muted-foreground hover:text-foreground"
+                        className="text-[11px] font-medium px-2.5 py-1 rounded-lg border border-[#40202C] bg-[#1A1418] hover:border-primary hover:bg-primary/20 transition-all text-white shrink-0 shadow-sm"
                       >
                         {p}
                       </button>
@@ -526,8 +525,8 @@ export function AiChatBot() {
                   </div>
                 )}
 
-                {/* Input */}
-                <div className="p-3 border-t border-border bg-background/70 flex items-center gap-2 shrink-0">
+                {/* Input Area — SOLID 100% OPAQUE BACKGROUND */}
+                <div className="p-3 bg-[#0D0B10] border-t border-[#331C28] flex items-center gap-2 shrink-0 opacity-100">
                   <input
                     ref={inputRef}
                     type="text"
@@ -535,13 +534,13 @@ export function AiChatBot() {
                     onChange={(e) => setInput(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && handleSend()}
                     placeholder="Ask about AI, data, cloud..."
-                    className="flex-1 text-xs bg-muted/50 border border-border/60 rounded-xl px-3 py-2.5 focus:outline-none focus:ring-1 focus:ring-primary/40 text-foreground placeholder:text-muted-foreground/60"
+                    className="flex-1 text-xs bg-[#1A1418] border border-[#40202C] rounded-xl px-3 py-2.5 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-white placeholder:text-zinc-500"
                   />
                   <Button
                     onClick={() => handleSend()}
                     disabled={!input.trim() || isLoading}
                     size="icon"
-                    className="h-9 w-9 rounded-xl shrink-0 shadow"
+                    className="h-9 w-9 rounded-xl shrink-0 shadow font-bold"
                   >
                     <Send className="h-3.5 w-3.5" />
                   </Button>
@@ -552,15 +551,15 @@ export function AiChatBot() {
         )}
       </AnimatePresence>
 
-      {/* Toggle FAB */}
+      {/* Floating Action Button */}
       <motion.button
-        whileHover={{ scale: 1.08 }}
+        whileHover={{ scale: 1.06 }}
         whileTap={{ scale: 0.94 }}
         onClick={() => {
           setIsOpen(!isOpen);
           setUnread(0);
         }}
-        className="relative h-12 w-12 rounded-full bg-primary text-primary-foreground shadow-xl flex items-center justify-center"
+        className="relative h-12 w-12 rounded-full bg-primary text-primary-foreground shadow-2xl flex items-center justify-center ring-2 ring-primary/20"
         aria-label="Open AI Chat Assistant"
       >
         <AnimatePresence mode="wait">
@@ -570,7 +569,7 @@ export function AiChatBot() {
               initial={{ rotate: -90, opacity: 0 }}
               animate={{ rotate: 0, opacity: 1 }}
               exit={{ rotate: 90, opacity: 0 }}
-              transition={{ duration: 0.18 }}
+              transition={{ duration: 0.15 }}
             >
               <X className="h-5 w-5" />
             </motion.div>
@@ -580,27 +579,27 @@ export function AiChatBot() {
               initial={{ rotate: 90, opacity: 0 }}
               animate={{ rotate: 0, opacity: 1 }}
               exit={{ rotate: -90, opacity: 0 }}
-              transition={{ duration: 0.18 }}
+              transition={{ duration: 0.15 }}
             >
               <MessageCircle className="h-5 w-5" />
             </motion.div>
           )}
         </AnimatePresence>
 
-        {/* Unread badge */}
+        {/* Unread Badge */}
         {unread > 0 && (
           <motion.span
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
-            className="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-emerald-500 text-white text-[9px] font-bold flex items-center justify-center"
+            className="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-emerald-500 text-white text-[9px] font-bold flex items-center justify-center shadow-sm"
           >
             {unread}
           </motion.span>
         )}
 
-        {/* Ping ring when closed */}
+        {/* Ping Ring */}
         {!isOpen && (
-          <span className="absolute inset-0 rounded-full bg-primary opacity-25 animate-ping pointer-events-none" />
+          <span className="absolute inset-0 rounded-full bg-primary opacity-30 animate-ping pointer-events-none" />
         )}
       </motion.button>
     </div>

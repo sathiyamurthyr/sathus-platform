@@ -80,12 +80,10 @@ const companySections = [
 export default function CompanyHubPage() {
   return (
     <div className="container mx-auto px-4 pt-3 pb-12 space-y-6">
-      <OrganizationJsonLd />
-      <LocalBusinessJsonLd />
-      <BreadcrumbJsonLd items={[{ name: 'Company', url: '/company' }]} />
       <Breadcrumb items={[{ label: 'Company' }]} />
       <SectionIntro
         eyebrow="Company"
+        headingLevel="h1"
         title="Engineering the Future of Enterprise Software"
         description="We partner with regulated enterprises to design, build, and scale mission-critical AI, data, and cloud platforms."
       />

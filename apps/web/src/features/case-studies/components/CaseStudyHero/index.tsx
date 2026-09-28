@@ -14,6 +14,7 @@ export function CaseStudyHero({ caseStudy }: CaseStudyHeroProps) {
             eyebrow={caseStudy.industry}
             title={caseStudy.title}
             description={caseStudy.challenge}
+            headingLevel="h1"
           />
           <div className="mt-6 flex flex-wrap gap-2">
             {caseStudy.technologies.map((tech) => (

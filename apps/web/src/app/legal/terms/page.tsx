@@ -22,6 +22,7 @@ export default function TermsPage() {
       <Breadcrumb items={[{ label: 'Legal', href: '/legal' }, { label: 'Terms of Service' }]} />
       <SectionIntro
         eyebrow="Legal Agreement"
+        headingLevel="h1"
         title="Terms of Service"
         description="Effective Date: July 2026. Please review these Terms of Service prior to deploying or integrating Sathus Technology software."
       />

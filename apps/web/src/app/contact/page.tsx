@@ -98,7 +98,6 @@ export default function ContactPage() {
   return (
     <>
       <ContactPageJsonLd />
-      <BreadcrumbJsonLd items={[{ name: 'Contact', url: '/contact' }]} />
       <div className="container mx-auto px-4 pt-2">
         <Breadcrumb items={[{ label: 'Contact' }]} />
       </div>
@@ -107,6 +106,7 @@ export default function ContactPage() {
         {/* Header */}
         <SectionIntro
           eyebrow="Contact"
+          headingLevel="h1"
           title="Let's Start a Technical Conversation"
           description="We believe the best client relationships start with an honest, engineering-first conversation. Tell us what you're building — or trying to fix — and we'll tell you how we can help."
         />

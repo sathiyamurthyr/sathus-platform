@@ -29,16 +29,16 @@ export async function generateMetadata({ params }: CaseStudyPageProps): Promise<
   }
 
   return generatePageMetadata({
-    title: `${caseStudy.title} — Enterprise Case Study`,
+    title: `${caseStudy.title} Case Study`,
     description: caseStudy.seo.description,
     path: `/case-studies/${caseStudy.slug}`,
     ogType: 'article',
     publishedTime: caseStudy.publishedAt,
     keywords: [
       caseStudy.title,
-      caseStudy.client.industry,
+      caseStudy.industry,
       'Sathus Technology case study',
-      ...caseStudy.techStack.map((t) => t.name),
+      ...caseStudy.technologies.map((t) => t.name),
     ],
   });
 }
@@ -74,8 +74,8 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
       <div className="container mx-auto px-4 py-8">
         <AISummaryBlock
           topic={caseStudy.title}
-          definition={caseStudy.summary}
-          keyTakeaways={caseStudy.outcomes ? caseStudy.outcomes.map((o) => `${o.title}: ${o.metric}`) : []}
+          definition={caseStudy.solution || caseStudy.seo.description}
+          keyTakeaways={caseStudy.outcomes ? caseStudy.outcomes.map((o) => `${o.title}: ${o.description}`) : []}
         />
       </div>
 

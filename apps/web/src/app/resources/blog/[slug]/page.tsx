@@ -51,8 +51,13 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
   return (
     <>
-      <BreadcrumbJsonLd items={breadcrumbItems} />
-      <ArticleJsonLd article={resource} />
+      <ArticleJsonLd
+        headline={resource.title}
+        description={resource.description}
+        url={`/resources/blog/${resource.slug}`}
+        datePublished={resource.publishedAt}
+        authorName={resource.author.name}
+      />
 
       <div className="container mx-auto px-4 py-8 space-y-10 max-w-5xl">
         <div className="flex flex-wrap items-center justify-between gap-4">

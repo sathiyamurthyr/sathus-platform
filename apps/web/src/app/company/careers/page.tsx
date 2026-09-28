@@ -148,6 +148,7 @@ export default function CareersPage() {
         <Breadcrumb items={[{ label: 'Company', href: '/company' }, { label: 'Careers' }]} />
         <SectionIntro
           eyebrow="Careers at Sathus"
+          headingLevel="h1"
           title="Build Engineering Systems That Actually Matter"
           description="We hire senior engineers, data architects, and AI researchers who want to own production systems — not maintain inherited technical debt. If you want to ship code that runs in critical enterprise environments, we should talk."
         />

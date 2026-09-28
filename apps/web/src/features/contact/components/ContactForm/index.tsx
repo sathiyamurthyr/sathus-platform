@@ -353,8 +353,8 @@ export function ContactForm({ inquiryType = 'general', onSuccess }: ContactFormP
                   <Checkbox
                     id="consent"
                     checked={field.value === true}
-                    onCheckedChange={(checked) => {
-                      field.onChange(checked === true);
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      field.onChange(e.target.checked);
                       trigger('consent');
                     }}
                     className={errors.consent ? 'border-destructive' : ''}

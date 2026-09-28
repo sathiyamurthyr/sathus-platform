@@ -6,20 +6,24 @@ import { Suspense } from 'react';
 const SITE_URL = 'https://sathus.in';
 
 export const metadata: Metadata = {
-  title: 'Platform Search — Sathus Technology',
+  title: 'Platform Search',
   description: 'Search across engineering solutions, industry platforms, technical whitepapers, pricing, and compliance docs.',
+  robots: {
+    index: false,
+    follow: false,
+  },
   alternates: {
     canonical: '/search',
   },
   openGraph: {
-    title: 'Platform Search — Sathus Technology',
+    title: 'Platform Search',
     description: 'Find solutions, engineering research, and platform resources across Sathus Technology.',
     url: `${SITE_URL}/search`,
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Platform Search — Sathus Technology',
+    title: 'Platform Search',
     description: 'Find solutions, engineering research, and platform resources across Sathus Technology.',
   },
 };
@@ -31,6 +35,7 @@ export default function SearchPage() {
         eyebrow="Enterprise Knowledge Base"
         title="Search Sathus Platform"
         description="Instant site-wide search across engineering whitepapers, solutions, pricing models, and compliance standards."
+        headingLevel="h1"
       />
       <Suspense fallback={
         <div className="max-w-4xl mx-auto h-32 rounded-2xl border border-border bg-card/50 animate-pulse flex items-center justify-center text-xs text-muted-foreground">

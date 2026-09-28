@@ -131,6 +131,7 @@ export default function InvestorsPage() {
         <Breadcrumb items={[{ label: 'Company', href: '/company' }, { label: 'Investor Relations' }]} />
         <SectionIntro
           eyebrow="Investor Relations"
+          headingLevel="h1"
           title="Building the Enterprise AI Infrastructure Layer"
           description="Sathus Technology Pvt. Ltd. is engineering the foundational software infrastructure that regulated enterprises need to deploy, govern, and scale AI and data platforms safely."
         />

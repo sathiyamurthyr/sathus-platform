@@ -42,11 +42,11 @@ const legalDocs = [
 export default function LegalHubPage() {
   return (
     <>
-      <BreadcrumbJsonLd items={[{ name: 'Legal', url: '/legal' }]} />
       <div className="container mx-auto px-4 pt-3 pb-12 space-y-6">
         <Breadcrumb items={[{ label: 'Legal' }]} />
         <SectionIntro
           eyebrow="Legal & Governance"
+          headingLevel="h1"
           title="Terms, Privacy & Legal Policies"
           description="Review our legal agreements, privacy disclosures, and compliance frameworks governing Sathus Technology services."
         />

@@ -101,6 +101,7 @@ export default function AboutPage() {
         <Breadcrumb items={[{ label: 'Company', href: '/company' }, { label: 'About Us' }]} />
         <SectionIntro
           eyebrow="About Sathus Technology"
+          headingLevel="h1"
           title="Engineering Precision for Regulated Enterprise Software"
           description="Sathus Technology was founded to solve a fundamental gap: regulated enterprises in finance, healthcare, and critical infrastructure needed to innovate with modern AI and cloud architectures — but lacked access to engineering teams with deep domain expertise and compliance rigor."
         />

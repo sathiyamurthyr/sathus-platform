@@ -56,6 +56,7 @@ export default function DocumentationPage() {
         <Breadcrumb items={[{ label: 'Resources', href: '/resources' }, { label: 'Documentation' }]} />
         <SectionIntro
           eyebrow="Developer Hub"
+          headingLevel="h1"
           title="Platform Documentation & API Reference"
           description="Access comprehensive API references, SDK documentation, OpenAPI schemas, and enterprise architecture blueprints."
         />

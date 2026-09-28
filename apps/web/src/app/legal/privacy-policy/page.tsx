@@ -22,6 +22,7 @@ export default function PrivacyPolicyPage() {
       <Breadcrumb items={[{ label: 'Legal', href: '/legal' }, { label: 'Privacy Policy' }]} />
       <SectionIntro
         eyebrow="Legal Policy"
+        headingLevel="h1"
         title="Privacy Policy"
         description="Effective Date: July 2026. This Privacy Policy details how Sathus Technology Pvt. Ltd. collects, uses, and safeguards enterprise data."
       />

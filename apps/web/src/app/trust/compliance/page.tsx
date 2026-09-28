@@ -23,17 +23,11 @@ export const metadata: Metadata = generatePageMetadata({
 export default function CompliancePage() {
   return (
     <>
-      <BreadcrumbJsonLd
-        items={[
-          { name: 'Trust Center', url: '/trust' },
-          { name: 'Compliance', url: '/trust/compliance' },
-        ]}
-      />
-
       <div className="container mx-auto px-4 py-12 space-y-10">
         <Breadcrumb items={[{ label: 'Trust Center', href: '/trust' }, { label: 'Compliance' }]} />
         <SectionIntro
           eyebrow="Trust Center"
+          headingLevel="h1"
           title="Regulatory Compliance Frameworks"
           description="Independent third-party audits, SOC 2 Type II attestations, ISO 27001, and HIPAA compliance alignments."
         />

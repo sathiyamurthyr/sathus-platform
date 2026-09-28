@@ -16,6 +16,7 @@ export function SolutionHero({ hero }: SolutionHeroProps) {
             eyebrow="Solution"
             title={hero.title}
             description={hero.description}
+            headingLevel="h1"
           />
           <div className="mt-8 flex flex-col gap-4 sm:flex-row">
             <Link

@@ -25,6 +25,7 @@ export default function BusinessContinuityPage() {
       <Breadcrumb items={[{ label: 'Trust Center', href: '/trust' }, { label: 'Business Continuity' }]} />
       <SectionIntro
         eyebrow="Trust Center"
+        headingLevel="h1"
         title="Business Continuity & Resilience"
         description="RPO < 15 mins, RTO < 1 hour. Multi-region failover, automated backups, and incident response SLA guarantees."
       />

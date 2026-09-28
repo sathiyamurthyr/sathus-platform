@@ -6,12 +6,12 @@ export const metadata: Metadata = {
   title: 'Company Contact',
   description: 'Reach out to Sathus Technology engineering, sales, and executive teams.',
   alternates: {
-    canonical: '/company/contact',
+    canonical: '/contact',
   },
   openGraph: {
-    title: 'Company Contact — Sathus Technology',
+    title: 'Company Contact',
     description: 'Reach out to Sathus Technology engineering, sales, and executive teams.',
-    url: `${siteConfig.url}/company/contact`,
+    url: `${siteConfig.url}/contact`,
   },
 };
 
