@@ -113,7 +113,7 @@ export function generatePageMetadata({
       images: [`${baseUrl}/twitter-image`],
     },
     verification: {
-      google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || 'google-site-verification-sathus-tech',
+      google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || 'google66399c2d930e86b3',
       other: {
         'msvalidate.01': process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION || '9EFF30B76BF1119CD257D4E864713973',
       },
