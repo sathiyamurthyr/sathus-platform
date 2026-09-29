@@ -3,6 +3,7 @@ import { allProducts } from '@/features/products/data';
 import { allSolutions } from '@/features/solutions/data';
 import { caseStudies } from '@/features/case-studies/data';
 import { resources } from '@/features/resources/data';
+import { getHubPillars, getAllHubTopics } from '@/features/engineering-hub/data';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
@@ -45,6 +46,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { route: '/industries/financial-services', priority: 0.90, changeFreq: 'monthly' },
     { route: '/industries/life-sciences', priority: 0.90, changeFreq: 'monthly' },
     { route: '/industries/healthcare', priority: 0.90, changeFreq: 'monthly' },
+    { route: '/engineering-hub', priority: 0.95, changeFreq: 'daily' },
+    { route: '/engineering-hub/tools', priority: 0.92, changeFreq: 'weekly' },
+    { route: '/engineering-hub/tools/spark-memory-calculator', priority: 0.90, changeFreq: 'weekly' },
+    { route: '/engineering-hub/tools/document-ai-cost-estimator', priority: 0.90, changeFreq: 'weekly' },
   ];
 
   const staticEntries: MetadataRoute.Sitemap = staticRoutes.map(({ route, priority, changeFreq }) => ({
@@ -82,5 +87,27 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.85,
   }));
 
-  return [...staticEntries, ...productEntries, ...solutionEntries, ...caseStudyEntries, ...resourceEntries];
+  const hubPillarEntries: MetadataRoute.Sitemap = getHubPillars().map((p) => ({
+    url: `${baseUrl}/engineering-hub/${p.slug}`,
+    lastModified: now,
+    changeFrequency: 'weekly',
+    priority: 0.90,
+  }));
+
+  const hubTopicEntries: MetadataRoute.Sitemap = getAllHubTopics().map((t) => ({
+    url: `${baseUrl}/engineering-hub/${t.pillarSlug}/${t.slug}`,
+    lastModified: now,
+    changeFrequency: 'weekly',
+    priority: 0.85,
+  }));
+
+  return [
+    ...staticEntries,
+    ...productEntries,
+    ...solutionEntries,
+    ...caseStudyEntries,
+    ...resourceEntries,
+    ...hubPillarEntries,
+    ...hubTopicEntries,
+  ];
 }

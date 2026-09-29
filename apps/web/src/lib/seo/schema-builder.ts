@@ -43,6 +43,48 @@ export interface ArticleSchemaProps {
   authorName?: string;
 }
 
+export interface TechArticleSchemaProps extends ArticleSchemaProps {
+  proficiencyLevel?: string;
+  dependencies?: string;
+}
+
+export interface CollectionPageSchemaProps {
+  title: string;
+  description: string;
+  url: string;
+  hasPart?: { name: string; url: string; description?: string }[];
+}
+
+export interface DatasetSchemaProps {
+  name: string;
+  description: string;
+  url: string;
+  license?: string;
+  variableMeasured?: string[];
+}
+
+export interface DefinedTermItem {
+  name: string;
+  termCode: string;
+  description: string;
+  url?: string;
+}
+
+export interface DefinedTermSetSchemaProps {
+  name: string;
+  description: string;
+  url: string;
+  terms: DefinedTermItem[];
+}
+
+export interface ProfilePageSchemaProps {
+  name: string;
+  description: string;
+  url: string;
+  role?: string;
+  knowsAbout?: string[];
+}
+
 export interface JobPostingSchemaProps {
   title: string;
   description: string;
@@ -309,6 +351,119 @@ export class SchemaBuilder {
           addressRegion: 'Tamil Nadu',
           addressCountry: 'IN',
         },
+      },
+    };
+  }
+
+  static getTechArticle({
+    headline,
+    description,
+    url,
+    image,
+    datePublished,
+    dateModified,
+    authorName = 'Sathus Data Engineering Practice Leads',
+    proficiencyLevel = 'Expert',
+    dependencies = 'Apache Spark, Databricks, Cloud Lakehouse',
+  }: TechArticleSchemaProps) {
+    const base = this.getArticle({
+      headline,
+      description,
+      url,
+      image,
+      datePublished,
+      dateModified,
+      authorName,
+    });
+    return {
+      ...base,
+      '@type': 'TechArticle',
+      proficiencyLevel,
+      dependencies,
+    };
+  }
+
+  static getCollectionPage({ title, description, url, hasPart = [] }: CollectionPageSchemaProps) {
+    const fullUrl = url.startsWith('http') ? url : `${BASE_URL}${url.startsWith('/') ? '' : '/'}${url}`;
+    return {
+      '@context': 'https://schema.org',
+      '@type': 'CollectionPage',
+      '@id': `${fullUrl}/#collection`,
+      name: title,
+      description,
+      url: fullUrl,
+      publisher: {
+        '@type': 'Organization',
+        name: companyConfig.name,
+        url: BASE_URL,
+      },
+      hasPart: hasPart.map((p) => ({
+        '@type': 'WebPage',
+        name: p.name,
+        description: p.description,
+        url: p.url.startsWith('http') ? p.url : `${BASE_URL}${p.url.startsWith('/') ? '' : '/'}${p.url}`,
+      })),
+    };
+  }
+
+  static getDataset({ name, description, url, license = 'https://creativecommons.org/licenses/by/4.0/', variableMeasured = [] }: DatasetSchemaProps) {
+    const fullUrl = url.startsWith('http') ? url : `${BASE_URL}${url.startsWith('/') ? '' : '/'}${url}`;
+    return {
+      '@context': 'https://schema.org',
+      '@type': 'Dataset',
+      '@id': `${fullUrl}/#dataset`,
+      name,
+      description,
+      url: fullUrl,
+      license,
+      creator: {
+        '@type': 'Organization',
+        name: companyConfig.name,
+        url: BASE_URL,
+      },
+      variableMeasured: variableMeasured.length > 0 ? variableMeasured : undefined,
+    };
+  }
+
+  static getDefinedTermSet({ name, description, url, terms }: DefinedTermSetSchemaProps) {
+    const fullUrl = url.startsWith('http') ? url : `${BASE_URL}${url.startsWith('/') ? '' : '/'}${url}`;
+    return {
+      '@context': 'https://schema.org',
+      '@type': 'DefinedTermSet',
+      '@id': `${fullUrl}/#definedtermset`,
+      name,
+      description,
+      url: fullUrl,
+      hasDefinedTerm: terms.map((t) => ({
+        '@type': 'DefinedTerm',
+        name: t.name,
+        termCode: t.termCode,
+        description: t.description,
+        url: t.url ? (t.url.startsWith('http') ? t.url : `${BASE_URL}${t.url.startsWith('/') ? '' : '/'}${t.url}`) : fullUrl,
+        inDefinedTermSet: `${fullUrl}/#definedtermset`,
+      })),
+    };
+  }
+
+  static getProfilePage({ name, description, url, role = 'Principal Systems Architect', knowsAbout = [] }: ProfilePageSchemaProps) {
+    const fullUrl = url.startsWith('http') ? url : `${BASE_URL}${url.startsWith('/') ? '' : '/'}${url}`;
+    return {
+      '@context': 'https://schema.org',
+      '@type': 'ProfilePage',
+      '@id': `${fullUrl}/#profile`,
+      name,
+      description,
+      url: fullUrl,
+      mainEntity: {
+        '@type': 'Person',
+        name,
+        jobTitle: role,
+        worksFor: {
+          '@type': 'Organization',
+          name: companyConfig.name,
+          url: BASE_URL,
+        },
+        knowsAbout,
       },
     };
   }

@@ -32,6 +32,28 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  async rewrites() {
+    return [
+      { source: '/data-engineering', destination: '/engineering-hub/data-engineering' },
+      { source: '/data-engineering/:slug', destination: '/engineering-hub/data-engineering/:slug' },
+      { source: '/big-data', destination: '/engineering-hub/big-data' },
+      { source: '/big-data/:slug', destination: '/engineering-hub/big-data/:slug' },
+      { source: '/data-analytics', destination: '/engineering-hub/data-analytics' },
+      { source: '/data-analytics/:slug', destination: '/engineering-hub/data-analytics/:slug' },
+      { source: '/cloud-data-engineering', destination: '/engineering-hub/cloud-data-engineering' },
+      { source: '/cloud-data-engineering/:slug', destination: '/engineering-hub/cloud-data-engineering/:slug' },
+      { source: '/healthcare-life-sciences', destination: '/engineering-hub/healthcare-life-sciences' },
+      { source: '/healthcare-life-sciences/:slug', destination: '/engineering-hub/healthcare-life-sciences/:slug' },
+      { source: '/life-sciences-data', destination: '/engineering-hub/life-sciences-data' },
+      { source: '/life-sciences-data/:slug', destination: '/engineering-hub/life-sciences-data/:slug' },
+      { source: '/ontology-knowledge-graph', destination: '/engineering-hub/ontology-knowledge-graph' },
+      { source: '/ontology-knowledge-graph/:slug', destination: '/engineering-hub/ontology-knowledge-graph/:slug' },
+      { source: '/document-intelligence', destination: '/engineering-hub/document-intelligence' },
+      { source: '/document-intelligence/:slug', destination: '/engineering-hub/document-intelligence/:slug' },
+      { source: '/technologies', destination: '/engineering-hub/technologies' },
+      { source: '/technologies/:slug', destination: '/engineering-hub/technologies/:slug' },
+    ];
+  },
 };
 
 export default nextConfig;

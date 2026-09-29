@@ -61,3 +61,10 @@ obj/
 .vs/
 _ReSharper*
 *.swp
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.db
+.pytest_cache/

@@ -91,3 +91,95 @@ export function ContactPageJsonLd() {
   };
   return <JsonLdScript data={schema} />;
 }
+
+export function TechArticleJsonLd({
+  headline,
+  description,
+  url,
+  datePublished,
+  authorName,
+  proficiencyLevel,
+  dependencies,
+}: {
+  headline: string;
+  description: string;
+  url: string;
+  datePublished?: string;
+  authorName?: string;
+  proficiencyLevel?: string;
+  dependencies?: string;
+}) {
+  const schema = SchemaBuilder.getTechArticle({
+    headline,
+    description,
+    url,
+    datePublished: datePublished || '2026-09-29',
+    authorName,
+    proficiencyLevel,
+    dependencies,
+  });
+  return <JsonLdScript data={schema} />;
+}
+
+export function CollectionPageJsonLd({
+  title,
+  description,
+  url,
+  hasPart,
+}: {
+  title: string;
+  description: string;
+  url: string;
+  hasPart?: { name: string; url: string; description?: string }[];
+}) {
+  const schema = SchemaBuilder.getCollectionPage({ title, description, url, hasPart });
+  return <JsonLdScript data={schema} />;
+}
+
+export function DatasetJsonLd({
+  name,
+  description,
+  url,
+  variableMeasured,
+}: {
+  name: string;
+  description: string;
+  url: string;
+  variableMeasured?: string[];
+}) {
+  const schema = SchemaBuilder.getDataset({ name, description, url, variableMeasured });
+  return <JsonLdScript data={schema} />;
+}
+
+export function DefinedTermSetJsonLd({
+  name,
+  description,
+  url,
+  terms,
+}: {
+  name: string;
+  description: string;
+  url: string;
+  terms: { name: string; termCode: string; description: string; url?: string }[];
+}) {
+  const schema = SchemaBuilder.getDefinedTermSet({ name, description, url, terms });
+  return <JsonLdScript data={schema} />;
+}
+
+export function ProfilePageJsonLd({
+  name,
+  description,
+  url,
+  role,
+  knowsAbout,
+}: {
+  name: string;
+  description: string;
+  url: string;
+  role?: string;
+  knowsAbout?: string[];
+}) {
+  const schema = SchemaBuilder.getProfilePage({ name, description, url, role, knowsAbout });
+  return <JsonLdScript data={schema} />;
+}
+
