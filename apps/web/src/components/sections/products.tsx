@@ -52,9 +52,9 @@ const PRODUCTS: Product[] = [
     icon: Fingerprint,
     name: 'OneHealthID',
     description:
-      'Privacy-first identity and consent layer for healthcare ecosystems, designed for interoperability and patient control.',
+      'Role-first healthcare operating platform that simplifies hospital and clinical operations for administrators, doctors, nurses, staff, and patients.',
     status: 'GA',
-    href: '#products',
+    href: '/products/onehealthid',
   },
   {
     icon: FlaskConical,
