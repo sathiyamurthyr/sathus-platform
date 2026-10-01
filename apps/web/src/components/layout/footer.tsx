@@ -38,7 +38,8 @@ export function Footer({ className }: { className?: string }) {
             {/* Official Company Address & Contact Details */}
             <div className="mt-4 space-y-1.5 text-xs text-[#B7B7B7] leading-relaxed">
               <p className="font-semibold text-white">{companyConfig.name}</p>
-              <p>{companyConfig.address.formatted}</p>
+              <p><span className="text-white/80 font-medium">HQ:</span> {companyConfig.address.formatted}</p>
+              <p><span className="text-white/80 font-medium">Branch:</span> {companyConfig.branchOffice.formatted}</p>
               <p className="pt-1">
                 Email:{' '}
                 <a href={`mailto:${companyConfig.email}`} className="font-medium text-[#E7B631] hover:underline">

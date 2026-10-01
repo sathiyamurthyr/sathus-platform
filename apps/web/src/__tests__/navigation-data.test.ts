@@ -4,7 +4,7 @@ import { mainNavigation, footerNavigation } from '@/features/navigation/config/n
 describe('Navigation Data', () => {
   describe('mainNavigation', () => {
     it('has all main navigation items', () => {
-      expect(mainNavigation.length).toBe(5);
+      expect(mainNavigation.length).toBe(6);
       expect(mainNavigation.find(n => n.id === 'solutions')).toBeDefined();
       expect(mainNavigation.find(n => n.id === 'products')).toBeDefined();
       expect(mainNavigation.find(n => n.id === 'resources')).toBeDefined();
@@ -21,7 +21,7 @@ describe('Navigation Data', () => {
 
   describe('footerNavigation', () => {
     it('has all footer sections', () => {
-      expect(footerNavigation.length).toBe(4);
+      expect(footerNavigation.length).toBe(5);
       expect(footerNavigation.find(f => f.id === 'product')).toBeDefined();
       expect(footerNavigation.find(f => f.id === 'resources')).toBeDefined();
       expect(footerNavigation.find(f => f.id === 'trust')).toBeDefined();

@@ -16,6 +16,7 @@ import {
   CheckCircle2,
   Clock,
   ShieldCheck,
+  MapPin,
 } from 'lucide-react';
 import { companyConfig } from '@/config/company';
 
@@ -28,6 +29,8 @@ export const metadata: Metadata = generatePageMetadata({
     'Book Strategy Session',
     'Sathus Technology Sales',
     'Sathus Chennai HQ Address',
+    'Sathus Guindy Branch Office',
+    'Sathus Chennai Guindy Address',
   ],
 });
 
@@ -195,12 +198,33 @@ export default function ContactPage() {
               </div>
             </div>
 
-            {/* Office Location */}
-            <div className="rounded-xl border border-border bg-card p-6 space-y-4">
-              <h3 className="text-base font-bold">Corporate Headquarters</h3>
-              <div className="text-sm text-muted-foreground space-y-1">
-                <p className="font-semibold text-foreground">{companyConfig.name}</p>
-                <p>{companyConfig.address.formatted}</p>
+            {/* Office Locations */}
+            <div className="rounded-xl border border-border bg-card p-6 space-y-5">
+              <div className="flex items-center gap-2 text-foreground">
+                <MapPin className="h-4.5 w-4.5 text-primary" />
+                <h3 className="text-base font-bold">Office Locations</h3>
+              </div>
+
+              {/* Corporate Headquarters */}
+              <div className="space-y-1.5 pb-4 border-b border-border/60">
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-primary bg-primary/10 px-2 py-0.5 rounded">
+                    Corporate Headquarters
+                  </span>
+                </div>
+                <p className="font-semibold text-foreground text-sm">{companyConfig.name}</p>
+                <p className="text-sm text-muted-foreground leading-relaxed">{companyConfig.address.formatted}</p>
+              </div>
+
+              {/* Branch Office */}
+              <div className="space-y-1.5">
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-primary bg-primary/10 px-2 py-0.5 rounded">
+                    Branch Office
+                  </span>
+                </div>
+                <p className="font-semibold text-foreground text-sm">{companyConfig.branchOffice.building}</p>
+                <p className="text-sm text-muted-foreground leading-relaxed">{companyConfig.branchOffice.formatted}</p>
               </div>
             </div>
 

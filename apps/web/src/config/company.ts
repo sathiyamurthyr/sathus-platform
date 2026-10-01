@@ -1,6 +1,7 @@
 // Centralized Official Sathus Technology Company Configuration
 
 export interface CompanyAddress {
+  building?: string;
   street: string;
   landmark: string;
   locality: string;
@@ -23,6 +24,7 @@ export interface CompanyConfig {
   shortName: string;
   legalName: string;
   address: CompanyAddress;
+  branchOffice: CompanyAddress;
   email: string;
   phone: string;
   phoneRaw: string;
@@ -47,6 +49,18 @@ export const companyConfig: CompanyConfig = {
     country: 'India',
     formatted:
       'Plot No. 8/47, Sri Ambal Nagar Annexe, Ponni Amman Kovil St, Opp. Kedar Hospital, Kovur, Chennai – 600128, India',
+  },
+  branchOffice: {
+    building: 'Bigspace Business Centre',
+    street: '110, Manickam Lane, Anna Salai',
+    landmark: 'Opp. Guindy Metro Station',
+    locality: 'Guindy',
+    city: 'Chennai',
+    state: 'Tamil Nadu',
+    postalCode: '600032',
+    country: 'India',
+    formatted:
+      'Bigspace Business Centre, 110, Manickam Lane, Anna Salai, Opp. Guindy Metro Station, Guindy, Chennai – 600 032, Tamil Nadu, India',
   },
   email: 'admin@sathus.in',
   phone: '+91 90253 81316',
@@ -92,6 +106,22 @@ export const companyConfig: CompanyConfig = {
         'Enterprise Software Architecture',
       ],
       sameAs: [this.socials.linkedin, this.socials.instagram],
+      department: [
+        {
+          '@type': 'LocalBusiness',
+          name: `${this.shortName} - Guindy Branch Office`,
+          url: `${this.website}/contact`,
+          telephone: this.phone,
+          address: {
+            '@type': 'PostalAddress',
+            streetAddress: `${this.branchOffice.building}, ${this.branchOffice.street}, ${this.branchOffice.landmark}`,
+            addressLocality: this.branchOffice.locality,
+            addressRegion: this.branchOffice.state,
+            postalCode: this.branchOffice.postalCode,
+            addressCountry: 'IN',
+          },
+        },
+      ],
     };
   },
   getLocalBusinessSchema() {
