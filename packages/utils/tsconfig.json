@@ -13,7 +13,6 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "jsx": "preserve",
-    "incremental": true,
     "isolatedModules": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
