@@ -66,7 +66,7 @@ export default function EngineeringHubPage() {
             </div>
 
             <h1 className="text-4xl md:text-6xl font-black tracking-tight text-foreground leading-[1.1]">
-              Architectural Blueprints, Lakehouse Standards &amp; B2B Search Authority
+              Architectural Blueprints, Lakehouse Standards &amp; Distributed Systems
             </h1>
 
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">

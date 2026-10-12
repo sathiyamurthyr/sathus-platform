@@ -19,13 +19,22 @@ export function PricingHero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-foreground"
+          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-foreground"
+        >
+          Enterprise Engineering & Platform Pricing
+        </motion.h1>
+
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15 }}
+          className="text-xl md:text-2xl font-medium text-foreground/90"
         >
           No Retainers.{' '}
           <span className="bg-gradient-to-r from-primary to-emerald-400 bg-clip-text text-transparent">
             No Surprises.
           </span>
-        </motion.h1>
+        </motion.p>
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}

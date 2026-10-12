@@ -76,7 +76,7 @@ export const sathusAi: Product = {
     { id: 'databricks', name: 'Databricks', category: 'Data' },
   ],
   security: [
-    { id: 'soc2', title: 'SOC 2 Type II Certified', description: 'Audited control environment for security and availability.' },
+    { id: 'soc2', title: 'SOC 2 Type II Aligned', description: 'Architected control environment for security, availability, and strict tenant isolation.' },
     { id: 'encryption', title: 'AES-256 & TLS 1.3', description: 'End-to-end encryption for all agent telemetry.' },
   ],
   roadmap: [

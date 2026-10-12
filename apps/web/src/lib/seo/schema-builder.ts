@@ -215,11 +215,11 @@ export class SchemaBuilder {
     features = [],
     price = '0',
     currency = 'USD',
-    ratingValue = 4.9,
-    reviewCount = 42,
+    ratingValue,
+    reviewCount,
   }: SoftwareAppSchemaProps) {
     const appUrl = `${BASE_URL}/products/${slug}`;
-    return {
+    const schema: Record<string, unknown> = {
       '@context': 'https://schema.org',
       '@type': ['SoftwareApplication', 'Product'],
       '@id': `${appUrl}/#software`,
@@ -241,22 +241,19 @@ export class SchemaBuilder {
         availability: 'https://schema.org/InStock',
         url: appUrl,
       },
-      aggregateRating: {
+    };
+
+    if (ratingValue && reviewCount) {
+      schema.aggregateRating = {
         '@type': 'AggregateRating',
         ratingValue: ratingValue.toString(),
         ratingCount: reviewCount.toString(),
         bestRating: '5',
         worstRating: '1',
-      },
-      review: [
-        {
-          '@type': 'Review',
-          author: { '@type': 'Person', name: 'Principal Enterprise Architect' },
-          reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
-          reviewBody: `Production-grade ${name} deployment with 99.99% SLA and full auditability.`,
-        },
-      ],
-    };
+      };
+    }
+
+    return schema;
   }
 
   static getArticle({

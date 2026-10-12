@@ -10,8 +10,8 @@ const TECHNOLOGIES = [
 ];
 
 const METRICS = [
-  { value: '12+', label: 'Years in market' },
-  { value: '50+', label: 'Enterprise projects' },
+  { value: '2018', label: 'Founded & Engineering' },
+  { value: 'Enterprise', label: 'Production Workloads' },
   { value: '99.95%', label: 'Availability target' },
   { value: '24×7', label: 'Support coverage' },
 ];

@@ -15,30 +15,35 @@ export interface BreadcrumbProps {
   items: BreadcrumbItem[];
   className?: string;
   showHome?: boolean;
+  includeJsonLd?: boolean;
 }
 
-export function Breadcrumb({ items, className, showHome = true }: BreadcrumbProps) {
+export function Breadcrumb({ items, className, showHome = true, includeJsonLd = false }: BreadcrumbProps) {
   const allItems: BreadcrumbItem[] = showHome
     ? [{ label: 'Home', href: '/' }, ...items]
     : items;
 
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: allItems.map((item, index) => ({
-      '@type': 'ListItem',
-      position: index + 1,
-      name: item.label,
-      item: item.href ? `${siteConfig.url}${item.href}` : undefined,
-    })),
-  };
+  const jsonLd = includeJsonLd
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: allItems.map((item, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          name: item.label,
+          item: item.href ? `${siteConfig.url}${item.href}` : undefined,
+        })),
+      }
+    : null;
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      {jsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      )}
       <nav
         aria-label="Breadcrumb"
         className={cn('flex items-center space-x-1.5 text-xs text-muted-foreground pt-1.5 pb-1', className)}

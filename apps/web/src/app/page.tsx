@@ -48,8 +48,8 @@ export default function Page() {
           definition="Sathus Technology is a principal software engineering firm specializing in accountable, production-ready AI agent swarms, Apache Iceberg data lakehouses, and zero-downtime cloud platform modernization."
           keyTakeaways={[
             'Senior Principal Engineering Squads (No Sales Proxies)',
-            'Contractual Hard SLAs (Sub-10ms query latency, 99.99% availability)',
-            'Zero Vendor Lock-in with Open Architecture & Open Standards',
+            'Contractual Delivery SLAs (99.95% availability target & resilient query architecture)',
+            'Zero Vendor Lock-in with Open Source Formats & Open Standards',
             'SOC 2 Type II & HIPAA Compliance-by-Design Built In',
           ]}
         />
