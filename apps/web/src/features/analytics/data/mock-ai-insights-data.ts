@@ -181,11 +181,11 @@ export const mockCopilotQueries: CopilotQueryResponse[] = [
 export const mockAIExecutiveSummary: AIExecutiveSummary = {
   period: 'July 2026 Executive Performance Briefing',
   generatedAt: '2026-07-20T07:00:00Z',
-  executiveHeadline: 'Sathus Cloud platform growth accelerates with 18.4% MRR expansion, 99.99% operational SLA uptime, and zero security compliance incidents.',
+  executiveHeadline: 'Sathus Cloud platform growth accelerates with 18.4% MRR expansion, 99.95% operational uptime target, and zero security compliance incidents.',
   summaryParagraphs: [
     'Platform revenue reached $24,850 MRR ($298,200 ARR), representing an 18.4% month-over-month growth. Enterprise Scale customer retention stands at 99.2% with zero customer churn this quarter.',
     'AI Platform adoption doubled with 48.9k API requests processed across vector retrieval and LLM agent workflows, maintaining an average response latency of 185ms.',
-    'Infrastructure SLA targets were fully maintained at 99.99% uptime with Redis 7.2 semantic cache hit ratio exceeding 96.4%.',
+    'Infrastructure SLA targets were fully maintained at 99.95% uptime with Redis 7.2 semantic cache hit ratio exceeding 96.4%.',
   ],
   keyWins: [
     'MRR reached $24,850 (+18.4% YoY)',

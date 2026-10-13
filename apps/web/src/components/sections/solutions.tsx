@@ -19,7 +19,7 @@ const SOLUTIONS: Solution[] = [
       'Pilot AI projects stall in production — models drift, outputs are not auditable, and teams cannot govern them.',
     outcome:
       'We ship production-grade agentic systems with evaluation harnesses, observability, and human-in-the-loop controls from day one.',
-    href: '#products',
+    href: '/solutions/ai-engineering',
   },
   {
     icon: Database,
@@ -28,7 +28,7 @@ const SOLUTIONS: Solution[] = [
       'Data lives in fragmented silos with no lineage, no quality guarantees, and no real-time access.',
     outcome:
       'We build governed lakehouses and streaming pipelines that turn raw events into trustworthy, query-ready intelligence.',
-    href: '#platform',
+    href: '/solutions/data-engineering',
   },
   {
     icon: Boxes,
@@ -37,7 +37,7 @@ const SOLUTIONS: Solution[] = [
       'Off-the-shelf software forces process compromise and creates brittle, hard-to-maintain integrations.',
     outcome:
       'We design domain-driven applications — custom or composable — that fit the way your organization actually works.',
-    href: '#products',
+    href: '/solutions/enterprise-applications',
   },
   {
     icon: CloudCog,
@@ -46,7 +46,7 @@ const SOLUTIONS: Solution[] = [
       'Legacy estates are costly, fragile, and difficult to scale securely without business disruption.',
     outcome:
       'We re-platform to cloud-native architectures on Azure and AWS with zero-downtime migration paths.',
-    href: '#technology',
+    href: '/solutions/cloud-modernization',
   },
   {
     icon: Rocket,
@@ -55,7 +55,7 @@ const SOLUTIONS: Solution[] = [
       'Strong ideas die in the gap between prototype and a shipped, supported product.',
     outcome:
       'We run embedded product squads that take concepts from discovery to GA with a real delivery cadence.',
-    href: '#why',
+    href: '/solutions/product-engineering',
   },
   {
     icon: Repeat,
@@ -64,7 +64,7 @@ const SOLUTIONS: Solution[] = [
       'Transformation programs run for years and deliver slide decks rather than measurable outcomes.',
     outcome:
       'We deliver operating-model change through outcome-based roadmaps and durable platform thinking.',
-    href: '#why',
+    href: '/solutions/digital-transformation',
   },
 ];
 

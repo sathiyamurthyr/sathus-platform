@@ -62,7 +62,7 @@ export const mockPlans: Plan[] = [
     tier: 'enterprise',
     priceMonthlyUsd: 999,
     priceAnnuallyUsd: 799,
-    description: 'Mission-critical platform with SOC 2 compliance, dedicated AI Gateway, and 99.99% SLA.',
+    description: 'Mission-critical platform with compliance-ready controls, dedicated AI Gateway, and 99.95% availability target.',
     features: [
       'Unlimited User Seats',
       '2,000 GB High-Speed Storage Vault',

@@ -29,7 +29,7 @@ const PRODUCTS: Product[] = [
     description:
       'Managed platform for building, evaluating, and deploying enterprise agents — with guardrails, evaluation harnesses, and production observability built in.',
     status: 'GA',
-    href: '#platform',
+    href: '/products/sathus-ai',
     featured: true,
   },
   {
@@ -38,7 +38,7 @@ const PRODUCTS: Product[] = [
     description:
       'Unified document intelligence and memory platform that turns enterprise knowledge into grounded, citation-ready context.',
     status: 'GA',
-    href: '#products',
+    href: '/products/memomes-cloud',
   },
   {
     icon: Share2,
@@ -46,7 +46,7 @@ const PRODUCTS: Product[] = [
     description:
       'Model Context Protocol gateway that connects AI agents to your social and business graph through governed, auditable tools.',
     status: 'Beta',
-    href: '#products',
+    href: '/products/socialhub-mcp',
   },
   {
     icon: Fingerprint,
@@ -62,7 +62,7 @@ const PRODUCTS: Product[] = [
     description:
       'Agentic data governance, industry copilots, and embedded analytics — in active research with design partners.',
     status: 'Research',
-    href: '#products',
+    href: '/products',
   },
 ];
 
@@ -125,10 +125,11 @@ export function Products() {
                 {/* Explore Link */}
                 <Link
                   href={product.href}
-                  className="mt-5 inline-flex w-fit items-center gap-1.5 text-sm font-medium text-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded"
+                  className="mt-5 inline-flex w-fit items-center gap-1.5 text-sm font-medium text-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded after:absolute after:inset-0 after:rounded-2xl"
+                  aria-label={`Explore ${product.name}`}
                 >
                   Explore
-                  <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 text-[#FF9933]" />
                 </Link>
               </Reveal>
             );

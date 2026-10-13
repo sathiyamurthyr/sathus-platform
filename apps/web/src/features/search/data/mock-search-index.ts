@@ -102,7 +102,7 @@ export const mockSavedSearches: SavedSearch[] = [
 
 export const mockSearchSuggestions: SearchSuggestion[] = [
   { text: 'Lakehouse Data Migration', type: 'entity', category: 'projects', url: '/app/projects' },
-  { text: 'SOC 2 Compliance Audit', type: 'entity', category: 'ai_knowledge', url: '/app/ai' },
+  { text: 'Compliance & Audit Controls', type: 'entity', category: 'ai_knowledge', url: '/app/ai' },
   { text: 'Memomes Vault Encryption', type: 'entity', category: 'files', url: '/app/files' },
   { text: 'Model Context Protocol (MCP)', type: 'entity', category: 'documentation', url: '/resources/documentation' },
   { text: 'Notification Webhooks Rate Limit', type: 'query' },

@@ -62,11 +62,19 @@ export const NODES = RAW_NODES.map((node) => {
 
 export function PlatformVisualization() {
   const reduce = useReducedMotion();
+  const [activeNodeId, setActiveNodeId] = React.useState<string | null>(null);
+
+  const toggleNode = (id: string) => {
+    setActiveNodeId((prev) => (prev === id ? null : id));
+  };
+
+  const activeNode = NODES.find((n) => n.id === activeNodeId);
 
   return (
     <div
       className="relative mx-auto aspect-square w-full max-w-[540px] platform-stacked select-none"
-      aria-hidden="true"
+      role="region"
+      aria-label="Enterprise platform architecture topology diagram showing AI Agents, Cloud, Applications, Analytics, and Data Pipelines connected to the AI Core"
     >
       {/* Radial Topology SVG Canvas (Center at 50, 50) */}
       <svg
@@ -74,6 +82,7 @@ export function PlatformVisualization() {
         preserveAspectRatio="none"
         className="absolute inset-0 h-full w-full pointer-events-none z-0"
         fill="none"
+        aria-hidden="true"
       >
         <defs>
           <linearGradient id="nodeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -95,46 +104,49 @@ export function PlatformVisualization() {
           vectorEffect="non-scaling-stroke"
         />
 
-        {NODES.map((node, i) => (
-          <React.Fragment key={node.id}>
-            {/* Connection Line from AI Core center (50, 50) to exact card visual center (node.x, node.y) */}
-            <line
-              x1="50"
-              y1="50"
-              x2={node.x}
-              y2={node.y}
-              stroke="url(#nodeGradient)"
-              strokeWidth="0.5"
-              strokeDasharray="2 2.4"
-              vectorEffect="non-scaling-stroke"
-              className={reduce ? '' : 'animate-dash'}
-              opacity={0.8}
-            />
+        {NODES.map((node, i) => {
+          const isActive = activeNodeId === node.id;
+          return (
+            <React.Fragment key={node.id}>
+              {/* Connection Line from AI Core center (50, 50) to exact card visual center (node.x, node.y) */}
+              <line
+                x1="50"
+                y1="50"
+                x2={node.x}
+                y2={node.y}
+                stroke={isActive ? '#A20A3A' : 'url(#nodeGradient)'}
+                strokeWidth={isActive ? '1.0' : '0.5'}
+                strokeDasharray={isActive ? 'none' : '2 2.4'}
+                vectorEffect="non-scaling-stroke"
+                className={reduce ? '' : 'animate-dash'}
+                opacity={isActive ? 1 : 0.75}
+              />
 
-            {/* Particle Streaming Effect (Burgundy & Vibrant Orange) */}
-            {!reduce && (
-              <circle r="0.8" fill={i % 2 === 0 ? "#A20A3A" : "#FF9933"} opacity="0.9">
-                <animateMotion
-                  path={`M 50 50 L ${node.x} ${node.y}`}
-                  dur={`${2.2 + (i % 3) * 0.4}s`}
-                  repeatCount="indefinite"
-                  begin={`${i * 0.3}s`}
-                />
-              </circle>
-            )}
+              {/* Particle Streaming Effect (Burgundy & Vibrant Orange) */}
+              {!reduce && (
+                <circle r={isActive ? '1.2' : '0.8'} fill={i % 2 === 0 ? '#A20A3A' : '#FF9933'} opacity={isActive ? 1 : 0.9}>
+                  <animateMotion
+                    path={`M 50 50 L ${node.x} ${node.y}`}
+                    dur={`${2.2 + (i % 3) * 0.4}s`}
+                    repeatCount="indefinite"
+                    begin={`${i * 0.3}s`}
+                  />
+                </circle>
+              )}
 
-            {!reduce && (
-              <circle r="0.6" fill={i % 3 === 0 ? "#EDC11E" : "#FF9933"} opacity="0.85">
-                <animateMotion
-                  path={`M ${node.x} ${node.y} L 50 50`}
-                  dur={`${2.6 + (i % 2) * 0.5}s`}
-                  repeatCount="indefinite"
-                  begin={`${i * 0.4 + 0.2}s`}
-                />
-              </circle>
-            )}
-          </React.Fragment>
-        ))}
+              {!reduce && (
+                <circle r={isActive ? '0.9' : '0.6'} fill={i % 3 === 0 ? '#EDC11E' : '#FF9933'} opacity={isActive ? 1 : 0.85}>
+                  <animateMotion
+                    path={`M ${node.x} ${node.y} L 50 50`}
+                    dur={`${2.6 + (i % 2) * 0.5}s`}
+                    repeatCount="indefinite"
+                    begin={`${i * 0.4 + 0.2}s`}
+                  />
+                </circle>
+              )}
+            </React.Fragment>
+          );
+        })}
       </svg>
 
       {/* 3D Interactive AI Core - centered at exact (50%, 50%) */}
@@ -153,24 +165,36 @@ export function PlatformVisualization() {
       {/* Technology Nodes */}
       {NODES.map((node, i) => {
         const Icon = node.icon;
+        const isActive = activeNodeId === node.id;
         return (
           <div
             key={node.id}
-            className="absolute z-20 pointer-events-auto"
+            className="absolute z-20 pointer-events-auto cursor-pointer"
             style={{
               left: `${node.x}%`,
               top: `${node.y}%`,
               transform: 'translate(-50%, -50%)',
             }}
+            role="button"
+            tabIndex={0}
+            aria-pressed={isActive}
+            aria-label={`${node.label} (${node.meta}) — tap to select`}
+            onClick={() => toggleNode(node.id)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggleNode(node.id);
+              }
+            }}
           >
             <motion.div
               initial={reduce ? false : { opacity: 0, scale: 0.8 }}
-              animate={reduce ? undefined : { opacity: 1, scale: 1 }}
-              transition={{ delay: 0.2 + i * 0.08, duration: 0.5 }}
+              animate={reduce ? undefined : { opacity: 1, scale: isActive ? 1.08 : 1 }}
+              transition={{ delay: 0.2 + i * 0.08, duration: 0.4 }}
               whileHover={reduce ? undefined : { scale: 1.06 }}
             >
               {/* Arrival Pulse Ring */}
-              {!reduce && (
+              {!reduce && !isActive && (
                 <span className="absolute inset-0 rounded-xl border border-[#FF9933]/40 animate-ping opacity-25 pointer-events-none" />
               )}
 
@@ -178,9 +202,21 @@ export function PlatformVisualization() {
                 className={reduce ? '' : 'animate-float-soft'}
                 style={{ animationDelay: `${i * 0.7}s` }}
               >
-                {/* Node Card: subtle surface, border #E8E2E5, hover border #A20A3A */}
-                <div className="group flex h-9 w-28 xs:w-32 sm:h-11 sm:w-44 items-center gap-1.5 sm:gap-2.5 rounded-lg sm:rounded-xl border border-[#E8E2E5] bg-[#FAF8F9] px-2 sm:px-3 shadow-md backdrop-blur-md transition-all duration-300 hover:border-[#A20A3A] hover:bg-white hover:shadow-lg">
-                  <span className="flex h-5 w-5 sm:h-7 sm:w-7 shrink-0 items-center justify-center rounded bg-[#A20A3A]/10 text-[#A20A3A] ring-1 ring-inset ring-[#A20A3A]/20 transition-all duration-300 group-hover:bg-[#A20A3A] group-hover:text-white group-hover:scale-110">
+                {/* Node Card: subtle surface, border #E8E2E5, active/hover border #A20A3A */}
+                <div
+                  className={`group flex h-9 w-28 xs:w-32 sm:h-11 sm:w-44 items-center gap-1.5 sm:gap-2.5 rounded-lg sm:rounded-xl border px-2 sm:px-3 shadow-md backdrop-blur-md transition-all duration-300 ${
+                    isActive
+                      ? 'border-[#A20A3A] bg-white ring-2 ring-[#A20A3A]/30 shadow-lg scale-105'
+                      : 'border-[#E8E2E5] bg-[#FAF8F9] hover:border-[#A20A3A] hover:bg-white hover:shadow-lg'
+                  }`}
+                >
+                  <span
+                    className={`flex h-5 w-5 sm:h-7 sm:w-7 shrink-0 items-center justify-center rounded ring-1 ring-inset transition-all duration-300 ${
+                      isActive
+                        ? 'bg-[#A20A3A] text-white ring-[#A20A3A]'
+                        : 'bg-[#A20A3A]/10 text-[#A20A3A] ring-[#A20A3A]/20 group-hover:bg-[#A20A3A] group-hover:text-white group-hover:scale-110'
+                    }`}
+                  >
                     <Icon className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
                   </span>
                   <span className="flex flex-col leading-tight min-w-0">
@@ -195,6 +231,15 @@ export function PlatformVisualization() {
           </div>
         );
       })}
+
+      {/* Active Node Detail Callout for touchscreen / mobile */}
+      {activeNode && (
+        <div className="absolute -bottom-7 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2 rounded-full border border-[#E8E2E5] bg-white/95 px-3 py-1 shadow-md backdrop-blur-md animate-in fade-in slide-in-from-bottom-2 duration-200">
+          <span className="h-2 w-2 rounded-full bg-[#A20A3A]" />
+          <span className="text-xs font-semibold text-[#292329]">{activeNode.label}:</span>
+          <span className="text-xs text-[#625B60]">{activeNode.meta}</span>
+        </div>
+      )}
     </div>
   );
 }

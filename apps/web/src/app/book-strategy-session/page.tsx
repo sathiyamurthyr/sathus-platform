@@ -72,32 +72,32 @@ const goodFor = [
   'Executive technical briefings for leadership alignment',
 ];
 
-const testimonials = [
+const sessionDeliverables = [
   {
-    quote: "The session gave us more clarity in 30 minutes than months of internal debate. The Sathus engineer knew our stack deeply and gave us a clear path forward.",
-    name: "CTO, Series B FinTech",
-    company: "Financial Services",
-    stars: 5,
+    title: 'Architecture Trade-Off Matrix',
+    description:
+      'We evaluate your compute, storage, and orchestration trade-offs — comparing latency, operational complexity, and infrastructure cost profiles.',
+    deliverable: 'Latency vs. cost comparison map',
   },
   {
-    quote: "No pitch, no fluff. They identified three critical architectural risks in our data pipeline that we had completely missed. The written summary alone was worth it.",
-    name: "VP of Engineering",
-    company: "Healthcare Platform",
-    stars: 5,
+    title: 'Production Governance & Risk Audit',
+    description:
+      'We review deterministic guardrails, evaluation harnesses, and compliance controls required for enterprise production deployment.',
+    deliverable: 'Auditable risk scorecard',
   },
   {
-    quote: "We came in skeptical. We left with a concrete migration plan and confidence it would actually work. Engaged them for a full embedded squad immediately.",
-    name: "Data Platform Lead",
-    company: "Global Insurance Group",
-    stars: 5,
+    title: '30-Day Delivery Roadmap',
+    description:
+      'A concrete sequencing plan outlining the high-priority technical spikes, squad composition, and incremental milestones to achieve production GA.',
+    deliverable: 'Phased milestone delivery brief',
   },
 ];
 
-const metrics = [
-  { value: '200+', label: 'Strategy Sessions Conducted' },
-  { value: '94%', label: 'Led to Formal Engagement' },
-  { value: '<24h', label: 'Confirmation Time' },
-  { value: '100%', label: 'Senior Engineer Led' },
+const sessionCommitments = [
+  { value: '30 min', label: 'Structured Technical Assessment' },
+  { value: '100%', label: 'Led by Principal Engineers' },
+  { value: '<24h', label: 'Scheduling Confirmation' },
+  { value: 'Zero', label: 'Sales Pressure or Obligation' },
 ];
 
 export default function StrategySessionPage() {
@@ -116,9 +116,9 @@ export default function StrategySessionPage() {
           description="Talk directly with a Sathus principal engineer about your platform challenges. No sales pitch. No account managers. Just an honest engineering conversation."
         />
 
-        {/* Social proof metrics strip */}
+        {/* Practice commitments strip */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {metrics.map((m) => (
+          {sessionCommitments.map((m) => (
             <div key={m.label} className="rounded-xl border border-border bg-card p-5 text-center">
               <div className="text-2xl font-black text-primary mb-1">{m.value}</div>
               <div className="text-xs text-muted-foreground leading-tight">{m.label}</div>
@@ -151,27 +151,22 @@ export default function StrategySessionPage() {
           })}
         </div>
 
-        {/* Testimonials */}
+        {/* Deliverables Section */}
         <div>
           <h2 className="text-xl font-bold mb-5 flex items-center gap-2">
-            <Star className="h-5 w-5 text-amber-400 fill-amber-400" />
-            What Engineers Say
+            <CheckCircle2 className="h-5 w-5 text-primary" />
+            What You Walk Away With
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {testimonials.map((t) => (
-              <div key={t.name} className="rounded-xl border border-border bg-card p-6 flex flex-col gap-4 hover:border-primary/30 transition-colors">
-                <Quote className="h-5 w-5 text-primary/40" />
-                <p className="text-xs text-muted-foreground leading-relaxed italic flex-1">&ldquo;{t.quote}&rdquo;</p>
-                <div className="flex items-center justify-between pt-2 border-t border-border">
-                  <div>
-                    <div className="text-xs font-semibold text-foreground">{t.name}</div>
-                    <div className="text-[10px] text-muted-foreground">{t.company}</div>
-                  </div>
-                  <div className="flex gap-0.5">
-                    {Array.from({ length: t.stars }).map((_, i) => (
-                      <Star key={i} className="h-3 w-3 text-amber-400 fill-amber-400" />
-                    ))}
-                  </div>
+            {sessionDeliverables.map((d) => (
+              <div key={d.title} className="rounded-xl border border-border bg-card p-6 flex flex-col justify-between hover:border-primary/30 transition-colors">
+                <div>
+                  <h3 className="text-sm font-bold text-foreground mb-2">{d.title}</h3>
+                  <p className="text-xs text-muted-foreground leading-relaxed">{d.description}</p>
+                </div>
+                <div className="mt-4 pt-3 border-t border-border flex items-center gap-2 text-[11px] font-semibold text-primary">
+                  <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+                  {d.deliverable}
                 </div>
               </div>
             ))}

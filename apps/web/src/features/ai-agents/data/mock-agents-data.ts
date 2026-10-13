@@ -293,7 +293,7 @@ export const mockGoalPlans = [
     strategicGoals: [
       {
         id: 'goal-str-1',
-        title: 'Achieve 99.99% Infrastructure Availability SLA',
+        title: 'Achieve 99.95% Infrastructure Availability Target',
         plannerType: 'strategic' as const,
         priority: 'P0' as const,
         progressPercent: 78,
@@ -404,7 +404,7 @@ export const mockKnowledgeEntities = [
     type: 'service' as const,
     description: 'Core ingress router handling JWT authentication, rate limiting, and tenant subdomain resolution.',
     ownerTenant: 'Platform Infrastructure Global',
-    attributesJson: '{"version": "v2.4.0", "sla": "99.99%"}',
+    attributesJson: '{"version": "v2.4.0", "sla": "99.95%"}',
   },
   {
     id: 'ent-db-01',

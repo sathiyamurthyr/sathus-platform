@@ -17,7 +17,7 @@ export function StatusBar() {
         </span>
         <span className="hidden md:flex items-center space-x-1">
           <Activity className="w-3 h-3 text-primary" />
-          <span>SLA: 99.99%</span>
+          <span>SLA Target: 99.95%</span>
         </span>
       </div>
 

@@ -34,6 +34,7 @@ export function ContactForm({ inquiryType = 'general', onSuccess }: ContactFormP
   const [currentStep, setCurrentStep] = React.useState(0);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [isSubmitted, setIsSubmitted] = React.useState(false);
+  const [submitError, setSubmitError] = React.useState<string | null>(null);
 
   const {
     register,
@@ -78,26 +79,32 @@ export function ContactForm({ inquiryType = 'general', onSuccess }: ContactFormP
 
   const onSubmit = async (data: ContactFormData) => {
     setIsSubmitting(true);
+    setSubmitError(null);
     try {
       let leadId = crypto.randomUUID();
-      try {
-        const res = await fetch('/api/contact', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data),
-        });
-        if (res.ok) {
-          const resData = await res.json();
-          if (resData.leadId) leadId = resData.leadId;
-        }
-      } catch {
-        // Dev client-side fallback
-      }
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
 
-      setIsSubmitted(true);
-      onSuccess?.(leadId);
+      if (res.ok) {
+        const resData = await res.json().catch(() => ({}));
+        if (resData.leadId) leadId = resData.leadId;
+        setIsSubmitted(true);
+        onSuccess?.(leadId);
+      } else {
+        const errData = await res.json().catch(() => null);
+        setSubmitError(
+          errData?.message ||
+            'We encountered an issue submitting your request. Please email us directly at info@sathus.com or call +91 99401 23648.'
+        );
+      }
     } catch (error) {
       console.error('Form submission error:', error);
+      setSubmitError(
+        'Unable to connect to the submission service. Please email our engineering team directly at info@sathus.com or call +91 99401 23648.'
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -378,6 +385,13 @@ export function ContactForm({ inquiryType = 'general', onSuccess }: ContactFormP
               </div>
             )}
           />
+        </div>
+      )}
+
+      {/* Submission error message */}
+      {submitError && (
+        <div className="rounded-lg border border-destructive/40 bg-destructive/10 p-4 text-xs text-destructive leading-relaxed">
+          {submitError}
         </div>
       )}
 

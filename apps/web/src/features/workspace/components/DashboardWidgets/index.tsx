@@ -64,7 +64,7 @@ export function DashboardWidgets() {
           <div className="text-2xl font-extrabold text-foreground">Operational</div>
           <div className="text-xs text-muted-foreground flex items-center">
             <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 mr-1.5" />
-            99.99% Availability SLA
+            99.95% Availability Target
           </div>
         </div>
 

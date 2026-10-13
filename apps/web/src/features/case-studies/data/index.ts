@@ -58,10 +58,10 @@ export const caseStudies: CaseStudy[] = [
     ],
     testimonial: {
       quote:
-        'The AI risk assessment system transformed our operations. We now process assessments in minutes instead of days, with better accuracy and full compliance.',
-      author: 'Sarah Chen',
-      title: 'Chief Risk Officer',
-      company: 'Global Financial Services Firm',
+        'Deterministic validation harnesses and structured RAG pipelines reduced risk report preparation time by 75% while maintaining full regulatory auditability.',
+      author: 'Principal AI Architect',
+      title: 'Financial Services Practice',
+      company: 'Sathus Technology',
     },
     relatedSolutions: ['ai-engineering', 'data-engineering'],
     seo: {
@@ -122,10 +122,10 @@ export const caseStudies: CaseStudy[] = [
     ],
     testimonial: {
       quote:
-        'The clinical decision support system has been transformative for our healthcare network. We are seeing better patient outcomes and our clinicians are more efficient.',
-      author: 'Dr. Michael Rodriguez',
-      title: 'Chief Medical Officer',
-      company: 'Regional Healthcare Network',
+        'Coupling structured FHIR data models with multi-stage verification guards ensured zero unbounded outputs during clinical document synthesis.',
+      author: 'Lead Health Informatics Architect',
+      title: 'Healthcare & Life Sciences Practice',
+      company: 'Sathus Technology',
     },
     relatedSolutions: ['ai-engineering'],
     seo: {
@@ -252,10 +252,10 @@ export const caseStudies: CaseStudy[] = [
     ],
     testimonial: {
       quote:
-        'Sathus engineered our core banking platform migration with surgical precision. Migrating 12 million active accounts with zero downtime exceeded our highest expectations.',
-      author: 'Marcus Vance',
-      title: 'Head of Core Engineering',
-      company: 'Apex Tier-1 Bank',
+        'Dual-write validation adapters and change-data-capture streaming enabled migrating 12 million active ledger accounts with continuous consistency and zero cutover outage.',
+      author: 'Principal Cloud & Ledger Architect',
+      title: 'Core Banking Practice',
+      company: 'Sathus Technology',
     },
     relatedSolutions: ['cloud-modernization', 'enterprise-architecture'],
     seo: {
@@ -318,10 +318,10 @@ export const caseStudies: CaseStudy[] = [
     ],
     testimonial: {
       quote:
-        'The FHIR clinical lakehouse has revolutionized our clinical informatics. Care teams now have unified patient histories in milliseconds, directly improving patient outcomes.',
-      author: 'Dr. Elena Rostova',
-      title: 'Director of Health Informatics',
-      company: 'Providence Health Alliance',
+        'Uniting HL7 FHIR standards with partitioned lakehouse tables reduced cohort discovery queries from multi-week manual extracts to sub-second analytical scans.',
+      author: 'Lead Data Platform Architect',
+      title: 'Clinical Data Practice',
+      company: 'Sathus Technology',
     },
     relatedSolutions: ['data-engineering', 'ai-engineering'],
     seo: {
@@ -383,10 +383,10 @@ export const caseStudies: CaseStudy[] = [
     ],
     testimonial: {
       quote:
-        'With Sathus, we transformed from reactive firefighting to predictive orchestration. The control tower paid for itself in less than four months.',
-      author: 'Henrik Lindqvist',
-      title: 'VP of Global Logistics',
-      company: 'Nordic Industrial Systems',
+        'Decoupling event ingestion via Kafka and applying streaming window aggregations delivered continuous visibility across global freight checkpoints without polling bottlenecks.',
+      author: 'Principal Systems Architect',
+      title: 'Supply Chain & IoT Practice',
+      company: 'Sathus Technology',
     },
     relatedSolutions: ['ai-engineering', 'data-engineering'],
     seo: {
@@ -449,10 +449,10 @@ export const caseStudies: CaseStudy[] = [
     ],
     testimonial: {
       quote:
-        'Sathus delivered the missing bridge between LLM hype and enterprise production reality. Our multi-agent platform is reliable, compliant, and extraordinarily fast.',
-      author: 'Kavita Sundaram',
-      title: 'Chief Technology Officer',
-      company: 'Nexar Global Technologies',
+        'Building deterministic evaluation harnesses and Model Context Protocol gateways transformed experimental LLM prototypes into auditable, production-ready enterprise agent swarms.',
+      author: 'Chief AI Solutions Architect',
+      title: 'Enterprise AI Practice',
+      company: 'Sathus Technology',
     },
     relatedSolutions: ['ai-engineering', 'enterprise-architecture'],
     seo: {

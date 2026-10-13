@@ -38,7 +38,7 @@ export default function AppHelpPage() {
             <span>Trust Center & Security</span>
           </div>
           <p className="text-xs text-muted-foreground">
-            Audit controls, zero-knowledge encryption architecture, and HIPAA/SOC 2 compliance details.
+            Audit controls, zero-knowledge encryption architecture, and compliance-ready governance controls.
           </p>
           <Link
             href="/trust/security"

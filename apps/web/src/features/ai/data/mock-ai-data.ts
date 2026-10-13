@@ -57,10 +57,10 @@ export const mockAIModels: AIModel[] = [
 export const mockAIAgents: AIAgent[] = [
   {
     id: 'agent-audit-01',
-    name: 'Autonomous SOC 2 Compliance Auditor',
+    name: 'Autonomous Infrastructure Compliance Auditor',
     role: 'research',
-    description: 'Scans cloud infrastructure state and evaluates compliance rules against CIS and SOC 2 controls.',
-    systemPrompt: 'You are the Lead Compliance Auditor for Sathus Cloud. Evaluate configurations against SOC 2 Trust Services Criteria.',
+    description: 'Scans cloud infrastructure state and evaluates compliance rules against CIS and security controls.',
+    systemPrompt: 'You are the Lead Compliance Auditor for Sathus Cloud. Evaluate configurations against Trust Services Criteria.',
     model: 'claude-3-5-sonnet',
     provider: 'anthropic',
     tools: ['cloud_config_scanner', 'memomes_vault_writer', 'jira_issue_creator'],

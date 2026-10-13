@@ -62,7 +62,7 @@ export function Hero() {
 
       {/* Ambient background orbs - restrained warm executive glow */}
       <div
-        className="orb left-[-10%] top-[-10%] h-72 w-72 bg-[#A20A3A]/05 transition-transform duration-500 ease-out"
+        className="orb pointer-events-none left-[-10%] top-[-10%] h-48 w-48 sm:h-72 sm:w-72 bg-[#A20A3A]/05 transition-transform duration-500 ease-out"
         style={{
           transform: reduce
             ? undefined
@@ -70,7 +70,7 @@ export function Hero() {
         }}
       />
       <div
-        className="orb right-[-8%] top-[20%] h-80 w-80 bg-[#FF9933]/05 transition-transform duration-500 ease-out"
+        className="orb pointer-events-none right-[-8%] top-[20%] h-56 w-56 sm:h-80 sm:w-80 bg-[#FF9933]/05 transition-transform duration-500 ease-out"
         style={{
           transform: reduce
             ? undefined
@@ -78,7 +78,7 @@ export function Hero() {
         }}
       />
       <div
-        className="orb bottom-[-15%] left-[30%] h-72 w-72 bg-[#EDC11E]/05 transition-transform duration-500 ease-out"
+        className="orb pointer-events-none bottom-[-15%] left-[30%] h-48 w-48 sm:h-72 sm:w-72 bg-[#EDC11E]/05 transition-transform duration-500 ease-out"
         style={{
           transform: reduce
             ? undefined

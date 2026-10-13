@@ -73,7 +73,7 @@ export function EnterpriseCard({
       <div className="h-12 flex items-center justify-start m-0 p-0">
         <Link
           href={href}
-          className="inline-flex items-center gap-1.5 text-sm font-medium text-[#292329] hover:text-[#A20A3A] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A20A3A] focus-visible:ring-offset-2 rounded whitespace-nowrap"
+          className="inline-flex items-center gap-1.5 text-sm font-medium text-[#292329] hover:text-[#A20A3A] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A20A3A] focus-visible:ring-offset-2 rounded whitespace-nowrap after:absolute after:inset-0 after:rounded-[20px]"
           aria-label={`Learn more about ${title}`}
         >
           Learn more
