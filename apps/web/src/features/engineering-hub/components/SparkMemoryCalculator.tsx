@@ -236,12 +236,12 @@ spark.memory.storageFraction: 0.50`;
             </div>
             <div className="rounded-lg bg-neutral-900 p-3 border border-border/40">
               <div className="text-[10px] text-muted-foreground uppercase">spark.executor.cores</div>
-              <div className="text-lg font-bold text-cyan-400">{calc.executorCores} Cores</div>
+              <div className="text-lg font-bold text-[#EDC11E]">{calc.executorCores} Cores</div>
               <div className="text-[10px] text-muted-foreground mt-1">Optimal GC pause limit</div>
             </div>
             <div className="rounded-lg bg-neutral-900 p-3 border border-border/40">
               <div className="text-[10px] text-muted-foreground uppercase">spark.sql.shuffle.partitions</div>
-              <div className="text-lg font-bold text-purple-400">{calc.calculatedPartitions}</div>
+              <div className="text-lg font-bold text-[#FF9933]">{calc.calculatedPartitions}</div>
               <div className="text-[10px] text-muted-foreground mt-1">~128MB per target partition</div>
             </div>
           </div>
@@ -249,7 +249,7 @@ spark.memory.storageFraction: 0.50`;
           <div className="rounded-lg bg-neutral-900/80 p-3 border border-border/40 space-y-2">
             <div className="text-[10px] uppercase font-bold text-muted-foreground">JVM Unified Memory Allocation</div>
             <div className="flex items-center gap-2 h-4 w-full rounded bg-muted/40 overflow-hidden text-[9px] font-bold text-center">
-              <div style={{ width: '30%' }} className="bg-blue-600/80 text-white h-full flex items-center justify-center">
+              <div style={{ width: '30%' }} className="bg-[#A20A3A] text-white h-full flex items-center justify-center">
                 Exec ({calc.executionStorageSplitGb}G)
               </div>
               <div style={{ width: '30%' }} className="bg-emerald-600/80 text-white h-full flex items-center justify-center">

@@ -155,7 +155,7 @@ export function MonitoringDashboardView() {
               : 'border-transparent text-muted-foreground hover:text-foreground'
           }`}
         >
-          <Gauge className="w-4 h-4 text-purple-500" />
+          <Gauge className="w-4 h-4 text-primary" />
           <span>SRE Operations & Tracing</span>
         </button>
       </div>
@@ -214,7 +214,7 @@ export function MonitoringDashboardView() {
           {/* Throughput & Error Rate */}
           <div className="space-y-2 md:pl-6 pt-4 md:pt-0">
             <div className="text-xs font-bold uppercase tracking-wider text-muted-foreground flex items-center space-x-1.5">
-              <Zap className="w-4 h-4 text-purple-500" />
+              <Zap className="w-4 h-4 text-[#FF9933]" />
               <span>Throughput & Error %</span>
             </div>
             <div className="text-xl font-extrabold text-foreground">
@@ -250,13 +250,13 @@ export function MonitoringDashboardView() {
           <div className="bg-card border border-border rounded-xl p-5 space-y-3 shadow-sm">
             <div className="flex items-center justify-between text-xs font-semibold text-muted-foreground">
               <span className="flex items-center space-x-1.5">
-                <Server className="w-4 h-4 text-purple-500" />
+                <Server className="w-4 h-4 text-[#FF9933]" />
                 <span>RAM Usage</span>
               </span>
               <span className="font-mono font-bold text-foreground">{mockSystemInfrastructure.memoryPercent}%</span>
             </div>
             <div className="w-full h-2 rounded-full bg-muted overflow-hidden">
-              <div className="h-full bg-purple-500 rounded-full" style={{ width: `${mockSystemInfrastructure.memoryPercent}%` }} />
+              <div className="h-full bg-[#FF9933] rounded-full" style={{ width: `${mockSystemInfrastructure.memoryPercent}%` }} />
             </div>
             <div className="text-[10px] font-mono text-muted-foreground">Redis Memory: {mockSystemInfrastructure.redisMemoryMb} MB</div>
           </div>
@@ -265,14 +265,14 @@ export function MonitoringDashboardView() {
           <div className="bg-card border border-border rounded-xl p-5 space-y-3 shadow-sm">
             <div className="flex items-center justify-between text-xs font-semibold text-muted-foreground">
               <span className="flex items-center space-x-1.5">
-                <Database className="w-4 h-4 text-blue-500" />
+                <Database className="w-4 h-4 text-[#EDC11E]" />
                 <span>DB Pool Connections</span>
               </span>
               <span className="font-mono font-bold text-foreground">{mockSystemInfrastructure.dbActiveConnections}/{mockSystemInfrastructure.dbMaxConnections}</span>
             </div>
             <div className="w-full h-2 rounded-full bg-muted overflow-hidden">
               <div
-                className="h-full bg-blue-500 rounded-full"
+                className="h-full bg-[#EDC11E] rounded-full"
                 style={{ width: `${(mockSystemInfrastructure.dbActiveConnections / mockSystemInfrastructure.dbMaxConnections) * 100}%` }}
               />
             </div>
@@ -306,7 +306,7 @@ export function MonitoringDashboardView() {
                 <div className="flex items-center space-x-2">
                   <span
                     className={`px-2 py-0.5 rounded text-[10px] font-extrabold uppercase border ${
-                      issue.severity === 'medium' ? 'bg-amber-500/10 text-amber-500 border-amber-500/20' : 'bg-blue-500/10 text-blue-500 border-blue-500/20'
+                      issue.severity === 'medium' ? 'bg-[#FF9933]/15 text-[#C46100] border-[#FF9933]/30' : 'bg-muted text-muted-foreground border-border'
                     }`}
                   >
                     {issue.severity}

@@ -31,7 +31,7 @@ export function AgentAnalyticsContinuousLearningView() {
           </p>
         </div>
 
-        <div className="flex items-center space-x-2 px-3 py-1.5 rounded-lg bg-purple-500/10 text-purple-500 border border-purple-500/20 text-xs font-bold font-mono">
+        <div className="flex items-center space-x-2 px-3 py-1.5 rounded-lg bg-primary/10 text-primary border border-primary/20 text-xs font-bold font-mono">
           <Award className="w-4 h-4" />
           <span>Fleet Reasoning Score: 4.88 / 5.0</span>
         </div>
@@ -75,7 +75,7 @@ export function AgentAnalyticsContinuousLearningView() {
       {/* Continuous Learning & Feedback Stream */}
       <div className="bg-card border border-border rounded-xl p-5 shadow-sm space-y-4">
         <h3 className="text-sm font-bold text-foreground flex items-center space-x-2 border-b border-border pb-3">
-          <Sparkles className="w-4 h-4 text-purple-500" />
+          <Sparkles className="w-4 h-4 text-[#FF9933]" />
           <span>Continuous Learning Feedback & Auto-Optimization Stream</span>
         </h3>
 

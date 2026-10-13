@@ -93,7 +93,7 @@ export function AIInsightsDashboardView() {
   const priorityBadges: Record<string, string> = {
     critical: 'bg-red-500/10 text-red-500 border-red-500/20',
     high: 'bg-amber-500/10 text-amber-500 border-amber-500/20',
-    medium: 'bg-blue-500/10 text-blue-500 border-blue-500/20',
+    medium: 'bg-[#FF9933]/15 text-[#C46100] border-[#FF9933]/30',
     low: 'bg-muted text-muted-foreground border-border',
   };
 
@@ -133,7 +133,7 @@ export function AIInsightsDashboardView() {
           { id: 'insights', label: 'Auto-Generated Business Insights', icon: <Sparkles className="w-4 h-4 text-amber-500" /> },
           { id: 'forecasting', label: 'Predictive Analytics & Forecasts', icon: <TrendingUp className="w-4 h-4 text-emerald-500" /> },
           { id: 'anomalies', label: 'Automated Anomaly Timeline', icon: <AlertTriangle className="w-4 h-4 text-red-500" /> },
-          { id: 'briefing', label: 'Executive Performance Briefing', icon: <Award className="w-4 h-4 text-purple-500" /> },
+          { id: 'briefing', label: 'Executive Performance Briefing', icon: <Award className="w-4 h-4 text-[#EDC11E]" /> },
         ].map((t) => (
           <button
             key={t.id}

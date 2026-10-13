@@ -27,16 +27,14 @@ const PILLARS = [
     icon: ShieldCheck,
     title: 'Security',
     text: 'Zero-trust by default, encryption in transit and at rest, and an audit trail on every action.',
-    stat: 'SOC 2 Type II',
+    stat: 'Security-by-Design',
   },
 ];
 
 const TIMELINE = [
-  { year: '2018', text: 'Founded as a product engineering studio for regulated enterprises.' },
-  { year: '2020', text: 'First enterprise data platform reaches production with full lineage.' },
-  { year: '2022', text: 'Launched the Sathus AI research practice and evaluation harnesses.' },
-  { year: '2024', text: 'ISO 27001-aligned security program and responsible-AI controls.' },
-  { year: '2026', text: 'Agentic platforms operating across six regulated industries.' },
+  { year: '2024', text: 'Incorporated as Sathus Technology Pvt. Ltd. (August 28, 2024) to engineer enterprise AI and data platforms.' },
+  { year: '2025', text: 'Deployed core open-table data lakehouse architectures, MCP gateway systems, and healthcare platforms.' },
+  { year: '2026', text: 'Operating production enterprise AI agent swarms and distributed systems across regulated industries.' },
 ];
 
 export function WhySathus() {

@@ -27,7 +27,7 @@ export default function SecurityPage() {
         eyebrow="Trust Center"
         headingLevel="h1"
         title="Security Architecture & Controls"
-        description="Our multi-layered security controls, encryption protocols, and SOC 2 Type II compliance standards for enterprise data."
+        description="Our multi-layered security controls, encryption protocols, and zero-trust architecture standards for enterprise data."
       />
       <SecurityOverview controls={securityControls} />
     </div>

@@ -80,7 +80,7 @@ export function AIAgentsPlatformView() {
         {[
           { id: 'overview', label: 'Overview', icon: <LayoutDashboard className="w-4 h-4" /> },
           { id: 'command_center', label: 'Command Center', icon: <Radio className="w-4 h-4 text-red-500" /> },
-          { id: 'security', label: 'Security & Governance', icon: <Lock className="w-4 h-4 text-purple-500" /> },
+          { id: 'security', label: 'Security & Governance', icon: <Lock className="w-4 h-4 text-[#A20A3A]" /> },
           { id: 'analytics_learning', label: 'Analytics & Learning', icon: <Award className="w-4 h-4 text-amber-500" /> },
           { id: 'operations', label: 'AI Operations', icon: <Activity className="w-4 h-4 text-emerald-500" /> },
           { id: 'approvals', label: 'HITL Approvals', icon: <ShieldAlert className="w-4 h-4 text-amber-500" /> },
@@ -88,11 +88,11 @@ export function AIAgentsPlatformView() {
           { id: 'registry', label: 'Agent Registry', icon: <Bot className="w-4 h-4 text-primary" /> },
           { id: 'orchestrator', label: 'Task Orchestrator', icon: <Layers className="w-4 h-4 text-emerald-500" /> },
           { id: 'tools', label: 'Tool Calling', icon: <Wrench className="w-4 h-4 text-amber-500" /> },
-          { id: 'knowledge', label: 'Knowledge Graph', icon: <Network className="w-4 h-4 text-blue-500" /> },
+          { id: 'knowledge', label: 'Knowledge Graph', icon: <Network className="w-4 h-4 text-[#FF9933]" /> },
           { id: 'optimization', label: 'Optimizer', icon: <TrendingUp className="w-4 h-4 text-emerald-500" /> },
-          { id: 'collaboration', label: 'Collaboration', icon: <Users className="w-4 h-4 text-indigo-500" /> },
-          { id: 'planning', label: 'Goal Planning', icon: <Target className="w-4 h-4 text-rose-500" /> },
-          { id: 'memory', label: 'Enterprise Memory', icon: <Brain className="w-4 h-4 text-purple-500" /> },
+          { id: 'collaboration', label: 'Collaboration', icon: <Users className="w-4 h-4 text-[#EDC11E]" /> },
+          { id: 'planning', label: 'Goal Planning', icon: <Target className="w-4 h-4 text-[#A20A3A]" /> },
+          { id: 'memory', label: 'Enterprise Memory', icon: <Brain className="w-4 h-4 text-[#FF9933]" /> },
         ].map((t) => (
           <button
             key={t.id}

@@ -36,10 +36,10 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#070810] text-foreground flex items-center justify-center p-4 relative overflow-hidden font-inter">
+    <div className="min-h-screen bg-white text-foreground flex items-center justify-center p-4 relative overflow-hidden font-inter">
       {/* Background Gradients */}
-      <div className="absolute top-[-20%] left-[-20%] w-[60%] h-[60%] bg-primary/10 rounded-full blur-[120px]" />
-      <div className="absolute bottom-[-20%] right-[-20%] w-[60%] h-[60%] bg-violet-600/10 rounded-full blur-[120px]" />
+      <div className="absolute top-[-20%] left-[-20%] w-[60%] h-[60%] bg-primary/5 rounded-full blur-[120px]" />
+      <div className="absolute bottom-[-20%] right-[-20%] w-[60%] h-[60%] bg-[#FF9933]/5 rounded-full blur-[120px]" />
 
       <div className="w-full max-w-md space-y-8 z-10">
         <div className="flex flex-col items-center">
@@ -116,7 +116,7 @@ export default function LoginPage() {
               <div className="w-full border-t border-border/40" />
             </div>
             <div className="relative flex justify-center text-xs">
-              <span className="bg-[#070810] px-2 text-muted-foreground">Or continue with</span>
+              <span className="bg-card px-2 text-muted-foreground">Or continue with</span>
             </div>
           </div>
 

@@ -59,10 +59,10 @@ export function NotificationCenterView() {
   const categoryIcons: Record<NotificationCategory, React.ReactNode> = {
     security: <ShieldAlert className="w-4 h-4 text-emerald-500" />,
     ai: <Bot className="w-4 h-4 text-primary" />,
-    project: <FolderKanban className="w-4 h-4 text-cyan-500" />,
-    task: <FolderKanban className="w-4 h-4 text-blue-500" />,
-    billing: <CreditCard className="w-4 h-4 text-purple-500" />,
-    system: <Server className="w-4 h-4 text-amber-500" />,
+    project: <FolderKanban className="w-4 h-4 text-[#A20A3A]" />,
+    task: <FolderKanban className="w-4 h-4 text-[#FF9933]" />,
+    billing: <CreditCard className="w-4 h-4 text-[#EDC11E]" />,
+    system: <Server className="w-4 h-4 text-[#625B60]" />,
     workspace: <Sparkles className="w-4 h-4 text-primary" />,
   };
 

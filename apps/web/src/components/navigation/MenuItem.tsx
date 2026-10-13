@@ -47,8 +47,8 @@ export const MenuItem = React.memo(function MenuItem({
         href={href}
         className={cn(
           'relative py-2 text-sm font-medium transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm inline-block',
-          isCurrentRoute ? 'text-primary font-semibold' : 'text-muted-foreground hover:text-foreground',
-          (isHovered || isFocused || isOpen) && 'text-foreground'
+          isCurrentRoute ? 'text-primary font-semibold' : 'text-[#625B60] hover:text-[#A20A3A]',
+          (isHovered || isFocused || isOpen) && 'text-[#A20A3A]'
         )}
         aria-haspopup={hasMega ? 'true' : undefined}
         aria-expanded={hasMega ? isOpen : undefined}

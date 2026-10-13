@@ -69,7 +69,7 @@ const contactRoutes = [
     cta: 'IR Contact',
     href: '/company/investors',
     badge: 'Investors',
-    badgeColor: 'bg-blue-500/10 text-blue-600',
+    badgeColor: 'bg-[#EDC11E]/15 text-[#9E7700]',
   },
   {
     icon: HeartPulse,
@@ -78,7 +78,7 @@ const contactRoutes = [
     cta: 'View Open Roles',
     href: '/company/careers',
     badge: 'Hiring',
-    badgeColor: 'bg-rose-500/10 text-rose-600',
+    badgeColor: 'bg-[#FF9933]/15 text-[#C46100]',
   },
   {
     icon: LifeBuoy,
@@ -245,7 +245,7 @@ export default function ContactPage() {
                   <span className="font-semibold text-foreground">Closed</span>
                 </div>
               </div>
-              <p className="text-xs text-muted-foreground">Enterprise SLA clients have 24/7 incident response access.</p>
+              <p className="text-xs text-muted-foreground">Enterprise SLA clients have dedicated architecture support channels.</p>
             </div>
           </div>
         </div>

@@ -15,15 +15,12 @@ const ThemeProviderContext = React.createContext<ThemeProviderState | undefined>
 );
 
 function getSystemTheme(): 'light' | 'dark' {
-  if (typeof window === 'undefined') return 'light';
-  return window.matchMedia('(prefers-color-scheme: dark)').matches
-    ? 'dark'
-    : 'light';
+  return 'light'; // Sathus Technology official brand theme is white surface
 }
 
 export function ThemeProvider({
   children,
-  defaultTheme = 'system',
+  defaultTheme = 'light',
   storageKey = 'sathus-theme',
   ...props
 }: {
@@ -33,7 +30,7 @@ export function ThemeProvider({
 }) {
   const [theme, setThemeState] = React.useState<Theme>(defaultTheme);
   const [resolvedTheme, setResolvedTheme] = React.useState<'light' | 'dark'>(
-    getSystemTheme()
+    defaultTheme === 'system' ? getSystemTheme() : (defaultTheme as 'light' | 'dark')
   );
 
   React.useEffect(() => {

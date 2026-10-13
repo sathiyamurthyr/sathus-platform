@@ -45,11 +45,11 @@ export function ObservabilityPlatformView() {
 
   const levelBadges: Record<LogLevel, string> = {
     TRACE: 'bg-muted text-muted-foreground border-border',
-    DEBUG: 'bg-blue-500/10 text-blue-500 border-blue-500/20',
-    INFO: 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20',
-    WARNING: 'bg-amber-500/10 text-amber-500 border-amber-500/20',
-    ERROR: 'bg-red-500/10 text-red-500 border-red-500/20',
-    CRITICAL: 'bg-purple-500/10 text-purple-500 border-purple-500/20',
+    DEBUG: 'bg-[#FF9933]/15 text-[#C46100] border-[#FF9933]/30',
+    INFO: 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20',
+    WARNING: 'bg-[#EDC11E]/20 text-[#8B6500] border-[#EDC11E]/30',
+    ERROR: 'bg-red-500/10 text-red-600 border-red-500/20',
+    CRITICAL: 'bg-[#A20A3A]/15 text-[#A20A3A] border-[#A20A3A]/30',
   };
 
   const statusIcons: Record<ServiceHealthStatus, React.ReactNode> = {

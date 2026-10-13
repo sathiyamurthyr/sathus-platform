@@ -23,6 +23,8 @@ export interface CompanyConfig {
   name: string;
   shortName: string;
   legalName: string;
+  incorporationDate: string;
+  foundingDate: string;
   address: CompanyAddress;
   branchOffice: CompanyAddress;
   email: string;
@@ -39,6 +41,8 @@ export const companyConfig: CompanyConfig = {
   name: 'Sathus Technology Pvt. Ltd.',
   shortName: 'Sathus Technology',
   legalName: 'Sathus Technology Pvt. Ltd.',
+  incorporationDate: '2024-08-28',
+  foundingDate: '2024-08-28',
   address: {
     street: 'Plot No. 8/47, Sri Ambal Nagar Annexe, Ponni Amman Kovil St',
     landmark: 'Opp. Kedar Hospital',
@@ -77,6 +81,7 @@ export const companyConfig: CompanyConfig = {
       '@id': 'https://www.sathus.in/#organization',
       name: this.name,
       legalName: this.legalName,
+      foundingDate: this.foundingDate,
       alternateName: ['Sathus', 'Sathus Technology', 'Sathus.in', 'Sathus Platform'],
       url: this.website,
       logo: {
@@ -161,3 +166,7 @@ export const companyConfig: CompanyConfig = {
     };
   },
 };
+
+export function getOrganizationSchema() {
+  return companyConfig.getOrganizationSchema();
+}

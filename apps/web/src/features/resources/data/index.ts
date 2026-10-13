@@ -128,7 +128,7 @@ export const resources: Resource[] = [
     id: '7',
     title: 'Migrating 12M+ Core Banking Users to Cloud-Native Databricks Lakehouse',
     slug: 'migrating-core-banking-lakehouse',
-    description: 'Lessons learned executing a zero-downtime database cutover under strict financial regulatory oversight and SOC 2 Type II compliance.',
+    description: 'Lessons learned executing a zero-downtime database cutover under strict financial regulatory oversight and zero-trust controls.',
     excerpt: 'Step-by-step case breakdown of migrating legacy Teradata and Oracle databases to Apache Iceberg and Delta Lake without service interruption.',
     category: 'blog',
     tags: [
@@ -255,7 +255,7 @@ export const resources: Resource[] = [
     id: '15',
     title: 'Zero-Trust SaaS Reference Architecture for Regulated Enterprise Markets',
     slug: 'zero-trust-saas-architecture',
-    description: 'How we design zero-trust networks, client-side KMS encryption, automated audit trails, and SOC 2 Type II compliance.',
+    description: 'How we design zero-trust networks, client-side KMS encryption, automated audit trails, and GDPR-aligned controls.',
     excerpt: 'Implementing mutual TLS, ephemeral service tokens, and continuous vulnerability scanning for enterprise SaaS platforms.',
     category: 'whitepapers',
     tags: [

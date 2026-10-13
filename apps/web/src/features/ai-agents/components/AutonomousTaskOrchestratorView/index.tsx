@@ -111,7 +111,7 @@ export function AutonomousTaskOrchestratorView() {
                       {task.priority.replace('_', ' ')}
                     </span>
                     <span className={`px-2 py-0.5 rounded text-[10px] font-extrabold uppercase ${
-                      task.status === 'running' ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20' : 'bg-blue-500/10 text-blue-500 border border-blue-500/20'
+                      task.status === 'running' ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20' : 'bg-[#FF9933]/15 text-[#C46100] border border-[#FF9933]/30'
                     }`}>
                       {task.status}
                     </span>

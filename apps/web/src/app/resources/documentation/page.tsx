@@ -41,8 +41,8 @@ const docSections = [
     href: '/resources/documentation#lakehouse',
   },
   {
-    title: 'Security & Compliance Guides',
-    description: 'HIPAA, SOC 2 Type II controls, zero-retention AI guardrails, and audit logging setup instructions.',
+    title: 'Security & Architecture Guides',
+    description: 'Zero-trust access policies, GDPR data protection guardrails, zero-retention AI controls, and audit logging setup.',
     icon: ShieldCheck,
     badge: 'Security',
     href: '/resources/documentation#security',

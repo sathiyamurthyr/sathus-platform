@@ -33,9 +33,9 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#070810] text-foreground flex items-center justify-center p-4 relative overflow-hidden font-inter">
-      <div className="absolute top-[-20%] left-[-20%] w-[60%] h-[60%] bg-primary/10 rounded-full blur-[120px]" />
-      <div className="absolute bottom-[-20%] right-[-20%] w-[60%] h-[60%] bg-violet-600/10 rounded-full blur-[120px]" />
+    <div className="min-h-screen bg-white text-foreground flex items-center justify-center p-4 relative overflow-hidden font-inter">
+      <div className="absolute top-[-20%] left-[-20%] w-[60%] h-[60%] bg-primary/5 rounded-full blur-[120px]" />
+      <div className="absolute bottom-[-20%] right-[-20%] w-[60%] h-[60%] bg-[#FF9933]/5 rounded-full blur-[120px]" />
 
       <div className="w-full max-w-md space-y-8 z-10">
         <div className="flex flex-col items-center">

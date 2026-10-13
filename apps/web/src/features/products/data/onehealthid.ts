@@ -16,7 +16,7 @@ export const oneHealthId: Product = {
   overview: {
     problem: 'Traditional hospital management systems (HMS) force every healthcare worker into cluttered, generic administrative interfaces. Doctors spend more time clicking than treating, nurses navigate disjointed screens for vitals and bed allocation, and patients wait in opaque, uncoordinated queues.',
     solution: 'OneHealthID replaces monolithic HMS software with role-first operating workspaces. Each user—whether a hospital administrator, attending physician, triage nurse, receptionist, or patient—interacts only with tools, workflows, and real-time data explicitly engineered for their operational role.',
-    differentiator: 'Validated in production pilots including Kedar Hospital. Built with strict tenant isolation, sub-50ms database response times, ABDM/ABHA compatibility, HL7 FHIR R4 interoperability, and ISO 27001-aligned zero-trust security.',
+    differentiator: 'Validated in production pilots including Kedar Hospital. Built with strict tenant isolation, sub-50ms database response times, ABDM/ABHA compatibility, HL7 FHIR R4 interoperability, and zero-trust security architecture.',
   },
   features: [
     {
@@ -119,7 +119,7 @@ export const oneHealthId: Product = {
     { id: 'tenant-isolation', title: 'Strict Hospital Tenant Isolation', description: 'Guaranteed boundary separation preventing unauthorized cross-hospital data access.' },
     { id: 'bcrypt-auth', title: 'Zero-Trust Authentication', description: 'High-cost bcrypt password hashing, JWT session protection, and sliding-window rate limiting.' },
     { id: 'audit-logging', title: 'Structured Audit Logging', description: 'Every clinical access, prescription dispatch, and record query logged with structured JSON audit trails.' },
-    { id: 'hipaa-abdm', title: 'HIPAA & ABDM Ready', description: 'End-to-end data encryption in transit and at rest, ISO 27001-aligned security program.' },
+    { id: 'fhir-abdm', title: 'FHIR R4 & ABDM Interoperable', description: 'End-to-end data encryption in transit and at rest, patient privacy controls, and ABHA gateway compatibility.' },
   ],
   roadmap: [
     { id: 'r1', quarter: 'Q1 2026', title: 'Kedar Hospital Pilot Vertical Slice', description: 'Responsive clinical workspace, doctor consultation, duplicate check, and SP/views architecture.', status: 'completed' },
@@ -155,7 +155,7 @@ export const oneHealthId: Product = {
           'IPD Ward & Bed Management Workflows',
           'ABDM (ABHA) Gateway & FHIR R4 Integration',
           'Hospital Operational & Revenue Analytics',
-          'Dedicated Security Audit & 24/7 SLA Support',
+          'Dedicated Security Review & Dedicated Enterprise Support',
           'On-Premises, Hybrid, or Dedicated VPC Hosting',
         ],
         popular: true,
@@ -165,7 +165,7 @@ export const oneHealthId: Product = {
   deploymentModels: [
     'Dedicated Healthcare VPC (AWS / Azure / GCP)',
     'On-Premises Hospital Datacenter Cluster',
-    'HIPAA-Compliant Managed SaaS',
+    'Dedicated Healthcare Cloud Managed Instance',
     'Hybrid Edge Clinic Sync Architecture',
   ],
   scalabilityMetrics: [
@@ -193,12 +193,12 @@ export const oneHealthId: Product = {
     {
       id: 'faq-2',
       question: 'Is OneHealthID compliant with ABDM and Indian healthcare regulations?',
-      answer: 'Yes. OneHealthID is engineered to support the Ayushman Bharat Digital Mission (ABDM), ABHA ID creation, and Health Information Provider/User (HIP/HIU) protocols, alongside international HIPAA and HL7 FHIR R4 standards.',
+      answer: 'Yes. OneHealthID is engineered to support the Ayushman Bharat Digital Mission (ABDM), ABHA ID creation, and Health Information Provider/User (HIP/HIU) protocols, alongside international HL7 FHIR R4 interoperability standards.',
     },
     {
       id: 'faq-3',
       question: 'Can OneHealthID run on-premises or does it require cloud hosting?',
-      answer: 'OneHealthID supports flexible deployment models: HIPAA-compliant managed cloud SaaS, dedicated healthcare VPCs (AWS / Azure / GCP), and on-premises private datacenter clusters for hospitals with local data residency mandates.',
+      answer: 'OneHealthID supports flexible deployment models: dedicated healthcare cloud instances, dedicated VPCs (AWS / Azure / GCP), and on-premises private datacenter clusters for hospitals with local data residency mandates.',
     },
     {
       id: 'faq-4',

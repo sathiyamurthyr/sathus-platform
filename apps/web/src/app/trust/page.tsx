@@ -19,16 +19,16 @@ import {
 } from '@/features/trust/data';
 
 export const metadata: Metadata = generatePageMetadata({
-  title: 'Trust Center — Security, Privacy & Compliance',
-  description: 'Our commitment to security posture, SOC 2 Type II, ISO 27001, HIPAA compliance, and responsible AI governance.',
+  title: 'Trust Center — Security, Privacy & Data Protection',
+  description: 'Our commitment to enterprise security posture, zero-trust architecture, GDPR data sovereignty, and responsible AI governance.',
   path: '/trust',
   keywords: [
     'Sathus Trust Center',
-    'SOC 2 Type II',
-    'ISO 27001',
-    'HIPAA compliance',
-    'Responsible AI framework',
     'Zero-trust security',
+    'Data sovereignty',
+    'GDPR compliance',
+    'Responsible AI framework',
+    'Enterprise encryption',
   ],
 });
 

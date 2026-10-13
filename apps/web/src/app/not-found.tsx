@@ -6,7 +6,10 @@ export const metadata: Metadata = {
   description: 'The requested page could not be found. Explore Sathus Technology enterprise engineering services and solutions.',
   robots: {
     index: false,
-    follow: true,
+    follow: false,
+  },
+  alternates: {
+    canonical: null,
   },
 };
 

@@ -78,9 +78,9 @@ export function AutomationPlatformView() {
   };
 
   const triggerBadge: Record<string, { bg: string; text: string; icon: React.ReactNode }> = {
-    event: { bg: 'bg-purple-500/10 border-purple-500/20 text-purple-500', text: 'Domain Event', icon: <Zap className="w-3 h-3" /> },
-    schedule: { bg: 'bg-amber-500/10 border-amber-500/20 text-amber-500', text: 'Cron Schedule', icon: <Clock className="w-3 h-3" /> },
-    webhook: { bg: 'bg-blue-500/10 border-blue-500/20 text-blue-500', text: 'Webhook', icon: <Globe className="w-3 h-3" /> },
+    event: { bg: 'bg-[#A20A3A]/15 border-[#A20A3A]/30 text-[#A20A3A]', text: 'Domain Event', icon: <Zap className="w-3 h-3" /> },
+    schedule: { bg: 'bg-[#EDC11E]/20 border-[#EDC11E]/30 text-[#8B6500]', text: 'Cron Schedule', icon: <Clock className="w-3 h-3" /> },
+    webhook: { bg: 'bg-[#FF9933]/15 border-[#FF9933]/30 text-[#C46100]', text: 'Webhook', icon: <Globe className="w-3 h-3" /> },
     manual: { bg: 'bg-emerald-500/10 border-emerald-500/20 text-emerald-500', text: 'Manual', icon: <Play className="w-3 h-3" /> },
   };
 
@@ -220,7 +220,7 @@ export function AutomationPlatformView() {
                             Type: {step.type} {step.actionType ? `(${step.actionType})` : ''}
                           </div>
                         </div>
-                        {step.type === 'ai_step' && <Sparkles className="w-4 h-4 text-purple-500" />}
+                        {step.type === 'ai_step' && <Sparkles className="w-4 h-4 text-primary" />}
                         {step.type === 'approval' && <UserCheck className="w-4 h-4 text-amber-500" />}
                         {step.type === 'action' && <Zap className="w-4 h-4 text-primary" />}
                       </div>
@@ -261,7 +261,7 @@ export function AutomationPlatformView() {
                         ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20'
                         : inst.status === 'waiting_approval'
                         ? 'bg-amber-500/10 text-amber-500 border-amber-500/20'
-                        : 'bg-blue-500/10 text-blue-500 border-blue-500/20'
+                        : 'bg-[#FF9933]/15 text-[#C46100] border-[#FF9933]/30'
                     }`}
                   >
                     {inst.status.replace('_', ' ')}
@@ -376,7 +376,7 @@ export function AutomationPlatformView() {
 
             <div className="bg-card border border-border rounded-xl p-5 space-y-4 shadow-sm">
               <div className="text-xs font-bold text-foreground uppercase tracking-wider flex items-center space-x-2">
-                <Globe className="w-4 h-4 text-blue-500" />
+                <Globe className="w-4 h-4 text-[#FF9933]" />
                 <span>Active Webhook Triggers</span>
               </div>
               <div className="p-3 rounded-lg bg-background border border-border space-y-1 font-mono text-xs">
@@ -401,7 +401,7 @@ export function AutomationPlatformView() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
               { label: 'Total Workflow Definitions', val: mockWorkflowMetrics.totalWorkflows, icon: <Layers className="w-4 h-4 text-primary" /> },
-              { label: 'Total Instance Executions', val: mockWorkflowMetrics.totalExecutions.toLocaleString(), icon: <Play className="w-4 h-4 text-purple-500" /> },
+              { label: 'Total Instance Executions', val: mockWorkflowMetrics.totalExecutions.toLocaleString(), icon: <Play className="w-4 h-4 text-primary" /> },
               { label: 'Success Rate', val: `${mockWorkflowMetrics.successRatePercent}%`, icon: <CheckCircle2 className="w-4 h-4 text-emerald-500" /> },
               { label: 'Avg Execution Time', val: `${mockWorkflowMetrics.averageExecutionDurationMs} ms`, icon: <Clock className="w-4 h-4 text-amber-500" /> },
             ].map((m, idx) => (

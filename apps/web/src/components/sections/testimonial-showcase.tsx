@@ -39,7 +39,7 @@ const TESTIMONIALS: Testimonial[] = [
     title: 'VP of Digital Health',
     company: 'Apex Health Systems',
     industry: 'Healthcare & Life Sciences',
-    metrics: '225x Faster Review • HIPAA Compliant',
+    metrics: '225x Faster Review • Zero-Trust Security',
     rating: 5,
     verifiedBadge: 'Verified Enterprise Client',
   },

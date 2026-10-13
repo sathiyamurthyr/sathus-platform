@@ -54,7 +54,7 @@ export const ragSolutionsSolution: Solution = {
       client: 'HealthNet Global',
       industry: 'Healthcare',
       challenge: 'Physicians spent 20+ minutes searching un-indexed EHR charts during patient visits.',
-      solution: 'HIPAA-compliant RAG pipeline with Qdrant vector search and fine-tuned embeddings.',
+      solution: 'Secure FHIR-aligned RAG pipeline with Qdrant vector search and fine-tuned embeddings.',
       outcome: 'Reduced chart review time to under 30 seconds with 98% factual precision.',
       technologies: ['Qdrant', 'Python', 'FastAPI', 'FHIR R4'],
       duration: '5 Months',

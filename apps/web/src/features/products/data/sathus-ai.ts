@@ -49,8 +49,8 @@ export const sathusAi: Product = {
     },
     {
       id: 'compliance',
-      title: 'SOC 2 & HIPAA Ready',
-      description: 'Full audit logging and encryption at rest and in transit.',
+      title: 'Zero-Trust Architecture',
+      description: 'Structured audit logging, role-based controls, and encryption at rest and in transit.',
       metric: '100%',
     },
   ],
@@ -76,7 +76,7 @@ export const sathusAi: Product = {
     { id: 'databricks', name: 'Databricks', category: 'Data' },
   ],
   security: [
-    { id: 'soc2', title: 'SOC 2 Type II Aligned', description: 'Architected control environment for security, availability, and strict tenant isolation.' },
+    { id: 'zero-trust', title: 'Zero-Trust Architecture', description: 'Architected control environment for strict tenant isolation, RBAC, and workload segmentation.' },
     { id: 'encryption', title: 'AES-256 & TLS 1.3', description: 'End-to-end encryption for all agent telemetry.' },
   ],
   roadmap: [
@@ -104,7 +104,7 @@ export const sathusAi: Product = {
           'Custom Evaluation Harnesses',
           'Zero Data Retention Policy',
           'Dedicated Customer Success Engineer',
-          '24/7 SOC Incident Response SLA',
+          'Dedicated Enterprise Incident Response',
         ],
         popular: true,
       },
@@ -117,7 +117,7 @@ export const sathusAi: Product = {
     'Edge Node Hybrid Deployment',
   ],
   scalabilityMetrics: [
-    { value: '99.99%', label: 'Platform Availability SLA', description: 'Multi-region fault-tolerant Kubernetes orchestration.' },
+    { value: '99.95%', label: 'Platform Availability Target', description: 'Multi-region fault-tolerant Kubernetes orchestration.' },
     { value: '< 150ms', label: 'Guardrail Latency overhead', description: 'Ultra-low latency streaming injection and PII check.' },
     { value: '10M+', label: 'Daily Agent Tool Calls', description: 'Benchmarked throughput on distributed event-bus core.' },
   ],

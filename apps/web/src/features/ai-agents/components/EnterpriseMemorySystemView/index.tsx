@@ -45,7 +45,7 @@ export function EnterpriseMemorySystemView() {
           </p>
         </div>
 
-        <div className="flex items-center space-x-2 px-3 py-1.5 rounded-lg bg-purple-500/10 text-purple-500 border border-purple-500/20 text-xs font-bold font-mono">
+        <div className="flex items-center space-x-2 px-3 py-1.5 rounded-lg bg-primary/10 text-primary border border-primary/20 text-xs font-bold font-mono">
           <Sparkles className="w-4 h-4" />
           <span>Vector Index: Multi-Provider Abstraction Layer</span>
         </div>
@@ -96,7 +96,7 @@ export function EnterpriseMemorySystemView() {
           <div key={mem.id} className="bg-card border border-border rounded-xl p-5 shadow-sm space-y-4 flex flex-col justify-between">
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <span className="px-2 py-0.5 rounded text-[10px] font-extrabold uppercase bg-purple-500/10 text-purple-500 border border-purple-500/20">
+                <span className="px-2 py-0.5 rounded text-[10px] font-extrabold uppercase bg-[#FF9933]/15 text-[#C46100] border border-[#FF9933]/30">
                   {mem.memoryType.replace('_', ' ')}
                 </span>
                 <span className="px-2 py-0.5 rounded text-[10px] font-extrabold uppercase bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">

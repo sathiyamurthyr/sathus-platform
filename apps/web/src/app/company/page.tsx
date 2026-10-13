@@ -70,7 +70,7 @@ const companySections = [
   },
   {
     title: 'Trust Center',
-    description: 'Inspect our security posture, ISO/SOC 2 readiness certifications, and responsible AI governance framework.',
+    description: 'Inspect our security posture, zero-trust controls, GDPR alignment, and responsible AI governance framework.',
     href: '/trust',
     icon: ShieldCheck,
     badge: 'Security',

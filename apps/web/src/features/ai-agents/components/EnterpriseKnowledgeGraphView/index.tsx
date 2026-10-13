@@ -36,7 +36,7 @@ export function EnterpriseKnowledgeGraphView() {
           </p>
         </div>
 
-        <div className="flex items-center space-x-2 px-3 py-1.5 rounded-lg bg-blue-500/10 text-blue-500 border border-blue-500/20 text-xs font-bold font-mono">
+        <div className="flex items-center space-x-2 px-3 py-1.5 rounded-lg bg-[#FF9933]/15 text-[#C46100] border border-[#FF9933]/30 text-xs font-bold font-mono">
           <Share2 className="w-4 h-4" />
           <span>Unified Context Window Active</span>
         </div>
@@ -79,7 +79,7 @@ export function EnterpriseKnowledgeGraphView() {
               <h3 className="text-sm font-bold text-foreground font-sans">{selectedEntity.name}</h3>
               <p className="text-xs text-muted-foreground font-sans">{selectedEntity.description}</p>
             </div>
-            <span className="px-2.5 py-0.5 rounded text-[10px] font-extrabold uppercase bg-blue-500/10 text-blue-500 border border-blue-500/20">
+            <span className="px-2.5 py-0.5 rounded text-[10px] font-extrabold uppercase bg-[#A20A3A]/15 text-[#A20A3A] border border-[#A20A3A]/30">
               {selectedEntity.type}
             </span>
           </div>

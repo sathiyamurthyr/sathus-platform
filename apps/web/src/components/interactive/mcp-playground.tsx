@@ -43,7 +43,7 @@ const scenarios: AgentScenario[] = [
         result: 'Guardrail Passed: 0.00% hallucination detected',
       },
     ],
-    output: 'Recommendation: Deploy Hybrid GraphRAG. Postgres pgvector provides sub-10ms semantic retrieval, while Neo4j entity graphs eliminate false relationship hallucinations.',
+    output: 'Recommendation: Deploy Hybrid GraphRAG. Postgres pgvector provides low-latency semantic retrieval, while Neo4j entity graphs eliminate false relationship hallucinations.',
   },
   {
     id: 'data-lakehouse',
@@ -67,8 +67,8 @@ const scenarios: AgentScenario[] = [
   },
   {
     id: 'security-auditor',
-    name: 'Zero-Trust Security & Compliance Agent',
-    role: 'Automated SOC 2 Auditor',
+    name: 'Zero-Trust Security & Policy Agent',
+    role: 'Automated Security Auditor',
     icon: ShieldCheck,
     prompt: 'Audit mTLS certificates, client-side KMS keys, and continuous audit logs',
     toolCalls: [
@@ -78,12 +78,12 @@ const scenarios: AgentScenario[] = [
         result: 'KMS Key Rotation Active (Next rotation: 30 days)',
       },
       {
-        name: 'mcp:soc2_compliance_audit',
-        params: { framework: 'SOC2_TYPE_II' },
-        result: '100% Audit Controls Passed (Zero vulnerabilities detected)',
+        name: 'mcp:security_policy_audit',
+        params: { framework: 'ZERO_TRUST_RBAC' },
+        result: '100% Policy Controls Passed (Zero vulnerabilities detected)',
       },
     ],
-    output: 'Security Clearance Approved: All microservices comply with SOC 2 Type II, HIPAA, and GDPR zero-trust encryption standards.',
+    output: 'Security Clearance Approved: All microservices comply with Zero-Trust, GDPR, and AES-256 encryption standards.',
   },
 ];
 

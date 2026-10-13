@@ -31,6 +31,22 @@ const config: Config = {
           DEFAULT: 'hsl(var(--accent))',
           foreground: 'hsl(var(--accent-foreground))',
         },
+        burgundy: {
+          DEFAULT: '#A20A3A',
+          hover: '#8C0832',
+        },
+        orange: {
+          DEFAULT: '#FF9933',
+          light: '#FFAE5C',
+        },
+        gold: {
+          DEFAULT: '#EDC11E',
+          light: '#F4D04C',
+        },
+        surface: {
+          DEFAULT: '#FAF8F9',
+          subtle: '#FAF8F9',
+        },
         destructive: {
           DEFAULT: 'hsl(var(--destructive))',
           foreground: 'hsl(var(--destructive-foreground))',

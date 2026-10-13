@@ -4,12 +4,12 @@ import { Clock, ArrowRight, ShieldCheck, FileCode, Layers, BookOpen } from 'luci
 import type { HubTopic } from '../types';
 
 const pageTypeBadgeMap: Record<string, { label: string; icon: React.ElementType; color: string }> = {
-  'architecture-guide': { label: 'Architecture Guide', icon: Layers, color: 'text-indigo-400 bg-indigo-500/10 border-indigo-500/20' },
-  'implementation-guide': { label: 'Implementation Code', icon: FileCode, color: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20' },
-  'technical-reference': { label: 'Technical Reference', icon: BookOpen, color: 'text-amber-400 bg-amber-500/10 border-amber-500/20' },
-  'money-service': { label: 'Enterprise Practice', icon: ShieldCheck, color: 'text-cyan-400 bg-cyan-500/10 border-cyan-500/20' },
-  'glossary': { label: 'Glossary Definition', icon: BookOpen, color: 'text-purple-400 bg-purple-500/10 border-purple-500/20' },
-  'case-study': { label: 'Case Study', icon: ShieldCheck, color: 'text-green-400 bg-green-500/10 border-green-500/20' },
+  'architecture-guide': { label: 'Architecture Guide', icon: Layers, color: 'text-[#A20A3A] bg-[#A20A3A]/10 border-[#A20A3A]/20' },
+  'implementation-guide': { label: 'Implementation Code', icon: FileCode, color: 'text-[#C46100] bg-[#FF9933]/15 border-[#FF9933]/30' },
+  'technical-reference': { label: 'Technical Reference', icon: BookOpen, color: 'text-[#9E7700] bg-[#EDC11E]/15 border-[#EDC11E]/30' },
+  'money-service': { label: 'Enterprise Practice', icon: ShieldCheck, color: 'text-[#A20A3A] bg-[#A20A3A]/10 border-[#A20A3A]/25' },
+  'glossary': { label: 'Glossary Definition', icon: BookOpen, color: 'text-[#625B60] bg-[#FAF8F9] border-[#E8E2E5]' },
+  'case-study': { label: 'Case Study', icon: ShieldCheck, color: 'text-[#A20A3A] bg-[#A20A3A]/10 border-[#A20A3A]/20' },
 };
 
 interface TopicCardProps {

@@ -18,7 +18,7 @@ export const dataEngineeringSolution: Solution = {
     },
     stats: [
       { value: '10x', valueLabel: 'Faster query speeds', label: 'Performance Optimization' },
-      { value: '99.99%', valueLabel: 'Pipeline Uptime', label: 'Streaming Availability' },
+      { value: '99.95%', valueLabel: 'Pipeline Availability Target', label: 'Streaming Availability' },
       { value: '100%', valueLabel: 'Data Lineage Tracked', label: 'Governance Coverage' },
     ],
   },

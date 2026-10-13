@@ -27,7 +27,7 @@ const ITEMS: TrustItem[] = [
   {
     icon: FileCheck2,
     title: 'Compliance',
-    text: 'SOC 2 Type II and ISO 27001-aligned controls, with GDPR and HIPAA-ready patterns for regulated programs.',
+    text: 'Engineered security controls, structured audit logging, role-based access, and GDPR data sovereignty patterns for regulated programs.',
   },
   {
     icon: Network,

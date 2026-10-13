@@ -5,9 +5,9 @@ interface ComplianceGridProps {
 }
 
 const STATUS_STYLES: Record<string, string> = {
-  achieved: 'bg-green-100 text-green-800',
-  'in-progress': 'bg-blue-100 text-blue-800',
-  planned: 'bg-amber-100 text-amber-800',
+  achieved: 'bg-emerald-100 text-emerald-800',
+  'in-progress': 'bg-[#FF9933]/15 text-[#C46100]',
+  planned: 'bg-[#EDC11E]/20 text-[#8B6500]',
 };
 
 export function ComplianceGrid({ frameworks }: ComplianceGridProps) {

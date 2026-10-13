@@ -77,7 +77,7 @@ const SOLUTION_PRACTICES: SolutionPractice[] = [
     href: '/solutions/rag-solutions',
     challenge: 'Naive vector search retrieves irrelevant context and exposes unauthorized documents to LLMs.',
     approach: 'Hybrid BM25 + vector search, semantic reranking, and RBAC permission filtering before prompt injection.',
-    outcome: '98%+ retrieval precision with SOC 2 document access compliance.',
+    outcome: '98%+ retrieval precision with zero-trust RBAC document access control.',
     technologies: ['Qdrant', 'Milvus', 'Hybrid Search', 'Reranking'],
   },
   {
@@ -95,7 +95,7 @@ const SOLUTION_PRACTICES: SolutionPractice[] = [
     href: '/solutions/cloud-engineering',
     challenge: 'Ad-hoc cloud provisioning creates environment drift, security gaps, and uncontrolled spending.',
     approach: 'Terraform IaC, GitOps Kubernetes clusters, and automated FinOps policies on AWS and Azure.',
-    outcome: '99.99% availability with 40% cloud cost reduction through automated governance.',
+    outcome: '99.95% availability target with 40% cloud cost reduction through automated governance.',
     technologies: ['Terraform', 'Kubernetes', 'ArgoCD', 'AWS / Azure'],
   },
   {
@@ -113,7 +113,7 @@ const SOLUTION_PRACTICES: SolutionPractice[] = [
     href: '/solutions/enterprise-integration',
     challenge: 'Point-to-point APIs and batch ETL create brittle coupling and near-real-time data delays.',
     approach: 'Kafka event mesh, Change Data Capture (CDC), and standardized API gateways to decouple systems.',
-    outcome: 'Sub-10ms event delivery with 99.999% message guarantee across enterprise services.',
+    outcome: 'Resilient event delivery with high-reliability message guarantees across enterprise services.',
     technologies: ['Apache Kafka', 'Debezium', 'Kong Gateway', 'RabbitMQ'],
   },
   {

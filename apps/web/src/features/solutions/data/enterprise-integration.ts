@@ -13,7 +13,7 @@ export const enterpriseIntegrationSolution: Solution = {
     stats: [
       { value: '1M+', valueLabel: 'Events per Second', label: 'Kafka Throughput' },
       { value: '99.999%', valueLabel: 'Message Delivery Guarantee', label: 'Reliability' },
-      { value: 'Sub-10ms', valueLabel: 'Event Latency', label: 'Speed' },
+      { value: '< 25ms', valueLabel: 'P99 Event Latency', label: 'Speed' },
     ],
   },
   challenges: [
@@ -45,7 +45,7 @@ export const enterpriseIntegrationSolution: Solution = {
     ],
   },
   outcomes: [
-    { id: 'o1', title: 'Sub-10ms Event Latency', description: 'Real-time message routing across enterprise microservices.', metric: '<10ms' },
+    { id: 'o1', title: 'Low-Latency Event Routing', description: 'Real-time message routing across enterprise microservices.', metric: '<25ms' },
   ],
   caseStudies: [
     {

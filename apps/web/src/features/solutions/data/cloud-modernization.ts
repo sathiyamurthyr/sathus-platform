@@ -46,7 +46,7 @@ export const cloudModernizationSolution: Solution = {
     ],
   },
   outcomes: [
-    { id: 'o1', title: '99.99% Availability', description: 'SLA availability achieved across cloud workloads.', metric: '99.99%' },
+    { id: 'o1', title: '99.95% Availability Target', description: 'Availability target achieved across resilient cloud workloads.', metric: '99.95%' },
   ],
   caseStudies: [
     {

@@ -84,8 +84,8 @@ export function ReportBuilderPlatformView() {
   const formatBadges: Record<ReportExportFormat, string> = {
     pdf: 'bg-red-500/10 text-red-500 border-red-500/20',
     xlsx: 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20',
-    csv: 'bg-blue-500/10 text-blue-500 border-blue-500/20',
-    json: 'bg-purple-500/10 text-purple-500 border-purple-500/20',
+    csv: 'bg-[#FF9933]/15 text-[#C46100] border-[#FF9933]/30',
+    json: 'bg-[#A20A3A]/15 text-[#A20A3A] border-[#A20A3A]/30',
   };
 
   return (

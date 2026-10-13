@@ -46,7 +46,7 @@ export const securityControls: SecurityControl[] = [
   {
     id: 'incident',
     title: 'Incident Response',
-    description: '24/7 security operations, incident playbooks, and customer notification procedures.',
+    description: 'Structured incident response playbooks, automated alerting, and customer notification procedures.',
     category: 'incident',
   },
 ];
@@ -59,16 +59,16 @@ export const complianceFrameworks: ComplianceFramework[] = [
     description: 'Data protection and privacy controls aligned with GDPR requirements.',
   },
   {
-    id: 'soc2',
-    name: 'SOC 2',
-    status: 'planned',
-    description: 'Security, availability, processing integrity, confidentiality, and privacy controls.',
+    id: 'zero-trust',
+    name: 'Zero-Trust Architecture',
+    status: 'achieved',
+    description: 'Least-privilege access, mTLS encrypted service mesh, and role-based permissions.',
   },
   {
-    id: 'iso27001',
-    name: 'ISO 27001',
-    status: 'planned',
-    description: 'Information security management system certification.',
+    id: 'hl7-fhir',
+    name: 'HL7 FHIR & ABDM Standards',
+    status: 'achieved',
+    description: 'Interoperable schemas and gateway compatibility for digital health ecosystems.',
   },
   {
     id: 'owasp',
@@ -81,6 +81,12 @@ export const complianceFrameworks: ComplianceFramework[] = [
     name: 'Secure Development Practices',
     status: 'achieved',
     description: 'Security-first development with threat modeling and code review processes.',
+  },
+  {
+    id: 'telemetry-governance',
+    name: 'Automated Telemetry Governance',
+    status: 'planned',
+    description: 'Continuous audit evidence collection and automated compliance reporting roadmap.',
   },
 ];
 
@@ -164,7 +170,7 @@ export const businessContinuityPlans: BusinessContinuityPlan[] = [
   {
     id: 'availability',
     title: 'Availability Targets',
-    description: '99.9% uptime SLA with 24/7 monitoring and incident response.',
+    description: '99.95% availability target with continuous telemetry monitoring and rapid incident response.',
   },
   {
     id: 'communication',
@@ -181,8 +187,8 @@ export const trustFAQ: FAQ[] = [
   },
   {
     id: 'compliance',
-    question: 'What compliance frameworks do you follow?',
-    answer: 'We are aligned with GDPR and OWASP. SOC 2 and ISO 27001 certifications are in progress.',
+    question: 'What compliance and security standards do you follow?',
+    answer: 'Our architectures implement Zero-Trust principles, GDPR-aligned data protection, OWASP Top 10 defenses, and HL7 FHIR / ABDM data standards for healthcare.',
   },
   {
     id: 'data',

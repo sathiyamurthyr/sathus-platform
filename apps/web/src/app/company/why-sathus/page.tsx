@@ -28,8 +28,8 @@ const pillars = [
   },
   {
     icon: ShieldCheck,
-    title: 'Compliance-by-Design',
-    description: 'Built for regulated markets. Zero-retention AI policies, HIPAA/SOC 2 Type II audit logging, and zero-trust identity tokenization embedded into every layer.',
+    title: 'Security-by-Design',
+    description: 'Built for regulated markets. Zero-retention AI processing policies, immutable structured audit logging, and zero-trust identity tokenization embedded into every layer.',
   },
   {
     icon: Layers,
@@ -39,7 +39,7 @@ const pillars = [
   {
     icon: Zap,
     title: 'Accountable Performance Metrics',
-    description: 'We commit to hard technical SLAs: sub-10ms query latencies, 99.99% system availability, 98% RAG precision, and 70% cloud TCO reduction.',
+    description: 'We commit to clear technical benchmarks: resilient query performance, 99.95% platform availability target, high RAG retrieval precision, and sustainable cloud TCO reduction.',
   },
 ];
 
@@ -91,7 +91,7 @@ export default function WhySathusPage() {
                 <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0" /> Senior principal engineering squads</li>
                 <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0" /> Open table formats & open-weight AI models</li>
                 <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0" /> Guaranteed performance & SLA metrics</li>
-                <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0" /> SOC 2 & HIPAA compliant reference builds</li>
+                <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0" /> Zero-trust & security-by-design reference builds</li>
               </ul>
             </div>
             <div className="space-y-3 opacity-75">

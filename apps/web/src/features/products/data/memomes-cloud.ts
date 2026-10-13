@@ -53,8 +53,8 @@ export const memomesCloud: Product = {
   benefits: [
     {
       id: 'compliance',
-      title: 'Regulatory Compliance',
-      description: 'Built for HIPAA, GDPR, and SOC 2 compliance requirements.',
+      title: 'Data Sovereignty & Privacy',
+      description: 'Built with GDPR alignment, zero-knowledge architecture, and cryptographic privacy.',
       metric: '100%',
     },
     {
@@ -92,7 +92,7 @@ export const memomesCloud: Product = {
         name: 'Enterprise',
         price: 'Custom',
         description: 'For large organizations',
-        features: ['Unlimited storage', 'Custom users', '24/7 support', 'SLA', 'Dedicated infrastructure'],
+        features: ['Unlimited storage', 'Custom users', 'Dedicated technical support', 'SLA', 'Dedicated infrastructure'],
       },
     ],
     cta: { text: 'View Full Pricing', href: '/pricing' },
@@ -101,7 +101,7 @@ export const memomesCloud: Product = {
     {
       id: 'healthcare',
       title: 'Medical Records Sharing',
-      description: 'Securely share patient records between healthcare providers with full HIPAA compliance.',
+      description: 'Securely share patient records between healthcare providers with zero-knowledge cryptographic safeguards.',
       industry: 'Healthcare',
     },
     {
@@ -228,7 +228,7 @@ export const memomesCloud: Product = {
     {
       id: 'compliance',
       question: 'Is Memomes Cloud compliant?',
-      answer: 'Yes, we are built for HIPAA, GDPR, and SOC 2 compliance readiness with audit logs and data residency controls.',
+      answer: 'Memomes Cloud is engineered for GDPR alignment and zero-knowledge privacy with structured audit logs and configurable data residency.',
     },
     {
       id: 'storage',

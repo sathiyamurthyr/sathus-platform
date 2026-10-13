@@ -121,7 +121,7 @@ export function ExecutiveAnalyticsDashboardView() {
         <div className="bg-card border border-border rounded-xl p-5 space-y-2 shadow-sm">
           <div className="flex items-center justify-between text-xs font-semibold text-muted-foreground">
             <span>Annual Run-Rate (ARR)</span>
-            <TrendingUp className="w-4 h-4 text-purple-500" />
+            <TrendingUp className="w-4 h-4 text-primary" />
           </div>
           <div className="text-2xl font-extrabold text-foreground">
             ${mockExecutiveDashboardMetrics.arrDollars.toLocaleString()}
@@ -135,7 +135,7 @@ export function ExecutiveAnalyticsDashboardView() {
         <div className="bg-card border border-border rounded-xl p-5 space-y-2 shadow-sm">
           <div className="flex items-center justify-between text-xs font-semibold text-muted-foreground">
             <span>Customer Retention Rate</span>
-            <UserCheck className="w-4 h-4 text-blue-500" />
+            <UserCheck className="w-4 h-4 text-primary" />
           </div>
           <div className="text-2xl font-extrabold text-emerald-500">
             {mockExecutiveDashboardMetrics.retentionRatePercent}%

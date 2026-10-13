@@ -10,10 +10,10 @@ const TECHNOLOGIES = [
 ];
 
 const METRICS = [
-  { value: '2018', label: 'Founded & Engineering' },
+  { value: '2024', label: 'Incorporated Entity' },
   { value: 'Enterprise', label: 'Production Workloads' },
   { value: '99.95%', label: 'Availability target' },
-  { value: '24×7', label: 'Support coverage' },
+  { value: 'Dedicated', label: 'Architecture Support' },
 ];
 
 export function TrustMetricsStrip() {

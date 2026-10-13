@@ -72,13 +72,13 @@ export function GlobalSearchHubView() {
   };
 
   const entityIcons: Record<string, React.ReactNode> = {
-    projects: <FolderKanban className="w-4 h-4 text-cyan-500" />,
-    tasks: <FolderKanban className="w-4 h-4 text-blue-500" />,
-    files: <FileText className="w-4 h-4 text-amber-500" />,
+    projects: <FolderKanban className="w-4 h-4 text-[#A20A3A]" />,
+    tasks: <FolderKanban className="w-4 h-4 text-[#FF9933]" />,
+    files: <FileText className="w-4 h-4 text-[#EDC11E]" />,
     ai_knowledge: <Bot className="w-4 h-4 text-primary" />,
     notifications: <Bell className="w-4 h-4 text-emerald-500" />,
-    documentation: <BookOpen className="w-4 h-4 text-purple-500" />,
-    users: <User className="w-4 h-4 text-pink-500" />,
+    documentation: <BookOpen className="w-4 h-4 text-[#625B60]" />,
+    users: <User className="w-4 h-4 text-[#A20A3A]" />,
   };
 
   return (

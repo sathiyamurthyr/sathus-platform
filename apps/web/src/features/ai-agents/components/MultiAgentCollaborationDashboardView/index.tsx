@@ -101,10 +101,10 @@ export function MultiAgentCollaborationDashboardView() {
                     <span
                       className={`px-1.5 py-0.5 rounded text-[9px] font-mono font-bold uppercase ${
                         m.role === 'coordinator'
-                          ? 'bg-purple-500/10 text-purple-500 border border-purple-500/20'
+                          ? 'bg-[#A20A3A]/15 text-[#A20A3A] border border-[#A20A3A]/30'
                           : m.role === 'reviewer'
-                          ? 'bg-amber-500/10 text-amber-500 border border-amber-500/20'
-                          : 'bg-blue-500/10 text-blue-500 border border-blue-500/20'
+                          ? 'bg-[#EDC11E]/20 text-[#8B6500] border border-[#EDC11E]/30'
+                          : 'bg-[#FF9933]/15 text-[#C46100] border border-[#FF9933]/30'
                       }`}
                     >
                       {m.role}

@@ -4,11 +4,11 @@ export const healthcareIndustry: Industry = {
   slug: 'healthcare',
   name: 'Healthcare',
   description:
-    'Engineering platforms for healthcare providers, payers, and health tech companies with HIPAA compliance and patient safety.',
+    'Engineering platforms for healthcare providers, payers, and health tech companies with patient data privacy and clinical interoperability.',
   hero: {
     title: 'Healthcare',
     description:
-      'Engineering platforms for healthcare providers, payers, and health tech companies with HIPAA compliance and patient safety.',
+      'Engineering platforms for healthcare providers, payers, and health tech companies with patient data privacy and clinical interoperability.',
     primaryCta: {
       text: 'Talk to an Expert',
       href: '/contact',
@@ -25,10 +25,10 @@ export const healthcareIndustry: Industry = {
   },
   challenges: [
     {
-      id: 'hipaa-compliance',
-      title: 'HIPAA Compliance',
+      id: 'data-privacy',
+      title: 'Data Privacy & Security',
       description:
-        'Ensuring patient data privacy and security in all systems.',
+        'Ensuring patient data confidentiality, consent governance, and security across all systems.',
     },
     {
       id: 'interoperability',
@@ -69,7 +69,7 @@ export const healthcareIndustry: Industry = {
   architecture: {
     title: 'Reference Architecture',
     description:
-      'Our healthcare reference architecture provides a HIPAA-compliant foundation for clinical and operational systems.',
+      'Our healthcare reference architecture provides a secure, FHIR-native foundation for clinical and operational systems.',
     imageUrl: '/images/industries/healthcare/architecture.png',
     imageAlt: 'Healthcare reference architecture diagram',
   },
@@ -107,9 +107,9 @@ export const healthcareIndustry: Industry = {
   faqs: [
     {
       id: 'compliance',
-      question: 'How do you ensure HIPAA compliance in healthcare solutions?',
+      question: 'How do you ensure data security in healthcare solutions?',
       answer:
-        'We implement HIPAA-compliant architectures with encryption, access controls, audit trails, and business associate agreements.',
+        'We implement zero-trust architectures with column-level encryption, role-based access controls, structured JSON audit trails, and strict patient consent governance.',
     },
   ],
 };

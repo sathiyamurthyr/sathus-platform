@@ -1,37 +1,37 @@
 /**
- * Official Sathus Technology Hybrid Enterprise & AI Design System
- * Coexistence: Enterprise Luxury (Burgundy & Gold) + AI Technology (Blue & Cyan)
+ * Official Sathus Technology Pvt. Ltd. Brand Design System
+ * Unified Brand Palette
  */
 
 export const BRAND_COLORS = {
   // Backgrounds & Surfaces
-  background: '#0D0B10',
-  surface: '#171419',
-  surfaceElevated: '#1F1A20',
+  background: '#FFFFFF',
+  surface: '#FAF8F9',
+  surfaceElevated: '#FFFFFF',
 
-  // Primary Brand (Burgundy - 8%)
-  primary: '#94003A',
-  primaryHover: '#B5004A',
+  // Primary Brand (Burgundy)
+  primary: '#A20A3A',
+  primaryHover: '#8C0832',
 
-  // Gold Accents (Gold - 4%)
-  premiumGold: '#E7B631',
-  secondaryGold: '#EDC11E',
-
-  // AI & Technology (Blue & Cyan - 8%)
-  aiBlue: '#4F7CFF',
-  aiCyan: '#37D5FF',
+  // Restrained Brand Accents (Orange & Gold)
+  vibrantOrange: '#FF9933',
+  orange: '#FF9933',
+  goldenYellow: '#EDC11E',
+  gold: '#EDC11E',
+  premiumGold: '#EDC11E',
+  secondaryGold: '#FF9933',
 
   // Typography
-  mainText: '#FFFFFF',
-  secondaryText: '#D6D6D6',
-  mutedText: '#9E9E9E',
+  mainText: '#292329',
+  secondaryText: '#625B60',
+  mutedText: '#625B60',
 
   // Borders & Structure
-  border: '#40202C',
-  engineeringGrid: 'rgba(255, 255, 255, 0.05)',
+  border: '#E8E2E5',
+  engineeringGrid: 'rgba(162, 10, 58, 0.04)',
 
   // Status & Feedback
-  success: '#2ECC71',
+  success: '#10B981',
   warning: '#EDC11E',
   error: '#D64545',
 } as const;

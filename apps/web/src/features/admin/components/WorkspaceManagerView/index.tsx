@@ -76,8 +76,8 @@ export function WorkspaceManagerView() {
 
   const templateBadges: Record<string, { label: string; color: string; icon: React.ReactNode }> = {
     ai_rag_agent: { label: 'AI RAG Agent Squad', color: 'bg-primary/10 text-primary border-primary/20', icon: <Sparkles className="w-3.5 h-3.5" /> },
-    data_lakehouse: { label: 'Data Lakehouse', color: 'bg-purple-500/10 text-purple-500 border-purple-500/20', icon: <Database className="w-3.5 h-3.5" /> },
-    cloud_microservices: { label: 'Microservices Mesh', color: 'bg-blue-500/10 text-blue-500 border-blue-500/20', icon: <Server className="w-3.5 h-3.5" /> },
+    data_lakehouse: { label: 'Data Lakehouse', color: 'bg-[#A20A3A]/15 text-[#A20A3A] border-[#A20A3A]/30', icon: <Database className="w-3.5 h-3.5" /> },
+    cloud_microservices: { label: 'Microservices Mesh', color: 'bg-[#FF9933]/15 text-[#C46100] border-[#FF9933]/30', icon: <Server className="w-3.5 h-3.5" /> },
     custom: { label: 'Custom Architecture', color: 'bg-muted text-muted-foreground border-border', icon: <LayoutGrid className="w-3.5 h-3.5" /> },
   };
 

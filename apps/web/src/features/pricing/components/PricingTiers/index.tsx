@@ -53,7 +53,7 @@ const tiers: Tier[] = [
       'Full sprint participation',
       'On-call architecture support',
       'Contractual SLAs (uptime, latency)',
-      'SOC 2 compliant delivery',
+      'Security-by-design delivery',
       'Monthly performance reports',
       'Direct Slack/Meet access',
     ],
@@ -193,15 +193,15 @@ export function PricingTiers() {
         <div className="grid grid-cols-3 gap-4 pt-8 border-t border-border/50">
           <div className="flex flex-col items-center justify-center gap-2 text-muted-foreground">
             <ShieldCheck className="w-8 h-8 text-primary/80" />
-            <span className="text-xs font-medium uppercase tracking-wider">SOC 2 Type II</span>
+            <span className="text-xs font-medium uppercase tracking-wider text-center">Zero-Trust</span>
           </div>
           <div className="flex flex-col items-center justify-center gap-2 text-muted-foreground">
             <ActivitySquare className="w-8 h-8 text-primary/80" />
-            <span className="text-xs font-medium uppercase tracking-wider">HIPAA Compliant</span>
+            <span className="text-xs font-medium uppercase tracking-wider text-center">GDPR Alignment</span>
           </div>
           <div className="flex flex-col items-center justify-center gap-2 text-muted-foreground">
             <Server className="w-8 h-8 text-primary/80" />
-            <span className="text-xs font-medium uppercase tracking-wider">ISO 27001</span>
+            <span className="text-xs font-medium uppercase tracking-wider text-center">Secure Engineering</span>
           </div>
         </div>
       </div>

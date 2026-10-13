@@ -58,7 +58,7 @@ export function NotificationCenter() {
     security: <ShieldAlert className="w-4 h-4 text-emerald-500" />,
     ai: <Bot className="w-4 h-4 text-primary" />,
     system: <Server className="w-4 h-4 text-amber-500" />,
-    info: <Info className="w-4 h-4 text-blue-500" />,
+    info: <Info className="w-4 h-4 text-[#FF9933]" />,
   };
 
   return (

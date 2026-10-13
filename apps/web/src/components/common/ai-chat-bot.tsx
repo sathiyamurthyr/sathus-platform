@@ -33,7 +33,7 @@ const SATHUS_KB: Array<{ keywords: string[]; response: string }> = [
 • **Zero-hallucination guardrails** (< 0.01% error rate)
 • Multi-agent orchestration with sandboxed tool execution
 • Human-in-the-loop approval workflows
-• Full audit trail and SOC 2 compliance
+• Full audit trail and sandboxed execution logs
 
 Want to see a live demo? Visit [/products](/products) or book a strategy session.`,
   },
@@ -63,7 +63,7 @@ Learn more at [/solutions/rag-solutions](/solutions/rag-solutions).`,
     keywords: ['cloud', 'aws', 'azure', 'kubernetes', 'terraform', 'devops', 'infrastructure'],
     response: `Our **Cloud Engineering practice** delivers:
 
-• 99.99% uptime with Kubernetes GitOps on AWS / Azure
+• 99.95% availability target with Kubernetes GitOps on AWS / Azure
 • Terraform IaC with automated FinOps cost governance
 • **40% cloud cost reduction** through right-sizing
 • Zero-downtime migration paths for legacy estates
@@ -71,16 +71,16 @@ Learn more at [/solutions/rag-solutions](/solutions/rag-solutions).`,
 See our [Cloud Engineering solutions](/solutions/cloud-engineering).`,
   },
   {
-    keywords: ['security', 'compliance', 'soc2', 'hipaa', 'gdpr', 'iso', 'audit'],
-    response: `Sathus is **compliance-by-design** across all engagements:
+    keywords: ['security', 'compliance', 'privacy', 'gdpr', 'encryption', 'audit'],
+    response: `Sathus is **security-by-design** across all engagements:
 
-• **SOC 2 Type II** audited annually
-• **HIPAA / HITECH** for healthcare AI platforms
-• **ISO/IEC 27001:2022** certified ISMS
-• **GDPR** EU data residency & right-to-erasure
-• Zero-trust mTLS and AES-256-GCM encryption
+• **Zero-Trust Access Control** with mTLS and session RBAC
+• **Healthcare Standards** with HL7 FHIR R4 schema integration
+• **GDPR Alignment** for EU data residency & privacy controls
+• **Encryption** via AES-256 at rest and TLS 1.3 in transit
+• **Immutable Audit Logs** across distributed workloads
 
-Explore our full [Compliance Matrix](/trust/compliance).`,
+Explore our [Trust Center](/trust).`,
   },
   {
     keywords: ['price', 'cost', 'pricing', 'budget', 'roi', 'tco'],
@@ -98,10 +98,10 @@ Use our [ROI Calculator](/company/why-sathus) to estimate your savings, or [book
 
 • Async-first **FastAPI** with Pydantic v2 validation
 • OpenAPI 3.0 auto-generated documentation
-• Sub-5ms P99 latency with Redis rate limiting
+• Resilient low-latency P99 caching with Redis
 • Async SQLAlchemy with connection pooling
 
-Try our live [API Playground](/solutions) to see sub-10ms responses.`,
+Try our live [API Playground](/solutions) to see high-throughput responses.`,
   },
   {
     keywords: ['product', 'svora', 'memomes', 'sathus ai', 'platform'],
@@ -159,7 +159,7 @@ Here are some things I can help you with:
 • Data Lakehouse & streaming pipelines
 • Cloud modernization & Kubernetes
 • Enterprise RAG & knowledge systems
-• Compliance (SOC 2, HIPAA, ISO 27001)
+• Security & Data Protection (Zero-Trust, GDPR, FHIR)
 
 Or you can [book a strategy session](/book-strategy-session) to speak directly with a principal engineer.`;
 }
@@ -252,31 +252,31 @@ function LeadFormMessage({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-2 mt-3 pt-3 border-t border-border/80">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-2 mt-3 pt-3 border-t border-[#E8E2E5]">
       <input 
         required 
         name="name" 
         placeholder="Full Name" 
-        className="h-8 text-xs border border-border bg-background rounded-lg px-2.5 focus:outline-none focus:ring-1 focus:ring-primary text-foreground placeholder:text-muted-foreground" 
+        className="h-8 text-xs border border-[#E8E2E5] bg-[#FAF8F9] rounded-lg px-2.5 focus:outline-none focus:ring-1 focus:ring-[#A20A3A] text-[#292329] placeholder:text-[#625B60]" 
       />
       <input 
         required 
         type="email" 
         name="email" 
         placeholder="Work Email" 
-        className="h-8 text-xs border border-border bg-background rounded-lg px-2.5 focus:outline-none focus:ring-1 focus:ring-primary text-foreground placeholder:text-muted-foreground" 
+        className="h-8 text-xs border border-[#E8E2E5] bg-[#FAF8F9] rounded-lg px-2.5 focus:outline-none focus:ring-1 focus:ring-[#A20A3A] text-[#292329] placeholder:text-[#625B60]" 
       />
       <input 
         required 
         name="company" 
         placeholder="Company Name" 
-        className="h-8 text-xs border border-border bg-background rounded-lg px-2.5 focus:outline-none focus:ring-1 focus:ring-primary text-foreground placeholder:text-muted-foreground" 
+        className="h-8 text-xs border border-[#E8E2E5] bg-[#FAF8F9] rounded-lg px-2.5 focus:outline-none focus:ring-1 focus:ring-[#A20A3A] text-[#292329] placeholder:text-[#625B60]" 
       />
       <Button 
         type="submit" 
         disabled={loading} 
         size="sm" 
-        className="w-full h-8 text-xs font-bold mt-1 shadow-md"
+        className="w-full h-8 text-xs font-bold mt-1 shadow-sm bg-[#A20A3A] hover:bg-[#8C0832] text-white"
       >
         {loading ? 'Submitting...' : 'Request Strategy Session'}
       </Button>
@@ -395,19 +395,19 @@ export function AiChatBot() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 16, scale: 0.96 }}
             transition={{ type: 'spring', damping: 28, stiffness: 320 }}
-            className="w-[340px] sm:w-[390px] rounded-2xl border border-[#40202C] bg-[#0D0B10] shadow-[0_25px_60px_-15px_rgba(0,0,0,0.95)] flex flex-col overflow-hidden ring-1 ring-white/10 opacity-100"
+            className="w-[340px] sm:w-[390px] rounded-2xl border border-[#E8E2E5] bg-white shadow-2xl flex flex-col overflow-hidden opacity-100"
             style={{ height: panelHeight }}
           >
             {/* Solid Header */}
-            <div className="flex items-center justify-between px-4 py-3 bg-primary text-primary-foreground shrink-0 shadow-md">
+            <div className="flex items-center justify-between px-4 py-3 bg-[#A20A3A] text-white shrink-0 shadow-sm">
               <div className="flex items-center gap-2.5">
                 <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/20 shrink-0">
-                  <Bot className="h-4 w-4" />
+                  <Bot className="h-4 w-4 text-white" />
                 </div>
                 <div>
                   <div className="text-xs font-extrabold tracking-tight">Sathus AI Assistant</div>
-                  <div className="flex items-center gap-1.5 text-[10px] text-white/80 mt-0.5 font-medium">
-                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-300 animate-pulse" />
+                  <div className="flex items-center gap-1.5 text-[10px] text-white/90 mt-0.5 font-medium">
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#EDC11E] animate-pulse" />
                     Online — Enterprise AI Expert
                   </div>
                 </div>
@@ -439,8 +439,8 @@ export function AiChatBot() {
 
             {!isMinimized && (
               <>
-                {/* Messages Container — SOLID 100% OPAQUE DARK BACKGROUND */}
-                <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-[#0D0B10] border-b border-[#331C28] opacity-100">
+                {/* Messages Container — White surface */}
+                <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-white border-b border-[#E8E2E5] opacity-100">
                   {messages.map((msg) => (
                     <div
                       key={msg.id}
@@ -449,23 +449,23 @@ export function AiChatBot() {
                       <div
                         className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full ${
                           msg.role === 'assistant'
-                            ? 'bg-primary/20 text-primary border border-primary/30'
-                            : 'bg-[#1A1418] text-white border border-[#40202C]'
+                            ? 'bg-[#A20A3A]/10 text-[#A20A3A] border border-[#A20A3A]/20'
+                            : 'bg-[#FAF8F9] text-[#292329] border border-[#E8E2E5]'
                         }`}
                       >
                         {msg.role === 'assistant' ? <Bot className="h-3.5 w-3.5" /> : <User className="h-3.5 w-3.5" />}
                       </div>
                       <div
-                        className={`max-w-[82%] rounded-2xl px-3.5 py-2.5 shadow-md opacity-100 ${
+                        className={`max-w-[82%] rounded-2xl px-3.5 py-2.5 shadow-xs opacity-100 ${
                           msg.role === 'assistant'
-                            ? 'bg-[#1A1418] border border-[#40202C] text-white rounded-tl-xs'
-                            : 'bg-primary text-primary-foreground font-medium rounded-tr-xs'
+                            ? 'bg-[#FAF8F9] border border-[#E8E2E5] text-[#292329] rounded-tl-xs'
+                            : 'bg-[#A20A3A] text-white font-medium rounded-tr-xs'
                         }`}
                       >
                         {msg.role === 'assistant' ? (
                           <>
                             {msg.type === 'lead-success' ? (
-                              <div className="flex flex-col gap-2 bg-emerald-500/10 p-2.5 rounded-lg border border-emerald-500/20 text-emerald-400 mb-1">
+                              <div className="flex flex-col gap-2 bg-[#10B981]/10 p-2.5 rounded-lg border border-[#10B981]/20 text-[#10B981] mb-1">
                                 <div className="flex items-center gap-2 font-bold text-xs">
                                   <CheckCircle2 className="h-4 w-4" />
                                   Session Requested
@@ -486,7 +486,7 @@ export function AiChatBot() {
                         ) : (
                           <p className="text-xs leading-relaxed">{msg.content}</p>
                         )}
-                        <div className={`text-[9px] mt-1 ${msg.role === 'assistant' ? 'text-zinc-400' : 'text-primary-foreground/70'}`}>
+                        <div className={`text-[9px] mt-1 ${msg.role === 'assistant' ? 'text-[#625B60]' : 'text-white/80'}`}>
                           {msg.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                         </div>
                       </div>
@@ -495,14 +495,14 @@ export function AiChatBot() {
 
                   {isLoading && (
                     <div className="flex gap-2">
-                      <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary/20 text-primary border border-primary/30">
+                      <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#A20A3A]/10 text-[#A20A3A] border border-[#A20A3A]/20">
                         <Bot className="h-3.5 w-3.5" />
                       </div>
-                      <div className="bg-[#1A1418] border border-[#40202C] rounded-2xl rounded-tl-xs px-4 py-3 shadow-sm">
+                      <div className="bg-[#FAF8F9] border border-[#E8E2E5] rounded-2xl rounded-tl-xs px-4 py-3 shadow-xs">
                         <div className="flex items-center gap-1.5">
-                          <span className="h-1.5 w-1.5 rounded-full bg-primary animate-bounce" style={{ animationDelay: '0ms' }} />
-                          <span className="h-1.5 w-1.5 rounded-full bg-primary animate-bounce" style={{ animationDelay: '160ms' }} />
-                          <span className="h-1.5 w-1.5 rounded-full bg-primary animate-bounce" style={{ animationDelay: '320ms' }} />
+                          <span className="h-1.5 w-1.5 rounded-full bg-[#A20A3A] animate-bounce" style={{ animationDelay: '0ms' }} />
+                          <span className="h-1.5 w-1.5 rounded-full bg-[#FF9933] animate-bounce" style={{ animationDelay: '160ms' }} />
+                          <span className="h-1.5 w-1.5 rounded-full bg-[#EDC11E] animate-bounce" style={{ animationDelay: '320ms' }} />
                         </div>
                       </div>
                     </div>
@@ -510,14 +510,14 @@ export function AiChatBot() {
                   <div ref={messagesEndRef} />
                 </div>
 
-                {/* Suggested Prompt Chips — SOLID 100% OPAQUE BACKGROUND */}
+                {/* Suggested Prompt Chips */}
                 {messages.length === 1 && (
-                  <div className="px-3 py-2 flex flex-wrap gap-1.5 bg-[#0D0B10] border-b border-[#331C28] opacity-100">
+                  <div className="px-3 py-2 flex flex-wrap gap-1.5 bg-[#FAF8F9] border-b border-[#E8E2E5] opacity-100">
                     {SUGGESTED_PROMPTS.map((p) => (
                       <button
                         key={p}
                         onClick={() => handleSend(p)}
-                        className="text-[11px] font-medium px-2.5 py-1 rounded-lg border border-[#40202C] bg-[#1A1418] hover:border-primary hover:bg-primary/20 transition-all text-white shrink-0 shadow-sm"
+                        className="text-[11px] font-medium px-2.5 py-1 rounded-lg border border-[#E8E2E5] bg-white hover:border-[#A20A3A] hover:text-[#A20A3A] transition-all text-[#292329] shrink-0 shadow-xs"
                       >
                         {p}
                       </button>
@@ -525,8 +525,8 @@ export function AiChatBot() {
                   </div>
                 )}
 
-                {/* Input Area — SOLID 100% OPAQUE BACKGROUND */}
-                <div className="p-3 bg-[#0D0B10] border-t border-[#331C28] flex items-center gap-2 shrink-0 opacity-100">
+                {/* Input Area */}
+                <div className="p-3 bg-white border-t border-[#E8E2E5] flex items-center gap-2 shrink-0 opacity-100">
                   <input
                     ref={inputRef}
                     type="text"
@@ -534,13 +534,13 @@ export function AiChatBot() {
                     onChange={(e) => setInput(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && handleSend()}
                     placeholder="Ask about AI, data, cloud..."
-                    className="flex-1 text-xs bg-[#1A1418] border border-[#40202C] rounded-xl px-3 py-2.5 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-white placeholder:text-zinc-500"
+                    className="flex-1 text-xs bg-[#FAF8F9] border border-[#E8E2E5] rounded-xl px-3 py-2.5 focus:outline-none focus:border-[#A20A3A] focus:ring-1 focus:ring-[#A20A3A] text-[#292329] placeholder:text-[#625B60]"
                   />
                   <Button
                     onClick={() => handleSend()}
                     disabled={!input.trim() || isLoading}
                     size="icon"
-                    className="h-9 w-9 rounded-xl shrink-0 shadow font-bold"
+                    className="h-9 w-9 rounded-xl shrink-0 shadow bg-[#A20A3A] hover:bg-[#8C0832] text-white font-bold"
                   >
                     <Send className="h-3.5 w-3.5" />
                   </Button>

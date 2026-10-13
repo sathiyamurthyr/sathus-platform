@@ -11,7 +11,7 @@ export const cloudEngineeringSolution: Solution = {
     primaryCta: { text: 'Book Architecture Review', href: '/book-strategy-session' },
     secondaryCta: { text: 'View Case Studies', href: '/case-studies' },
     stats: [
-      { value: '99.99%', valueLabel: 'Uptime SLA', label: 'Availability' },
+      { value: '99.95%', valueLabel: 'Availability Target', label: 'Availability' },
       { value: '100%', valueLabel: 'IaC Coverage', label: 'Terraform Automation' },
       { value: '40%', valueLabel: 'Cloud Savings', label: 'FinOps Impact' },
     ],
@@ -46,7 +46,7 @@ export const cloudEngineeringSolution: Solution = {
     ],
   },
   outcomes: [
-    { id: 'o1', title: '99.99% Infrastructure Reliability', description: 'High availability SLA across multi-region deployments.', metric: '99.99%' },
+    { id: 'o1', title: '99.95% Infrastructure Availability', description: 'Availability target across resilient multi-region deployments.', metric: '99.95%' },
   ],
   caseStudies: [
     {
@@ -56,7 +56,7 @@ export const cloudEngineeringSolution: Solution = {
       industry: 'Financial Services',
       challenge: 'Manual deployment delays and regulatory compliance requirements.',
       solution: 'Automated Terraform EKS landing zone with zero-trust networking.',
-      outcome: '99.99% uptime achieved across 12M+ monthly transactions.',
+      outcome: '99.95% availability target achieved across 12M+ monthly transactions.',
       technologies: ['AWS', 'Terraform', 'Kubernetes'],
       duration: '6 Months',
     },

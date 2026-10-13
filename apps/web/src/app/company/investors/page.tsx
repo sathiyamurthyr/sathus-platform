@@ -97,7 +97,7 @@ const governancePillars = [
   {
     icon: ShieldCheck,
     title: 'Security & Compliance Controls',
-    description: 'International security standards readiness (ISO 27001, SOC 2 Type II), transparent fiscal auditing, automated compliance reporting.',
+    description: 'Zero-trust architecture readiness, secure software engineering standards, transparent fiscal auditing, and automated telemetry reporting.',
   },
   {
     icon: Lock,

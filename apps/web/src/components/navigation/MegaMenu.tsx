@@ -82,7 +82,7 @@ export const MegaMenu = React.memo(function MegaMenu({
           exit="exit"
           variants={variants}
           transition={{ duration: 0.15, ease: 'easeOut' }}
-          className="absolute inset-x-0 top-full z-[1100] border-b border-[#40202C] bg-[#0D0B10] opacity-100 shadow-[0_20px_60px_rgba(0,0,0,0.95)] pointer-events-auto"
+          className="absolute inset-x-0 top-full z-[1100] border-b border-[#E8E2E5] bg-white opacity-100 shadow-[0_20px_50px_rgba(0,0,0,0.08)] pointer-events-auto"
           style={{ willChange: 'transform, opacity' }}
           role="menu"
           aria-label="Mega menu"
@@ -164,7 +164,7 @@ export const MegaMenu = React.memo(function MegaMenu({
                           })}
                         </ul>
                         {column.featured && (
-                          <div className="mt-4 rounded-xl border bg-gradient-to-br from-muted/50 to-muted/30 p-4 transition-colors hover:border-primary/20">
+                          <div className="mt-4 rounded-xl border border-[#E8E2E5] bg-[#FAF8F9] p-4 transition-colors hover:border-[#A20A3A]/40">
                             <div className="flex items-start justify-between gap-2">
                               <div>
                                 <span className="inline-flex items-center rounded-full bg-primary/10 px-2 py-0.5 text-[0.65rem] font-semibold uppercase tracking-wider text-primary mb-2">

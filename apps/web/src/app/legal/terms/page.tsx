@@ -38,7 +38,7 @@ export default function TermsPage() {
         <section className="space-y-2">
           <h2 className="text-base font-bold text-foreground">2. Service Level Agreements (SLAs)</h2>
           <p>
-            Enterprise cloud platform deployments guarantee 99.99% monthly uptime, backed by credit remedies specified in your enterprise subscription contract.
+            Enterprise cloud platform deployments target 99.95% monthly availability, backed by remedies specified in your enterprise subscription contract or Statement of Work.
           </p>
         </section>
 

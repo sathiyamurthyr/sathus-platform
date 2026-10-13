@@ -50,7 +50,7 @@ export function AuditComplianceCenterView() {
   });
 
   const severityBadges: Record<string, string> = {
-    info: 'bg-blue-500/10 text-blue-500 border-blue-500/20',
+    info: 'bg-[#FF9933]/15 text-[#C46100] border-[#FF9933]/30',
     warning: 'bg-amber-500/10 text-amber-500 border-amber-500/20',
     critical: 'bg-red-500/10 text-red-500 border-red-500/20',
   };

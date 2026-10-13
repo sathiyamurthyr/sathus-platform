@@ -230,9 +230,9 @@ export default function StrategySessionPage() {
           <div className="space-y-6">
             {/* Trust badges */}
             <div className="rounded-xl border border-border bg-card p-6">
-              <h3 className="text-sm font-bold mb-4">Compliance & Security</h3>
+              <h3 className="text-sm font-bold mb-4">Standards & Security Architecture</h3>
               <div className="grid grid-cols-3 gap-3">
-                {['SOC 2 Type II', 'HIPAA', 'ISO 27001', 'GDPR', 'CCPA', 'PCI DSS'].map((badge) => (
+                {['Zero-Trust', 'AES-256', 'TLS 1.3', 'GDPR', 'FHIR R4', 'Open Standards'].map((badge) => (
                   <div key={badge} className="flex items-center justify-center rounded-lg border border-border bg-muted/30 px-2 py-2 text-[10px] font-bold text-muted-foreground text-center">
                     {badge}
                   </div>

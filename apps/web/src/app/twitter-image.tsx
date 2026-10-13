@@ -15,12 +15,12 @@ export default function TwitterImage() {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
-          backgroundColor: '#070810',
+          backgroundColor: '#FFFFFF',
           padding: '72px',
-          color: 'white',
+          color: '#292329',
           fontFamily: 'Inter, sans-serif',
           backgroundImage:
-            'radial-gradient(900px 500px at 80% -10%, rgba(148,0,58,0.45), transparent), radial-gradient(700px 500px at 0% 110%, rgba(231,182,49,0.25), transparent)',
+            'radial-gradient(900px 500px at 80% -10%, rgba(162,10,58,0.06), transparent), radial-gradient(700px 500px at 0% 110%, rgba(255,153,51,0.06), transparent)',
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
@@ -29,27 +29,27 @@ export default function TwitterImage() {
               width: 48,
               height: 48,
               borderRadius: 12,
-              background: 'linear-gradient(135deg, #94003A, #E7B631)',
+              background: 'linear-gradient(135deg, #A20A3A, #FF9933)',
               display: 'flex',
             }}
           />
-          <div style={{ fontSize: 32, fontWeight: 700, letterSpacing: '-0.02em', color: '#ffffff' }}>
+          <div style={{ fontSize: 32, fontWeight: 700, letterSpacing: '-0.02em', color: '#292329' }}>
             Sathus Technology
           </div>
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <div style={{ fontSize: 58, lineHeight: 1.1, fontWeight: 700, maxWidth: 960, color: '#ffffff' }}>
+          <div style={{ fontSize: 58, lineHeight: 1.1, fontWeight: 700, maxWidth: 960, color: '#292329' }}>
             Enterprise AI, Data Engineering &amp; Cloud Modernization
           </div>
-          <div style={{ fontSize: 24, color: '#D6D6D6', marginTop: 24, maxWidth: 880, lineHeight: 1.4 }}>
+          <div style={{ fontSize: 24, color: '#625B60', marginTop: 24, maxWidth: 880, lineHeight: 1.4 }}>
             Production-grade agentic swarms, governed lakehouses, and cloud-native applications for regulated industries.
           </div>
         </div>
 
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid rgba(255,255,255,0.15)', paddingTop: 24 }}>
-          <span style={{ fontSize: 20, color: '#E7B631', fontWeight: 600 }}>https://www.sathus.in</span>
-          <div style={{ display: 'flex', gap: 20, fontSize: 18, color: 'rgba(255,255,255,0.6)' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid #E8E2E5', paddingTop: 24 }}>
+          <span style={{ fontSize: 20, color: '#A20A3A', fontWeight: 600 }}>https://www.sathus.in</span>
+          <div style={{ display: 'flex', gap: 20, fontSize: 18, color: '#625B60' }}>
             <span>AI Swarms</span>
             <span>•</span>
             <span>Apache Iceberg</span>

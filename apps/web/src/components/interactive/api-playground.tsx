@@ -38,7 +38,7 @@ const apiEndpoints: ApiEndpoint[] = [
       guardrailScore: 0.999,
       decisions: [
         { step: 1, action: 'vector_search', result: '14 matching policy docs' },
-        { step: 2, action: 'audit_check', result: 'SOC 2 Type II compliant' },
+        { step: 2, action: 'audit_check', result: 'Zero-trust policy compliant' },
       ],
     },
     latencyMs: 14,
@@ -47,7 +47,7 @@ const apiEndpoints: ApiEndpoint[] = [
     id: 'lakehouse-query',
     method: 'GET',
     path: '/api/v1/lakehouse/query?table=gold_transactions&limit=10',
-    summary: 'Sub-10ms High-Throughput Delta Lakehouse Query',
+    summary: 'High-Throughput Delta Lakehouse Query',
     headers: {
       Authorization: 'Bearer sth_live_99f8a37b...',
       'Accept-Encoding': 'gzip, br',
@@ -125,7 +125,7 @@ export function ApiPlayground() {
           </div>
           <div>
             <h3 className="text-lg font-extrabold text-foreground">Interactive FastAPI & OpenAPI Explorer</h3>
-            <p className="text-xs text-muted-foreground">Test sub-10ms microservice endpoints and inspect JSON payloads live</p>
+            <p className="text-xs text-muted-foreground">Test high-performance microservice endpoints and inspect JSON payloads live</p>
           </div>
         </div>
         <div className="flex items-center gap-2">
@@ -162,7 +162,7 @@ export function ApiPlayground() {
               <div className="flex items-center gap-2 mb-1">
                 <span
                   className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded ${
-                    ep.method === 'POST' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-blue-500/20 text-blue-400'
+                    ep.method === 'POST' ? 'bg-[#A20A3A]/20 text-[#A20A3A]' : 'bg-[#FF9933]/20 text-[#FF9933]'
                   }`}
                 >
                   {ep.method}

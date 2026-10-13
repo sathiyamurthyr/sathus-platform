@@ -66,11 +66,11 @@ export function PlatformOverview() {
   return (
     <section
       id="platform"
-      className="scroll-mt-24 border-t border-white/10 bg-[#070810] py-20 text-white sm:py-24"
+      className="scroll-mt-24 border-t border-[#E8E2E5] bg-white py-20 text-[#292329] sm:py-24"
     >
       <div className="container mx-auto px-4">
         <SectionIntro
-          tone="dark"
+          tone="light"
           eyebrow="Platform"
           title="One architecture, from silicon to solution"
           description="Every engagement runs on the same governed backbone — so AI, data, cloud, and products compose instead of competing."
@@ -97,29 +97,29 @@ export function PlatformOverview() {
                     y1={pa.y}
                     x2={pb.x}
                     y2={pb.y}
-                    stroke={lit ? 'url(#pg)' : 'rgba(255,255,255,0.12)'}
-                    strokeWidth={type === 'core' ? 0.45 : 0.35}
+                    stroke={lit ? 'url(#pg)' : '#E8E2E5'}
+                    strokeWidth={type === 'core' ? 0.5 : 0.35}
                     strokeDasharray={type === 'link' ? '1.6 2.2' : undefined}
                     vectorEffect="non-scaling-stroke"
                     className={cn(
                       'transition-[stroke,opacity] duration-300',
-                      lit ? 'opacity-100' : 'opacity-40'
+                      lit ? 'opacity-100' : 'opacity-50'
                     )}
                   />
                 );
               })}
               <defs>
                 <linearGradient id="pg" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stopColor="#60a5fa" />
-                  <stop offset="50%" stopColor="#a78bfa" />
-                  <stop offset="100%" stopColor="#22d3ee" />
+                  <stop offset="0%" stopColor="#A20A3A" />
+                  <stop offset="50%" stopColor="#FF9933" />
+                  <stop offset="100%" stopColor="#EDC11E" />
                 </linearGradient>
               </defs>
             </svg>
 
             {/* Core */}
             <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-              <div className="flex h-24 w-24 flex-col items-center justify-center rounded-2xl bg-gradient-to-br from-primary via-violet-500 to-cyan-400 text-center shadow-2xl ring-1 ring-inset ring-white/20">
+              <div className="flex h-24 w-24 flex-col items-center justify-center rounded-2xl bg-[#A20A3A] text-center shadow-lg border border-[#A20A3A]">
                 <Cpu className="h-6 w-6 text-white" />
                 <span className="mt-1 px-2 text-[0.62rem] font-semibold leading-tight text-white">
                   Sathus
@@ -148,10 +148,10 @@ export function PlatformOverview() {
                 >
                   <span
                     className={cn(
-                      'flex items-center gap-2 rounded-full border px-3 py-1.5 text-sm font-medium backdrop-blur transition-all duration-300',
+                      'flex items-center gap-2 rounded-full border px-3 py-1.5 text-sm font-medium backdrop-blur transition-all duration-300 shadow-xs',
                       isActive
-                        ? 'border-white/30 bg-white/10 text-white shadow-lg'
-                        : 'border-white/10 bg-white/5 text-white/70 hover:text-white'
+                        ? 'border-[#A20A3A] bg-[#A20A3A] text-white shadow-md'
+                        : 'border-[#E8E2E5] bg-[#FAF8F9] text-[#625B60] hover:text-[#A20A3A] hover:border-[#A20A3A] hover:bg-white'
                     )}
                   >
                     <Icon className="h-4 w-4" />
@@ -163,12 +163,12 @@ export function PlatformOverview() {
           </div>
 
           {/* Detail panel */}
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-8 backdrop-blur-md">
+          <div className="rounded-2xl border border-[#E8E2E5] bg-[#FAF8F9] p-8 shadow-xs">
             <div aria-live="polite">
-              <h3 className="font-display text-3xl text-white">
+              <h3 className="font-display text-3xl text-[#292329]">
                 {active ? detail.label : 'Sathus Platform'}
               </h3>
-              <p className="mt-4 text-base leading-relaxed text-white/65">
+              <p className="mt-4 text-base leading-relaxed text-[#625B60]">
                 {detail.description}
               </p>
             </div>
@@ -182,10 +182,10 @@ export function PlatformOverview() {
                   onFocus={() => setActive(node.id)}
                   onBlur={() => setActive(null)}
                   className={cn(
-                    'rounded-full border px-3 py-1 text-xs font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40',
+                    'rounded-full border px-3 py-1 text-xs font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#A20A3A]',
                     active === node.id
-                      ? 'border-white/40 bg-white/15 text-white'
-                      : 'border-white/10 text-white/60 hover:text-white'
+                      ? 'border-[#A20A3A] bg-[#A20A3A] text-white shadow-xs'
+                      : 'border-[#E8E2E5] bg-white text-[#625B60] hover:text-[#A20A3A] hover:border-[#A20A3A]'
                   )}
                 >
                   {node.label}

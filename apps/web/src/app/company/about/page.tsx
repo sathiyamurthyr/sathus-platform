@@ -53,7 +53,7 @@ const principles = [
     icon: Zap,
     title: 'Accountable Performance',
     description:
-      'We commit to hard technical SLAs: sub-10ms query latencies, 99.99% system availability, 98%+ RAG retrieval precision. These are contractual metrics, not marketing claims.',
+      'We commit to clear technical benchmarks: resilient query performance, 99.95% platform availability target, and high RAG retrieval precision across enterprise workloads.',
   },
   {
     icon: Users,
@@ -74,7 +74,7 @@ const expertise = [
   { domain: 'Data Engineering', detail: 'Governed lakehouses, Apache Iceberg, Databricks, Snowflake, Apache Kafka streaming, and dbt transformation pipelines.' },
   { domain: 'Cloud Infrastructure', detail: 'AWS and Azure enterprise landing zones, Kubernetes orchestration, Terraform IaC, GitOps, and FinOps governance.' },
   { domain: 'Enterprise Applications', detail: '.NET 9 Clean Architecture, FastAPI microservices, FHIR healthcare APIs, core banking systems, and identity platforms.' },
-  { domain: 'Regulated Industries', detail: 'Financial services (BFSI), healthcare (HIPAA/FHIR), insurance, life sciences, and public sector compliance environments.' },
+  { domain: 'Regulated Industries', detail: 'Financial services (BFSI), healthcare interoperability (HL7 FHIR / ABDM), insurance, life sciences, and sensitive data environments.' },
 ];
 
 const industryClients = [
@@ -136,7 +136,7 @@ export default function AboutPage() {
             </li>
             <li className="flex gap-2">
               <span className="text-primary font-bold shrink-0">→</span>
-              <span>Deep expertise in open table formats, MCP protocol, FHIR, and SOC 2 / ISO 27001 environments.</span>
+              <span>Deep expertise in open table formats, MCP protocol, FHIR standards, and security-first enterprise architectures.</span>
             </li>
             <li className="flex gap-2">
               <span className="text-primary font-bold shrink-0">→</span>

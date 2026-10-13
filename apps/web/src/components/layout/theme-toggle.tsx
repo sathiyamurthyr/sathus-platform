@@ -14,9 +14,10 @@ export function ThemeToggle() {
     <Button
       variant="ghost"
       size="icon"
-      onClick={() => setTheme(isDark ? 'light' : 'dark')}
-      aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-      title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+      className="text-[#625B60] hover:text-[#A20A3A]"
+      onClick={() => setTheme('light')}
+      aria-label="Sathus brand theme"
+      title="Sathus brand theme"
     >
       <motion.span
         initial={{ scale: 0.5, opacity: 0, rotate: -90 }}

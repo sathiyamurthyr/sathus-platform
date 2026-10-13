@@ -34,8 +34,7 @@ export function SectionIntro({
       {eyebrow && (
         <span
           className={cn(
-            'inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em]',
-            isDark ? 'text-white/60' : 'text-primary'
+            'inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-primary'
           )}
         >
           <span className="h-px w-6 bg-current opacity-60" />
@@ -44,8 +43,7 @@ export function SectionIntro({
       )}
       <Heading
         className={cn(
-          'max-w-3xl text-balance font-display text-3xl leading-[1.08] tracking-tight sm:text-4xl lg:text-5xl',
-          isDark ? 'text-white' : 'text-foreground'
+          'max-w-3xl text-balance font-display text-3xl leading-[1.08] tracking-tight sm:text-4xl lg:text-5xl text-foreground'
         )}
       >
         {title}
@@ -53,8 +51,7 @@ export function SectionIntro({
       {description && (
         <p
           className={cn(
-            'max-w-2xl text-pretty text-base leading-relaxed sm:text-lg',
-            isDark ? 'text-white/60' : 'text-muted-foreground'
+            'max-w-2xl text-pretty text-base leading-relaxed sm:text-lg text-muted-foreground'
           )}
         >
           {description}

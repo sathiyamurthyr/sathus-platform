@@ -31,25 +31,25 @@ export function AnnouncementBar() {
       animate={{ height: 40, opacity: 1 }}
       exit={{ height: 0, opacity: 0 }}
       transition={{ duration: 0.3, ease: 'easeOut' }}
-      className="relative z-50 overflow-hidden bg-gradient-to-r from-[#94003A] via-[#B5004A] to-[#4F7CFF] text-white border-b border-[#40202C]"
+      className="relative z-50 overflow-hidden bg-[#FAF8F9] text-[#292329] border-b border-[#E8E2E5]"
       role="banner"
       aria-label="Announcements"
     >
       <div className="flex h-10 items-center justify-center px-3 pr-9 sm:px-4 sm:pr-4">
         <div className="flex items-center gap-2 sm:gap-3 min-w-0">
           <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
-            <Icon className="h-3.5 w-3.5 shrink-0 text-[#E7B631]" aria-hidden="true" />
-            <span className="hidden rounded-full bg-[rgba(231,182,49,0.2)] border border-[rgba(231,182,49,0.3)] text-[#E7B631] px-2 py-0.5 text-[0.65rem] font-semibold uppercase tracking-wider sm:inline">
+            <Icon className="h-3.5 w-3.5 shrink-0 text-[#FF9933]" aria-hidden="true" />
+            <span className="hidden rounded-full bg-[#A20A3A]/10 border border-[#A20A3A]/20 text-[#A20A3A] px-2 py-0.5 text-[0.65rem] font-semibold uppercase tracking-wider sm:inline">
               {current.tag}
             </span>
           </div>
-          <p className="text-xs sm:text-sm font-medium truncate max-w-[250px] xs:max-w-[340px] sm:max-w-[600px] text-white">
+          <p className="text-xs sm:text-sm font-medium truncate max-w-[250px] xs:max-w-[340px] sm:max-w-[600px] text-[#292329]">
             {current.text}{' '}
             <Link
               href={current.href}
-              className="font-semibold text-[#E7B631] underline underline-offset-4 hover:no-underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E7B631] rounded"
+              className="font-semibold text-[#A20A3A] underline underline-offset-4 hover:text-[#8C0832] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#A20A3A] rounded"
             >
-              Explore <ArrowRight className="inline h-3 w-3 ml-0.5 text-[#E7B631]" aria-hidden="true" />
+              Explore <ArrowRight className="inline h-3 w-3 ml-0.5 text-[#A20A3A]" aria-hidden="true" />
             </Link>
           </p>
         </div>
@@ -61,8 +61,8 @@ export function AnnouncementBar() {
                 key={i}
                 onClick={() => setIndex(i)}
                 className={cn(
-                  'h-1 rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-foreground',
-                  i === index ? 'w-4 bg-white' : 'w-1 bg-white/40 hover:bg-white/60'
+                  'h-1 rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#A20A3A]',
+                  i === index ? 'w-4 bg-[#A20A3A]' : 'w-1 bg-[#625B60]/40 hover:bg-[#625B60]/60'
                 )}
                 aria-label={`Show announcement ${i + 1}`}
                 aria-current={i === index ? 'true' : undefined}
@@ -73,7 +73,7 @@ export function AnnouncementBar() {
             variant="ghost"
             size="icon"
             onClick={dismiss}
-            className="h-6 w-6 text-primary-foreground/70 hover:text-primary-foreground hover:bg-white/10"
+            className="h-6 w-6 text-[#625B60] hover:text-[#292329] hover:bg-[#E8E2E5]/50"
             aria-label="Dismiss announcement"
           >
             <X className="h-3.5 w-3.5" />

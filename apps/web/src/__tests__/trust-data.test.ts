@@ -20,7 +20,7 @@ describe('Trust Data', () => {
 
   describe('complianceFrameworks', () => {
     it('has achieved and planned frameworks', () => {
-      expect(complianceFrameworks.length).toBe(5);
+      expect(complianceFrameworks.length).toBe(6);
       const achieved = complianceFrameworks.filter(f => f.status === 'achieved');
       const planned = complianceFrameworks.filter(f => f.status === 'planned');
       expect(achieved.length).toBeGreaterThan(0);

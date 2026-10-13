@@ -83,11 +83,11 @@ export function AIFoundationView() {
   };
 
   const providerBadges: Record<string, string> = {
-    openai: 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20',
-    anthropic: 'bg-purple-500/10 text-purple-500 border-purple-500/20',
-    gemini: 'bg-blue-500/10 text-blue-500 border-blue-500/20',
-    ollama: 'bg-amber-500/10 text-amber-500 border-amber-500/20',
-    azure_openai: 'bg-cyan-500/10 text-cyan-500 border-cyan-500/20',
+    openai: 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20',
+    anthropic: 'bg-[#A20A3A]/15 text-[#A20A3A] border-[#A20A3A]/30',
+    gemini: 'bg-[#FF9933]/15 text-[#C46100] border-[#FF9933]/30',
+    ollama: 'bg-[#EDC11E]/20 text-[#8B6500] border-[#EDC11E]/30',
+    azure_openai: 'bg-primary/10 text-primary border-primary/20',
   };
 
   return (
@@ -401,7 +401,7 @@ export function AIFoundationView() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
               { label: 'Total AI Requests', val: mockAIMetrics.totalRequests.toLocaleString(), icon: <Zap className="w-4 h-4 text-primary" /> },
-              { label: 'Tokens Processed', val: mockAIMetrics.totalTokensProcessed.toLocaleString(), icon: <Cpu className="w-4 h-4 text-purple-500" /> },
+              { label: 'Tokens Processed', val: mockAIMetrics.totalTokensProcessed.toLocaleString(), icon: <Cpu className="w-4 h-4 text-primary" /> },
               { label: 'Estimated Provider Cost', val: `$${mockAIMetrics.estimatedCostUsd}`, icon: <BarChart3 className="w-4 h-4 text-emerald-500" /> },
               { label: 'Average Response Latency', val: `${mockAIMetrics.averageLatencyMs} ms`, icon: <Clock className="w-4 h-4 text-amber-500" /> },
             ].map((m, idx) => (

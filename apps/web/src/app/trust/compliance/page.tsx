@@ -8,14 +8,14 @@ import { complianceFrameworks } from '@/features/trust/data';
 import { generatePageMetadata } from '@/lib/seo/metadata-builder';
 
 export const metadata: Metadata = generatePageMetadata({
-  title: 'Compliance Frameworks — SOC 2 Type II, HIPAA & ISO 27001 Audits',
-  description: 'Independent third-party audits, SOC 2 Type II attestations, ISO 27001 certification, and HIPAA healthcare compliance alignments.',
+  title: 'Regulatory Data Protection & Security Controls — Sathus',
+  description: 'Enterprise security controls, zero-trust architecture, OWASP mitigation, and GDPR data sovereignty frameworks.',
   path: '/trust/compliance',
   keywords: [
-    'SOC 2 Type II Compliance',
-    'HIPAA Compliance AI',
-    'ISO 27001 Certification',
-    'GDPR EU Sovereignty',
+    'Enterprise Security Controls',
+    'Zero-Trust Architecture',
+    'GDPR Data Sovereignty',
+    'OWASP Security',
     'Enterprise Compliance Matrix',
   ],
 });
@@ -28,8 +28,8 @@ export default function CompliancePage() {
         <SectionIntro
           eyebrow="Trust Center"
           headingLevel="h1"
-          title="Regulatory Compliance Frameworks"
-          description="Independent third-party audits, SOC 2 Type II attestations, ISO 27001, and HIPAA compliance alignments."
+          title="Security & Regulatory Frameworks"
+          description="Engineered security controls, zero-trust access policies, and GDPR data sovereignty standards."
         />
 
         {/* Interactive Enterprise Compliance Matrix */}

@@ -197,7 +197,7 @@ export const aiEngineeringSolution: Solution = {
       client: 'Regional Healthcare Network',
       industry: 'Healthcare',
       challenge:
-        'Clinicians needed real-time access to patient data insights while maintaining HIPAA compliance.',
+        'Clinicians needed real-time access to patient data insights while maintaining strict patient privacy and access controls.',
       solution:
         'Built a secure, on-premise AI system with human-in-the-loop controls and comprehensive observability.',
       outcome:
@@ -209,9 +209,9 @@ export const aiEngineeringSolution: Solution = {
   faqs: [
     {
       id: 'compliance',
-      question: 'How do you ensure AI compliance in regulated industries?',
+      question: 'How do you ensure AI governance in regulated industries?',
       answer:
-        'We embed compliance controls into the development lifecycle, including audit trails, model versioning, and policy enforcement. Our reference architectures are designed to meet ISO 27001, SOC 2, and industry-specific requirements.',
+        'We embed security controls into the development lifecycle, including audit trails, model versioning, and zero-trust policy enforcement. Our reference architectures are designed to support enterprise security and data privacy requirements.',
     },
     {
       id: 'timeline',

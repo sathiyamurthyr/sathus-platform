@@ -54,8 +54,8 @@ const faqCategories = [
     category: 'Security, Compliance & Engagement',
     faqs: [
       {
-        question: 'Are Sathus products SOC 2 Type II and HIPAA compliant?',
-        answer: 'Yes. Sathus Technology maintains a audited SOC 2 Type II control environment and executes Business Associate Agreements (BAAs) with all healthcare clients.',
+        question: 'How does Sathus handle enterprise security and data privacy?',
+        answer: 'Sathus engineers zero-trust architectures with AES-256 encryption at rest, TLS 1.3 in transit, role-based access control (RBAC), and GDPR data sovereignty alignment. Client data is never used for model training.',
       },
       {
         question: 'How do embedded engineering squads work?',

@@ -54,7 +54,7 @@ export function GoalPlanningDecompositionView() {
             <div key={stratGoal.id} className="p-4 rounded-xl bg-background border border-border space-y-4 shadow-sm">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-2">
-                  <span className="px-2 py-0.5 rounded text-[10px] font-extrabold uppercase bg-purple-500/10 text-purple-500 border border-purple-500/20">
+                  <span className="px-2 py-0.5 rounded text-[10px] font-extrabold uppercase bg-[#A20A3A]/15 text-[#A20A3A] border border-[#A20A3A]/30">
                     {stratGoal.plannerType} PLANNER
                   </span>
                   <h4 className="text-xs font-bold text-foreground">{stratGoal.title}</h4>
@@ -74,7 +74,7 @@ export function GoalPlanningDecompositionView() {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-2">
                         <ChevronRight className="w-4 h-4 text-primary" />
-                        <span className="px-2 py-0.5 rounded text-[9px] font-extrabold uppercase bg-blue-500/10 text-blue-500 border border-blue-500/20">
+                        <span className="px-2 py-0.5 rounded text-[9px] font-extrabold uppercase bg-[#FF9933]/15 text-[#C46100] border border-[#FF9933]/30">
                           {tacGoal.plannerType}
                         </span>
                         <span className="text-xs font-semibold text-foreground">{tacGoal.title}</span>

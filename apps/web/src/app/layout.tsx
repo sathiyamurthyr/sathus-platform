@@ -118,7 +118,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   themeColor: [
     { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-    { media: '(prefers-color-scheme: dark)', color: '#070810' },
+    { media: '(prefers-color-scheme: dark)', color: '#ffffff' },
   ],
 };
 
@@ -195,7 +195,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
         <MotionProvider reducedMotion="user">
-          <ThemeProvider defaultTheme="system" storageKey="sathus-theme">
+          <ThemeProvider defaultTheme="light" storageKey="sathus-theme">
             <TooltipProvider>
               <ToastProvider>
                 <a

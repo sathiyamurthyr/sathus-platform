@@ -65,7 +65,7 @@ export function RolePermissionManagerView() {
     platform: 'bg-red-500/10 text-red-500 border-red-500/20',
     organization: 'bg-primary/10 text-primary border-primary/20',
     tenant: 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20',
-    workspace: 'bg-purple-500/10 text-purple-500 border-purple-500/20',
+    workspace: 'bg-[#FF9933]/15 text-[#C46100] border-[#FF9933]/30',
   };
 
   return (

@@ -51,7 +51,7 @@ export function Logo({
         />
       </motion.span>
       {showWordmark && (
-        <span className={cn('font-display font-semibold text-foreground inline-block tracking-tight', WORDMARK_SIZE_CLASSES[size], wordmarkClassName)}>
+        <span className={cn('font-display font-semibold text-[#292329] inline-block tracking-tight', WORDMARK_SIZE_CLASSES[size], wordmarkClassName)}>
           <span className="inline xs:inline sm:hidden">Sathus</span>
           <span className="hidden sm:inline">Sathus Technology</span>
         </span>

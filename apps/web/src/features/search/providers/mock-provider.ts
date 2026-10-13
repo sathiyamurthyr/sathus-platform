@@ -44,7 +44,7 @@ const MOCK_RESULTS: SearchResult[] = [
     description: 'Cloud-native infrastructure automation on AWS and Azure with Kubernetes and FinOps cost governance.',
     category: 'solutions',
     url: '/solutions/cloud-engineering',
-    snippet: 'Terraform IaC, Crossplane, ArgoCD GitOps, 99.99% SLA, multi-region failover.',
+    snippet: 'Terraform IaC, Crossplane, ArgoCD GitOps, 99.95% SLA target, multi-region failover.',
   },
   {
     id: 'cloud-modernization',
@@ -88,7 +88,7 @@ const MOCK_RESULTS: SearchResult[] = [
     category: 'products',
     url: '/pricing',
     badge: 'Most Popular',
-    snippet: 'Dedicated engineers, SOC 2 delivery, direct Slack access, daily pairing.',
+    snippet: 'Dedicated engineers, security-by-design delivery, direct Slack access, daily pairing.',
   },
 
   // Industries
@@ -159,12 +159,12 @@ const MOCK_RESULTS: SearchResult[] = [
   // Trust & Security
   {
     id: 'trust-compliance',
-    title: 'Trust Center: SOC 2, HIPAA & ISO 27001 Compliance',
-    description: 'Our audited security controls, compliance posture, and data protection guarantees.',
+    title: 'Trust Center: Security Architecture & GDPR Data Protection',
+    description: 'Our security controls, zero-trust architecture posture, and data protection guarantees.',
     category: 'trust-center',
     url: '/trust/compliance',
-    badge: 'SOC 2',
-    snippet: 'SOC 2 Type II, HIPAA, ISO 27001, GDPR, data encryption at rest.',
+    badge: 'Security',
+    snippet: 'Zero-trust architecture, GDPR alignment, AES-256 data encryption at rest, TLS 1.3.',
   },
 ];
 
@@ -173,7 +173,7 @@ const POPULAR_SEARCHES = [
   'Data Lakehouse',
   'Pricing & Squads',
   'GraphRAG',
-  'SOC 2 Compliance',
+  'Zero-Trust Security',
   'Kafka CDC',
 ];
 

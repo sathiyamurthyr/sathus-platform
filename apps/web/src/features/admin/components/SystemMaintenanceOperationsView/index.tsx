@@ -149,7 +149,7 @@ export function SystemMaintenanceOperationsView() {
             className="p-4 rounded-xl bg-background border border-border hover:bg-muted/20 text-left space-y-2 transition-colors"
           >
             <div className="flex items-center space-x-2 text-xs font-bold text-foreground">
-              <Radio className="w-4 h-4 text-purple-500" />
+              <Radio className="w-4 h-4 text-primary" />
               <span>Restart Worker Pool</span>
             </div>
             <p className="text-[11px] text-muted-foreground">Gracefully restart Celery background queue workers.</p>

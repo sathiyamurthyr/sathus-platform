@@ -363,25 +363,25 @@ export default async function TopicDetailPage({ params }: TopicPageProps) {
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <div className="flex items-center gap-2">
                     {(topic.beforeAfterArchitecture.evidence.type === 'verified-result' || topic.beforeAfterArchitecture.evidence.type === 'production-experience') && (
-                      <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 px-3 py-1 text-xs font-bold text-emerald-400">
+                      <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 px-3 py-1 text-xs font-bold text-emerald-600">
                         <ShieldCheck className="h-3.5 w-3.5" />
                         {topic.beforeAfterArchitecture.evidence.label}
                       </span>
                     )}
                     {topic.beforeAfterArchitecture.evidence.type === 'reproducible-benchmark' && (
-                      <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-500/15 border border-blue-500/30 px-3 py-1 text-xs font-bold text-blue-400">
+                      <span className="inline-flex items-center gap-1.5 rounded-full bg-[#FF9933]/15 border border-[#FF9933]/30 px-3 py-1 text-xs font-bold text-[#C46100]">
                         <FlaskConical className="h-3.5 w-3.5" />
                         {topic.beforeAfterArchitecture.evidence.label}
                       </span>
                     )}
                     {topic.beforeAfterArchitecture.evidence.type === 'reference-architecture' && (
-                      <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-500/15 border border-amber-500/30 px-3 py-1 text-xs font-bold text-amber-400">
+                      <span className="inline-flex items-center gap-1.5 rounded-full bg-[#EDC11E]/20 border border-[#EDC11E]/35 px-3 py-1 text-xs font-bold text-[#8B6500]">
                         <Compass className="h-3.5 w-3.5" />
                         {topic.beforeAfterArchitecture.evidence.label}
                       </span>
                     )}
                     {topic.beforeAfterArchitecture.evidence.type === 'illustrative-example' && (
-                      <span className="inline-flex items-center gap-1.5 rounded-full bg-purple-500/15 border border-purple-500/30 px-3 py-1 text-xs font-bold text-purple-400">
+                      <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 border border-primary/25 px-3 py-1 text-xs font-bold text-primary">
                         <Sparkles className="h-3.5 w-3.5" />
                         {topic.beforeAfterArchitecture.evidence.label}
                       </span>

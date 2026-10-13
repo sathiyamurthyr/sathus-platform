@@ -34,19 +34,19 @@ export function AICore3D({ className }: AICore3DProps) {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     container.appendChild(renderer.domElement);
 
-    // 3. Lighting
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+    // 3. Lighting with Sathus Brand Colors
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
     scene.add(ambientLight);
 
-    const pointLight1 = new THREE.PointLight(0x4f7cff, 3.5, 10);
+    const pointLight1 = new THREE.PointLight(0xa20a3a, 3.5, 10); // Burgundy
     pointLight1.position.set(2, 2, 3);
     scene.add(pointLight1);
 
-    const pointLight2 = new THREE.PointLight(0x37d5ff, 3, 10);
+    const pointLight2 = new THREE.PointLight(0xff9933, 3, 10); // Vibrant Orange
     pointLight2.position.set(-2, -2, 2);
     scene.add(pointLight2);
 
-    const pointLight3 = new THREE.PointLight(0xe7b631, 2.5, 10);
+    const pointLight3 = new THREE.PointLight(0xedc11e, 2.5, 10); // Golden Yellow
     pointLight3.position.set(0, 3, -1);
     scene.add(pointLight3);
 
@@ -54,24 +54,24 @@ export function AICore3D({ className }: AICore3DProps) {
     const coreGroup = new THREE.Group();
     scene.add(coreGroup);
 
-    // Inner Glowing Sphere Core (Burgundy Center)
+    // Inner Glowing Sphere Core (Primary Burgundy)
     const innerGeo = new THREE.SphereGeometry(0.65, 32, 32);
     const innerMat = new THREE.MeshStandardMaterial({
-      color: 0x94003a,
-      emissive: 0xb5004a,
-      emissiveIntensity: 0.9,
-      roughness: 0.2,
-      metalness: 0.8,
+      color: 0xa20a3a,
+      emissive: 0x8c0832,
+      emissiveIntensity: 0.8,
+      roughness: 0.25,
+      metalness: 0.7,
     });
     const innerCore = new THREE.Mesh(innerGeo, innerMat);
     coreGroup.add(innerCore);
 
-    // Outer Geodesic Wireframe Shell (AI Blue Outer Glow)
+    // Outer Geodesic Wireframe Shell (Vibrant Orange Wireframe)
     const outerGeo = new THREE.IcosahedronGeometry(1.05, 1);
     const outerWireMat = new THREE.MeshStandardMaterial({
-      color: 0x4f7cff,
-      emissive: 0x37d5ff,
-      emissiveIntensity: 0.6,
+      color: 0xff9933,
+      emissive: 0xffae5c,
+      emissiveIntensity: 0.5,
       wireframe: true,
       transparent: true,
       opacity: 0.85,
@@ -79,12 +79,12 @@ export function AICore3D({ className }: AICore3DProps) {
     const outerCore = new THREE.Mesh(outerGeo, outerWireMat);
     coreGroup.add(outerCore);
 
-    // Orbital Ring 1 (AI Blue)
+    // Orbital Ring 1 (Burgundy with Orange Emissive)
     const ring1Geo = new THREE.TorusGeometry(1.35, 0.015, 16, 64);
     const ring1Mat = new THREE.MeshStandardMaterial({
-      color: 0x4f7cff,
-      emissive: 0x37d5ff,
-      emissiveIntensity: 0.6,
+      color: 0xa20a3a,
+      emissive: 0xff9933,
+      emissiveIntensity: 0.5,
       transparent: true,
       opacity: 0.7,
     });
@@ -93,12 +93,12 @@ export function AICore3D({ className }: AICore3DProps) {
     ring1.rotation.y = Math.PI / 6;
     coreGroup.add(ring1);
 
-    // Orbital Ring 2 (Gold + Burgundy Accent)
+    // Orbital Ring 2 (Golden Yellow with Orange Accent)
     const ring2Geo = new THREE.TorusGeometry(1.5, 0.012, 16, 64);
     const ring2Mat = new THREE.MeshStandardMaterial({
-      color: 0xe7b631,
-      emissive: 0x94003a,
-      emissiveIntensity: 0.6,
+      color: 0xedc11e,
+      emissive: 0xff9933,
+      emissiveIntensity: 0.5,
       transparent: true,
       opacity: 0.6,
     });

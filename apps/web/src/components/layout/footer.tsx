@@ -5,10 +5,9 @@ import Link from 'next/link';
 import { ArrowUpRight, Send, Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Logo } from '@/components/common/Logo';
-import { footerSections, socialLinks, siteConfig } from '@/constants';
+import { footerSections, socialLinks } from '@/constants';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-
 import { companyConfig } from '@/config/company';
 
 export function Footer({ className }: { className?: string }) {
@@ -25,35 +24,35 @@ export function Footer({ className }: { className?: string }) {
   };
 
   return (
-    <footer className={cn('border-t border-[#94003A]/40 bg-[#08070A] text-white', className)}>
+    <footer className={cn('border-t border-[#E8E2E5] bg-[#FAF8F9] text-[#292329]', className)}>
       <div className="container mx-auto px-4 py-16">
         <div className="grid gap-12 lg:grid-cols-[1.4fr_2.6fr]">
           {/* Brand & Contact Info */}
           <div className="flex flex-col">
             <Logo size="lg" showWordmark={true} />
-            <p className="mt-4 max-w-xs text-sm leading-relaxed text-[#B7B7B7]">
+            <p className="mt-4 max-w-xs text-sm leading-relaxed text-[#625B60]">
               Engineering the future of AI, data & enterprise software for regulated industries.
             </p>
 
             {/* Official Company Address & Contact Details */}
-            <div className="mt-4 space-y-1.5 text-xs text-[#B7B7B7] leading-relaxed">
-              <p className="font-semibold text-white">{companyConfig.name}</p>
-              <p><span className="text-white/80 font-medium">HQ:</span> {companyConfig.address.formatted}</p>
-              <p><span className="text-white/80 font-medium">Branch:</span> {companyConfig.branchOffice.formatted}</p>
+            <div className="mt-4 space-y-1.5 text-xs text-[#625B60] leading-relaxed">
+              <p className="font-semibold text-[#292329]">{companyConfig.name}</p>
+              <p><span className="text-[#292329] font-medium">HQ:</span> {companyConfig.address.formatted}</p>
+              <p><span className="text-[#292329] font-medium">Branch:</span> {companyConfig.branchOffice.formatted}</p>
               <p className="pt-1">
                 Email:{' '}
-                <a href={`mailto:${companyConfig.email}`} className="font-medium text-[#E7B631] hover:underline">
+                <a href={`mailto:${companyConfig.email}`} className="font-medium text-[#A20A3A] hover:underline">
                   {companyConfig.email}
                 </a>{' '}
                 • Phone:{' '}
-                <a href={`tel:${companyConfig.phoneRaw}`} className="font-medium text-[#E7B631] hover:underline">
+                <a href={`tel:${companyConfig.phoneRaw}`} className="font-medium text-[#A20A3A] hover:underline">
                   {companyConfig.phone}
                 </a>
               </p>
             </div>
 
             <form onSubmit={handleSubscribe} className="mt-6 max-w-sm space-y-2">
-              <label htmlFor="footer-email" className="text-xs font-semibold text-white">
+              <label htmlFor="footer-email" className="text-xs font-semibold text-[#292329]">
                 Subscribe to Engineering Briefings
               </label>
               <div className="flex items-center gap-2">
@@ -64,24 +63,24 @@ export function Footer({ className }: { className?: string }) {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="h-9 text-xs bg-[#1A1418] border-[#40202C] text-white placeholder:text-[#8F8F8F] focus-visible:ring-[#E7B631]"
+                  className="h-9 text-xs bg-white border-[#E8E2E5] text-[#292329] placeholder:text-[#625B60] focus-visible:ring-[#A20A3A]"
                 />
-                <Button type="submit" size="sm" className="h-9 px-3 shrink-0 gap-1 text-xs bg-[#94003A] text-white hover:bg-[#B5004A]">
+                <Button type="submit" size="sm" className="h-9 px-3 shrink-0 gap-1 text-xs bg-[#A20A3A] text-white hover:bg-[#8C0832]">
                   {subscribed ? (
                     <>
-                      <Check className="h-3.5 w-3.5 text-emerald-400" />
+                      <Check className="h-3.5 w-3.5 text-white" />
                       Subscribed
                     </>
                   ) : (
                     <>
                       Subscribe
-                      <Send className="h-3 w-3 text-[#E7B631]" />
+                      <Send className="h-3 w-3 text-[#EDC11E]" />
                     </>
                   )}
                 </Button>
               </div>
               {subscribed && (
-                <p className="text-[11px] text-emerald-500 font-medium">
+                <p className="text-[11px] text-[#10B981] font-medium">
                   ✓ Thank you for subscribing to Sathus Engineering Briefings.
                 </p>
               )}
@@ -89,10 +88,10 @@ export function Footer({ className }: { className?: string }) {
 
             <Link
               href="/book-strategy-session"
-              className="group mt-6 inline-flex w-fit items-center gap-1.5 text-sm font-medium text-white transition-colors hover:text-[#E7B631] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E7B631] focus-visible:ring-offset-2 rounded"
+              className="group mt-6 inline-flex w-fit items-center gap-1.5 text-sm font-medium text-[#292329] transition-colors hover:text-[#A20A3A] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A20A3A] focus-visible:ring-offset-2 rounded"
             >
               Book a strategy session
-              <ArrowUpRight className="h-4 w-4 text-[#E7B631] transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              <ArrowUpRight className="h-4 w-4 text-[#FF9933] transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </Link>
 
             <div className="mt-6 flex items-center gap-3">
@@ -100,7 +99,7 @@ export function Footer({ className }: { className?: string }) {
                 <a
                   key={link.name}
                   href={link.href}
-                  className="flex h-9 w-9 items-center justify-center rounded-lg border border-[#40202C] text-[#B7B7B7] transition-colors hover:border-[#E7B631] hover:text-[#E7B631] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E7B631]"
+                  className="flex h-9 w-9 items-center justify-center rounded-lg border border-[#E8E2E5] bg-white text-[#625B60] transition-colors hover:border-[#A20A3A] hover:text-[#A20A3A] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#A20A3A]"
                   aria-label={link.name}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -125,7 +124,7 @@ export function Footer({ className }: { className?: string }) {
           <nav className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-4" aria-label="Footer">
             {footerSections.map((section) => (
               <div key={section.title}>
-                <h3 className="text-sm font-semibold text-white">
+                <h3 className="text-sm font-semibold text-[#292329]">
                   {section.title}
                 </h3>
                 <ul className="mt-4 space-y-2.5">
@@ -133,7 +132,7 @@ export function Footer({ className }: { className?: string }) {
                     <li key={link.title}>
                       <Link
                         href={link.href}
-                        className="text-sm text-[#B7B7B7] transition-colors hover:text-[#E7B631] focus:outline-none focus-visible:underline"
+                        className="text-sm text-[#625B60] transition-colors hover:text-[#A20A3A] focus:outline-none focus-visible:underline"
                       >
                         {link.title}
                       </Link>
@@ -145,13 +144,13 @@ export function Footer({ className }: { className?: string }) {
           </nav>
         </div>
 
-        <div className="mt-14 flex flex-col gap-4 border-t border-[#40202C] pt-8 text-sm text-[#B7B7B7] sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-14 flex flex-col gap-4 border-t border-[#E8E2E5] pt-8 text-sm text-[#625B60] sm:flex-row sm:items-center sm:justify-between">
           <p>
             © {new Date().getFullYear()} {companyConfig.name}. All rights reserved.
           </p>
-          <p className="max-w-md text-xs leading-relaxed text-[#8F8F8F]">
-            Built for regulated industries. SOC 2 Type II · ISO 27001-aligned ·
-            GDPR & HIPAA-ready.
+          <p className="max-w-md text-xs leading-relaxed text-[#625B60]">
+            Built for regulated industries. Open architectures · Zero-trust design ·
+            GDPR data sovereignty.
           </p>
         </div>
       </div>

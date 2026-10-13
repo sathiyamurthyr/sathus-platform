@@ -50,7 +50,7 @@ export default function Page() {
             'Senior Principal Engineering Squads (No Sales Proxies)',
             'Contractual Delivery SLAs (99.95% availability target & resilient query architecture)',
             'Zero Vendor Lock-in with Open Source Formats & Open Standards',
-            'SOC 2 Type II & HIPAA Compliance-by-Design Built In',
+            'Zero-Trust Architecture & Data Sovereignty by Design',
           ]}
         />
       </div>

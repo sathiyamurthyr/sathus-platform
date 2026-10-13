@@ -18,8 +18,8 @@ const AICore3D = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="relative flex h-24 w-24 items-center justify-center rounded-2xl bg-gradient-to-br from-primary via-violet-500 to-cyan-400 shadow-2xl ring-1 ring-inset ring-white/20">
-        <Sparkles className="h-8 w-8 text-white animate-pulse" />
+      <div className="relative flex h-24 w-24 items-center justify-center rounded-2xl bg-[#FAF8F9] border border-[#E8E2E5] shadow-md">
+        <Sparkles className="h-8 w-8 text-[#A20A3A] animate-pulse" />
       </div>
     ),
   }
@@ -77,21 +77,21 @@ export function PlatformVisualization() {
       >
         <defs>
           <linearGradient id="nodeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#4F7CFF" stopOpacity="0.8" />
-            <stop offset="60%" stopColor="#37D5FF" stopOpacity="0.8" />
-            <stop offset="100%" stopColor="#E7B631" stopOpacity="0.7" />
+            <stop offset="0%" stopColor="#A20A3A" stopOpacity="0.8" />
+            <stop offset="60%" stopColor="#FF9933" stopOpacity="0.8" />
+            <stop offset="100%" stopColor="#EDC11E" stopOpacity="0.7" />
           </linearGradient>
         </defs>
 
-        {/* Visual Guide Orbit Circle proving all node centers lie on radius R = 38.5 */}
+        {/* Visual Guide Orbit Circle */}
         <circle
           cx="50"
           cy="50"
           r={RADIUS}
-          stroke="#4F7CFF"
-          strokeWidth="0.25"
-          strokeDasharray="1 2"
-          opacity="0.25"
+          stroke="#E8E2E5"
+          strokeWidth="0.4"
+          strokeDasharray="1.5 2.5"
+          opacity="0.8"
           vectorEffect="non-scaling-stroke"
         />
 
@@ -108,12 +108,12 @@ export function PlatformVisualization() {
               strokeDasharray="2 2.4"
               vectorEffect="non-scaling-stroke"
               className={reduce ? '' : 'animate-dash'}
-              opacity={0.7}
+              opacity={0.8}
             />
 
-            {/* Particle Streaming Effect (Blue, Cyan & Gold) */}
+            {/* Particle Streaming Effect (Burgundy & Vibrant Orange) */}
             {!reduce && (
-              <circle r="0.8" fill={i % 2 === 0 ? "#4F7CFF" : "#37D5FF"} opacity="0.9">
+              <circle r="0.8" fill={i % 2 === 0 ? "#A20A3A" : "#FF9933"} opacity="0.9">
                 <animateMotion
                   path={`M 50 50 L ${node.x} ${node.y}`}
                   dur={`${2.2 + (i % 3) * 0.4}s`}
@@ -124,7 +124,7 @@ export function PlatformVisualization() {
             )}
 
             {!reduce && (
-              <circle r="0.6" fill={i % 3 === 0 ? "#E7B631" : "#37D5FF"} opacity="0.85">
+              <circle r="0.6" fill={i % 3 === 0 ? "#EDC11E" : "#FF9933"} opacity="0.85">
                 <animateMotion
                   path={`M ${node.x} ${node.y} L 50 50`}
                   dur={`${2.6 + (i % 2) * 0.5}s`}
@@ -141,16 +141,16 @@ export function PlatformVisualization() {
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 flex items-center justify-center">
         {!reduce && (
           <>
-            <span className="absolute left-1/2 top-1/2 h-24 w-24 sm:h-36 sm:w-36 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#4F7CFF]/40 [animation:pulse-ring_3.5s_ease-out_infinite]" />
-            <span className="absolute left-1/2 top-1/2 h-24 w-24 sm:h-36 sm:w-36 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#E7B631]/25 [animation:pulse-ring_3.5s_ease-out_infinite_1.5s]" />
+            <span className="absolute left-1/2 top-1/2 h-24 w-24 sm:h-36 sm:w-36 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#A20A3A]/25 [animation:pulse-ring_3.5s_ease-out_infinite]" />
+            <span className="absolute left-1/2 top-1/2 h-24 w-24 sm:h-36 sm:w-36 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#FF9933]/25 [animation:pulse-ring_3.5s_ease-out_infinite_1.5s]" />
           </>
         )}
-        <div className="relative flex items-center justify-center rounded-2xl sm:rounded-3xl bg-[#0D0B10]/85 p-1.5 sm:p-2 backdrop-blur-md border border-[#40202C] shadow-[0_0_40px_rgba(79,124,255,0.35)]">
+        <div className="relative flex items-center justify-center rounded-2xl sm:rounded-3xl bg-white/95 p-1.5 sm:p-2 backdrop-blur-md border border-[#E8E2E5] shadow-lg">
           <AICore3D className="h-20 w-20 xs:h-24 xs:w-24 sm:h-32 sm:w-32" />
         </div>
       </div>
 
-      {/* Technology Nodes - Outer wrapper forces translate(-50%, -50%) so card CENTER sits on (node.x, node.y) */}
+      {/* Technology Nodes */}
       {NODES.map((node, i) => {
         const Icon = node.icon;
         return (
@@ -171,23 +171,23 @@ export function PlatformVisualization() {
             >
               {/* Arrival Pulse Ring */}
               {!reduce && (
-                <span className="absolute inset-0 rounded-xl border border-[#4F7CFF]/50 animate-ping opacity-25 pointer-events-none" />
+                <span className="absolute inset-0 rounded-xl border border-[#FF9933]/40 animate-ping opacity-25 pointer-events-none" />
               )}
 
               <div
                 className={reduce ? '' : 'animate-float-soft'}
                 style={{ animationDelay: `${i * 0.7}s` }}
               >
-                {/* Node Card: bg #171419, border #40202C, hover border #E7B631, hover glow Blue */}
-                <div className="group flex h-9 w-28 xs:w-32 sm:h-11 sm:w-44 items-center gap-1.5 sm:gap-2.5 rounded-lg sm:rounded-xl border border-[#40202C] bg-[#171419] px-2 sm:px-3 shadow-xl backdrop-blur-md transition-all duration-300 hover:border-[#E7B631] hover:bg-[#1F1A20] hover:shadow-[0_0_25px_rgba(79,124,255,0.35)]">
-                  <span className="flex h-5 w-5 sm:h-7 sm:w-7 shrink-0 items-center justify-center rounded bg-[rgba(148,0,58,0.25)] text-[#E7B631] ring-1 ring-inset ring-[rgba(231,182,49,0.25)] transition-all duration-300 group-hover:bg-[#E7B631] group-hover:text-[#94003A] group-hover:scale-110">
+                {/* Node Card: subtle surface, border #E8E2E5, hover border #A20A3A */}
+                <div className="group flex h-9 w-28 xs:w-32 sm:h-11 sm:w-44 items-center gap-1.5 sm:gap-2.5 rounded-lg sm:rounded-xl border border-[#E8E2E5] bg-[#FAF8F9] px-2 sm:px-3 shadow-md backdrop-blur-md transition-all duration-300 hover:border-[#A20A3A] hover:bg-white hover:shadow-lg">
+                  <span className="flex h-5 w-5 sm:h-7 sm:w-7 shrink-0 items-center justify-center rounded bg-[#A20A3A]/10 text-[#A20A3A] ring-1 ring-inset ring-[#A20A3A]/20 transition-all duration-300 group-hover:bg-[#A20A3A] group-hover:text-white group-hover:scale-110">
                     <Icon className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
                   </span>
                   <span className="flex flex-col leading-tight min-w-0">
-                    <span className="text-[0.65rem] sm:text-[0.76rem] font-semibold text-white tracking-tight truncate">
+                    <span className="text-[0.65rem] sm:text-[0.76rem] font-semibold text-[#292329] tracking-tight truncate">
                       {node.label}
                     </span>
-                    <span className="text-[0.52rem] sm:text-[0.60rem] text-[#D6D6D6] truncate">{node.meta}</span>
+                    <span className="text-[0.52rem] sm:text-[0.60rem] text-[#625B60] truncate">{node.meta}</span>
                   </span>
                 </div>
               </div>

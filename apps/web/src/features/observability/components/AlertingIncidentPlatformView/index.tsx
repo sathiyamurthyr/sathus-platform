@@ -88,15 +88,15 @@ export function AlertingIncidentPlatformView() {
   const severityBadges: Record<AlertSeverity, string> = {
     P0_CRITICAL: 'bg-red-500/10 text-red-500 border-red-500/20',
     P1_HIGH: 'bg-amber-500/10 text-amber-500 border-amber-500/20',
-    P2_MEDIUM: 'bg-blue-500/10 text-blue-500 border-blue-500/20',
+    P2_MEDIUM: 'bg-[#FF9933]/15 text-[#C46100] border-[#FF9933]/30',
     P3_LOW: 'bg-muted text-muted-foreground border-border',
   };
 
   const statusBadges: Record<IncidentStatus, string> = {
     open: 'bg-red-500/10 text-red-500 border-red-500/20',
     acknowledged: 'bg-amber-500/10 text-amber-500 border-amber-500/20',
-    investigating: 'bg-purple-500/10 text-purple-500 border-purple-500/20',
-    mitigated: 'bg-blue-500/10 text-blue-500 border-blue-500/20',
+    investigating: 'bg-[#EDC11E]/20 text-[#8B6500] border-[#EDC11E]/30',
+    mitigated: 'bg-[#A20A3A]/15 text-[#A20A3A] border-[#A20A3A]/30',
     resolved: 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20',
     closed: 'bg-muted text-muted-foreground border-border',
   };
@@ -235,7 +235,7 @@ export function AlertingIncidentPlatformView() {
                         {selectedIncident.status === 'acknowledged' && (
                           <button
                             onClick={() => handleStatusChange(selectedIncident.id, 'investigating')}
-                            className="px-3 py-1.5 rounded-lg bg-purple-500 text-white text-xs font-semibold hover:opacity-90"
+                            className="px-3 py-1.5 rounded-lg bg-[#EDC11E] text-[#292329] text-xs font-semibold hover:opacity-90"
                           >
                             Investigate
                           </button>
@@ -243,7 +243,7 @@ export function AlertingIncidentPlatformView() {
                         {selectedIncident.status === 'investigating' && (
                           <button
                             onClick={() => handleStatusChange(selectedIncident.id, 'mitigated')}
-                            className="px-3 py-1.5 rounded-lg bg-blue-500 text-white text-xs font-semibold hover:opacity-90"
+                            className="px-3 py-1.5 rounded-lg bg-[#FF9933] text-white text-xs font-semibold hover:opacity-90"
                           >
                             Mitigate
                           </button>
@@ -414,7 +414,7 @@ export function AlertingIncidentPlatformView() {
           <div className="space-y-4">
             {[
               { level: 'Level 1: DevOps On-Call', recipients: mockEscalationPolicy.level1, badge: 'bg-primary/10 text-primary border-primary/20' },
-              { level: 'Level 2: Tech Leads & Architects', recipients: mockEscalationPolicy.level2, badge: 'bg-purple-500/10 text-purple-500 border-purple-500/20' },
+              { level: 'Level 2: Tech Leads & Architects', recipients: mockEscalationPolicy.level2, badge: 'bg-[#FF9933]/15 text-[#C46100] border-[#FF9933]/30' },
               { level: 'Level 3: Executive Escalation', recipients: mockEscalationPolicy.level3, badge: 'bg-red-500/10 text-red-500 border-red-500/20' },
             ].map((chain, idx) => (
               <div key={idx} className="p-4 rounded-xl bg-background border border-border space-y-2">

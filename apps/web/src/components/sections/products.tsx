@@ -17,9 +17,9 @@ interface Product {
 }
 
 const STATUS_STYLES: Record<Status, string> = {
-  GA: 'border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400',
-  Beta: 'border-amber-500/30 bg-amber-500/10 text-amber-600 dark:text-amber-400',
-  Research: 'border-violet-500/30 bg-violet-500/10 text-violet-600 dark:text-violet-400',
+  GA: 'border-emerald-500/30 bg-emerald-500/10 text-emerald-700',
+  Beta: 'border-[#FF9933]/40 bg-[#FF9933]/15 text-[#FF9933]',
+  Research: 'border-[#EDC11E]/40 bg-[#EDC11E]/15 text-[#292329]',
 };
 
 const PRODUCTS: Product[] = [
@@ -98,7 +98,7 @@ export function Products() {
                 key={product.name}
                 delay={(i % 3) * 0.06}
                 className={cn(
-                  'group relative flex flex-col rounded-2xl border border-border bg-background p-7 transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-xl justify-between',
+                  'group relative flex flex-col rounded-2xl border border-border bg-[#FAF8F9] p-7 transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:bg-white hover:shadow-lg justify-between',
                   product.featured && 'md:col-span-2 lg:col-span-3'
                 )}
               >

@@ -79,13 +79,13 @@ export const caseStudies: CaseStudy[] = [
     title: 'Clinical Decision Support',
     industry: 'Healthcare',
     challenge:
-      'Clinicians needed real-time access to patient data insights while maintaining HIPAA compliance. Existing systems were fragmented and slow.',
+      'Clinicians needed real-time access to patient data insights while maintaining strict clinical data privacy and access security. Existing systems were fragmented and slow.',
     solution:
       'Built a secure, on-premise AI system with human-in-the-loop controls and comprehensive observability. The system integrates with EHR systems and provides real-time diagnostic assistance.',
     architecture: {
       title: 'Reference Architecture',
       description:
-        'HIPAA-compliant on-premise deployment with encrypted data flow and human oversight controls.',
+        'Zero-trust on-premise deployment with encrypted data flow and human oversight controls.',
       imageUrl: '/images/case-studies/healthcare/architecture.png',
       imageAlt: 'Healthcare clinical decision support architecture diagram',
     },
@@ -97,13 +97,13 @@ export const caseStudies: CaseStudy[] = [
     metrics: [
       { id: 'accuracy', value: '30%', label: 'Improved Accuracy', description: 'Diagnostic accuracy improvement' },
       { id: 'time', value: '50%', label: 'Time Saved', description: 'Documentation time reduction' },
-      { id: 'compliance', value: '100%', label: 'HIPAA Compliant', description: 'Full regulatory compliance' },
+      { id: 'compliance', value: '100%', label: 'Audit Compliance', description: 'Zero-trust regulatory audit compliance' },
     ],
     timeline: {
       duration: '4 months',
       phases: [
         { name: 'Discovery', description: 'Analyzed clinical workflows and compliance needs' },
-        { name: 'Architecture', description: 'Designed HIPAA-compliant on-premise system' },
+        { name: 'Architecture', description: 'Designed zero-trust on-premise system' },
         { name: 'Build', description: 'Developed secure AI models with oversight' },
         { name: 'Deploy', description: 'Integrated with EHR systems' },
       ],
@@ -117,7 +117,7 @@ export const caseStudies: CaseStudy[] = [
       {
         id: 'compliance',
         title: 'Regulatory Compliance',
-        description: 'Full HIPAA compliance with audit trails',
+        description: 'Full patient privacy compliance with structured audit trails',
       },
     ],
     testimonial: {
@@ -275,7 +275,7 @@ export const caseStudies: CaseStudy[] = [
     challenge:
       'Fragmented electronic health records (EHR) across 40+ regional clinics blocked real-time patient history synthesis, research analytics, and HL7 FHIR compliance.',
     solution:
-      'Built a HIPAA-compliant, FHIR R4-native clinical data lakehouse ingesting HL7 feeds, unstructured clinical notes, and DICOM imaging metadata into a unified query engine.',
+      'Built a secure, FHIR R4-native clinical data lakehouse ingesting HL7 feeds, unstructured clinical notes, and DICOM imaging metadata into a unified query engine.',
     architecture: {
       title: 'FHIR-Native Data Lakehouse Architecture',
       description:
@@ -287,13 +287,13 @@ export const caseStudies: CaseStudy[] = [
       { id: 'fhir', name: 'HL7 FHIR R4', category: 'data' },
       { id: 'spark', name: 'Apache Spark', category: 'data' },
       { id: 'delta-lake', name: 'Delta Lake', category: 'database' },
-      { id: 'hipaa', name: 'HIPAA Security Controls', category: 'other' },
+      { id: 'security', name: 'Zero-Trust Security Controls', category: 'other' },
       { id: 'nlp', name: 'Clinical NLP', category: 'ai' },
     ],
     metrics: [
       { id: 'records', value: '45M+', label: 'Clinical Records', description: 'Harmonized across 40+ clinical networks' },
       { id: 'query-time', value: '88%', label: 'Faster Queries', description: 'Cross-facility patient record retrieval' },
-      { id: 'compliance', value: '100%', label: 'HIPAA & ONC Compliant', description: 'Certified secure clinical interoperability' },
+      { id: 'compliance', value: '100%', label: 'ONC & FHIR Compliant', description: 'Certified secure clinical interoperability' },
     ],
     timeline: {
       duration: '9 months',
@@ -327,7 +327,7 @@ export const caseStudies: CaseStudy[] = [
     seo: {
       title: 'FHIR Clinical Data Platform Case Study',
       description:
-        'How Sathus built an HL7 FHIR-native clinical data lakehouse uniting 45M+ patient records with 100% HIPAA compliance.',
+        'How Sathus built an HL7 FHIR-native clinical data lakehouse uniting 45M+ patient records with robust clinical data protection.',
       canonical: '/case-studies/fhir-clinical-data-platform',
     },
     featured: true,

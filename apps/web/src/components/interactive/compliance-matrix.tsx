@@ -15,54 +15,56 @@ interface Framework {
     code: string;
     title: string;
     description: string;
-    status: 'PASSED' | 'AUDITED';
+    status: 'IMPLEMENTED' | 'VERIFIED';
   }>;
 }
 
 const frameworks: Framework[] = [
   {
-    id: 'soc2',
-    name: 'SOC 2 Type II',
-    badge: 'Audited Annually',
-    description: 'Trust Services Criteria covering Security, Availability, Processing Integrity, and Confidentiality.',
+    id: 'zero-trust',
+    name: 'Zero-Trust Architecture',
+    badge: 'Implemented Controls',
+    description: 'Cryptographic identity verification, session isolation, and strict network segmentation across microservices.',
     controls: [
-      { code: 'CC6.1', title: 'Logical Access Controls', description: 'mTLS certificate authentication and RBAC session isolation for all microservices.', status: 'PASSED' },
-      { code: 'CC6.6', title: 'Perimeter & Border Defense', description: 'Web Application Firewall (WAF) with DDoS mitigation and IP rate limiting.', status: 'PASSED' },
-      { code: 'CC7.2', title: 'Continuous Infrastructure Monitoring', description: 'Sub-second telemetry logging with automated alert triggers for anomalous traffic.', status: 'PASSED' },
-      { code: 'CC8.1', title: 'Change Management & CI/CD Auditing', description: 'Mandatory peer review, static code analysis, and signed Git commit enforcement.', status: 'PASSED' },
+      { code: 'ZT-01', title: 'Logical Access Controls', description: 'mTLS certificate authentication and RBAC session isolation for all microservices.', status: 'IMPLEMENTED' },
+      { code: 'ZT-02', title: 'Perimeter & Border Defense', description: 'Web Application Firewall (WAF) with DDoS mitigation and IP rate limiting.', status: 'IMPLEMENTED' },
+      { code: 'ZT-03', title: 'Continuous Infrastructure Monitoring', description: 'Telemetry logging with automated alert triggers for anomalous traffic.', status: 'IMPLEMENTED' },
+      { code: 'ZT-04', title: 'Change Management & CI/CD Auditing', description: 'Mandatory peer review, static code analysis, and signed Git commit enforcement.', status: 'VERIFIED' },
     ],
   },
   {
-    id: 'hipaa',
-    name: 'HIPAA & HITECH',
-    badge: 'Healthcare Compliant',
-    description: 'Protected Health Information (PHI) encryption, BAA agreements, and zero-retention AI pipelines.',
+    id: 'data-protection',
+    name: 'Data Protection & GDPR Sovereignty',
+    badge: 'Privacy by Design',
+    description: 'EU data residency, automated Right to be Forgotten API deletion, and client-isolated encryption keys.',
     controls: [
-      { code: '164.312(a)', title: 'PHI Access Control & Tokenization', description: 'De-identification and tokenization of health data before model ingestion.', status: 'PASSED' },
-      { code: '164.312(e)', title: 'AES-256 Encryption at Rest & Transit', description: 'Customer-managed KMS keys with TLS 1.3 in-flight wire encryption.', status: 'PASSED' },
-      { code: '164.312(b)', title: 'Immutable Audit Logging', description: 'Tamper-proof audit logs retaining all access requests for 7+ years.', status: 'PASSED' },
+      { code: 'DP-01', title: 'Security of Processing', description: 'Pseudonymization and end-to-end data isolation in client cloud regions.', status: 'IMPLEMENTED' },
+      { code: 'DP-02', title: 'AES-256 Encryption at Rest & Transit', description: 'Client-managed KMS keys with TLS 1.3 in-flight wire encryption.', status: 'IMPLEMENTED' },
+      { code: 'DP-03', title: 'Automated Data Erasure', description: 'Instant API trigger to erase vector embeddings and customer records.', status: 'IMPLEMENTED' },
+      { code: 'DP-04', title: 'AI Transparency & Model Auditability', description: 'Explainable RAG citations and deterministic evaluation benchmarks.', status: 'VERIFIED' },
     ],
   },
   {
-    id: 'iso27001',
-    name: 'ISO / IEC 27001:2022',
-    badge: 'Globally Certified',
-    description: 'International standard for Information Security Management Systems (ISMS).',
+    id: 'secure-engineering',
+    name: 'Secure SDLC & OWASP Standards',
+    badge: 'Verified Practices',
+    description: 'Application security controls mapped to OWASP Top 10 risks and secure development lifecycles.',
     controls: [
-      { code: 'A.5.15', title: 'Access Control Policy', description: 'Principle of Least Privilege (PoLP) and Just-In-Time (JIT) admin elevation.', status: 'PASSED' },
-      { code: 'A.8.24', title: 'Use of Cryptography', description: 'Hardware Security Module (HSM) key management and automated certificate rotation.', status: 'PASSED' },
-      { code: 'A.8.28', title: 'Secure Coding Standards', description: 'OWASP Top 10 mitigation and automated static dependency scanning.', status: 'PASSED' },
+      { code: 'SDLC-01', title: 'Access Control Policy', description: 'Principle of Least Privilege (PoLP) and Just-In-Time (JIT) admin elevation.', status: 'IMPLEMENTED' },
+      { code: 'SDLC-02', title: 'Use of Cryptography', description: 'Hardware Security Module (HSM) key management and automated certificate rotation.', status: 'IMPLEMENTED' },
+      { code: 'SDLC-03', title: 'Secure Coding Standards', description: 'OWASP Top 10 mitigation and automated static dependency scanning.', status: 'VERIFIED' },
+      { code: 'SDLC-04', title: 'Immutable Audit Logging', description: 'Tamper-proof audit logs retaining all access requests with structured telemetry.', status: 'IMPLEMENTED' },
     ],
   },
   {
-    id: 'gdpr',
-    name: 'GDPR & EU AI Act',
-    badge: 'EU Data Sovereignty',
-    description: 'EU data residency, Right to be Forgotten data deletion, and AI transparency controls.',
+    id: 'healthcare-interop',
+    name: 'Healthcare Standards & ABDM / FHIR',
+    badge: 'Schema Standards',
+    description: 'HL7 FHIR R4 schema integration, ABDM gateway compatibility, and automated patient data de-identification.',
     controls: [
-      { code: 'Art. 32', title: 'Security of Processing', description: 'Pseudonymization and end-to-end data isolation in EU cloud regions.', status: 'PASSED' },
-      { code: 'Art. 17', title: 'Automated Data Erasure', description: 'Instant API trigger to erase vector embeddings and customer records.', status: 'PASSED' },
-      { code: 'AI Act-T4', title: 'AI Transparency & Model Auditability', description: 'Explainable RAG citations and deterministic evaluation benchmarks.', status: 'PASSED' },
+      { code: 'HL7-01', title: 'Clinical Data De-Identification', description: 'Automated de-identification and tokenization of health data before model ingestion.', status: 'IMPLEMENTED' },
+      { code: 'HL7-02', title: 'FHIR R4 Resource Mapping', description: 'Strict validation against HL7 FHIR R4 standard healthcare data schemas.', status: 'VERIFIED' },
+      { code: 'HL7-03', title: 'ABDM Health Gateway Integration', description: 'Secure ABHA registration and consent-driven health data exchange protocols.', status: 'IMPLEMENTED' },
     ],
   },
 ];
@@ -89,7 +91,7 @@ export function ComplianceMatrix() {
           </div>
           <div>
             <h3 className="text-lg font-extrabold text-foreground">Enterprise Security & Compliance Matrix</h3>
-            <p className="text-xs text-muted-foreground">Interactive verification of SOC 2, HIPAA, ISO 27001, and GDPR controls</p>
+            <p className="text-xs text-muted-foreground">Interactive verification of Zero-Trust, GDPR, Secure Engineering, and Healthcare Data standards</p>
           </div>
         </div>
         <div className="flex items-center gap-2">

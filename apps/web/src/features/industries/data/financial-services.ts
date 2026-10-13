@@ -160,7 +160,7 @@ export const financialServicesIndustry: Industry = {
       id: 'compliance',
       question: 'How do you ensure compliance in financial services solutions?',
       answer:
-        'We embed compliance controls into the development lifecycle, including audit trails, data governance, and policy enforcement. Our reference architectures are designed to meet ISO 27001, SOC 2, and financial industry-specific requirements.',
+        'We embed security and governance controls into the development lifecycle, including audit trails, data lineage, and policy enforcement. Our reference architectures are designed to support banking and financial industry-specific requirements.',
     },
     {
       id: 'security',

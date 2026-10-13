@@ -60,12 +60,12 @@ export function Header() {
     <>
       <motion.header
         className={cn(
-          'sticky top-0 z-50 w-full transition-all duration-300',
+          'sticky top-0 z-50 w-full transition-all duration-300 text-[#292329]',
           isScrolled
-            ? 'bg-[#0D0B10]/95 backdrop-blur-md border-b border-[#40202C] shadow-lg'
-            : 'bg-[#0D0B10] border-b border-[#40202C]/40'
+            ? 'bg-white/95 backdrop-blur-md border-b border-[#E8E2E5] shadow-sm'
+            : 'bg-white border-b border-[#E8E2E5]'
         )}
-        initial={{ y: -60 }}
+        initial={false}
         animate={{ y: 0 }}
         transition={{ duration: 0.4, ease: 'easeOut' }}
       >
@@ -86,7 +86,7 @@ export function Header() {
             <Button
               variant="ghost"
               size="icon"
-              className="flex text-muted-foreground hover:text-foreground"
+              className="flex text-[#625B60] hover:text-[#A20A3A]"
               onClick={handleSearchClick}
               aria-label="Open search"
             >
@@ -96,19 +96,19 @@ export function Header() {
               variant="ghost"
               size="sm"
               className={cn(
-                'hidden md:flex h-8 gap-1.5 px-2.5 text-xs text-muted-foreground hover:text-foreground',
-                isScrolled ? 'border border-border/50' : ''
+                'hidden md:flex h-8 gap-1.5 px-2.5 text-xs text-[#625B60] hover:text-[#A20A3A] border-[#E8E2E5] bg-[#FAF8F9]',
+                isScrolled ? 'border-[#E8E2E5]' : ''
               )}
               onClick={handleCommandClick}
             >
               <Command className="h-3.5 w-3.5" aria-hidden="true" />
               <span className="hidden lg:inline">Search</span>
-              <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded-md border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
+              <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded-md border border-[#E8E2E5] bg-white px-1.5 font-mono text-[10px] font-medium text-[#625B60] opacity-100">
                 <span className="text-xs">⌘</span>K
               </kbd>
             </Button>
 
-            <div className="hidden lg:block h-4 w-px bg-border mx-1" aria-hidden="true" />
+            <div className="hidden lg:block h-4 w-px bg-[#E8E2E5] mx-1" aria-hidden="true" />
 
             <Button
               size="sm"
@@ -191,7 +191,7 @@ export function Header() {
             <Button
               variant="ghost"
               size="icon"
-              className="lg:hidden text-muted-foreground hover:text-foreground"
+              className="lg:hidden text-[#292329] hover:text-[#A20A3A]"
               onClick={() => setMobileMenuOpen(true)}
               aria-label="Open menu"
               aria-expanded={mobileMenuOpen}

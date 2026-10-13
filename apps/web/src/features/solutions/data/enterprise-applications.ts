@@ -12,7 +12,7 @@ export const enterpriseApplicationsSolution: Solution = {
     secondaryCta: { text: 'View Products', href: '/products' },
     stats: [
       { value: '12M+', valueLabel: 'Active Users Served', label: 'Scalability' },
-      { value: '99.99%', valueLabel: 'Uptime SLA', label: 'Reliability' },
+      { value: '99.95%', valueLabel: 'Availability Target', label: 'Reliability' },
     ],
   },
   challenges: [
