@@ -21,6 +21,11 @@ describe('ContactForm', () => {
   });
 
   it('advances through step 1, step 2, and submits step 3 successfully', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({ success: true }),
+    }));
+
     const onSuccess = vi.fn();
     render(<ContactForm onSuccess={onSuccess} />);
 

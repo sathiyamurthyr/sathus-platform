@@ -17,12 +17,12 @@ interface PlatformNode {
 }
 
 const NODES: PlatformNode[] = [
-  { id: 'ai', label: 'AI', description: 'Agentic systems, evaluation harnesses, and guardrails that keep models accountable in production.', icon: Bot, x: 50, y: 9 },
-  { id: 'data', label: 'Data', description: 'Governed lakehouses and streaming pipelines with lineage, quality, and real-time access.', icon: Database, x: 13, y: 33 },
-  { id: 'cloud', label: 'Cloud', description: 'Cloud-native foundations on Azure and AWS — secure, elastic, and observable.', icon: Cloud, x: 87, y: 33 },
-  { id: 'apis', label: 'APIs', description: 'Unified API and integration layer that connects agents, data, and applications.', icon: Webhook, x: 13, y: 76 },
-  { id: 'products', label: 'Products', description: 'Composable enterprise applications and our product portfolio running on the platform.', icon: Boxes, x: 87, y: 76 },
-  { id: 'security', label: 'Security', description: 'Zero-trust controls, encryption, and auditability woven through every layer.', icon: ShieldCheck, x: 50, y: 92 },
+  { id: 'ai', label: 'AI Engine', description: 'AI Intelligence Engine: Agentic systems, evaluation harnesses, and guardrails that keep models accountable in production.', icon: Bot, x: 50, y: 9 },
+  { id: 'data', label: 'Data Foundation', description: 'Governed Data Foundation: Governed lakehouses and streaming pipelines with lineage, quality, and real-time access.', icon: Database, x: 13, y: 33 },
+  { id: 'cloud', label: 'Cloud Execution', description: 'Cloud Infrastructure & Execution: Cloud-native foundations on Azure and AWS — secure, elastic, and observable.', icon: Cloud, x: 87, y: 33 },
+  { id: 'apis', label: 'API Fabric', description: 'Unified API & Integration Fabric: High-throughput API gateway connecting agents, data pipelines, and client surfaces.', icon: Webhook, x: 13, y: 76 },
+  { id: 'products', label: 'Enterprise Apps', description: 'Enterprise Applications: Composable domain-driven applications and product suites running on the unified platform.', icon: Boxes, x: 87, y: 76 },
+  { id: 'security', label: 'Zero-Trust', description: 'Zero-Trust Security & Governance: Cryptographic isolation, AES-256 encryption, and auditability woven through every layer.', icon: ShieldCheck, x: 50, y: 92 },
 ];
 
 const EDGES: Array<[string, string, 'core' | 'link']> = [
@@ -41,9 +41,9 @@ const EDGES: Array<[string, string, 'core' | 'link']> = [
 ];
 
 const DEFAULT_DETAIL = {
-  label: 'Sathus Platform',
+  label: 'Sathus Intelligence Network',
   description:
-    'A single operating model connecting AI, data, and cloud into composable enterprise products — governed end-to-end by security and a unified API layer. Hover or focus a layer to see how it connects.',
+    'A unified enterprise operating model connecting Governed Data, Cloud Infrastructure, and AI Engine into Composable Enterprise Applications — secured end-to-end by Zero-Trust governance. Hover or focus a layer to inspect its live connections.',
 };
 
 function position(id: string) {
@@ -71,7 +71,7 @@ export function PlatformOverview() {
       <div className="container mx-auto px-4">
         <SectionIntro
           tone="light"
-          eyebrow="Platform"
+          eyebrow="Sathus Intelligence Network"
           title="One architecture, from silicon to solution"
           description="Every engagement runs on the same governed backbone — so AI, data, cloud, and products compose instead of competing."
         />

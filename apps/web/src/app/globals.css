@@ -227,21 +227,6 @@
     mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
   }
 
-  /* Platform visualization responsive layout */
-  .platform-stacked {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    padding: 1rem;
-  }
-
-  .platform-stacked .platform-node {
-    position: relative;
-    left: auto !important;
-    top: auto !important;
-    transform: none !important;
-  }
 
   /* Brand Technology Gradient (Burgundy -> Vibrant Orange) */
   .text-ai-gradient {

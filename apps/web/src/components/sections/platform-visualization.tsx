@@ -7,7 +7,7 @@ import {
   Bot,
   Workflow,
   Cloud,
-  LineChart,
+  ShieldCheck,
   LayoutGrid,
   Sparkles,
   type LucideIcon,
@@ -40,11 +40,11 @@ interface RawNode {
 }
 
 const RAW_NODES: RawNode[] = [
-  { id: 'ai', label: 'AI Agents', meta: 'Reasoning · Tools', icon: Bot, angle: -90 },
-  { id: 'cloud', label: 'Cloud', meta: 'Azure · AWS', icon: Cloud, angle: -18 },
-  { id: 'apps', label: 'Applications', meta: 'Composable', icon: LayoutGrid, angle: 54 },
-  { id: 'analytics', label: 'Analytics', meta: 'Real-time', icon: LineChart, angle: 126 },
-  { id: 'data', label: 'Data Pipelines', meta: 'Streaming · Lakehouse', icon: Workflow, angle: 198 },
+  { id: 'ai', label: 'AI Intelligence', meta: 'Agent Swarms · Guardrails', icon: Bot, angle: -90 },
+  { id: 'cloud', label: 'Cloud Infrastructure', meta: 'Azure · AWS Multi-Cloud', icon: Cloud, angle: -18 },
+  { id: 'apps', label: 'Enterprise Apps', meta: 'Composable Systems', icon: LayoutGrid, angle: 54 },
+  { id: 'security', label: 'Zero-Trust Security', meta: 'AES-256 · Governance', icon: ShieldCheck, angle: 126 },
+  { id: 'data', label: 'Governed Data', meta: 'Lakehouse · Lineage', icon: Workflow, angle: 198 },
 ];
 
 export const NODES = RAW_NODES.map((node) => {
@@ -72,9 +72,9 @@ export function PlatformVisualization() {
 
   return (
     <div
-      className="relative mx-auto aspect-square w-full max-w-[540px] platform-stacked select-none"
+      className="relative mx-auto aspect-square w-full max-w-[540px] select-none"
       role="region"
-      aria-label="Enterprise platform architecture topology diagram showing AI Agents, Cloud, Applications, Analytics, and Data Pipelines connected to the AI Core"
+      aria-label="Sathus Intelligence Network architecture topology showing Governed Data Foundation, Cloud Infrastructure, AI Intelligence Engine, Enterprise Applications, and Zero-Trust Security connected to the central AI Core"
     >
       {/* Radial Topology SVG Canvas (Center at 50, 50) */}
       <svg

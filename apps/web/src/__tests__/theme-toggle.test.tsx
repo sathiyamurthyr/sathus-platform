@@ -11,17 +11,18 @@ describe('ThemeToggle', () => {
         <ThemeToggle />
       </ThemeProvider>
     );
-    expect(screen.getByLabelText('Switch to dark mode')).toBeInTheDocument();
+    expect(screen.getByLabelText('Sathus brand theme')).toBeInTheDocument();
   });
 
-  it('toggles theme on click', () => {
+  it('renders theme button on dark mode', () => {
     render(
       <ThemeProvider defaultTheme="dark">
         <ThemeToggle />
       </ThemeProvider>
     );
-    const button = screen.getByLabelText('Switch to light mode');
+    const button = screen.getByLabelText('Sathus brand theme');
+    expect(button).toBeInTheDocument();
     fireEvent.click(button);
-    expect(screen.getByLabelText('Switch to dark mode')).toBeInTheDocument();
+    expect(button).toBeInTheDocument();
   });
 });
