@@ -17,9 +17,9 @@ interface Product {
 }
 
 const STATUS_STYLES: Record<Status, string> = {
-  GA: 'border-emerald-500/30 bg-emerald-500/10 text-emerald-700',
-  Beta: 'border-[#FF9933]/40 bg-[#FF9933]/15 text-[#FF9933]',
-  Research: 'border-[#EDC11E]/40 bg-[#EDC11E]/15 text-[#292329]',
+  GA: 'border-emerald-200 bg-emerald-50 text-emerald-800',
+  Beta: 'border-[#FFD9B3] bg-[#FFF4E8] text-[#C25E00]',
+  Research: 'border-[#EDE1E6] bg-white text-[#635861]',
 };
 
 const PRODUCTS: Product[] = [
@@ -70,7 +70,7 @@ function StatusPill({ status }: { status: Status }) {
   return (
     <span
       className={cn(
-        'inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-xs font-medium',
+        'inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-xs font-semibold',
         STATUS_STYLES[status]
       )}
     >
@@ -82,7 +82,7 @@ function StatusPill({ status }: { status: Status }) {
 
 export function Products() {
   return (
-    <section id="products" className="scroll-mt-24 py-20 sm:py-24">
+    <section id="products" className="scroll-mt-24 bg-white py-20 sm:py-24">
       <div className="container mx-auto px-4">
         <SectionIntro
           eyebrow="Products"
@@ -98,18 +98,18 @@ export function Products() {
                 key={product.name}
                 delay={(i % 3) * 0.06}
                 className={cn(
-                  'group relative flex flex-col rounded-2xl border border-border bg-[#FAF8F9] p-7 transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:bg-white hover:shadow-lg justify-between',
-                  product.featured && 'md:col-span-2 lg:col-span-3'
+                  'group relative flex flex-col rounded-2xl border border-[#EDE1E6] bg-[#FAF8F9] p-7 transition-all duration-300 hover:-translate-y-1 hover:border-[#A20A3A]/40 hover:bg-white hover:shadow-md justify-between',
+                  product.featured && 'md:col-span-2 lg:col-span-3 border-[#A20A3A]/30 bg-gradient-to-br from-[#FAF8F9] via-[#FAF8F9] to-[#F9EEF2]/40'
                 )}
               >
                 <div>
                   {/* CardHeader: Icon + Title + StatusPill */}
                   <div className="flex items-center gap-4 m-0 p-0">
-                    <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary ring-1 ring-inset ring-primary/15 shrink-0">
+                    <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#F9EEF2] border border-[#EDE1E6] text-[#A20A3A] transition-colors group-hover:bg-[#A20A3A] group-hover:text-white shrink-0">
                       <Icon className="h-6 w-6" />
                     </span>
                     <div className="flex flex-wrap items-center gap-3">
-                      <h3 className="text-xl font-semibold tracking-tight text-balance text-foreground m-0 p-0 leading-normal">
+                      <h3 className="text-xl font-semibold tracking-tight text-balance text-[#292329] m-0 p-0 leading-normal">
                         {product.name}
                       </h3>
                       <StatusPill status={product.status} />
@@ -117,7 +117,7 @@ export function Products() {
                   </div>
 
                   {/* Description */}
-                  <p className={cn("mt-4 text-sm leading-relaxed text-pretty text-muted-foreground", product.featured && "max-w-3xl")}>
+                  <p className={cn("mt-4 text-sm leading-relaxed text-pretty text-[#635861]", product.featured && "max-w-3xl")}>
                     {product.description}
                   </p>
                 </div>
@@ -125,7 +125,7 @@ export function Products() {
                 {/* Explore Link */}
                 <Link
                   href={product.href}
-                  className="mt-5 inline-flex w-fit items-center gap-1.5 text-sm font-medium text-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded after:absolute after:inset-0 after:rounded-2xl"
+                  className="mt-5 inline-flex w-fit items-center gap-1.5 text-sm font-medium text-[#292329] transition-colors hover:text-[#A20A3A] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A20A3A] focus-visible:ring-offset-2 rounded after:absolute after:inset-0 after:rounded-2xl"
                   aria-label={`Explore ${product.name}`}
                 >
                   Explore

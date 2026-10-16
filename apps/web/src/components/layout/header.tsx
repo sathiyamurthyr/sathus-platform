@@ -62,8 +62,8 @@ export function Header() {
         className={cn(
           'sticky top-0 z-50 w-full transition-all duration-300 text-[#292329]',
           isScrolled
-            ? 'bg-white/95 backdrop-blur-md border-b border-[#E8E2E5] shadow-sm'
-            : 'bg-white border-b border-[#E8E2E5]'
+            ? 'bg-white/95 backdrop-blur-md border-b border-[#EDE1E6] shadow-xs'
+            : 'bg-white border-b border-[#EDE1E6]'
         )}
         initial={false}
         animate={{ y: 0 }}
@@ -86,7 +86,7 @@ export function Header() {
             <Button
               variant="ghost"
               size="icon"
-              className="flex text-[#625B60] hover:text-[#A20A3A]"
+              className="flex text-[#635861] hover:text-[#A20A3A]"
               onClick={handleSearchClick}
               aria-label="Open search"
             >
@@ -96,19 +96,19 @@ export function Header() {
               variant="ghost"
               size="sm"
               className={cn(
-                'hidden md:flex h-8 gap-1.5 px-2.5 text-xs text-[#625B60] hover:text-[#A20A3A] border-[#E8E2E5] bg-[#FAF8F9]',
-                isScrolled ? 'border-[#E8E2E5]' : ''
+                'hidden md:flex h-8 gap-1.5 px-2.5 text-xs text-[#635861] hover:text-[#A20A3A] border-[#EDE1E6] bg-[#FAF8F9]',
+                isScrolled ? 'border-[#EDE1E6]' : ''
               )}
               onClick={handleCommandClick}
             >
               <Command className="h-3.5 w-3.5" aria-hidden="true" />
               <span className="hidden lg:inline">Search</span>
-              <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded-md border border-[#E8E2E5] bg-white px-1.5 font-mono text-[10px] font-medium text-[#625B60] opacity-100">
+              <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded-md border border-[#EDE1E6] bg-white px-1.5 font-mono text-[10px] font-medium text-[#635861] opacity-100">
                 <span className="text-xs">⌘</span>K
               </kbd>
             </Button>
 
-            <div className="hidden lg:block h-4 w-px bg-[#E8E2E5] mx-1" aria-hidden="true" />
+            <div className="hidden lg:block h-4 w-px bg-[#EDE1E6] mx-1" aria-hidden="true" />
 
             <Button
               size="sm"

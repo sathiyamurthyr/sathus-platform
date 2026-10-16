@@ -30,10 +30,12 @@ export const tailwindTheme: Config = {
         burgundy: {
           DEFAULT: '#A20A3A',
           hover: '#8C0832',
+          light: '#F9EEF2',
         },
         orange: {
           DEFAULT: '#FF9933',
           light: '#FFAE5C',
+          pale: '#FFF4E8',
         },
         gold: {
           DEFAULT: '#EDC11E',
@@ -42,6 +44,11 @@ export const tailwindTheme: Config = {
         surface: {
           DEFAULT: '#FAF8F9',
           subtle: '#FAF8F9',
+          elevated: '#FFFFFF',
+        },
+        highlight: {
+          burgundy: '#F9EEF2',
+          orange: '#FFF4E8',
         },
         destructive: {
           DEFAULT: 'hsl(var(--destructive))',

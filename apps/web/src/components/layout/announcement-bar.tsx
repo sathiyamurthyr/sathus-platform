@@ -31,7 +31,7 @@ export function AnnouncementBar() {
       animate={{ height: 40, opacity: 1 }}
       exit={{ height: 0, opacity: 0 }}
       transition={{ duration: 0.3, ease: 'easeOut' }}
-      className="relative z-50 overflow-hidden bg-[#FAF8F9] text-[#292329] border-b border-[#E8E2E5]"
+      className="relative z-50 overflow-hidden bg-[#FAF8F9] text-[#292329] border-b border-[#EDE1E6]"
       role="banner"
       aria-label="Announcements"
     >
@@ -39,7 +39,7 @@ export function AnnouncementBar() {
         <div className="flex items-center gap-2 sm:gap-3 min-w-0">
           <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
             <Icon className="h-3.5 w-3.5 shrink-0 text-[#FF9933]" aria-hidden="true" />
-            <span className="hidden rounded-full bg-[#A20A3A]/10 border border-[#A20A3A]/20 text-[#A20A3A] px-2 py-0.5 text-[0.65rem] font-semibold uppercase tracking-wider sm:inline">
+            <span className="hidden rounded-full bg-[#F9EEF2] border border-[#EDE1E6] text-[#A20A3A] px-2 py-0.5 text-[0.65rem] font-semibold uppercase tracking-wider sm:inline">
               {current.tag}
             </span>
           </div>
@@ -62,7 +62,7 @@ export function AnnouncementBar() {
                 onClick={() => setIndex(i)}
                 className={cn(
                   'h-1 rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#A20A3A]',
-                  i === index ? 'w-4 bg-[#A20A3A]' : 'w-1 bg-[#625B60]/40 hover:bg-[#625B60]/60'
+                  i === index ? 'w-4 bg-[#A20A3A]' : 'w-1 bg-[#635861]/40 hover:bg-[#635861]/60'
                 )}
                 aria-label={`Show announcement ${i + 1}`}
                 aria-current={i === index ? 'true' : undefined}
@@ -73,7 +73,7 @@ export function AnnouncementBar() {
             variant="ghost"
             size="icon"
             onClick={dismiss}
-            className="h-6 w-6 text-[#625B60] hover:text-[#292329] hover:bg-[#E8E2E5]/50"
+            className="h-6 w-6 text-[#635861] hover:text-[#292329] hover:bg-[#EDE1E6]/50"
             aria-label="Dismiss announcement"
           >
             <X className="h-3.5 w-3.5" />

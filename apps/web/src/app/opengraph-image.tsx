@@ -42,12 +42,12 @@ export default function OpengraphImage() {
           <div style={{ fontSize: 64, lineHeight: 1.05, fontWeight: 400, maxWidth: 980, color: '#292329' }}>
             Engineering the Future of AI, Data &amp; Enterprise Software
           </div>
-          <div style={{ fontSize: 26, color: '#625B60', marginTop: 24, maxWidth: 900 }}>
+          <div style={{ fontSize: 26, color: '#635861', marginTop: 24, maxWidth: 900 }}>
             Enterprise AI, data platforms, and cloud-native software for regulated industries.
           </div>
         </div>
 
-        <div style={{ display: 'flex', gap: 24, fontSize: 22, color: '#625B60' }}>
+        <div style={{ display: 'flex', gap: 24, fontSize: 22, color: '#635861' }}>
           <span>Azure</span>
           <span>Databricks</span>
           <span>Snowflake</span>

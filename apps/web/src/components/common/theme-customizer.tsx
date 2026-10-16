@@ -45,7 +45,7 @@ export function ThemeCustomizer() {
       <motion.div whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.95 }}>
         <Button
           onClick={() => setIsOpen(!isOpen)}
-          className="h-12 w-12 rounded-full bg-[#A20A3A] hover:bg-[#8C0832] text-white shadow-xl border border-[#E8E2E5] flex items-center justify-center p-0"
+          className="h-12 w-12 rounded-full bg-[#A20A3A] hover:bg-[#8C0832] text-white shadow-xl border border-[#EDE1E6] flex items-center justify-center p-0"
           aria-label="Open Sathus Brand Customizer"
           title="Open Sathus Brand Customizer"
         >
@@ -61,10 +61,10 @@ export function ThemeCustomizer() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="absolute bottom-16 right-0 w-80 rounded-2xl border border-[#E8E2E5] bg-white/95 backdrop-blur-xl p-5 shadow-2xl space-y-5 text-[#292329]"
+            className="absolute bottom-16 right-0 w-80 rounded-2xl border border-[#EDE1E6] bg-white/95 backdrop-blur-xl p-5 shadow-2xl space-y-5 text-[#292329]"
           >
             {/* Header */}
-            <div className="flex items-center justify-between border-b border-[#E8E2E5] pb-3">
+            <div className="flex items-center justify-between border-b border-[#EDE1E6] pb-3">
               <div className="flex items-center gap-2">
                 <Sparkles className="h-4 w-4 text-[#A20A3A]" />
                 <h3 className="text-sm font-extrabold text-[#292329]">Official Brand Palette</h3>
@@ -72,7 +72,7 @@ export function ThemeCustomizer() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="h-7 w-7 rounded-full text-[#625B60] hover:text-[#292329]"
+                className="h-7 w-7 rounded-full text-[#635861] hover:text-[#292329]"
                 onClick={() => setIsOpen(false)}
               >
                 <X className="h-4 w-4" />
@@ -81,15 +81,15 @@ export function ThemeCustomizer() {
 
             {/* Base Theme Indicator */}
             <div className="space-y-2">
-              <label className="text-xs font-semibold text-[#625B60] uppercase tracking-wider">
+              <label className="text-xs font-semibold text-[#635861] uppercase tracking-wider">
                 Brand Surface Mode
               </label>
-              <div className="flex items-center justify-between py-2 px-3 rounded-lg border border-[#E8E2E5] bg-[#FAF8F9] text-xs font-semibold text-[#292329]">
+              <div className="flex items-center justify-between py-2 px-3 rounded-lg border border-[#EDE1E6] bg-[#FAF8F9] text-xs font-semibold text-[#292329]">
                 <div className="flex items-center gap-2">
                   <Sun className="h-4 w-4 text-[#FF9933]" />
                   <span>White Surface (#FFFFFF)</span>
                 </div>
-                <span className="text-[10px] uppercase font-bold text-[#A20A3A] bg-[#A20A3A]/10 px-2 py-0.5 rounded-full">
+                <span className="text-[10px] uppercase font-bold text-[#A20A3A] bg-[#F9EEF2] border border-[#EDE1E6] px-2 py-0.5 rounded-full">
                   Official Standard
                 </span>
               </div>
@@ -97,7 +97,7 @@ export function ThemeCustomizer() {
 
             {/* Accent Color Palette */}
             <div className="space-y-2">
-              <label className="text-xs font-semibold text-[#625B60] uppercase tracking-wider">
+              <label className="text-xs font-semibold text-[#635861] uppercase tracking-wider">
                 Brand Highlight Accent
               </label>
               <div className="grid grid-cols-3 gap-2">
@@ -106,7 +106,7 @@ export function ThemeCustomizer() {
                     key={accent.id}
                     onClick={() => setAccentColor(accent.id as any)}
                     className={`h-10 rounded-lg border flex items-center justify-center transition-all ${
-                      accentColor === accent.id ? 'border-[#A20A3A] ring-2 ring-[#A20A3A]/30 scale-105 shadow-sm' : 'border-[#E8E2E5] bg-[#FAF8F9]'
+                      accentColor === accent.id ? 'border-[#A20A3A] ring-2 ring-[#A20A3A]/30 scale-105 shadow-sm' : 'border-[#EDE1E6] bg-[#FAF8F9]'
                     }`}
                     title={accent.label}
                   >
@@ -120,10 +120,10 @@ export function ThemeCustomizer() {
 
             {/* Micro-Animation Status */}
             <div className="space-y-2">
-              <label className="text-xs font-semibold text-[#625B60] uppercase tracking-wider">
+              <label className="text-xs font-semibold text-[#635861] uppercase tracking-wider">
                 Enterprise Motion
               </label>
-              <div className="flex items-center justify-between rounded-lg border border-[#E8E2E5] bg-[#FAF8F9] p-2.5">
+              <div className="flex items-center justify-between rounded-lg border border-[#EDE1E6] bg-[#FAF8F9] p-2.5">
                 <div className="flex items-center gap-2 text-xs font-medium text-[#292329]">
                   <Zap className="h-3.5 w-3.5 text-[#FF9933]" />
                   Physics Animations
@@ -135,13 +135,13 @@ export function ThemeCustomizer() {
             </div>
 
             {/* Reset */}
-            <div className="pt-2 border-t border-[#E8E2E5] flex justify-end">
+            <div className="pt-2 border-t border-[#EDE1E6] flex justify-end">
               <button
                 onClick={() => {
                   setTheme('light');
                   setAccentColor('burgundy');
                 }}
-                className="text-[11px] font-semibold text-[#625B60] hover:text-[#A20A3A] transition-colors"
+                className="text-[11px] font-semibold text-[#635861] hover:text-[#A20A3A] transition-colors"
               >
                 Reset Brand Defaults
               </button>

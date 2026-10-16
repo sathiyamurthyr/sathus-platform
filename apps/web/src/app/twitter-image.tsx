@@ -42,14 +42,14 @@ export default function TwitterImage() {
           <div style={{ fontSize: 58, lineHeight: 1.1, fontWeight: 700, maxWidth: 960, color: '#292329' }}>
             Enterprise AI, Data Engineering &amp; Cloud Modernization
           </div>
-          <div style={{ fontSize: 24, color: '#625B60', marginTop: 24, maxWidth: 880, lineHeight: 1.4 }}>
+          <div style={{ fontSize: 24, color: '#635861', marginTop: 24, maxWidth: 880, lineHeight: 1.4 }}>
             Production-grade agentic swarms, governed lakehouses, and cloud-native applications for regulated industries.
           </div>
         </div>
 
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid #E8E2E5', paddingTop: 24 }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid #EDE1E6', paddingTop: 24 }}>
           <span style={{ fontSize: 20, color: '#A20A3A', fontWeight: 600 }}>https://www.sathus.in</span>
-          <div style={{ display: 'flex', gap: 20, fontSize: 18, color: '#625B60' }}>
+          <div style={{ display: 'flex', gap: 20, fontSize: 18, color: '#635861' }}>
             <span>AI Swarms</span>
             <span>•</span>
             <span>Apache Iceberg</span>

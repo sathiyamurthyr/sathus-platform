@@ -66,7 +66,7 @@ export function PlatformOverview() {
   return (
     <section
       id="platform"
-      className="scroll-mt-24 border-t border-[#E8E2E5] bg-white py-20 text-[#292329] sm:py-24"
+      className="scroll-mt-24 border-t border-[#EDE1E6] bg-[#FAF8F9] py-20 text-[#292329] sm:py-24"
     >
       <div className="container mx-auto px-4">
         <SectionIntro
@@ -97,7 +97,7 @@ export function PlatformOverview() {
                     y1={pa.y}
                     x2={pb.x}
                     y2={pb.y}
-                    stroke={lit ? 'url(#pg)' : '#E8E2E5'}
+                    stroke={lit ? 'url(#pg)' : '#EDE1E6'}
                     strokeWidth={type === 'core' ? 0.5 : 0.35}
                     strokeDasharray={type === 'link' ? '1.6 2.2' : undefined}
                     vectorEffect="non-scaling-stroke"
@@ -151,7 +151,7 @@ export function PlatformOverview() {
                       'flex items-center gap-2 rounded-full border px-3 py-1.5 text-sm font-medium backdrop-blur transition-all duration-300 shadow-xs',
                       isActive
                         ? 'border-[#A20A3A] bg-[#A20A3A] text-white shadow-md'
-                        : 'border-[#E8E2E5] bg-[#FAF8F9] text-[#625B60] hover:text-[#A20A3A] hover:border-[#A20A3A] hover:bg-white'
+                        : 'border-[#EDE1E6] bg-white text-[#635861] hover:text-[#A20A3A] hover:border-[#A20A3A] hover:bg-white'
                     )}
                   >
                     <Icon className="h-4 w-4" />
@@ -163,12 +163,12 @@ export function PlatformOverview() {
           </div>
 
           {/* Detail panel */}
-          <div className="rounded-2xl border border-[#E8E2E5] bg-[#FAF8F9] p-8 shadow-xs">
+          <div className="rounded-2xl border border-[#EDE1E6] bg-white p-8 shadow-xs">
             <div aria-live="polite">
               <h3 className="font-display text-3xl text-[#292329]">
                 {active ? detail.label : 'Sathus Platform'}
               </h3>
-              <p className="mt-4 text-base leading-relaxed text-[#625B60]">
+              <p className="mt-4 text-base leading-relaxed text-[#635861]">
                 {detail.description}
               </p>
             </div>
@@ -185,7 +185,7 @@ export function PlatformOverview() {
                     'rounded-full border px-3 py-1 text-xs font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#A20A3A]',
                     active === node.id
                       ? 'border-[#A20A3A] bg-[#A20A3A] text-white shadow-xs'
-                      : 'border-[#E8E2E5] bg-white text-[#625B60] hover:text-[#A20A3A] hover:border-[#A20A3A]'
+                      : 'border-[#EDE1E6] bg-[#FAF8F9] text-[#635861] hover:text-[#A20A3A] hover:border-[#A20A3A] hover:bg-white'
                   )}
                 >
                   {node.label}

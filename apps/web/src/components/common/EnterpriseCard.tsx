@@ -28,14 +28,14 @@ export function EnterpriseCard({
       delay={delay}
       y={0}
       className={cn(
-        "group relative w-full text-left bg-[#FAF8F9] border border-[#E8E2E5] rounded-[20px] p-6 shadow-xs transition-all duration-200 hover:-translate-y-[6px] hover:border-[#A20A3A] hover:bg-white hover:shadow-md cursor-pointer",
+        "group relative w-full text-left bg-[#FAF8F9] border border-[#EDE1E6] rounded-[20px] p-6 shadow-xs transition-all duration-200 hover:-translate-y-[6px] hover:border-[#A20A3A] hover:bg-white hover:shadow-md cursor-pointer",
         "h-[440px] grid grid-cols-1 grid-rows-[64px_120px_1px_120px_1px_48px]"
       )}
     >
       {/* CardHeader (Row 1 - 64px) */}
       <div className="h-16 flex items-center justify-between gap-2 w-full m-0 p-0">
         <div className="flex items-center gap-3 min-w-0 m-0 p-0">
-          <div className="h-12 w-12 rounded-xl bg-[#A20A3A]/10 border border-[#A20A3A]/20 text-[#A20A3A] transition-all duration-200 group-hover:bg-[#A20A3A] group-hover:text-white shrink-0 flex items-center justify-center">
+          <div className="h-12 w-12 rounded-xl bg-[#F9EEF2] border border-[#EDE1E6] text-[#A20A3A] transition-all duration-200 group-hover:bg-[#A20A3A] group-hover:border-[#A20A3A] group-hover:text-white shrink-0 flex items-center justify-center">
             <Icon className="h-6 w-6 text-[#A20A3A] group-hover:text-white transition-colors" />
           </div>
           <h3 className="text-xl font-bold leading-snug text-balance line-clamp-2 text-[#292329] tracking-tight m-0 p-0">
@@ -50,24 +50,24 @@ export function EnterpriseCard({
       {/* ProblemSection (Row 2 - 120px) */}
       <div className="h-[120px] overflow-hidden flex flex-col justify-start items-start m-0 p-0 pt-2">
         <h4 className="font-bold text-xs text-[#FF9933] uppercase tracking-[0.08em] m-0 p-0">The problem.</h4>
-        <p className="text-sm text-[#625B60] text-pretty line-clamp-3 leading-relaxed mt-1 m-0 p-0">
+        <p className="text-sm text-[#635861] text-pretty line-clamp-3 leading-relaxed mt-1 m-0 p-0">
           {problem}
         </p>
       </div>
 
       {/* Divider (Row 3 - 1px) */}
-      <div className="h-px bg-[#E8E2E5] w-full m-0 p-0" />
+      <div className="h-px bg-[#EDE1E6] w-full m-0 p-0" />
 
       {/* OutcomeSection (Row 4 - 120px) */}
       <div className="h-[120px] overflow-hidden flex flex-col justify-start items-start m-0 p-0 pt-2">
         <h4 className="font-bold text-xs text-[#FF9933] uppercase tracking-[0.08em] m-0 p-0">The outcome.</h4>
-        <p className="text-sm text-[#625B60] text-pretty line-clamp-3 leading-relaxed mt-1 m-0 p-0">
+        <p className="text-sm text-[#635861] text-pretty line-clamp-3 leading-relaxed mt-1 m-0 p-0">
           {outcome}
         </p>
       </div>
 
       {/* Divider (Row 5 - 1px) */}
-      <div className="h-px bg-[#E8E2E5] w-full m-0 p-0" />
+      <div className="h-px bg-[#EDE1E6] w-full m-0 p-0" />
 
       {/* CardFooter (Row 6 - 48px) */}
       <div className="h-12 flex items-center justify-start m-0 p-0">

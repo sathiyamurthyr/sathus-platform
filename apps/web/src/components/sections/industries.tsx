@@ -50,7 +50,7 @@ export function Industries() {
   return (
     <section
       id="industries"
-      className="scroll-mt-24 border-t border-border bg-muted/30 py-20 sm:py-24"
+      className="scroll-mt-24 border-t border-[#EDE1E6] bg-[#FAF8F9] py-20 sm:py-24"
     >
       <div className="container mx-auto px-4">
         <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
@@ -68,17 +68,17 @@ export function Industries() {
                 as="li"
                 key={industry.name}
                 delay={(i % 2) * 0.05}
-                className="group border-t border-border py-7 first:border-t-0 last:border-b"
+                className="group border-t border-[#EDE1E6] py-7 first:border-t-0 last:border-b last:border-[#EDE1E6]"
               >
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-baseline sm:gap-8">
-                  <span className="font-display text-lg text-muted-foreground/50 sm:w-10">
+                  <span className="font-display text-lg text-[#635861]/60 sm:w-10">
                     {String(i + 1).padStart(2, '0')}
                   </span>
                   <div className="flex-1">
-                    <h3 className="text-2xl font-semibold tracking-tight text-foreground transition-colors group-hover:text-primary">
+                    <h3 className="text-2xl font-semibold tracking-tight text-[#292329] transition-colors group-hover:text-[#A20A3A]">
                       {industry.name}
                     </h3>
-                    <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-foreground">
+                    <p className="mt-2 max-w-xl text-sm leading-relaxed text-[#635861]">
                       {industry.description}
                     </p>
                   </div>
@@ -86,7 +86,7 @@ export function Industries() {
                     {industry.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="rounded-full border border-border bg-background px-3 py-1 text-xs font-medium text-muted-foreground"
+                        className="rounded-full border border-[#EDE1E6] bg-white px-3 py-1 text-xs font-medium text-[#635861] shadow-xs"
                       >
                         {tag}
                       </span>

@@ -10,11 +10,14 @@ export function FinalCta() {
       <div className="orb right-[5%] bottom-[-30%] h-80 w-80 bg-[#FF9933]/05" />
 
       <div className="container mx-auto px-4 py-20 sm:py-28">
-        <div className="relative mx-auto max-w-3xl rounded-3xl border border-[#E8E2E5] bg-[#FAF8F9] p-10 text-center shadow-sm sm:p-16">
+        <div className="relative mx-auto max-w-3xl rounded-3xl border border-[#EDE1E6] bg-[#FAF8F9] p-10 text-center shadow-sm sm:p-16">
+          <div className="mb-4 inline-flex items-center gap-1.5 rounded-full border border-[#EDE1E6] bg-[#F9EEF2] px-3.5 py-1 text-xs font-semibold text-[#A20A3A]">
+            <span>Enterprise Advisory & Implementation</span>
+          </div>
           <h2 className="font-display text-4xl leading-[1.08] tracking-tight text-[#292329] sm:text-5xl">
             Ready to build your next enterprise platform?
           </h2>
-          <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-[#625B60]">
+          <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-[#635861]">
             Bring us a problem worth solving. We will map the architecture, the
             data, and the path to production — in a single strategy session.
           </p>
@@ -30,12 +33,12 @@ export function FinalCta() {
               asChild
               size="lg"
               variant="outline"
-              className="h-12 border-[#E8E2E5] bg-white px-7 text-base text-[#292329] hover:border-[#A20A3A] hover:text-[#A20A3A]"
+              className="h-12 border-[#EDE1E6] bg-white px-7 text-base text-[#292329] hover:border-[#A20A3A] hover:text-[#A20A3A]"
             >
               <Link href="#solutions">Explore Solutions</Link>
             </Button>
           </div>
-          <p className="mt-8 text-xs text-[#625B60]">
+          <p className="mt-8 text-xs text-[#635861]">
             No vendor pitch. A working session with our principal engineers.
           </p>
         </div>

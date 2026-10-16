@@ -39,7 +39,7 @@ const TIMELINE = [
 
 export function WhySathus() {
   return (
-    <section id="why" className="scroll-mt-24 border-t border-border bg-muted/30 py-20 sm:py-24">
+    <section id="why" className="scroll-mt-24 border-t border-[#EDE1E6] bg-white py-20 sm:py-24">
       <div className="container mx-auto px-4">
         <SectionIntro
           eyebrow="Why Sathus"
@@ -53,26 +53,26 @@ export function WhySathus() {
             const Icon = step.icon;
             return (
               <Reveal as="li" key={step.title} delay={i * 0.05} className="relative">
-                <div className="flex h-full flex-col rounded-2xl border border-border bg-background p-6">
+                <div className="flex h-full flex-col rounded-2xl border border-[#EDE1E6] bg-[#FAF8F9] p-6 shadow-xs transition-all duration-200 hover:-translate-y-1 hover:border-[#A20A3A]/40 hover:bg-white hover:shadow-md">
                   <div className="flex items-center justify-between relative m-0 p-0">
                     <div className="flex items-center gap-3 pr-10 m-0 p-0">
-                      <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary ring-1 ring-inset ring-primary/15 shrink-0">
+                      <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#F9EEF2] border border-[#EDE1E6] text-[#A20A3A] shrink-0">
                         <Icon className="h-5 w-5" />
                       </span>
-                      <h3 className="text-lg font-semibold tracking-tight text-balance text-foreground m-0 p-0">
+                      <h3 className="text-lg font-semibold tracking-tight text-balance text-[#292329] m-0 p-0">
                         {step.title}
                       </h3>
                     </div>
-                    <span className="absolute top-0 right-0 font-display text-xl text-muted-foreground/40 select-none">
+                    <span className="absolute top-0 right-0 font-display text-xl text-[#635861]/40 select-none">
                       {String(i + 1).padStart(2, '0')}
                     </span>
                   </div>
-                  <p className="mt-3 text-sm leading-relaxed text-pretty text-muted-foreground">
+                  <p className="mt-3 text-sm leading-relaxed text-pretty text-[#635861]">
                     {step.text}
                   </p>
                 </div>
                 {i < PROCESS.length - 1 && (
-                  <ArrowRight className="absolute -right-3 top-1/2 hidden h-4 w-4 -translate-y-1/2 text-muted-foreground/40 lg:block" />
+                  <ArrowRight className="absolute -right-3 top-1/2 hidden h-4 w-4 -translate-y-1/2 text-[#635861]/40 lg:block" />
                 )}
               </Reveal>
             );
@@ -80,28 +80,28 @@ export function WhySathus() {
         </ol>
 
         {/* Pillars */}
-        <div className="mt-5 grid grid-cols-1 gap-5 md:grid-cols-3">
+        <div className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-3">
           {PILLARS.map((pillar, i) => {
             const Icon = pillar.icon;
             return (
               <Reveal
                 key={pillar.title}
                 delay={i * 0.06}
-                className="rounded-2xl border border-border bg-background p-8"
+                className="rounded-2xl border border-[#EDE1E6] bg-[#FAF8F9] p-8 shadow-xs transition-all duration-200 hover:-translate-y-1 hover:border-[#A20A3A]/40 hover:bg-white hover:shadow-md"
               >
                 <div className="flex items-center gap-3 m-0 p-0">
-                  <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary ring-1 ring-inset ring-primary/15 shrink-0">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#F9EEF2] border border-[#EDE1E6] text-[#A20A3A] shrink-0">
                     <Icon className="h-5 w-5" />
                   </span>
-                  <h3 className="text-xl font-semibold tracking-tight text-foreground m-0 p-0">
+                  <h3 className="text-xl font-semibold tracking-tight text-[#292329] m-0 p-0">
                     {pillar.title}
                   </h3>
                 </div>
-                <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+                <p className="mt-4 text-sm leading-relaxed text-[#635861]">
                   {pillar.text}
                 </p>
-                <p className="mt-5 inline-flex items-center gap-2 border-t border-border pt-4 text-sm font-medium text-foreground">
-                  <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+                <p className="mt-5 inline-flex items-center gap-2 border-t border-[#EDE1E6] pt-4 text-sm font-medium text-[#292329]">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#A20A3A]" />
                   {pillar.stat}
                 </p>
               </Reveal>
@@ -110,16 +110,16 @@ export function WhySathus() {
         </div>
 
         {/* Timeline */}
-        <div className="mt-10">
-          <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+        <div className="mt-12">
+          <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-[#635861]">
             How we got here
           </h3>
-          <ol className="mt-8 grid gap-8 border-l border-border pl-6 sm:grid-cols-2 lg:grid-cols-5 lg:border-l-0 lg:pl-0">
+          <ol className="mt-8 grid gap-8 border-l border-[#EDE1E6] pl-6 sm:grid-cols-2 lg:grid-cols-3 lg:border-l-0 lg:pl-0">
             {TIMELINE.map((item, i) => (
               <Reveal as="li" key={item.year} delay={i * 0.05} className="relative">
-                <span className="absolute -left-[1.65rem] top-1.5 h-3 w-3 rounded-full border-2 border-background bg-primary ring-1 ring-primary/30 lg:static lg:-ml-1.5 lg:mb-4" />
-                <p className="font-display text-2xl text-foreground">{item.year}</p>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                <span className="absolute -left-[1.65rem] top-1.5 h-3 w-3 rounded-full border-2 border-white bg-[#A20A3A] ring-1 ring-[#A20A3A]/30 lg:static lg:-ml-1.5 lg:mb-4" />
+                <p className="font-display text-2xl font-semibold text-[#292329]">{item.year}</p>
+                <p className="mt-2 text-sm leading-relaxed text-[#635861]">
                   {item.text}
                 </p>
               </Reveal>

@@ -117,7 +117,7 @@ export function PlatformAdminFoundationView() {
           { id: 'operations', label: 'Maintenance & Operations', icon: <Server className="w-4 h-4 text-emerald-500" /> },
           { id: 'health', label: 'Health Diagnostics', icon: <HealthIcon className="w-4 h-4 text-[#A20A3A]" /> },
           { id: 'settings', label: 'Platform Settings Framework', icon: <Sliders className="w-4 h-4 text-amber-500" /> },
-          { id: 'activity', label: 'Centralized Activity Stream', icon: <FileText className="w-4 h-4 text-[#625B60]" /> },
+          { id: 'activity', label: 'Centralized Activity Stream', icon: <FileText className="w-4 h-4 text-[#635861]" /> },
         ].map((t) => (
           <button
             key={t.id}

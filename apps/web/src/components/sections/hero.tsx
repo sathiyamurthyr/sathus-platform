@@ -94,7 +94,7 @@ export function Hero() {
               initial={reduce ? false : { opacity: 0, y: 15 }}
               animate={reduce ? undefined : { opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="inline-flex items-center gap-2 rounded-full border border-[#E8E2E5] bg-[#FAF8F9] px-3.5 py-1 text-xs font-medium text-[#A20A3A] shadow-xs"
+              className="inline-flex items-center gap-2 rounded-full border border-[#EDE1E6] bg-[#F9EEF2] px-3.5 py-1 text-xs font-medium text-[#A20A3A] shadow-xs"
             >
               <span className="relative flex h-2 w-2">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#FF9933] opacity-75" />
@@ -118,7 +118,7 @@ export function Hero() {
               initial={reduce ? false : { opacity: 0, y: 20 }}
               animate={reduce ? undefined : { opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="mt-5 max-w-xl text-pretty text-base leading-relaxed text-[#625B60] sm:text-lg"
+              className="mt-5 max-w-xl text-pretty text-base leading-relaxed text-[#635861] sm:text-lg"
             >
               Sathus Technology helps enterprises design, build and modernize
               AI-powered products, intelligent data platforms and cloud-native
@@ -147,7 +147,7 @@ export function Hero() {
                 asChild
                 size="lg"
                 variant="outline"
-                className="h-12 border-[#E8E2E5] bg-[#FAF8F9] px-7 text-base text-[#292329] transition-all duration-300 hover:border-[#A20A3A] hover:bg-white hover:text-[#A20A3A]"
+                className="h-12 border-[#EDE1E6] bg-[#FAF8F9] px-7 text-base text-[#292329] transition-all duration-300 hover:border-[#A20A3A] hover:bg-white hover:text-[#A20A3A]"
               >
                 <Link href="#solutions">Explore Solutions</Link>
               </Button>
@@ -158,14 +158,14 @@ export function Hero() {
               initial={reduce ? false : { opacity: 0, y: 20 }}
               animate={reduce ? undefined : { opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.5 }}
-              className="mt-8 sm:mt-10 grid max-w-xl grid-cols-3 gap-2 sm:gap-6 border-t border-[#E8E2E5] pt-6"
+              className="mt-8 sm:mt-10 grid max-w-xl grid-cols-3 gap-2 sm:gap-6 border-t border-[#EDE1E6] pt-6"
             >
               {STATS.map((stat) => (
                 <div key={stat.label} className="group/stat relative pb-2 transition-all duration-300">
                   <dt className="font-display text-lg xs:text-xl sm:text-3xl font-semibold text-[#A20A3A] transition-transform duration-300 group-hover/stat:-translate-y-0.5">
                     <CountUp value={stat.value} />
                   </dt>
-                  <dd className="mt-1 text-[0.68rem] xs:text-[0.72rem] sm:text-xs leading-tight sm:leading-snug text-[#625B60]">
+                  <dd className="mt-1 text-[0.68rem] xs:text-[0.72rem] sm:text-xs leading-tight sm:leading-snug text-[#635861]">
                     {stat.label}
                   </dd>
                   <span className="absolute bottom-0 left-0 h-0.5 w-0 bg-gradient-to-r from-[#A20A3A] to-[#FF9933] transition-all duration-300 group-hover/stat:w-full" />
@@ -181,7 +181,7 @@ export function Hero() {
         </div>
 
         {/* Footer - centered with proper spacing */}
-        <div className="mt-8 flex flex-col items-center justify-center gap-4 border-t border-[#E8E2E5] pt-8 text-xs text-[#625B60] sm:flex-row sm:justify-between">
+        <div className="mt-8 flex flex-col items-center justify-center gap-4 border-t border-[#EDE1E6] pt-8 text-xs text-[#635861] sm:flex-row sm:justify-between">
           <span className="inline-flex items-center gap-2">
             <ShieldCheck className="h-4 w-4 text-[#10B981]" />
             AES-256 · TLS 1.3 · Zero-Trust Access Controls

@@ -14,7 +14,7 @@ export function ThemeToggle() {
     <Button
       variant="ghost"
       size="icon"
-      className="text-[#625B60] hover:text-[#A20A3A]"
+      className="text-[#635861] hover:text-[#A20A3A]"
       onClick={() => setTheme('light')}
       aria-label="Sathus brand theme"
       title="Sathus brand theme"

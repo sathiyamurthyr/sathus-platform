@@ -62,7 +62,7 @@ export function NotificationCenterView() {
     project: <FolderKanban className="w-4 h-4 text-[#A20A3A]" />,
     task: <FolderKanban className="w-4 h-4 text-[#FF9933]" />,
     billing: <CreditCard className="w-4 h-4 text-[#EDC11E]" />,
-    system: <Server className="w-4 h-4 text-[#625B60]" />,
+    system: <Server className="w-4 h-4 text-[#635861]" />,
     workspace: <Sparkles className="w-4 h-4 text-primary" />,
   };
 

@@ -21,13 +21,17 @@ export const BRAND_COLORS = {
   premiumGold: '#EDC11E',
   secondaryGold: '#FF9933',
 
+  // Highlights
+  highlightBurgundy: '#F9EEF2',
+  highlightOrange: '#FFF4E8',
+
   // Typography
   mainText: '#292329',
-  secondaryText: '#625B60',
-  mutedText: '#625B60',
+  secondaryText: '#635861',
+  mutedText: '#635861',
 
   // Borders & Structure
-  border: '#E8E2E5',
+  border: '#EDE1E6',
   engineeringGrid: 'rgba(162, 10, 58, 0.04)',
 
   // Status & Feedback

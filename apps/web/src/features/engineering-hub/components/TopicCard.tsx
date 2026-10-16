@@ -8,7 +8,7 @@ const pageTypeBadgeMap: Record<string, { label: string; icon: React.ElementType;
   'implementation-guide': { label: 'Implementation Code', icon: FileCode, color: 'text-[#C46100] bg-[#FF9933]/15 border-[#FF9933]/30' },
   'technical-reference': { label: 'Technical Reference', icon: BookOpen, color: 'text-[#9E7700] bg-[#EDC11E]/15 border-[#EDC11E]/30' },
   'money-service': { label: 'Enterprise Practice', icon: ShieldCheck, color: 'text-[#A20A3A] bg-[#A20A3A]/10 border-[#A20A3A]/25' },
-  'glossary': { label: 'Glossary Definition', icon: BookOpen, color: 'text-[#625B60] bg-[#FAF8F9] border-[#E8E2E5]' },
+  'glossary': { label: 'Glossary Definition', icon: BookOpen, color: 'text-[#635861] bg-[#FAF8F9] border-[#EDE1E6]' },
   'case-study': { label: 'Case Study', icon: ShieldCheck, color: 'text-[#A20A3A] bg-[#A20A3A]/10 border-[#A20A3A]/20' },
 };
 

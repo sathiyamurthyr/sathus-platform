@@ -77,7 +77,7 @@ export function GlobalSearchHubView() {
     files: <FileText className="w-4 h-4 text-[#EDC11E]" />,
     ai_knowledge: <Bot className="w-4 h-4 text-primary" />,
     notifications: <Bell className="w-4 h-4 text-emerald-500" />,
-    documentation: <BookOpen className="w-4 h-4 text-[#625B60]" />,
+    documentation: <BookOpen className="w-4 h-4 text-[#635861]" />,
     users: <User className="w-4 h-4 text-[#A20A3A]" />,
   };
 

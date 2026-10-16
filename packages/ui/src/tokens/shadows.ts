@@ -9,6 +9,6 @@ export const shadows = {
 } as const;
 
 export const shadowColors = {
-  primary: '0 4px 6px -1px hsl(221 83% 53% / 0.2), 0 2px 4px -2px hsl(221 83% 53% / 0.1)',
-  secondary: '0 4px 6px -1px hsl(263 70% 50% / 0.2), 0 2px 4px -2px hsl(263 70% 50% / 0.1)',
+  primary: '0 4px 12px -2px rgba(162, 10, 58, 0.08), 0 2px 4px -2px rgba(162, 10, 58, 0.04)',
+  secondary: '0 4px 12px -2px rgba(255, 153, 51, 0.08), 0 2px 4px -2px rgba(255, 153, 51, 0.04)',
 } as const;

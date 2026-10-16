@@ -59,7 +59,7 @@ export function Technology() {
   const [active, setActive] = React.useState<{ name: string; blurb: string }>(OVERVIEW);
 
   return (
-    <section id="technology" className="scroll-mt-24 border-t border-border py-20 sm:py-24">
+    <section id="technology" className="scroll-mt-24 border-t border-[#EDE1E6] bg-[#FAF8F9] py-20 sm:py-24">
       <div className="container mx-auto px-4">
         <SectionIntro
           eyebrow="Technology"
@@ -71,7 +71,7 @@ export function Technology() {
           <div className="grid gap-8 sm:grid-cols-2">
             {CATEGORIES.map((category) => (
               <div key={category.title}>
-                <h3 className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.18em] text-[#635861]">
                   {category.title}
                 </h3>
                 <div className="mt-4 flex flex-wrap gap-2.5">
@@ -85,10 +85,10 @@ export function Technology() {
                         onFocus={() => setActive(tech)}
                         onClick={() => setActive(tech)}
                         className={cn(
-                          'rounded-full border px-4 py-2 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+                          'rounded-full border px-4 py-2 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#A20A3A] focus-visible:ring-offset-2',
                           isActive
-                            ? 'border-primary bg-primary text-primary-foreground'
-                            : 'border-border bg-background text-foreground hover:border-primary/40 hover:text-primary'
+                            ? 'border-[#A20A3A] bg-[#A20A3A] text-white shadow-xs'
+                            : 'border-[#EDE1E6] bg-white text-[#292329] hover:border-[#A20A3A] hover:text-[#A20A3A] shadow-xs'
                         )}
                         aria-pressed={isActive}
                       >
@@ -106,14 +106,14 @@ export function Technology() {
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.25 }}
-            className="h-fit rounded-2xl border border-border bg-muted/40 p-8 lg:sticky lg:top-28"
+            className="h-fit rounded-2xl border border-[#EDE1E6] bg-white p-8 shadow-xs lg:sticky lg:top-28"
             aria-live="polite"
           >
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#A20A3A]">
               {active.name === OVERVIEW.name ? 'Overview' : 'How we use it'}
             </p>
-            <h3 className="mt-3 font-display text-3xl text-foreground">{active.name}</h3>
-            <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+            <h3 className="mt-3 font-display text-3xl font-semibold text-[#292329]">{active.name}</h3>
+            <p className="mt-4 text-sm leading-relaxed text-[#635861]">
               {active.blurb}
             </p>
           </motion.aside>

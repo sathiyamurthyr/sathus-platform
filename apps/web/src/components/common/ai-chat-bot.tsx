@@ -252,25 +252,25 @@ function LeadFormMessage({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-2 mt-3 pt-3 border-t border-[#E8E2E5]">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-2 mt-3 pt-3 border-t border-[#EDE1E6]">
       <input 
         required 
         name="name" 
         placeholder="Full Name" 
-        className="h-8 text-xs border border-[#E8E2E5] bg-[#FAF8F9] rounded-lg px-2.5 focus:outline-none focus:ring-1 focus:ring-[#A20A3A] text-[#292329] placeholder:text-[#625B60]" 
+        className="h-8 text-xs border border-[#EDE1E6] bg-[#FAF8F9] rounded-lg px-2.5 focus:outline-none focus:ring-1 focus:ring-[#A20A3A] text-[#292329] placeholder:text-[#635861]" 
       />
       <input 
         required 
         type="email" 
         name="email" 
         placeholder="Work Email" 
-        className="h-8 text-xs border border-[#E8E2E5] bg-[#FAF8F9] rounded-lg px-2.5 focus:outline-none focus:ring-1 focus:ring-[#A20A3A] text-[#292329] placeholder:text-[#625B60]" 
+        className="h-8 text-xs border border-[#EDE1E6] bg-[#FAF8F9] rounded-lg px-2.5 focus:outline-none focus:ring-1 focus:ring-[#A20A3A] text-[#292329] placeholder:text-[#635861]" 
       />
       <input 
         required 
         name="company" 
         placeholder="Company Name" 
-        className="h-8 text-xs border border-[#E8E2E5] bg-[#FAF8F9] rounded-lg px-2.5 focus:outline-none focus:ring-1 focus:ring-[#A20A3A] text-[#292329] placeholder:text-[#625B60]" 
+        className="h-8 text-xs border border-[#EDE1E6] bg-[#FAF8F9] rounded-lg px-2.5 focus:outline-none focus:ring-1 focus:ring-[#A20A3A] text-[#292329] placeholder:text-[#635861]" 
       />
       <Button 
         type="submit" 
@@ -395,7 +395,7 @@ export function AiChatBot() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 16, scale: 0.96 }}
             transition={{ type: 'spring', damping: 28, stiffness: 320 }}
-            className="w-[340px] sm:w-[390px] rounded-2xl border border-[#E8E2E5] bg-white shadow-2xl flex flex-col overflow-hidden opacity-100"
+            className="w-[340px] sm:w-[390px] rounded-2xl border border-[#EDE1E6] bg-white shadow-2xl flex flex-col overflow-hidden opacity-100"
             style={{ height: panelHeight }}
           >
             {/* Solid Header */}
@@ -440,7 +440,7 @@ export function AiChatBot() {
             {!isMinimized && (
               <>
                 {/* Messages Container — White surface */}
-                <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-white border-b border-[#E8E2E5] opacity-100">
+                <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-white border-b border-[#EDE1E6] opacity-100">
                   {messages.map((msg) => (
                     <div
                       key={msg.id}
@@ -449,8 +449,8 @@ export function AiChatBot() {
                       <div
                         className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full ${
                           msg.role === 'assistant'
-                            ? 'bg-[#A20A3A]/10 text-[#A20A3A] border border-[#A20A3A]/20'
-                            : 'bg-[#FAF8F9] text-[#292329] border border-[#E8E2E5]'
+                            ? 'bg-[#F9EEF2] text-[#A20A3A] border border-[#EDE1E6]'
+                            : 'bg-[#FAF8F9] text-[#292329] border border-[#EDE1E6]'
                         }`}
                       >
                         {msg.role === 'assistant' ? <Bot className="h-3.5 w-3.5" /> : <User className="h-3.5 w-3.5" />}
@@ -458,7 +458,7 @@ export function AiChatBot() {
                       <div
                         className={`max-w-[82%] rounded-2xl px-3.5 py-2.5 shadow-xs opacity-100 ${
                           msg.role === 'assistant'
-                            ? 'bg-[#FAF8F9] border border-[#E8E2E5] text-[#292329] rounded-tl-xs'
+                            ? 'bg-[#FAF8F9] border border-[#EDE1E6] text-[#292329] rounded-tl-xs'
                             : 'bg-[#A20A3A] text-white font-medium rounded-tr-xs'
                         }`}
                       >
@@ -486,7 +486,7 @@ export function AiChatBot() {
                         ) : (
                           <p className="text-xs leading-relaxed">{msg.content}</p>
                         )}
-                        <div className={`text-[9px] mt-1 ${msg.role === 'assistant' ? 'text-[#625B60]' : 'text-white/80'}`}>
+                        <div className={`text-[9px] mt-1 ${msg.role === 'assistant' ? 'text-[#635861]' : 'text-white/80'}`}>
                           {msg.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                         </div>
                       </div>
@@ -495,10 +495,10 @@ export function AiChatBot() {
 
                   {isLoading && (
                     <div className="flex gap-2">
-                      <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#A20A3A]/10 text-[#A20A3A] border border-[#A20A3A]/20">
+                      <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#F9EEF2] text-[#A20A3A] border border-[#EDE1E6]">
                         <Bot className="h-3.5 w-3.5" />
                       </div>
-                      <div className="bg-[#FAF8F9] border border-[#E8E2E5] rounded-2xl rounded-tl-xs px-4 py-3 shadow-xs">
+                      <div className="bg-[#FAF8F9] border border-[#EDE1E6] rounded-2xl rounded-tl-xs px-4 py-3 shadow-xs">
                         <div className="flex items-center gap-1.5">
                           <span className="h-1.5 w-1.5 rounded-full bg-[#A20A3A] animate-bounce" style={{ animationDelay: '0ms' }} />
                           <span className="h-1.5 w-1.5 rounded-full bg-[#FF9933] animate-bounce" style={{ animationDelay: '160ms' }} />
@@ -512,12 +512,12 @@ export function AiChatBot() {
 
                 {/* Suggested Prompt Chips */}
                 {messages.length === 1 && (
-                  <div className="px-3 py-2 flex flex-wrap gap-1.5 bg-[#FAF8F9] border-b border-[#E8E2E5] opacity-100">
+                  <div className="px-3 py-2 flex flex-wrap gap-1.5 bg-[#FAF8F9] border-b border-[#EDE1E6] opacity-100">
                     {SUGGESTED_PROMPTS.map((p) => (
                       <button
                         key={p}
                         onClick={() => handleSend(p)}
-                        className="text-[11px] font-medium px-2.5 py-1 rounded-lg border border-[#E8E2E5] bg-white hover:border-[#A20A3A] hover:text-[#A20A3A] transition-all text-[#292329] shrink-0 shadow-xs"
+                        className="text-[11px] font-medium px-2.5 py-1 rounded-lg border border-[#EDE1E6] bg-white hover:border-[#A20A3A] hover:text-[#A20A3A] transition-all text-[#292329] shrink-0 shadow-xs"
                       >
                         {p}
                       </button>
@@ -526,7 +526,7 @@ export function AiChatBot() {
                 )}
 
                 {/* Input Area */}
-                <div className="p-3 bg-white border-t border-[#E8E2E5] flex items-center gap-2 shrink-0 opacity-100">
+                <div className="p-3 bg-white border-t border-[#EDE1E6] flex items-center gap-2 shrink-0 opacity-100">
                   <input
                     ref={inputRef}
                     type="text"
@@ -534,7 +534,7 @@ export function AiChatBot() {
                     onChange={(e) => setInput(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && handleSend()}
                     placeholder="Ask about AI, data, cloud..."
-                    className="flex-1 text-xs bg-[#FAF8F9] border border-[#E8E2E5] rounded-xl px-3 py-2.5 focus:outline-none focus:border-[#A20A3A] focus:ring-1 focus:ring-[#A20A3A] text-[#292329] placeholder:text-[#625B60]"
+                    className="flex-1 text-xs bg-[#FAF8F9] border border-[#EDE1E6] rounded-xl px-3 py-2.5 focus:outline-none focus:border-[#A20A3A] focus:ring-1 focus:ring-[#A20A3A] text-[#292329] placeholder:text-[#635861]"
                   />
                   <Button
                     onClick={() => handleSend()}

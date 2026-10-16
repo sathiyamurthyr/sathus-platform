@@ -18,7 +18,7 @@ const AICore3D = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="relative flex h-24 w-24 items-center justify-center rounded-2xl bg-[#FAF8F9] border border-[#E8E2E5] shadow-md">
+      <div className="relative flex h-24 w-24 items-center justify-center rounded-2xl bg-[#FAF8F9] border border-[#EDE1E6] shadow-md">
         <Sparkles className="h-8 w-8 text-[#A20A3A] animate-pulse" />
       </div>
     ),
@@ -97,7 +97,7 @@ export function PlatformVisualization() {
           cx="50"
           cy="50"
           r={RADIUS}
-          stroke="#E8E2E5"
+          stroke="#EDE1E6"
           strokeWidth="0.4"
           strokeDasharray="1.5 2.5"
           opacity="0.8"
@@ -157,7 +157,7 @@ export function PlatformVisualization() {
             <span className="absolute left-1/2 top-1/2 h-24 w-24 sm:h-36 sm:w-36 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#FF9933]/25 [animation:pulse-ring_3.5s_ease-out_infinite_1.5s]" />
           </>
         )}
-        <div className="relative flex items-center justify-center rounded-2xl sm:rounded-3xl bg-white/95 p-1.5 sm:p-2 backdrop-blur-md border border-[#E8E2E5] shadow-lg">
+        <div className="relative flex items-center justify-center rounded-2xl sm:rounded-3xl bg-white/95 p-1.5 sm:p-2 backdrop-blur-md border border-[#EDE1E6] shadow-lg">
           <AICore3D className="h-20 w-20 xs:h-24 xs:w-24 sm:h-32 sm:w-32" />
         </div>
       </div>
@@ -202,12 +202,12 @@ export function PlatformVisualization() {
                 className={reduce ? '' : 'animate-float-soft'}
                 style={{ animationDelay: `${i * 0.7}s` }}
               >
-                {/* Node Card: subtle surface, border #E8E2E5, active/hover border #A20A3A */}
+                {/* Node Card: subtle surface, border #EDE1E6, active/hover border #A20A3A */}
                 <div
                   className={`group flex h-9 w-28 xs:w-32 sm:h-11 sm:w-44 items-center gap-1.5 sm:gap-2.5 rounded-lg sm:rounded-xl border px-2 sm:px-3 shadow-md backdrop-blur-md transition-all duration-300 ${
                     isActive
                       ? 'border-[#A20A3A] bg-white ring-2 ring-[#A20A3A]/30 shadow-lg scale-105'
-                      : 'border-[#E8E2E5] bg-[#FAF8F9] hover:border-[#A20A3A] hover:bg-white hover:shadow-lg'
+                      : 'border-[#EDE1E6] bg-[#FAF8F9] hover:border-[#A20A3A] hover:bg-white hover:shadow-lg'
                   }`}
                 >
                   <span
@@ -223,7 +223,7 @@ export function PlatformVisualization() {
                     <span className="text-[0.65rem] sm:text-[0.76rem] font-semibold text-[#292329] tracking-tight truncate">
                       {node.label}
                     </span>
-                    <span className="text-[0.52rem] sm:text-[0.60rem] text-[#625B60] truncate">{node.meta}</span>
+                    <span className="text-[0.52rem] sm:text-[0.60rem] text-[#635861] truncate">{node.meta}</span>
                   </span>
                 </div>
               </div>
@@ -234,10 +234,10 @@ export function PlatformVisualization() {
 
       {/* Active Node Detail Callout for touchscreen / mobile */}
       {activeNode && (
-        <div className="absolute -bottom-7 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2 rounded-full border border-[#E8E2E5] bg-white/95 px-3 py-1 shadow-md backdrop-blur-md animate-in fade-in slide-in-from-bottom-2 duration-200">
+        <div className="absolute -bottom-7 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2 rounded-full border border-[#EDE1E6] bg-white/95 px-3 py-1 shadow-md backdrop-blur-md animate-in fade-in slide-in-from-bottom-2 duration-200">
           <span className="h-2 w-2 rounded-full bg-[#A20A3A]" />
           <span className="text-xs font-semibold text-[#292329]">{activeNode.label}:</span>
-          <span className="text-xs text-[#625B60]">{activeNode.meta}</span>
+          <span className="text-xs text-[#635861]">{activeNode.meta}</span>
         </div>
       )}
     </div>

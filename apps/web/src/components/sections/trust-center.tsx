@@ -45,7 +45,7 @@ export function TrustCenter() {
   return (
     <section
       id="trust-center"
-      className="scroll-mt-24 border-t border-border bg-muted/30 py-20 sm:py-24"
+      className="scroll-mt-24 border-t border-[#EDE1E6] bg-[#FAF8F9] py-20 sm:py-24"
     >
       <div className="container mx-auto px-4">
         <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
@@ -56,10 +56,10 @@ export function TrustCenter() {
           />
           <Link
             href="/trust"
-            className="group inline-flex items-center gap-1.5 text-sm font-medium text-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded"
+            className="group inline-flex items-center gap-1.5 text-sm font-medium text-[#292329] transition-colors hover:text-[#A20A3A] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A20A3A] focus-visible:ring-offset-2 rounded"
           >
             Visit the Trust Center
-            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+            <ArrowRight className="h-4 w-4 text-[#FF9933] transition-transform group-hover:translate-x-0.5" />
           </Link>
         </div>
 
@@ -71,21 +71,21 @@ export function TrustCenter() {
                 key={item.title}
                 delay={(i % 3) * 0.05}
                 className={cn(
-                  'group flex flex-col rounded-2xl border border-border bg-background p-8 transition-all duration-300 hover:border-primary/30 hover:shadow-xl justify-between',
+                  'group flex flex-col rounded-2xl border border-[#EDE1E6] bg-white p-8 transition-all duration-300 hover:border-[#A20A3A]/40 hover:shadow-md justify-between',
                   item.featured && 'sm:col-span-2 lg:col-span-2'
                 )}
               >
                 <div>
                   {/* CardHeader */}
                   <div className="flex items-center gap-4 m-0 p-0">
-                    <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary ring-1 ring-inset ring-primary/15">
+                    <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#F9EEF2] border border-[#EDE1E6] text-[#A20A3A]">
                       <Icon className="h-6 w-6" />
                     </span>
-                    <h3 className="text-xl font-semibold tracking-tight text-balance text-foreground m-0 p-0 leading-normal">
+                    <h3 className="text-xl font-semibold tracking-tight text-balance text-[#292329] m-0 p-0 leading-normal">
                       {item.title}
                     </h3>
                   </div>
-                  <p className="mt-4 text-sm leading-relaxed text-pretty text-muted-foreground">
+                  <p className="mt-4 text-sm leading-relaxed text-pretty text-[#635861]">
                     {item.text}
                   </p>
                 </div>
