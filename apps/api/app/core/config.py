@@ -2,7 +2,7 @@
 
 from typing import Any
 
-from pydantic import Field, field_validator
+from pydantic import Field, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -424,6 +424,16 @@ class Settings(BaseSettings):
         if v not in allowed:
             raise ValueError(f"Environment must be one of {allowed}")
         return v
+
+    @model_validator(mode="after")
+    def validate_production_secrets(self) -> "Settings":
+        """Validate critical secrets in production environment."""
+        if self.ENVIRONMENT == "production":
+            if self.SECRET_KEY == "change-me-in-production" or len(self.SECRET_KEY) < 32:
+                raise ValueError(
+                    "SECRET_KEY must be configured with a secure random string of at least 32 characters in production"
+                )
+        return self
 
 
 settings = Settings()

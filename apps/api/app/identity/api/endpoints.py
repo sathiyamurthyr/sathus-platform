@@ -6,7 +6,11 @@ from fastapi import APIRouter, Depends, HTTPException
 from fastapi.security import HTTPBearer
 
 from app.core.database import get_db
+from app.core.rate_limit import RateLimiter
 from app.core.security import create_access_token, create_refresh_token, decode_token
+
+login_rate_limiter = RateLimiter(times=10, seconds=60, key_prefix="auth_login")
+register_rate_limiter = RateLimiter(times=5, seconds=60, key_prefix="auth_register")
 from app.identity.api.schemas import (
     LoginRequest,
     RegisterRequest,
@@ -29,7 +33,7 @@ async def get_current_user(token: str = Depends(security)) -> dict:
     return payload
 
 
-@router.post("/register", response_model=TokenResponse, status_code=201)
+@router.post("/register", response_model=TokenResponse, status_code=201, dependencies=[Depends(register_rate_limiter)])
 async def register(
     request: RegisterRequest,
     db=Depends(get_db),
@@ -47,7 +51,7 @@ async def register(
     return TokenResponse(access_token=access_token, refresh_token=refresh_token)
 
 
-@router.post("/login", response_model=TokenResponse)
+@router.post("/login", response_model=TokenResponse, dependencies=[Depends(login_rate_limiter)])
 async def login(
     request: LoginRequest,
     db=Depends(get_db),

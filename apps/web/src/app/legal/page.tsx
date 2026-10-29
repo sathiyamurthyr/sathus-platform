@@ -4,7 +4,7 @@ import { Breadcrumb } from '@/components/common/breadcrumb';
 import { BreadcrumbJsonLd } from '@/components/seo/json-ld';
 import { generatePageMetadata } from '@/lib/seo/metadata-builder';
 import Link from 'next/link';
-import { Shield, FileText, Cookie, ExternalLink } from 'lucide-react';
+import { Shield, FileText, Cookie, ExternalLink, HeartPulse, Trash2 } from 'lucide-react';
 
 export const metadata: Metadata = generatePageMetadata({
   title: 'Legal Hub — Terms, Privacy & Cookies',
@@ -15,6 +15,8 @@ export const metadata: Metadata = generatePageMetadata({
     'Sathus privacy policy',
     'Sathus terms of service',
     'Sathus cookie policy',
+    'OH-ID privacy policy',
+    'OH-ID account deletion',
   ],
 });
 
@@ -37,6 +39,18 @@ const legalDocs = [
     href: '/legal/cookies',
     icon: Cookie,
   },
+  {
+    title: 'OH-ID Privacy Policy',
+    description: 'Healthcare data governance, patient privacy, and clinical confidentiality for the OneHealth ID platform.',
+    href: '/oh-id-privacy-policy',
+    icon: HeartPulse,
+  },
+  {
+    title: 'OH-ID Account Deletion',
+    description: 'Official instructions and portal for requesting account removal and personal data erasure for OH-ID users.',
+    href: '/oh-id-account-deletion',
+    icon: Trash2,
+  },
 ];
 
 export default function LegalHubPage() {
@@ -51,7 +65,7 @@ export default function LegalHubPage() {
           description="Review our legal agreements, privacy disclosures, and compliance frameworks governing Sathus Technology services."
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
           {legalDocs.map((doc) => {
             const Icon = doc.icon;
             return (

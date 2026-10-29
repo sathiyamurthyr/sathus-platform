@@ -43,14 +43,6 @@ async function saveLead(lead: LeadPayload) {
   }
 }
 
-export async function GET() {
-  try {
-    const leads = await getLeads();
-    return NextResponse.json({ success: true, leads });
-  } catch (error) {
-    return NextResponse.json({ success: true, leads: [] });
-  }
-}
 
 export async function POST(request: Request) {
   try {

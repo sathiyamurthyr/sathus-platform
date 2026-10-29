@@ -56,22 +56,6 @@ async function saveSubscriber(subscriber: SubscriberPayload) {
   }
 }
 
-export async function GET() {
-  try {
-    const subscribers = await getSubscribers();
-    return NextResponse.json({
-      success: true,
-      count: subscribers.length,
-      subscribers,
-    });
-  } catch (error) {
-    return NextResponse.json({
-      success: true,
-      count: 0,
-      subscribers: [],
-    });
-  }
-}
 
 export async function POST(request: Request) {
   try {

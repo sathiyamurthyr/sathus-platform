@@ -22,7 +22,10 @@ from app.authorization.application.services import (
     RoleService,
 )
 
-router = APIRouter()
+from app.core.database import get_db
+from app.identity.api.endpoints import get_current_user
+
+router = APIRouter(dependencies=[Depends(get_current_user)])
 
 
 @router.get("/permissions", response_model=list[RoleResponse])

@@ -38,10 +38,21 @@ def get_media_service(db=Depends(get_db)) -> MediaService:
     )
 
 
+async def get_current_user_id(current_user: dict = Depends(get_current_user)) -> UUID:
+    """Extract authenticated user UUID from token claims."""
+    sub = current_user.get("sub")
+    if not sub:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token claims: missing subject")
+    try:
+        return UUID(str(sub))
+    except (ValueError, TypeError):
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token claims: subject is not a valid UUID")
+
+
 @router.post("/upload", response_model=AssetResponseSchema, status_code=status.HTTP_201_CREATED)
 async def upload_single(
     data: UploadFileSchema,
-    user_id: UUID = Depends(get_current_user),
+    user_id: UUID = Depends(get_current_user_id),
     service: MediaService = Depends(get_media_service),
 ) -> AssetResponseSchema:
     """Upload a single file through the enterprise upload pipeline."""
@@ -58,7 +69,7 @@ async def upload_single(
 @router.post("/upload/multiple", response_model=list[AssetResponseSchema], status_code=status.HTTP_201_CREATED)
 async def upload_multiple(
     data: UploadMultipleSchema,
-    user_id: UUID = Depends(get_current_user),
+    user_id: UUID = Depends(get_current_user_id),
     service: MediaService = Depends(get_media_service),
 ) -> list[AssetResponseSchema]:
     """Upload multiple files through the enterprise upload pipeline."""
@@ -78,7 +89,7 @@ async def upload_multiple(
 @router.post("/upload-sessions", response_model=UploadSessionResponseSchema, status_code=status.HTTP_201_CREATED)
 async def create_upload_session(
     data: UploadSessionCreateSchema,
-    user_id: UUID = Depends(get_current_user),
+    user_id: UUID = Depends(get_current_user_id),
     service: MediaService = Depends(get_media_service),
 ) -> UploadSessionResponseSchema:
     """Create a new upload session for chunked uploads."""
@@ -103,7 +114,7 @@ async def upload_chunk(
 @router.post("/upload-sessions/{session_id}/complete", response_model=AssetResponseSchema, status_code=status.HTTP_201_CREATED)
 async def complete_upload(
     session_id: UUID,
-    user_id: UUID = Depends(get_current_user),
+    user_id: UUID = Depends(get_current_user_id),
     service: MediaService = Depends(get_media_service),
 ) -> AssetResponseSchema:
     """Complete an upload session and create an asset."""
@@ -139,7 +150,7 @@ async def get_asset(
 async def update_asset(
     asset_id: UUID,
     data: AssetUpdateSchema,
-    user_id: UUID = Depends(get_current_user),
+    user_id: UUID = Depends(get_current_user_id),
     service: MediaService = Depends(get_media_service),
 ) -> AssetResponseSchema:
     """Update an asset."""
@@ -152,7 +163,7 @@ async def update_asset(
 @router.delete("/assets/{asset_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_asset(
     asset_id: UUID,
-    user_id: UUID = Depends(get_current_user),
+    user_id: UUID = Depends(get_current_user_id),
     service: MediaService = Depends(get_media_service),
 ) -> None:
     """Delete an asset."""
@@ -164,7 +175,7 @@ async def delete_asset(
 @router.post("/assets/{asset_id}/restore", response_model=AssetResponseSchema, status_code=status.HTTP_200_OK)
 async def restore_asset(
     asset_id: UUID,
-    user_id: UUID = Depends(get_current_user),
+    user_id: UUID = Depends(get_current_user_id),
     service: MediaService = Depends(get_media_service),
 ) -> AssetResponseSchema:
     """Restore a deleted asset."""
@@ -178,7 +189,7 @@ async def restore_asset(
 async def move_asset(
     asset_id: UUID,
     folder_id: UUID | None,
-    user_id: UUID = Depends(get_current_user),
+    user_id: UUID = Depends(get_current_user_id),
     service: MediaService = Depends(get_media_service),
 ) -> AssetResponseSchema:
     """Move an asset to a different folder."""
@@ -203,7 +214,7 @@ async def get_signed_url(
 @router.post("/folders", response_model=FolderResponseSchema, status_code=status.HTTP_201_CREATED)
 async def create_folder(
     data: FolderCreateSchema,
-    user_id: UUID = Depends(get_current_user),
+    user_id: UUID = Depends(get_current_user_id),
     service: MediaService = Depends(get_media_service),
 ) -> FolderResponseSchema:
     """Create a new folder."""
@@ -249,7 +260,7 @@ async def get_image_metadata(
 @router.post("/assets/{asset_id}/reprocess", status_code=status.HTTP_200_OK)
 async def reprocess_image(
     asset_id: UUID,
-    user_id: UUID = Depends(get_current_user),
+    user_id: UUID = Depends(get_current_user_id),
     service: MediaService = Depends(get_media_service),
 ) -> dict:
     """Reprocess an image asset."""
@@ -336,7 +347,7 @@ async def get_video_thumbnails(
 @router.post("/assets/{asset_id}/reprocess-video", status_code=status.HTTP_200_OK)
 async def reprocess_video(
     asset_id: UUID,
-    user_id: UUID = Depends(get_current_user),
+    user_id: UUID = Depends(get_current_user_id),
     service: MediaService = Depends(get_media_service),
 ) -> dict:
     """Reprocess a video asset."""
@@ -352,7 +363,7 @@ async def reprocess_video(
 @router.post("/documents/upload", status_code=status.HTTP_201_CREATED)
 async def upload_document(
     data: UploadFileSchema,
-    user_id: UUID = Depends(get_current_user),
+    user_id: UUID = Depends(get_current_user_id),
     service: MediaService = Depends(get_media_service),
 ) -> AssetResponseSchema:
     """Upload a document through the enterprise document pipeline."""
@@ -418,7 +429,7 @@ async def get_document_versions(
 async def restore_document_version(
     document_id: UUID,
     version: int,
-    user_id: UUID = Depends(get_current_user),
+    user_id: UUID = Depends(get_current_user_id),
     service: MediaService = Depends(get_media_service),
 ) -> AssetResponseSchema:
     """Restore a document to a previous version."""
@@ -431,7 +442,7 @@ async def restore_document_version(
 @router.delete("/documents/{document_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_document(
     document_id: UUID,
-    user_id: UUID = Depends(get_current_user),
+    user_id: UUID = Depends(get_current_user_id),
     service: MediaService = Depends(get_media_service),
 ) -> None:
     """Delete a document."""
@@ -444,7 +455,7 @@ async def delete_document(
 @router.get("/assets/{asset_id}/download", status_code=status.HTTP_200_OK)
 async def download_asset(
     asset_id: UUID,
-    user_id: UUID = Depends(get_current_user),
+    user_id: UUID = Depends(get_current_user_id),
     service: MediaService = Depends(get_media_service),
 ) -> dict:
     """Get download URL for an asset."""
@@ -505,7 +516,7 @@ async def head_asset(
 @router.get("/search", status_code=status.HTTP_200_OK)
 async def search_media(
     query: str = "",
-    user_id: UUID = Depends(get_current_user),
+    user_id: UUID = Depends(get_current_user_id),
     service: MediaService = Depends(get_media_service),
 ) -> list[dict]:
     """Search media assets."""
@@ -514,7 +525,7 @@ async def search_media(
 
 @router.get("/filter", status_code=status.HTTP_200_OK)
 async def filter_media(
-    user_id: UUID = Depends(get_current_user),
+    user_id: UUID = Depends(get_current_user_id),
     service: MediaService = Depends(get_media_service),
 ) -> list[dict]:
     """Filter media assets."""
@@ -524,7 +535,7 @@ async def filter_media(
 @router.post("/tags", status_code=status.HTTP_201_CREATED)
 async def create_tag(
     name: str,
-    user_id: UUID = Depends(get_current_user),
+    user_id: UUID = Depends(get_current_user_id),
     service: MediaService = Depends(get_media_service),
 ) -> dict:
     """Create a tag."""
@@ -534,7 +545,7 @@ async def create_tag(
 @router.put("/tags/{tag_id}", status_code=status.HTTP_200_OK)
 async def update_tag(
     tag_id: UUID,
-    user_id: UUID = Depends(get_current_user),
+    user_id: UUID = Depends(get_current_user_id),
     service: MediaService = Depends(get_media_service),
 ) -> dict:
     """Update a tag."""
@@ -544,7 +555,7 @@ async def update_tag(
 @router.delete("/tags/{tag_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_tag(
     tag_id: UUID,
-    user_id: UUID = Depends(get_current_user),
+    user_id: UUID = Depends(get_current_user_id),
     service: MediaService = Depends(get_media_service),
 ) -> None:
     """Delete a tag."""
@@ -562,7 +573,7 @@ async def get_categories(
 @router.post("/collections", status_code=status.HTTP_201_CREATED)
 async def create_collection(
     name: str,
-    user_id: UUID = Depends(get_current_user),
+    user_id: UUID = Depends(get_current_user_id),
     service: MediaService = Depends(get_media_service),
 ) -> dict:
     """Create a collection."""
@@ -571,7 +582,7 @@ async def create_collection(
 
 @router.get("/favorites", status_code=status.HTTP_200_OK)
 async def get_favorites(
-    user_id: UUID = Depends(get_current_user),
+    user_id: UUID = Depends(get_current_user_id),
     service: MediaService = Depends(get_media_service),
 ) -> list[dict]:
     """Get user favorites."""
@@ -581,7 +592,7 @@ async def get_favorites(
 @router.post("/{asset_id}/favorite", status_code=status.HTTP_200_OK)
 async def favorite_asset(
     asset_id: UUID,
-    user_id: UUID = Depends(get_current_user),
+    user_id: UUID = Depends(get_current_user_id),
     service: MediaService = Depends(get_media_service),
 ) -> dict:
     """Favorite an asset."""
@@ -591,7 +602,7 @@ async def favorite_asset(
 @router.delete("/{asset_id}/favorite", status_code=status.HTTP_200_OK)
 async def unfavorite_asset(
     asset_id: UUID,
-    user_id: UUID = Depends(get_current_user),
+    user_id: UUID = Depends(get_current_user_id),
     service: MediaService = Depends(get_media_service),
 ) -> dict:
     """Unfavorite an asset."""
@@ -601,7 +612,7 @@ async def unfavorite_asset(
 # Lifecycle Endpoints
 @router.get("/jobs", status_code=status.HTTP_200_OK)
 async def get_jobs(
-    user_id: UUID = Depends(get_current_user),
+    user_id: UUID = Depends(get_current_user_id),
     service: MediaService = Depends(get_media_service),
 ) -> list[dict]:
     """Get background jobs."""
@@ -611,7 +622,7 @@ async def get_jobs(
 @router.get("/jobs/{job_id}", status_code=status.HTTP_200_OK)
 async def get_job(
     job_id: UUID,
-    user_id: UUID = Depends(get_current_user),
+    user_id: UUID = Depends(get_current_user_id),
     service: MediaService = Depends(get_media_service),
 ) -> dict:
     """Get a job by ID."""
@@ -621,7 +632,7 @@ async def get_job(
 @router.post("/jobs/{job_id}/retry", status_code=status.HTTP_200_OK)
 async def retry_job(
     job_id: UUID,
-    user_id: UUID = Depends(get_current_user),
+    user_id: UUID = Depends(get_current_user_id),
     service: MediaService = Depends(get_media_service),
 ) -> dict:
     """Retry a failed job."""
@@ -631,7 +642,7 @@ async def retry_job(
 @router.post("/archive/{asset_id}", status_code=status.HTTP_200_OK)
 async def archive_media(
     asset_id: UUID,
-    user_id: UUID = Depends(get_current_user),
+    user_id: UUID = Depends(get_current_user_id),
     service: MediaService = Depends(get_media_service),
 ) -> dict:
     """Archive a media asset."""
@@ -641,7 +652,7 @@ async def archive_media(
 @router.post("/restore/{asset_id}", status_code=status.HTTP_200_OK)
 async def restore_media(
     asset_id: UUID,
-    user_id: UUID = Depends(get_current_user),
+    user_id: UUID = Depends(get_current_user_id),
     service: MediaService = Depends(get_media_service),
 ) -> dict:
     """Restore an archived media asset."""
@@ -651,7 +662,7 @@ async def restore_media(
 @router.delete("/purge/{asset_id}", status_code=status.HTTP_200_OK)
 async def purge_media(
     asset_id: UUID,
-    user_id: UUID = Depends(get_current_user),
+    user_id: UUID = Depends(get_current_user_id),
     service: MediaService = Depends(get_media_service),
 ) -> dict:
     """Permanently delete a media asset."""
@@ -660,7 +671,7 @@ async def purge_media(
 
 @router.get("/lifecycle", status_code=status.HTTP_200_OK)
 async def get_lifecycle_policies(
-    user_id: UUID = Depends(get_current_user),
+    user_id: UUID = Depends(get_current_user_id),
     service: MediaService = Depends(get_media_service),
 ) -> list[dict]:
     """Get lifecycle policies."""
@@ -669,7 +680,7 @@ async def get_lifecycle_policies(
 
 @router.put("/lifecycle", status_code=status.HTTP_200_OK)
 async def update_lifecycle_policy(
-    user_id: UUID = Depends(get_current_user),
+    user_id: UUID = Depends(get_current_user_id),
     service: MediaService = Depends(get_media_service),
 ) -> dict:
     """Update lifecycle policy."""

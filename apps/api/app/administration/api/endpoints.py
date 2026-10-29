@@ -33,8 +33,9 @@ from app.administration.infrastructure.repositories import (
     MaintenanceModeRepository,
 )
 from app.core.database import get_db
+from app.identity.api.endpoints import get_current_user
 
-router = APIRouter()
+router = APIRouter(dependencies=[Depends(get_current_user)])
 
 
 async def get_organization_service(

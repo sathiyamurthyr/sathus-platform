@@ -10,9 +10,11 @@ RUN pip install --no-cache-dir --upgrade pip && \
 # Copy application
 COPY app ./app
 
-# Run as non-root
-RUN useradd -m -u 1000 appuser && chown -R appuser:appuser /app
-USER appuser
+# Run as non-root (UID/GID 10001)
+RUN groupadd -g 10001 appuser && \
+    useradd -m -u 10001 -g 10001 appuser && \
+    chown -R appuser:appuser /app
+USER 10001:10001
 
 EXPOSE 8000
 

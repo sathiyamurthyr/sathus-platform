@@ -42,7 +42,10 @@ async def override_get_db():
     
     yield mock_session
 
+from app.identity.api.endpoints import get_current_user
+
 app.dependency_overrides[get_db] = override_get_db
+app.dependency_overrides[get_current_user] = lambda: {"sub": "00000000-0000-0000-0000-000000000001", "email": "admin@sathus.com"}
 client = TestClient(app)
 
 

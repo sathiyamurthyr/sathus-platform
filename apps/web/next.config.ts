@@ -8,6 +8,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [],
     formats: ['image/avif', 'image/webp'],
   },
+  output: 'standalone',
   compress: true,
   poweredByHeader: false,
   reactStrictMode: true,

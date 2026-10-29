@@ -22,13 +22,15 @@ from app.cloud_platform.infrastructure.models import (
     IaCChangeStatus,
 )
 
-# Initialize routers
-kubernetes_router = APIRouter()
-clusters_router = APIRouter()
-devops_router = APIRouter()
-pipelines_router = APIRouter()
-iac_router = APIRouter()
-infrastructure_router = APIRouter()
+from app.identity.api.endpoints import get_current_user
+
+# Initialize routers with authentication guards
+kubernetes_router = APIRouter(dependencies=[Depends(get_current_user)])
+clusters_router = APIRouter(dependencies=[Depends(get_current_user)])
+devops_router = APIRouter(dependencies=[Depends(get_current_user)])
+pipelines_router = APIRouter(dependencies=[Depends(get_current_user)])
+iac_router = APIRouter(dependencies=[Depends(get_current_user)])
+infrastructure_router = APIRouter(dependencies=[Depends(get_current_user)])
 
 DEFAULT_TENANT_ID = UUID("00000000-0000-0000-0000-000000000001")
 
