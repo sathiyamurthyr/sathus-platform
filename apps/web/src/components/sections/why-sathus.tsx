@@ -42,9 +42,9 @@ export function WhySathus() {
     <section id="why" className="scroll-mt-24 border-t border-[#EDE1E6] bg-white py-20 sm:py-24">
       <div className="container mx-auto px-4">
         <SectionIntro
-          eyebrow="Why Sathus"
-          title="A delivery practice, not a project shop"
-          description="The same operating model underpins every engagement — a disciplined process, accountable pillars, and a track record you can verify."
+          eyebrow="Corporate Positioning"
+          title="Engineering technology that delivers real business outcomes"
+          description="We do not sell slide decks or experimental pilots. Our delivery practice pairs senior principal squads with proven reference architectures to build software that scales reliably in regulated production."
         />
 
         {/* Engineering process */}

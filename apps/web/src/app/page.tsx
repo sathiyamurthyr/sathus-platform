@@ -1,16 +1,12 @@
 import { Metadata } from 'next';
 import { generatePageMetadata } from '@/lib/seo/metadata-builder';
 import { Hero } from '@/components/sections/hero';
-import { TrustMetricsStrip } from '@/components/sections/trust-metrics-strip';
-import { Solutions } from '@/components/sections/solutions';
-import { Industries } from '@/components/sections/industries';
-import { Products } from '@/components/sections/products';
-import { PlatformOverview } from '@/components/sections/platform-overview';
-import { WhySathus } from '@/components/sections/why-sathus';
-import { Technology } from '@/components/sections/technology';
-import { TrustCenter } from '@/components/sections/trust-center';
+import { CinematicUniverse } from '@/components/cinematic/cinematic-universe';
+import { CinematicProducts } from '@/components/cinematic/cinematic-products';
+import { CinematicIndustries } from '@/components/cinematic/cinematic-industries';
+import { CinematicPositioning } from '@/components/cinematic/cinematic-positioning';
 import { Insights } from '@/components/sections/insights';
-import { FinalCta } from '@/components/sections/final-cta';
+import { CinematicConversion } from '@/components/cinematic/cinematic-conversion';
 import { AISummaryBlock } from '@/components/seo/ai-summary-block';
 
 export const metadata: Metadata = generatePageMetadata({
@@ -31,22 +27,32 @@ export const metadata: Metadata = generatePageMetadata({
     'OneHealthID',
     'Vmaila',
     'Memomes Cloud',
+    'Svora',
   ],
 });
 
 export default function Page() {
   return (
     <>
+      {/* 01: Cinematic Hero — Futuristic Sky Citadel & Executive Terrace */}
       <Hero />
-      <TrustMetricsStrip />
-      <Solutions />
-      <Industries />
-      <Products />
-      <PlatformOverview />
-      <WhySathus />
-      <Technology />
 
-      {/* AI Search Optimization Section */}
+      {/* 02-05: Engineering Worlds — AI Lab, Data Canyon, Cloud Hub & Enterprise Campus */}
+      <CinematicUniverse />
+
+      {/* 06: Our Products — Enterprise Products for a Connected World */}
+      <CinematicProducts />
+
+      {/* 07: Industries — Creating Impact Across Industries */}
+      <CinematicIndustries />
+
+      {/* 08: Methodology — The Sathus Engineering Approach (5-Step Framework) */}
+      <CinematicPositioning />
+
+      {/* 09: Insights — Ideas, Engineering & Innovation */}
+      <Insights />
+
+      {/* Semantic AI Summary for Discovery */}
       <div className="container mx-auto px-4 py-8">
         <AISummaryBlock
           topic="Sathus Technology Enterprise Engineering"
@@ -60,9 +66,8 @@ export default function Page() {
         />
       </div>
 
-      <TrustCenter />
-      <Insights />
-      <FinalCta />
+      {/* 10: Conversion CTA — Let's Build What's Next Together */}
+      <CinematicConversion />
     </>
   );
 }

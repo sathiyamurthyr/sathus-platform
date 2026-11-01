@@ -86,9 +86,9 @@ export function PlatformVisualization() {
       >
         <defs>
           <linearGradient id="nodeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#A20A3A" stopOpacity="0.8" />
+            <stop offset="0%" stopColor="#A20A3A" stopOpacity="0.85" />
             <stop offset="60%" stopColor="#FF9933" stopOpacity="0.8" />
-            <stop offset="100%" stopColor="#EDC11E" stopOpacity="0.7" />
+            <stop offset="100%" stopColor="#FF9D2E" stopOpacity="0.75" />
           </linearGradient>
         </defs>
 
@@ -135,7 +135,7 @@ export function PlatformVisualization() {
               )}
 
               {!reduce && (
-                <circle r={isActive ? '0.9' : '0.6'} fill={i % 3 === 0 ? '#EDC11E' : '#FF9933'} opacity={isActive ? 1 : 0.85}>
+                <circle r={isActive ? '0.9' : '0.6'} fill={i % 3 === 0 ? '#FF9D2E' : '#FF9933'} opacity={isActive ? 1 : 0.85}>
                   <animateMotion
                     path={`M ${node.x} ${node.y} L 50 50`}
                     dur={`${2.6 + (i % 2) * 0.5}s`}

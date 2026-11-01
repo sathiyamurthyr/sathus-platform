@@ -46,7 +46,7 @@ export function AICore3D({ className }: AICore3DProps) {
     pointLight2.position.set(-2, -2, 2);
     scene.add(pointLight2);
 
-    const pointLight3 = new THREE.PointLight(0xedc11e, 2.5, 10); // Golden Yellow
+    const pointLight3 = new THREE.PointLight(0xff9d2e, 2.5, 10); // Warm Orange
     pointLight3.position.set(0, 3, -1);
     scene.add(pointLight3);
 
@@ -93,10 +93,10 @@ export function AICore3D({ className }: AICore3DProps) {
     ring1.rotation.y = Math.PI / 6;
     coreGroup.add(ring1);
 
-    // Orbital Ring 2 (Golden Yellow with Orange Accent)
+    // Orbital Ring 2 (Warm Orange with Emissive Accent)
     const ring2Geo = new THREE.TorusGeometry(1.5, 0.012, 16, 64);
     const ring2Mat = new THREE.MeshStandardMaterial({
-      color: 0xedc11e,
+      color: 0xff9d2e,
       emissive: 0xff9933,
       emissiveIntensity: 0.5,
       transparent: true,

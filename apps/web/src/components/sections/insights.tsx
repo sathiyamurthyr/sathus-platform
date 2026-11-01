@@ -1,132 +1,118 @@
-import Link from 'next/link';
-import { ArrowUpRight } from 'lucide-react';
-import { Reveal } from '@/components/sections/reveal';
-import { SectionIntro } from '@/components/sections/section-intro';
+'use client';
 
-interface Article {
+import * as React from 'react';
+import Link from 'next/link';
+import { motion, useReducedMotion } from 'motion/react';
+import { ArrowRight, Sparkles } from 'lucide-react';
+
+interface InsightArticle {
+  id: string;
   category: string;
   title: string;
-  excerpt: string;
   readTime: string;
-  date: string;
   href: string;
+  gradient: string;
 }
 
-const FEATURED: Article = {
-  category: 'AI Engineering',
-  title: 'Evaluation harnesses are the unit tests of enterprise AI',
-  excerpt:
-    'Agents fail quietly. We treat evaluation as a first-class delivery artifact — versioned suites, regression gates, and human review that travel with every model we ship to production.',
-  readTime: '9 min read',
-  date: 'May 2026',
-  href: '#insights',
-};
-
-const LIST: Article[] = [
+const ARTICLES: InsightArticle[] = [
   {
-    category: 'Data',
-    title: 'Streaming lineage: making Kafka pipelines auditable',
-    excerpt: 'Change data capture with provenance end-to-end.',
-    readTime: '7 min read',
-    date: 'Apr 2026',
-    href: '#insights',
+    id: '1',
+    category: 'AI Engineering',
+    title: 'Building Enterprise-Grade AI Platforms',
+    readTime: '6 min read',
+    href: '/resources/blog/eval-harnesses',
+    gradient: 'from-[#850B30] to-[#FF9933]',
   },
   {
-    category: 'Architecture',
-    title: 'A reference architecture for zero-trust SaaS',
-    excerpt: 'Identity, segmentation, and audit by default.',
-    readTime: '11 min read',
-    date: 'Apr 2026',
-    href: '#insights',
-  },
-  {
-    category: 'Data',
-    title: 'From lakehouse to decision: governed analytics that ship',
-    excerpt: 'Closing the gap between raw events and decisions.',
+    id: '2',
+    category: 'Data Architecture',
+    title: 'Modern Data Engineering at Scale',
     readTime: '8 min read',
-    date: 'Mar 2026',
-    href: '#insights',
+    href: '/resources/blog/kafka-lineage',
+    gradient: 'from-[#DE6419] to-[#FFB366]',
   },
   {
-    category: 'Engineering',
-    title: 'Migrating .NET estates to Azure without downtime',
-    excerpt: 'A phased, reversible path off legacy infrastructure.',
-    readTime: '10 min read',
-    date: 'Feb 2026',
-    href: '#insights',
+    id: '3',
+    category: 'Cloud Systems',
+    title: 'A Practical Guide to Cloud Modernization',
+    readTime: '7 min read',
+    href: '/resources/blog/zero-trust-reference',
+    gradient: 'from-[#850B30] to-[#DE6419]',
+  },
+  {
+    id: '4',
+    category: 'Enterprise Applications',
+    title: 'Designing Scalable Enterprise Applications',
+    readTime: '9 min read',
+    href: '/resources/blog/lakehouse-analytics',
+    gradient: 'from-[#FF9933] to-[#850B30]',
   },
 ];
 
 export function Insights() {
+  const reduce = useReducedMotion();
+
   return (
-    <section id="insights" className="scroll-mt-24 border-t border-[#EDE1E6] bg-white py-20 sm:py-24">
-      <div className="container mx-auto px-4">
-        <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
-          <SectionIntro
-            eyebrow="Insights"
-            title="Field notes from the engineering floor"
-            description="Practices, patterns, and postmortems from building AI and data platforms for regulated enterprises."
-          />
-          <Link
-            href="#insights"
-            className="group inline-flex items-center gap-1.5 text-sm font-medium text-[#292329] transition-colors hover:text-[#A20A3A] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A20A3A] focus-visible:ring-offset-2 rounded"
-          >
-            All articles
-            <ArrowUpRight className="h-4 w-4 text-[#FF9933] transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          </Link>
+    <section id="insights" className="relative w-full bg-[#FAF8F9] py-24 sm:py-32 border-t border-[#EDE1E6]">
+      <div className="container relative mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Header */}
+        <div className="max-w-3xl">
+          <span className="font-mono text-xs uppercase tracking-widest text-[#850B30] font-bold">
+            INSIGHTS
+          </span>
+          <h2 className="mt-3 font-display text-4xl sm:text-5xl font-bold tracking-tight text-[#292329]">
+            Ideas, Engineering & Innovation
+          </h2>
+          <p className="mt-4 text-base sm:text-lg text-[#635861] leading-relaxed">
+            Perspectives on AI, data, cloud and enterprise technology written directly by our staff engineering team.
+          </p>
         </div>
 
-        <div className="mt-10 grid gap-8 lg:grid-cols-12">
-          {/* Featured */}
-          <Reveal className="lg:col-span-7">
-            <Link
-              href={FEATURED.href}
-              className="group flex h-full flex-col justify-between rounded-3xl border border-[#EDE1E6] bg-[#FAF8F9] p-8 shadow-xs transition-all duration-300 hover:border-[#A20A3A]/40 hover:bg-white hover:shadow-md sm:p-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A20A3A] focus-visible:ring-offset-2"
+        {/* 4 Editorial Cards with Radiant Thumbnails */}
+        <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {ARTICLES.map((art, idx) => (
+            <motion.div
+              key={art.id}
+              initial={reduce ? false : { opacity: 0, y: 25 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: idx * 0.1 }}
+              className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-[#EDE1E6] bg-white p-6 shadow-xs transition-all duration-300 hover:-translate-y-1.5 hover:border-[#FF9933] hover:shadow-xl"
             >
               <div>
-                <span className="inline-flex items-center rounded-full border border-[#EDE1E6] bg-[#F9EEF2] px-3 py-1 text-xs font-semibold text-[#A20A3A]">
-                  {FEATURED.category}
-                </span>
-                <h3 className="mt-5 font-display text-3xl font-semibold leading-tight tracking-tight text-balance text-[#292329] transition-colors group-hover:text-[#A20A3A] sm:text-4xl">
-                  {FEATURED.title}
-                </h3>
-                <p className="mt-4 max-w-xl text-base leading-relaxed text-pretty text-[#635861]">
-                  {FEATURED.excerpt}
-                </p>
-              </div>
-              <div className="mt-8 flex items-center gap-3 text-sm text-[#635861]">
-                <span>{FEATURED.date}</span>
-                <span className="h-1 w-1 rounded-full bg-[#635861]/50" />
-                <span>{FEATURED.readTime}</span>
-              </div>
-            </Link>
-          </Reveal>
-
-          {/* List */}
-          <ul className="flex flex-col divide-y divide-[#EDE1E6] lg:col-span-5">
-            {LIST.map((article, i) => (
-              <Reveal as="li" key={article.title} delay={i * 0.05}>
-                <Link
-                  href={article.href}
-                  className="group flex flex-col gap-2 py-6 first:pt-0 last:pb-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A20A3A] focus-visible:ring-offset-2 rounded"
+                {/* Visual Header / Artwork Thumbnail */}
+                <div
+                  className={`h-36 w-full rounded-2xl bg-gradient-to-tr ${art.gradient} p-4 flex flex-col justify-between shadow-xs transition-transform duration-300 group-hover:scale-102`}
                 >
-                  <div className="flex items-center gap-3 text-xs text-[#635861]">
-                    <span className="font-semibold text-[#A20A3A]">{article.category}</span>
-                    <span className="h-1 w-1 rounded-full bg-[#635861]/50" />
-                    <span>{article.date}</span>
-                    <span className="h-1 w-1 rounded-full bg-[#635861]/50" />
-                    <span>{article.readTime}</span>
+                  <span className="inline-flex self-start rounded-full bg-black/30 px-3 py-1 font-mono text-[10px] font-semibold text-white backdrop-blur-md">
+                    {art.category}
+                  </span>
+                  <div className="self-end h-8 w-8 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-md text-white">
+                    <Sparkles className="h-4 w-4" />
                   </div>
-                  <h3 className="text-lg font-semibold leading-snug tracking-tight text-balance text-[#292329] transition-colors group-hover:text-[#A20A3A]">
-                    {article.title}
+                </div>
+
+                <div className="mt-5">
+                  <span className="font-mono text-[11px] text-[#635861]">
+                    {art.readTime}
+                  </span>
+                  <h3 className="mt-2 font-display text-xl font-bold leading-snug text-[#292329] group-hover:text-[#850B30] transition-colors">
+                    {art.title}
                   </h3>
-                  <p className="text-sm leading-relaxed text-pretty text-[#635861]">
-                    {article.excerpt}
-                  </p>
+                </div>
+              </div>
+
+              <div className="mt-6 pt-4 border-t border-[#EDE1E6]">
+                <Link
+                  href={art.href}
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-[#850B30] group-hover:text-[#FF9933] transition-colors"
+                >
+                  <span>Read More</span>
+                  <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
                 </Link>
-              </Reveal>
-            ))}
-          </ul>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>

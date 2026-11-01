@@ -92,9 +92,9 @@ export function Products() {
     <section id="products" className="scroll-mt-24 bg-white py-20 sm:py-24">
       <div className="container mx-auto px-4">
         <SectionIntro
-          eyebrow="Products"
-          title="A platform and a portfolio, shipping today"
-          description="Production systems our clients run on, plus research that defines what comes next."
+          eyebrow="Product Universe"
+          title="An enterprise platform and product ecosystem"
+          description="Production systems running across regulated enterprises, engineered on open standards with zero vendor lock-in."
         />
 
         <div className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
@@ -105,7 +105,7 @@ export function Products() {
                 key={product.name}
                 delay={(i % 3) * 0.06}
                 className={cn(
-                  'group relative flex flex-col rounded-2xl border border-[#EDE1E6] bg-[#FAF8F9] p-7 transition-all duration-300 hover:-translate-y-1 hover:border-[#A20A3A]/40 hover:bg-white hover:shadow-md justify-between',
+                  'group relative flex flex-col rounded-2xl border border-[#EDE1E6] bg-[#FAF8F9] p-7 transition-all duration-300 hover:-translate-y-1.5 hover:border-[#A20A3A]/50 hover:bg-white hover:shadow-xl justify-between',
                   product.featured && 'md:col-span-2 lg:col-span-3 border-[#A20A3A]/30 bg-gradient-to-br from-[#FAF8F9] via-[#FAF8F9] to-[#F9EEF2]/40'
                 )}
               >

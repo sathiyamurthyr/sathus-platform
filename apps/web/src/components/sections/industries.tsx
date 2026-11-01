@@ -56,7 +56,7 @@ export function Industries() {
         <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
           <div className="lg:sticky lg:top-28 lg:self-start">
             <SectionIntro
-              eyebrow="Industries"
+              eyebrow="Regulated Industry Impact"
               title="Built for the jurisdictions and standards that matter"
               description="We engineer inside the constraints of regulated industries — auditability, data residency, and explainability are design inputs, not retrofits."
             />

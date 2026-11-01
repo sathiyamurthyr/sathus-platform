@@ -24,9 +24,9 @@ export function FinalCta() {
           <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Button asChild size="lg" className="group h-12 bg-[#A20A3A] hover:bg-[#8C0832] text-white px-7 text-base shadow-sm transition-all duration-300 hover:shadow-md">
               <Link href="/book-strategy-session">
-                <CalendarClock className="mr-2 h-4 w-4 text-[#EDC11E]" />
+                <CalendarClock className="mr-2 h-4 w-4 text-[#FF9933]" />
                 Book Strategy Session
-                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5 text-[#EDC11E]" />
+                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5 text-[#FF9933]" />
               </Link>
             </Button>
             <Button

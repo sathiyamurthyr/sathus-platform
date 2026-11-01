@@ -73,9 +73,9 @@ export function Solutions() {
     <section id="solutions" className="scroll-mt-24 bg-white py-20 sm:py-24">
       <div className="container mx-auto px-4">
         <SectionIntro
-          eyebrow="Solutions"
-          title="Engineering disciplines, delivered as outcomes"
-          description="We do not sell workshops. Each discipline is a delivery practice with accountable outcomes, reference architectures, and a path to production."
+          eyebrow="Engineering Capabilities"
+          title="Disciplines engineered for mission-critical scale"
+          description="We do not sell workshops or vague advisory. Each discipline is an accountable engineering practice with reference architectures, strict SLAs, and a verifiable path to production."
         />
 
         <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-6 lg:grid-cols-3 lg:gap-8">

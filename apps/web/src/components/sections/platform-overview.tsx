@@ -112,7 +112,7 @@ export function PlatformOverview() {
                 <linearGradient id="pg" x1="0" y1="0" x2="1" y2="1">
                   <stop offset="0%" stopColor="#A20A3A" />
                   <stop offset="50%" stopColor="#FF9933" />
-                  <stop offset="100%" stopColor="#EDC11E" />
+                  <stop offset="100%" stopColor="#FF9D2E" />
                 </linearGradient>
               </defs>
             </svg>
