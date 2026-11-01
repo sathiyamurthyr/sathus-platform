@@ -14,18 +14,23 @@ import { FinalCta } from '@/components/sections/final-cta';
 import { AISummaryBlock } from '@/components/seo/ai-summary-block';
 
 export const metadata: Metadata = generatePageMetadata({
-  title: 'Enterprise AI Development, Data Engineering & Cloud Modernization',
+  title: 'Enterprise AI, Data & Cloud Engineering',
   description:
-    'Sathus Technology (sathus.in) is an enterprise software engineering company delivering production-grade AI agents, governed data lakehouses, and cloud-native applications for regulated industries.',
+    'Sathus Technology builds enterprise AI solutions, governed data platforms, cloud-native applications and intelligent software products for businesses operating in complex and regulated industries.',
   path: '/',
   keywords: [
     'Sathus',
     'Sathus Technology',
     'sathus.in',
+    'Enterprise Software Development Company',
+    'AI Engineering Company',
     'Enterprise AI Development',
     'AI Agents & Swarms',
     'Data Lakehouse Engineering',
     'Cloud Modernization',
+    'OneHealthID',
+    'Vmaila',
+    'Memomes Cloud',
   ],
 });
 

@@ -15,15 +15,14 @@ export const siteConfig: SiteConfig = {
 };
 
 export const navItems: NavItem[] = [
+  { label: 'Home', href: '/', hasMega: false },
+  { label: 'About', href: '/company/about', hasMega: false },
   { label: 'Solutions', href: '/solutions', hasMega: true },
-  { label: 'Industries', href: '/industries', hasMega: false },
   { label: 'Products', href: '/products', hasMega: true },
+  { label: 'Industries', href: '/industries', hasMega: false },
   { label: 'Technology', href: '/#technology', hasMega: true },
-  { label: 'Resources', href: '/resources', hasMega: true },
-  { label: 'Pricing', href: '/pricing', hasMega: false },
-  { label: 'Company', href: '/company', hasMega: true },
-  { label: 'Trust Center', href: '/trust', hasMega: false },
-  { label: 'Legal', href: '/legal', hasMega: false },
+  { label: 'Insights', href: '/resources/insights', hasMega: false },
+  { label: 'Contact', href: '/contact', hasMega: false },
 ];
 
 export const megaMenuSections: Record<string, MegaMenuSection[]> = {
@@ -104,9 +103,11 @@ export const megaMenuSections: Record<string, MegaMenuSection[]> = {
           description: 'Core products powering enterprise AI and data.',
           items: [
             { title: 'Sathus AI', description: 'Enterprise agent platform', href: '/products/sathus-ai', icon: 'Bot', badge: 'GA' },
-            { title: 'Memomes Cloud', description: 'Document intelligence', href: '/products/memomes-cloud', icon: 'FileSearch' },
-            { title: 'SocialHub MCP', description: 'Agent connectivity gateway', href: '/products/socialhub-mcp', icon: 'Share2' },
-            { title: 'OneHealthID', description: 'Healthcare identity & consent', href: '/products/onehealthid', icon: 'HeartPulse' },
+            { title: 'OneHealthID', description: 'Healthcare operating platform', href: '/products/onehealthid', icon: 'HeartPulse', badge: 'GA' },
+            { title: 'Memomes Cloud', description: 'Document intelligence & vault', href: '/products/memomes-cloud', icon: 'FileSearch', badge: 'GA' },
+            { title: 'Vmaila', description: 'Private encrypted business email', href: '/products/vmaila', icon: 'Mail', badge: 'GA' },
+            { title: 'Vmailachat', description: 'Real-time team collaboration', href: '/products/vmailachat', icon: 'MessageSquare', badge: 'GA' },
+            { title: 'SocialHub MCP', description: 'Agent connectivity gateway', href: '/products/socialhub-mcp', icon: 'Share2', badge: 'Beta' },
           ],
           featured: {
             title: 'Sathus AI Platform',
@@ -357,9 +358,11 @@ export const footerSections: FooterSection[] = [
     title: 'Products',
     links: [
       { title: 'Sathus AI', href: '/products/sathus-ai' },
-      { title: 'Memomes Cloud', href: '/products/memomes-cloud' },
-      { title: 'SocialHub MCP', href: '/products/socialhub-mcp' },
       { title: 'OneHealthID', href: '/products/onehealthid' },
+      { title: 'Memomes Cloud', href: '/products/memomes-cloud' },
+      { title: 'Vmaila', href: '/products/vmaila' },
+      { title: 'Vmailachat', href: '/products/vmailachat' },
+      { title: 'SocialHub MCP', href: '/products/socialhub-mcp' },
     ],
   },
   {

@@ -12,6 +12,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { contactFormSchema } from '../../validation';
 import type { ContactFormData, InquiryType } from '../../types';
 import { INDUSTRY_OPTIONS, COMPANY_SIZE_OPTIONS, COUNTRY_OPTIONS, SERVICE_OPTIONS } from '../../types';
+import { companyConfig } from '@/config/company';
 
 interface ContactFormProps {
   inquiryType?: InquiryType;
@@ -97,13 +98,13 @@ export function ContactForm({ inquiryType = 'general', onSuccess }: ContactFormP
         const errData = await res.json().catch(() => null);
         setSubmitError(
           errData?.message ||
-            'We encountered an issue submitting your request. Please email us directly at info@sathus.com or call +91 99401 23648.'
+            `We encountered an issue submitting your request. Please email us directly at ${companyConfig.email} or call ${companyConfig.phone}.`
         );
       }
     } catch (error) {
       console.error('Form submission error:', error);
       setSubmitError(
-        'Unable to connect to the submission service. Please email our engineering team directly at info@sathus.com or call +91 99401 23648.'
+        `Unable to connect to the submission service. Please email our engineering team directly at ${companyConfig.email} or call ${companyConfig.phone}.`
       );
     } finally {
       setIsSubmitting(false);

@@ -119,7 +119,7 @@ export function Header() {
               asChild
             >
               <Link href="/book-strategy-session">
-                Request Consultation
+                Get in Touch
                 <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
               </Link>
             </Button>

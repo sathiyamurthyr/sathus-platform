@@ -111,7 +111,7 @@ export function Hero() {
             >
               Engineering the Future of{' '}
               <span className="text-ai-gradient font-semibold">AI</span>,{' '}
-              <span className="text-ai-gradient font-semibold">Data</span> & Enterprise Software
+              <span className="text-ai-gradient font-semibold">Data</span> & Enterprise Software.
             </motion.h1>
 
             <motion.p
@@ -120,9 +120,7 @@ export function Hero() {
               transition={{ duration: 0.6, delay: 0.3 }}
               className="mt-5 max-w-xl text-pretty text-base leading-relaxed text-[#635861] sm:text-lg"
             >
-              Sathus Technology helps enterprises design, build and modernize
-              AI-powered products, intelligent data platforms and cloud-native
-              applications for regulated industries.
+              We design, build and modernize intelligent enterprise platforms, governed data systems and cloud-native applications for businesses operating in complex and regulated environments.
             </motion.p>
 
             {/* CTA Buttons */}
@@ -137,9 +135,8 @@ export function Hero() {
                 size="lg"
                 className="group btn-shine-sweep h-12 bg-[#A20A3A] hover:bg-[#8C0832] text-white px-7 text-base shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md active:translate-y-0"
               >
-                <Link href="/book-strategy-session">
-                  <CalendarClock className="mr-2 h-4 w-4 text-[#EDC11E]" />
-                  Book Strategy Session
+                <Link href="/solutions">
+                  Explore Our Solutions
                   <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1 text-[#EDC11E]" />
                 </Link>
               </Button>
@@ -149,7 +146,10 @@ export function Hero() {
                 variant="outline"
                 className="h-12 border-[#EDE1E6] bg-[#FAF8F9] px-7 text-base text-[#292329] transition-all duration-300 hover:border-[#A20A3A] hover:bg-white hover:text-[#A20A3A]"
               >
-                <Link href="#solutions">Explore Solutions</Link>
+                <Link href="/book-strategy-session">
+                  <CalendarClock className="mr-2 h-4 w-4 text-[#FF9933]" />
+                  Book a Strategy Session
+                </Link>
               </Button>
             </motion.div>
 

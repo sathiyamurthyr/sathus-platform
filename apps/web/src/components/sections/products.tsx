@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ArrowUpRight, BrainCircuit, FileStack, Share2, Fingerprint, FlaskConical } from 'lucide-react';
+import { ArrowUpRight, BrainCircuit, FileStack, Share2, Fingerprint, Mail, MessageSquare } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { Reveal } from '@/components/sections/reveal';
 import { SectionIntro } from '@/components/sections/section-intro';
@@ -30,23 +30,6 @@ const PRODUCTS: Product[] = [
       'Managed platform for building, evaluating, and deploying enterprise agents — with guardrails, evaluation harnesses, and production observability built in.',
     status: 'GA',
     href: '/products/sathus-ai',
-    featured: true,
-  },
-  {
-    icon: FileStack,
-    name: 'Memomes Cloud',
-    description:
-      'Unified document intelligence and memory platform that turns enterprise knowledge into grounded, citation-ready context.',
-    status: 'GA',
-    href: '/products/memomes-cloud',
-  },
-  {
-    icon: Share2,
-    name: 'SocialHub MCP',
-    description:
-      'Model Context Protocol gateway that connects AI agents to your social and business graph through governed, auditable tools.',
-    status: 'Beta',
-    href: '/products/socialhub-mcp',
   },
   {
     icon: Fingerprint,
@@ -57,12 +40,36 @@ const PRODUCTS: Product[] = [
     href: '/products/onehealthid',
   },
   {
-    icon: FlaskConical,
-    name: 'Future Products',
+    icon: FileStack,
+    name: 'Memomes Cloud',
     description:
-      'Agentic data governance, industry copilots, and embedded analytics — in active research with design partners.',
-    status: 'Research',
-    href: '/products',
+      'Unified document intelligence and zero-knowledge memory platform that turns enterprise knowledge into grounded, citation-ready context.',
+    status: 'GA',
+    href: '/products/memomes-cloud',
+  },
+  {
+    icon: Mail,
+    name: 'Vmaila',
+    description:
+      'Private, encrypted enterprise business email suite with multi-tenant organization security, scheduled send, and complete communication sovereignty.',
+    status: 'GA',
+    href: '/products/vmaila',
+  },
+  {
+    icon: MessageSquare,
+    name: 'Vmailachat',
+    description:
+      'Real-time enterprise team collaboration and secure messaging with role-based channels, audited file sharing, and zero third-party access.',
+    status: 'GA',
+    href: '/products/vmailachat',
+  },
+  {
+    icon: Share2,
+    name: 'SocialHub MCP',
+    description:
+      'Model Context Protocol gateway that connects AI agents to your social and business graph through governed, auditable tools.',
+    status: 'Beta',
+    href: '/products/socialhub-mcp',
   },
 ];
 
