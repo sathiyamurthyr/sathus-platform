@@ -10,7 +10,6 @@ node_modules
 .ruff_cache
 __pycache__
 apps/api
-apps/admin
 apps/docs
 bin/
 obj/
