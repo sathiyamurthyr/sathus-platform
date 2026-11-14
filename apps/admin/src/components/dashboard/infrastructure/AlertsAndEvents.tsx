@@ -194,3 +194,4 @@ export function AlertsAndEvents({ alerts, sslCertificates, backups }: AlertsAndE
     </div>
   );
 }
+

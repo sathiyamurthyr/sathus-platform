@@ -235,3 +235,4 @@ export function SupabaseHealthSection({ supabase }: SupabaseHealthSectionProps) 
     </div>
   );
 }
+

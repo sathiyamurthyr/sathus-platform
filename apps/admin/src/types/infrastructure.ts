@@ -170,3 +170,4 @@ export interface InfrastructureTelemetryResponse {
   containers: ContainerTelemetry[];
   alerts: InfrastructureAlert[];
 }
+

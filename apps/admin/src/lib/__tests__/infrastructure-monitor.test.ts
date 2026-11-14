@@ -67,3 +67,4 @@ describe('Unified Infrastructure & Supabase Telemetry Engine', () => {
     expect(fresh.cached).toBe(false);
   }, 15000);
 });
+

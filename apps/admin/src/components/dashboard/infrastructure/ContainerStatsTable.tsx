@@ -113,3 +113,4 @@ export function ContainerStatsTable({ containers }: ContainerStatsTableProps) {
     </Card>
   );
 }
+
