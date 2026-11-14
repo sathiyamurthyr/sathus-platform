@@ -5,12 +5,13 @@ import { StatCard } from '@/components/dashboard/StatCard';
 import { QuickActionCard } from '@/components/dashboard/QuickActionCard';
 import { RecentActivity } from '@/components/dashboard/RecentActivity';
 import { SystemStatus } from '@/components/dashboard/SystemStatus';
+import { UnifiedInfrastructureDashboard } from '@/components/dashboard/infrastructure/UnifiedInfrastructureDashboard';
 import { Button } from '@/components/ui/button';
 import { stats, quickActions, recentActivity, services } from '@/config/dashboard-data';
 
 export const metadata: Metadata = {
-  title: 'Admin Console Dashboard',
-  description: 'Enterprise overview of System Health, Service Status, and quick operations.',
+  title: 'Admin Console Dashboard | Unified Infrastructure & Supabase Telemetry',
+  description: 'Enterprise overview of System Health, VPS Telemetry, Docker Containers, Supabase Usage, and Quick Operations.',
   alternates: {
     canonical: '/admin/dashboard',
   },
@@ -18,10 +19,10 @@ export const metadata: Metadata = {
 
 export default function DashboardPage() {
   return (
-    <div className="mx-auto w-full max-w-7xl space-y-6 p-4 md:p-6 lg:p-8">
+    <div className="mx-auto w-full max-w-7xl space-y-8 p-4 md:p-6 lg:p-8">
       <PageHeader
         title="Dashboard"
-        description="Welcome back. Here is an overview of the Sathus Platform."
+        description="Welcome back. Here is an overview of the Sathus Platform and Live Infrastructure Telemetry."
         actions={
           <Button variant="outline" size="sm">
             Export
@@ -29,6 +30,7 @@ export default function DashboardPage() {
         }
       />
 
+      {/* Primary Key Metrics */}
       <section aria-label="Key metrics">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
           {stats.map((stat) => (
@@ -37,6 +39,7 @@ export default function DashboardPage() {
         </div>
       </section>
 
+      {/* Quick Actions Bar */}
       <section aria-label="Quick actions">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {quickActions.map((action) => (
@@ -45,6 +48,7 @@ export default function DashboardPage() {
         </div>
       </section>
 
+      {/* Activity and Platform Status */}
       <section className="grid grid-cols-1 gap-4 lg:grid-cols-3">
         <DashboardCard
           title="Recent Activity"
@@ -55,9 +59,14 @@ export default function DashboardPage() {
           <RecentActivity items={recentActivity} />
         </DashboardCard>
 
-        <DashboardCard title="System Status" description="Service health">
+        <DashboardCard title="System Status" description="Core platform health">
           <SystemStatus services={services} />
         </DashboardCard>
+      </section>
+
+      {/* UNIFIED INFRASTRUCTURE HEALTH & SUPABASE MONITORING SUITE */}
+      <section aria-label="Unified infrastructure and supabase monitoring">
+        <UnifiedInfrastructureDashboard />
       </section>
     </div>
   );
