@@ -189,6 +189,7 @@ export interface SubscriptionItem {
   server_identifier?: string;
   server_hostname?: string;
   server_ip?: string;
+  server_specs?: string;
   quantity: number;
   unit_price: number;
   gst_rate: number;
@@ -204,6 +205,7 @@ export interface ServerSubscription {
   base_amount_monthly?: number;
   server_hostname?: string;
   server_ip?: string;
+  server_specs?: string;
   customer_ref_id: number;
   customer_name?: string;
   customer_code?: string;

@@ -16,6 +16,7 @@ from app.finance.api.schemas import (
     CompanySignatoryResponse,
     CustomerCreate,
     CustomerResponse,
+    CustomerUpdate,
     FinanceDashboardSummary,
     InvoiceCalculateRequest,
     InvoiceCreate,
@@ -28,6 +29,7 @@ from app.finance.api.schemas import (
     ServiceResponse,
     SubscriptionCreate,
     SubscriptionResponse,
+    SubscriptionUpdate,
     VendorCreate,
     VendorResponse,
 )
@@ -195,6 +197,19 @@ async def get_customer(ref_id: int, repos: dict = Depends(get_repos)):
     return cust
 
 
+@router.put("/customers/{ref_id}", response_model=CustomerResponse)
+async def update_customer(
+    ref_id: int,
+    payload: CustomerUpdate,
+    repos: dict = Depends(get_repos),
+):
+    """Update customer details, GSTIN, address, and contacts."""
+    cust = await repos["customer"].update_customer(ref_id, **payload.model_dump(exclude_unset=True))
+    if not cust:
+        raise HTTPException(status_code=404, detail="Customer not found")
+    return cust
+
+
 # ==============================================================================
 # 4. VENDOR MANAGEMENT
 # ==============================================================================
@@ -254,6 +269,25 @@ async def create_subscription(
 @router.get("/subscriptions/{ref_id}", response_model=SubscriptionResponse)
 async def get_subscription(ref_id: int, repos: dict = Depends(get_repos)):
     sub = await repos["subscription"].get_by_ref_id(ref_id)
+    if not sub:
+        raise HTTPException(status_code=404, detail="Subscription not found")
+    return sub
+
+
+@router.put("/subscriptions/{ref_id}", response_model=SubscriptionResponse)
+async def update_subscription(
+    ref_id: int,
+    payload: SubscriptionUpdate,
+    repos: dict = Depends(get_repos),
+):
+    """Update subscription server hostname, IP, specs, and monthly amounts."""
+    data = payload.model_dump(exclude_unset=True)
+    unit_price = data.pop("base_amount_monthly", None)
+    sub = await repos["subscription"].update_subscription(
+        ref_id,
+        unit_price=unit_price,
+        **data,
+    )
     if not sub:
         raise HTTPException(status_code=404, detail="Subscription not found")
     return sub

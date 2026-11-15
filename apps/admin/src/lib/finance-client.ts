@@ -405,6 +405,53 @@ class FinanceClient {
     return this.getStorage('services', INITIAL_SERVICES);
   }
 
+  async updateService(
+    service_ref_id: number,
+    data: {
+      service_name?: string;
+      description?: string;
+      sac_code?: string;
+      default_gst_rate?: number;
+      unit_price?: number;
+    }
+  ): Promise<FinanceService> {
+    const services = await this.getServices();
+    const svc = services.find((s) => s.ref_id === service_ref_id);
+    if (!svc) throw new Error('Service not found');
+
+    if (data.service_name !== undefined) svc.service_name = data.service_name;
+    if (data.description !== undefined) svc.description = data.description;
+    if (data.sac_code !== undefined) svc.sac_code = data.sac_code;
+    if (data.default_gst_rate !== undefined) svc.default_gst_rate = data.default_gst_rate;
+
+    if (data.unit_price !== undefined) {
+      if (svc.prices && svc.prices.length > 0) {
+        svc.prices[0].unit_price = data.unit_price;
+        svc.prices[0].amount = data.unit_price;
+      } else {
+        svc.prices = [
+          {
+            ref_id: Date.now(),
+            currency: 'INR',
+            unit_price: data.unit_price,
+            amount: data.unit_price,
+            effective_from: new Date().toISOString().split('T')[0],
+            is_active: true,
+          },
+        ];
+      }
+    }
+    this.setStorage('services', services);
+    return svc;
+  }
+
+  async updateServicePrice(
+    service_ref_id: number,
+    new_price: number
+  ): Promise<FinanceService> {
+    return this.updateService(service_ref_id, { unit_price: new_price });
+  }
+
   // --- Customers ---
   async getCustomers(): Promise<FinanceCustomer[]> {
     try {
@@ -449,6 +496,62 @@ class FinanceClient {
     customers.unshift(newCust);
     this.setStorage('customers', customers);
     return newCust;
+  }
+
+  async updateCustomer(
+    ref_id: number,
+    cust: Partial<FinanceCustomer>
+  ): Promise<FinanceCustomer> {
+    try {
+      const res = await fetch(`${API_BASE}/api/v1/finance/customers/${ref_id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(cust),
+      });
+      if (res.ok) return await res.json();
+    } catch {
+      // Fallback
+    }
+    const customers = await this.getCustomers();
+    const idx = customers.findIndex((c) => c.ref_id === ref_id);
+    if (idx === -1) throw new Error('Customer not found');
+
+    const updated: FinanceCustomer = {
+      ...customers[idx],
+      ...cust,
+      customer_name: cust.customer_name || cust.legal_company_name || cust.legal_name || customers[idx].customer_name,
+      legal_company_name: cust.legal_company_name || cust.legal_name || cust.customer_name || customers[idx].legal_company_name,
+      legal_name: cust.legal_name || cust.legal_company_name || cust.customer_name || customers[idx].legal_name,
+      trade_name: cust.trade_name !== undefined ? cust.trade_name : customers[idx].trade_name,
+      gstin: cust.gstin !== undefined ? cust.gstin : customers[idx].gstin,
+      pan: cust.pan !== undefined ? cust.pan : customers[idx].pan,
+      state: cust.state || customers[idx].state,
+      state_code: cust.state_code || customers[idx].state_code,
+      billing_address: cust.billing_address || cust.billing_address_line1 || customers[idx].billing_address,
+      billing_address_line1: cust.billing_address_line1 || cust.billing_address || customers[idx].billing_address_line1,
+      email: cust.email || cust.contact_email || customers[idx].email,
+      contact_email: cust.contact_email || cust.email || customers[idx].contact_email,
+      phone: cust.phone || cust.contact_phone || customers[idx].phone,
+      contact_phone: cust.contact_phone || cust.phone || customers[idx].contact_phone,
+    };
+    customers[idx] = updated;
+    this.setStorage('customers', customers);
+
+    // Propagate customer name updates to subscriptions and invoices in storage
+    const subs = this.getStorage<ServerSubscription[]>('subscriptions', INITIAL_SUBSCRIPTIONS);
+    let subsUpdated = false;
+    for (const sub of subs) {
+      if (sub.customer_ref_id === ref_id) {
+        sub.customer_name = updated.customer_name || updated.legal_name || updated.legal_company_name;
+        sub.customer_gstin = updated.gstin;
+        subsUpdated = true;
+      }
+    }
+    if (subsUpdated) {
+      this.setStorage('subscriptions', subs);
+    }
+
+    return updated;
   }
 
   // --- Vendors ---
@@ -556,6 +659,66 @@ class FinanceClient {
     subs.unshift(newSub);
     this.setStorage('subscriptions', subs);
     return newSub;
+  }
+
+  async updateSubscription(
+    ref_id: number,
+    payload: {
+      customer_ref_id?: number;
+      customer_name?: string;
+      server_hostname?: string;
+      server_ip?: string;
+      server_identifier?: string;
+      server_specs?: string;
+      base_amount_monthly?: number;
+      plan_name?: string;
+      billing_frequency?: string;
+      next_billing_date?: string;
+    }
+  ): Promise<ServerSubscription> {
+    try {
+      const res = await fetch(`${API_BASE}/api/v1/finance/subscriptions/${ref_id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      if (res.ok) return await res.json();
+    } catch {
+      // Fallback
+    }
+    const subs = await this.getSubscriptions();
+    const idx = subs.findIndex((s) => s.ref_id === ref_id);
+    if (idx === -1) throw new Error('Subscription not found');
+
+    const sub = subs[idx];
+    const newBase = payload.base_amount_monthly !== undefined ? payload.base_amount_monthly : sub.base_amount_monthly;
+
+    const updatedItems = (sub.items || []).map((it) => ({
+      ...it,
+      server_hostname: payload.server_hostname !== undefined ? payload.server_hostname : it.server_hostname,
+      server_ip: payload.server_ip !== undefined ? payload.server_ip : it.server_ip,
+      server_identifier: payload.server_identifier !== undefined ? payload.server_identifier : it.server_identifier,
+      server_specs: payload.server_specs !== undefined ? payload.server_specs : it.server_specs,
+      unit_price: newBase !== undefined ? newBase : it.unit_price,
+    }));
+
+    const updated: ServerSubscription = {
+      ...sub,
+      customer_ref_id: payload.customer_ref_id !== undefined ? payload.customer_ref_id : sub.customer_ref_id,
+      customer_name: payload.customer_name !== undefined ? payload.customer_name : sub.customer_name,
+      plan_name: payload.plan_name !== undefined ? payload.plan_name : sub.plan_name,
+      server_hostname: payload.server_hostname !== undefined ? payload.server_hostname : sub.server_hostname,
+      server_ip: payload.server_ip !== undefined ? payload.server_ip : sub.server_ip,
+      server_specs: payload.server_specs !== undefined ? payload.server_specs : sub.server_specs,
+      base_amount_monthly: newBase,
+      billing_frequency: payload.billing_frequency !== undefined ? payload.billing_frequency : sub.billing_frequency,
+      next_billing_date: payload.next_billing_date !== undefined ? payload.next_billing_date : sub.next_billing_date,
+      items: updatedItems.length > 0 ? updatedItems : sub.items,
+    };
+
+    subs[idx] = updated;
+    this.setStorage('subscriptions', subs);
+    return updated;
   }
 
   async pauseSubscription(ref_id: number): Promise<ServerSubscription> {

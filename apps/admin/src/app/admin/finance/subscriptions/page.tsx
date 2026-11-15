@@ -14,6 +14,8 @@ import {
   Layers,
   Search,
   Filter,
+  Edit,
+  Save,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -27,6 +29,8 @@ export default function SubscriptionsPage() {
   const [services, setServices] = useState<FinanceService[]>([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [editingSub, setEditingSub] = useState<ServerSubscription | null>(null);
   const [statusMsg, setStatusMsg] = useState<string | null>(null);
 
   // New Subscription Form State
@@ -35,6 +39,16 @@ export default function SubscriptionsPage() {
   const [billingCycle, setBillingCycle] = useState<'MONTHLY' | 'ANNUAL'>('MONTHLY');
   const [hostname, setHostname] = useState('app01.clientnode.sathus.cloud');
   const [serverIp, setServerIp] = useState('185.199.108.153');
+
+  // Edit Subscription Form State (Server & Amount)
+  const [editCustomerId, setEditCustomerId] = useState<number>(0);
+  const [editHostname, setEditHostname] = useState('');
+  const [editServerIp, setEditServerIp] = useState('');
+  const [editServerSpecs, setEditServerSpecs] = useState('');
+  const [editPlanName, setEditPlanName] = useState('');
+  const [editBaseAmount, setEditBaseAmount] = useState<number>(8500);
+  const [editBillingFreq, setEditBillingFreq] = useState('MONTHLY');
+  const [editNextBillingDate, setEditNextBillingDate] = useState('');
 
   const loadData = async () => {
     setLoading(true);
@@ -95,8 +109,6 @@ export default function SubscriptionsPage() {
     const cust = customers.find((c) => c.ref_id === customerId);
     if (!cust) return;
 
-    const pricing = getSelectedPlanPricing();
-
     const items = [];
     if (planType === 'APP_ONLY' || planType === 'DUAL_BUNDLE') {
       items.push({
@@ -129,6 +141,54 @@ export default function SubscriptionsPage() {
     }
   };
 
+  const handleOpenEdit = (sub: ServerSubscription) => {
+    setEditingSub(sub);
+    const baseAmt =
+      sub.base_amount_monthly ??
+      sub.items?.reduce((acc, it) => acc + it.unit_price * it.quantity, 0) ??
+      8500;
+
+    setEditCustomerId(sub.customer_ref_id || (customers[0]?.ref_id ?? 0));
+    setEditHostname(sub.server_hostname || sub.items?.[0]?.server_hostname || 'app01.clientnode.sathus.cloud');
+    setEditServerIp(sub.server_ip || sub.items?.[0]?.server_ip || '185.199.108.153');
+    setEditServerSpecs(sub.server_specs || sub.items?.[0]?.server_specs || '8 vCPU, 32GB RAM, 100GB NVMe SSD, Ubuntu 24.04 LTS');
+    setEditPlanName(sub.plan_name || sub.items?.[0]?.service_name || 'Server Hosting Contract');
+    setEditBaseAmount(baseAmt);
+    setEditBillingFreq(sub.billing_frequency || 'MONTHLY');
+    setEditNextBillingDate(sub.next_billing_date || new Date().toISOString().split('T')[0]);
+    setShowEditModal(true);
+  };
+
+  const handleSaveEdit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingSub) return;
+
+    const matchedCust = customers.find((c) => c.ref_id === editCustomerId);
+
+    try {
+      await financeClient.updateSubscription(editingSub.ref_id, {
+        customer_ref_id: editCustomerId,
+        customer_name: matchedCust
+          ? matchedCust.legal_name || matchedCust.customer_name || matchedCust.legal_company_name
+          : editingSub.customer_name,
+        server_hostname: editHostname,
+        server_ip: editServerIp,
+        server_identifier: editHostname,
+        server_specs: editServerSpecs,
+        base_amount_monthly: Number(editBaseAmount),
+        plan_name: editPlanName,
+        billing_frequency: editBillingFreq,
+        next_billing_date: editNextBillingDate,
+      });
+      setStatusMsg(`Subscription ${editingSub.subscription_code || editingSub.subscription_number} details and amounts updated successfully.`);
+      setShowEditModal(false);
+      setEditingSub(null);
+      await loadData();
+    } catch {
+      setStatusMsg('Failed to update subscription details.');
+    }
+  };
+
   const handleToggleStatus = async (sub: ServerSubscription, newStatus: ServerSubscription['status']) => {
     try {
       await financeClient.updateSubscriptionStatus(sub.ref_id, newStatus);
@@ -151,7 +211,7 @@ export default function SubscriptionsPage() {
             Server Hosting Subscriptions
           </h1>
           <p className="text-sm text-muted-foreground">
-            Manage customer hosting subscriptions: Application Servers (₹5,500) and Database Servers (₹3,000).
+            Manage customer hosting subscriptions: Application Servers (₹5,500), Database Servers (₹3,000), and custom billing amounts.
           </p>
         </div>
 
@@ -310,8 +370,13 @@ export default function SubscriptionsPage() {
                           {sub.server_hostname || 'node.sathus.cloud'}
                         </p>
                         <p className="text-[10px] font-mono text-muted-foreground">
-                          {sub.server_ip || '185.199.108.153'}
+                          IP: {sub.server_ip || '185.199.108.153'}
                         </p>
+                        {sub.server_specs && (
+                          <p className="text-[10px] text-muted-foreground font-sans truncate max-w-[220px]" title={sub.server_specs}>
+                            ⚙ {sub.server_specs}
+                          </p>
+                        )}
                       </td>
                       <td className="p-3 text-right font-mono font-medium text-foreground">
                         {fmt(monthlyTaxable)}
@@ -334,25 +399,36 @@ export default function SubscriptionsPage() {
                         </span>
                       </td>
                       <td className="p-3 text-right">
-                        {sub.status === 'ACTIVE' ? (
+                        <div className="flex items-center justify-end gap-1">
                           <Button
-                            variant="ghost"
+                            variant="outline"
                             size="sm"
-                            onClick={() => handleToggleStatus(sub, 'PAUSED')}
-                            className="h-7 text-xs text-amber-600 hover:text-amber-700"
+                            onClick={() => handleOpenEdit(sub)}
+                            className="h-7 px-2 text-xs gap-1 text-primary hover:text-primary hover:bg-primary/10"
                           >
-                            <Pause className="h-3 w-3 mr-1" /> Pause
+                            <Edit className="h-3 w-3" /> Edit Server & Amount
                           </Button>
-                        ) : (
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => handleToggleStatus(sub, 'ACTIVE')}
-                            className="h-7 text-xs text-emerald-600 hover:text-emerald-700"
-                          >
-                            <Play className="h-3 w-3 mr-1" /> Resume
-                          </Button>
-                        )}
+
+                          {sub.status === 'ACTIVE' ? (
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => handleToggleStatus(sub, 'PAUSED')}
+                              className="h-7 text-xs text-amber-600 hover:text-amber-700"
+                            >
+                              <Pause className="h-3 w-3 mr-1" /> Pause
+                            </Button>
+                          ) : (
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => handleToggleStatus(sub, 'ACTIVE')}
+                              className="h-7 text-xs text-emerald-600 hover:text-emerald-700"
+                            >
+                              <Play className="h-3 w-3 mr-1" /> Resume
+                            </Button>
+                          )}
+                        </div>
                       </td>
                     </tr>
                   );
@@ -362,6 +438,256 @@ export default function SubscriptionsPage() {
           </div>
         </CardContent>
       </Card>
+
+      {/* EDIT SERVER & AMOUNT DETAILS MODAL */}
+      {showEditModal && editingSub && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+          <div className="w-full max-w-lg rounded-lg border border-border bg-card p-6 shadow-xl space-y-4 max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between border-b border-border pb-3">
+              <div>
+                <h2 className="text-lg font-bold text-foreground flex items-center gap-2">
+                  <Edit className="h-5 w-5 text-[#A20A3A]" /> Edit Server & Amount Details
+                </h2>
+                <p className="text-xs text-muted-foreground mt-0.5">
+                  Subscription: <span className="font-mono font-bold text-foreground">{editingSub.subscription_code || editingSub.subscription_number}</span> ({editingSub.customer_name})
+                </p>
+              </div>
+              <button
+                onClick={() => {
+                  setShowEditModal(false);
+                  setEditingSub(null);
+                }}
+                className="text-muted-foreground hover:text-foreground"
+              >
+                ✕
+              </button>
+            </div>
+
+            <form onSubmit={handleSaveEdit} className="space-y-4 text-xs">
+              {/* SECTION 1: SERVER & CUSTOMER DETAILS */}
+              <div className="rounded-lg border border-border p-3 space-y-3 bg-muted/20">
+                <p className="font-bold text-foreground uppercase tracking-wider text-[11px] flex items-center gap-1.5">
+                  <Server className="h-3.5 w-3.5 text-primary" /> Server Node & Customer Configuration
+                </p>
+
+                <div>
+                  <label className="block font-semibold text-foreground mb-1">
+                    Customer Account
+                  </label>
+                  <select
+                    value={editCustomerId}
+                    onChange={(e) => setEditCustomerId(Number(e.target.value))}
+                    className="w-full rounded border border-border bg-background p-2 text-foreground"
+                  >
+                    {customers.map((c) => (
+                      <option key={c.ref_id} value={c.ref_id}>
+                        {c.legal_name || c.customer_name || c.legal_company_name} ({c.state})
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="grid grid-cols-2 gap-2">
+                  <div>
+                    <label className="block font-semibold text-foreground mb-1">
+                      Server Hostname
+                    </label>
+                    <input
+                      type="text"
+                      value={editHostname}
+                      onChange={(e) => setEditHostname(e.target.value)}
+                      placeholder="app01.clientnode.sathus.cloud"
+                      className="w-full rounded border border-border bg-background p-2 text-foreground font-mono"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block font-semibold text-foreground mb-1">
+                      Server IP Address
+                    </label>
+                    <input
+                      type="text"
+                      value={editServerIp}
+                      onChange={(e) => setEditServerIp(e.target.value)}
+                      placeholder="185.199.108.153"
+                      className="w-full rounded border border-border bg-background p-2 text-foreground font-mono"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block font-semibold text-foreground mb-1">
+                    Server Hardware Specs & Environment
+                  </label>
+                  <input
+                    type="text"
+                    value={editServerSpecs}
+                    onChange={(e) => setEditServerSpecs(e.target.value)}
+                    placeholder="e.g. 8 vCPU, 32GB RAM, 100GB NVMe SSD, Ubuntu 24.04 LTS"
+                    className="w-full rounded border border-border bg-background p-2 text-foreground font-mono"
+                  />
+                </div>
+
+                <div>
+                  <label className="block font-semibold text-foreground mb-1">
+                    Plan / Service Description
+                  </label>
+                  <input
+                    type="text"
+                    value={editPlanName}
+                    onChange={(e) => setEditPlanName(e.target.value)}
+                    placeholder="e.g. Dual Server Bundle (App + DB)"
+                    className="w-full rounded border border-border bg-background p-2 text-foreground"
+                    required
+                  />
+                </div>
+              </div>
+
+              {/* SECTION 2: AMOUNT & PRICING DETAILS */}
+              <div className="rounded-lg border border-border p-3 space-y-3 bg-muted/20">
+                <p className="font-bold text-foreground uppercase tracking-wider text-[11px] flex items-center gap-1.5">
+                  <Database className="h-3.5 w-3.5 text-[#A20A3A]" /> Billing & Amount Details
+                </p>
+
+                {/* Quick amount presets */}
+                <div>
+                  <label className="block font-semibold text-foreground mb-1">
+                    Standard Presets or Custom:
+                  </label>
+                  <div className="grid grid-cols-3 gap-2">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setEditBaseAmount(5500);
+                        setEditPlanName('Application Server Hosting (₹5,500/mo)');
+                      }}
+                      className={`rounded border p-1.5 text-center transition-colors ${
+                        editBaseAmount === 5500
+                          ? 'border-[#A20A3A] bg-[#A20A3A]/10 font-bold text-[#A20A3A]'
+                          : 'border-border'
+                      }`}
+                    >
+                      <p>App Server</p>
+                      <p className="text-[10px] text-muted-foreground">₹5,500</p>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setEditBaseAmount(3000);
+                        setEditPlanName('Database Server Hosting (₹3,000/mo)');
+                      }}
+                      className={`rounded border p-1.5 text-center transition-colors ${
+                        editBaseAmount === 3000
+                          ? 'border-[#A20A3A] bg-[#A20A3A]/10 font-bold text-[#A20A3A]'
+                          : 'border-border'
+                      }`}
+                    >
+                      <p>DB Server</p>
+                      <p className="text-[10px] text-muted-foreground">₹3,000</p>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setEditBaseAmount(8500);
+                        setEditPlanName('Dual Server Bundle: App Server + DB Server');
+                      }}
+                      className={`rounded border p-1.5 text-center transition-colors ${
+                        editBaseAmount === 8500
+                          ? 'border-[#A20A3A] bg-[#A20A3A]/10 font-bold text-[#A20A3A]'
+                          : 'border-border'
+                      }`}
+                    >
+                      <p>Dual Bundle</p>
+                      <p className="text-[10px] text-muted-foreground">₹8,500</p>
+                    </button>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-2">
+                  <div>
+                    <label className="block font-semibold text-foreground mb-1">
+                      Monthly Taxable Amount (₹)
+                    </label>
+                    <input
+                      type="number"
+                      value={editBaseAmount}
+                      onChange={(e) => setEditBaseAmount(Number(e.target.value))}
+                      className="w-full rounded border border-border bg-background p-2 text-foreground font-mono font-bold text-sm"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block font-semibold text-foreground mb-1">
+                      Billing Cycle
+                    </label>
+                    <select
+                      value={editBillingFreq}
+                      onChange={(e) => setEditBillingFreq(e.target.value)}
+                      className="w-full rounded border border-border bg-background p-2 text-foreground"
+                    >
+                      <option value="MONTHLY">Monthly Recurring</option>
+                      <option value="ANNUAL">Annual Prepaid</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block font-semibold text-foreground mb-1">
+                    Next Billing Scheduled Date
+                  </label>
+                  <input
+                    type="date"
+                    value={editNextBillingDate}
+                    onChange={(e) => setEditNextBillingDate(e.target.value)}
+                    className="w-full rounded border border-border bg-background p-2 text-foreground font-mono"
+                    required
+                  />
+                </div>
+
+                {/* Real-time Dynamic Calculation */}
+                <div className="rounded border border-border bg-card p-3 space-y-1.5">
+                  <div className="flex justify-between text-muted-foreground">
+                    <span>Taxable Base Value:</span>
+                    <span className="font-mono font-medium">{fmt(editBaseAmount)}</span>
+                  </div>
+                  <div className="flex justify-between text-muted-foreground">
+                    <span>GST (18% SAC 998315):</span>
+                    <span className="font-mono font-medium">{fmt(Math.round(editBaseAmount * 0.18))}</span>
+                  </div>
+                  <div className="flex justify-between font-bold text-foreground border-t border-border pt-1">
+                    <span>Total Invoiced per Cycle:</span>
+                    <span className="font-mono text-[#A20A3A] text-sm">
+                      {fmt(Math.round(editBaseAmount * 1.18))}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex justify-end gap-2 pt-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    setShowEditModal(false);
+                    setEditingSub(null);
+                  }}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  type="submit"
+                  size="sm"
+                  className="bg-[#A20A3A] hover:bg-[#85082e] text-white"
+                >
+                  Save Server & Amount Details
+                </Button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
 
       {/* PROVISION SUBSCRIPTION MODAL */}
       {showModal && (

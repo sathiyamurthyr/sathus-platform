@@ -499,6 +499,50 @@ class SubscriptionRepository:
         await self.session.commit()
         return sub
 
+    async def update_subscription(
+        self,
+        ref_id: int,
+        server_hostname: Optional[str] = None,
+        server_ip: Optional[str] = None,
+        server_identifier: Optional[str] = None,
+        server_specs: Optional[str] = None,
+        unit_price: Optional[Decimal] = None,
+        billing_frequency: Optional[str] = None,
+        next_billing_date: Optional[date] = None,
+        customer_ref_id: Optional[int] = None,
+        status: Optional[str] = None,
+    ) -> Optional[FinanceSubscription]:
+        sub = await self.get_by_ref_id(ref_id)
+        if not sub:
+            return None
+        if billing_frequency:
+            sub.billing_frequency = billing_frequency
+        if next_billing_date:
+            sub.next_billing_date = next_billing_date
+        if status:
+            sub.status = status
+        if customer_ref_id:
+            cust = await self.session.execute(
+                select(FinanceCustomer).where(FinanceCustomer.ref_id == customer_ref_id)
+            )
+            customer = cust.scalar_one_or_none()
+            if customer:
+                sub.customer_ref_id = customer.finance_customer_ref_id
+
+        if sub.items:
+            for it in sub.items:
+                if server_hostname is not None:
+                    it.server_hostname = server_hostname
+                if server_ip is not None:
+                    it.server_ip = server_ip
+                if server_identifier is not None:
+                    it.server_identifier = server_identifier
+                if unit_price is not None:
+                    it.unit_price = unit_price
+        sub.updated_at = datetime.utcnow()
+        await self.session.commit()
+        return await self.get_by_ref_id(ref_id)
+
     async def get_subscriptions_due_for_billing(self, as_of_date: date) -> Sequence[FinanceSubscription]:
         stmt = (
             select(FinanceSubscription)

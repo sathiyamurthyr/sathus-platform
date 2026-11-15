@@ -145,6 +145,24 @@ class CustomerCreate(BaseModel):
     payment_terms_days: int = 15
 
 
+class CustomerUpdate(BaseModel):
+    customer_name: Optional[str] = None
+    legal_company_name: Optional[str] = None
+    gstin: Optional[str] = None
+    pan: Optional[str] = None
+    gst_reg_type: Optional[str] = None
+    state: Optional[str] = None
+    state_code: Optional[str] = None
+    billing_address: Optional[str] = None
+    service_address: Optional[str] = None
+    email: Optional[str] = None
+    phone: Optional[str] = None
+    primary_contact: Optional[str] = None
+    payment_terms_days: Optional[int] = None
+    credit_limit: Optional[Decimal] = None
+    status: Optional[str] = None
+
+
 class CustomerResponse(BaseSchema):
     ref_id: int
     customer_code: str
@@ -220,6 +238,19 @@ class SubscriptionCreate(BaseModel):
     auto_generate: bool = True
     auto_send: bool = False
     approval_required: bool = True
+
+
+class SubscriptionUpdate(BaseModel):
+    customer_ref_id: Optional[int] = None
+    server_hostname: Optional[str] = None
+    server_ip: Optional[str] = None
+    server_identifier: Optional[str] = None
+    server_specs: Optional[str] = None
+    base_amount_monthly: Optional[Decimal] = None
+    plan_name: Optional[str] = None
+    billing_frequency: Optional[str] = None
+    next_billing_date: Optional[date] = None
+    status: Optional[str] = None
 
 
 class SubscriptionItemResponse(BaseSchema):
