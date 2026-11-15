@@ -73,6 +73,16 @@ export default function SubscriptionsPage() {
     loadData();
   }, []);
 
+  useEffect(() => {
+    if (showModal || showEditModal) {
+      const original = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = original;
+      };
+    }
+  }, [showModal, showEditModal]);
+
   const fmt = (val: number) =>
     new Intl.NumberFormat('en-IN', {
       style: 'currency',
@@ -441,425 +451,491 @@ export default function SubscriptionsPage() {
 
       {/* EDIT SERVER & AMOUNT DETAILS MODAL */}
       {showEditModal && editingSub && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <div className="w-full max-w-lg rounded-lg border border-border bg-card p-6 shadow-xl space-y-4 max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between border-b border-border pb-3">
-              <div>
-                <h2 className="text-lg font-bold text-foreground flex items-center gap-2">
-                  <Edit className="h-5 w-5 text-[#A20A3A]" /> Edit Server & Amount Details
-                </h2>
-                <p className="text-xs text-muted-foreground mt-0.5">
-                  Subscription: <span className="font-mono font-bold text-foreground">{editingSub.subscription_code || editingSub.subscription_number}</span> ({editingSub.customer_name})
-                </p>
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto"
+          role="dialog"
+          aria-modal="true"
+        >
+          {/* Separate Dark Backdrop */}
+          <div
+            className="fixed inset-0 bg-black/50 transition-opacity"
+            aria-hidden="true"
+            onClick={() => {
+              setShowEditModal(false);
+              setEditingSub(null);
+            }}
+          />
+
+          {/* Modal Container: Solid White #FFFFFF, max-w-[640px], max-h-[90vh], rounded-2xl, shadow-2xl */}
+          <div
+            className="relative z-10 w-full max-w-[640px] max-h-[90vh] flex flex-col rounded-2xl bg-white border border-neutral-200 shadow-2xl overflow-hidden text-neutral-900"
+            style={{ backgroundColor: '#FFFFFF' }}
+          >
+            {/* Fixed Sticky Header */}
+            <div className="flex items-center justify-between px-6 py-4 border-b border-neutral-200 bg-white shrink-0">
+              <div className="flex items-center gap-3">
+                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#A20A3A]/10 text-[#A20A3A] shrink-0">
+                  <Edit className="h-5 w-5 text-[#A20A3A]" />
+                </div>
+                <div>
+                  <h2 className="text-base font-bold text-neutral-900">
+                    Edit Server & Amount Details
+                  </h2>
+                  <p className="text-xs text-neutral-500">
+                    Contract: <span className="font-mono font-bold text-neutral-900">{editingSub.subscription_code || editingSub.subscription_number}</span> ({editingSub.customer_name})
+                  </p>
+                </div>
               </div>
               <button
+                type="button"
                 onClick={() => {
                   setShowEditModal(false);
                   setEditingSub(null);
                 }}
-                className="text-muted-foreground hover:text-foreground"
+                className="rounded-lg p-1.5 text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 transition-colors"
+                aria-label="Close modal"
               >
                 ✕
               </button>
             </div>
 
-            <form onSubmit={handleSaveEdit} className="space-y-4 text-xs">
-              {/* SECTION 1: SERVER & CUSTOMER DETAILS */}
-              <div className="rounded-lg border border-border p-3 space-y-3 bg-muted/20">
-                <p className="font-bold text-foreground uppercase tracking-wider text-[11px] flex items-center gap-1.5">
-                  <Server className="h-3.5 w-3.5 text-primary" /> Server Node & Customer Configuration
-                </p>
+            {/* Scrollable Form Body */}
+            <div className="flex-1 overflow-y-auto px-6 py-5 admin-scrollbar bg-white">
+              <form id="edit-sub-form" onSubmit={handleSaveEdit} className="space-y-4 text-xs">
+                {/* SECTION 1: SERVER & CUSTOMER DETAILS */}
+                <div className="rounded-xl border border-neutral-200 p-4 space-y-3 bg-[#FAF8F9]">
+                  <p className="font-bold text-neutral-900 uppercase tracking-wider text-[11px] flex items-center gap-1.5">
+                    <Server className="h-3.5 w-3.5 text-[#A20A3A]" /> Server Node & Customer Configuration
+                  </p>
 
-                <div>
-                  <label className="block font-semibold text-foreground mb-1">
-                    Customer Account
-                  </label>
-                  <select
-                    value={editCustomerId}
-                    onChange={(e) => setEditCustomerId(Number(e.target.value))}
-                    className="w-full rounded border border-border bg-background p-2 text-foreground"
-                  >
-                    {customers.map((c) => (
-                      <option key={c.ref_id} value={c.ref_id}>
-                        {c.legal_name || c.customer_name || c.legal_company_name} ({c.state})
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div className="grid grid-cols-2 gap-2">
                   <div>
-                    <label className="block font-semibold text-foreground mb-1">
-                      Server Hostname
-                    </label>
-                    <input
-                      type="text"
-                      value={editHostname}
-                      onChange={(e) => setEditHostname(e.target.value)}
-                      placeholder="app01.clientnode.sathus.cloud"
-                      className="w-full rounded border border-border bg-background p-2 text-foreground font-mono"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block font-semibold text-foreground mb-1">
-                      Server IP Address
-                    </label>
-                    <input
-                      type="text"
-                      value={editServerIp}
-                      onChange={(e) => setEditServerIp(e.target.value)}
-                      placeholder="185.199.108.153"
-                      className="w-full rounded border border-border bg-background p-2 text-foreground font-mono"
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block font-semibold text-foreground mb-1">
-                    Server Hardware Specs & Environment
-                  </label>
-                  <input
-                    type="text"
-                    value={editServerSpecs}
-                    onChange={(e) => setEditServerSpecs(e.target.value)}
-                    placeholder="e.g. 8 vCPU, 32GB RAM, 100GB NVMe SSD, Ubuntu 24.04 LTS"
-                    className="w-full rounded border border-border bg-background p-2 text-foreground font-mono"
-                  />
-                </div>
-
-                <div>
-                  <label className="block font-semibold text-foreground mb-1">
-                    Plan / Service Description
-                  </label>
-                  <input
-                    type="text"
-                    value={editPlanName}
-                    onChange={(e) => setEditPlanName(e.target.value)}
-                    placeholder="e.g. Dual Server Bundle (App + DB)"
-                    className="w-full rounded border border-border bg-background p-2 text-foreground"
-                    required
-                  />
-                </div>
-              </div>
-
-              {/* SECTION 2: AMOUNT & PRICING DETAILS */}
-              <div className="rounded-lg border border-border p-3 space-y-3 bg-muted/20">
-                <p className="font-bold text-foreground uppercase tracking-wider text-[11px] flex items-center gap-1.5">
-                  <Database className="h-3.5 w-3.5 text-[#A20A3A]" /> Billing & Amount Details
-                </p>
-
-                {/* Quick amount presets */}
-                <div>
-                  <label className="block font-semibold text-foreground mb-1">
-                    Standard Presets or Custom:
-                  </label>
-                  <div className="grid grid-cols-3 gap-2">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setEditBaseAmount(5500);
-                        setEditPlanName('Application Server Hosting (₹5,500/mo)');
-                      }}
-                      className={`rounded border p-1.5 text-center transition-colors ${
-                        editBaseAmount === 5500
-                          ? 'border-[#A20A3A] bg-[#A20A3A]/10 font-bold text-[#A20A3A]'
-                          : 'border-border'
-                      }`}
-                    >
-                      <p>App Server</p>
-                      <p className="text-[10px] text-muted-foreground">₹5,500</p>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setEditBaseAmount(3000);
-                        setEditPlanName('Database Server Hosting (₹3,000/mo)');
-                      }}
-                      className={`rounded border p-1.5 text-center transition-colors ${
-                        editBaseAmount === 3000
-                          ? 'border-[#A20A3A] bg-[#A20A3A]/10 font-bold text-[#A20A3A]'
-                          : 'border-border'
-                      }`}
-                    >
-                      <p>DB Server</p>
-                      <p className="text-[10px] text-muted-foreground">₹3,000</p>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setEditBaseAmount(8500);
-                        setEditPlanName('Dual Server Bundle: App Server + DB Server');
-                      }}
-                      className={`rounded border p-1.5 text-center transition-colors ${
-                        editBaseAmount === 8500
-                          ? 'border-[#A20A3A] bg-[#A20A3A]/10 font-bold text-[#A20A3A]'
-                          : 'border-border'
-                      }`}
-                    >
-                      <p>Dual Bundle</p>
-                      <p className="text-[10px] text-muted-foreground">₹8,500</p>
-                    </button>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-2">
-                  <div>
-                    <label className="block font-semibold text-foreground mb-1">
-                      Monthly Taxable Amount (₹)
-                    </label>
-                    <input
-                      type="number"
-                      value={editBaseAmount}
-                      onChange={(e) => setEditBaseAmount(Number(e.target.value))}
-                      className="w-full rounded border border-border bg-background p-2 text-foreground font-mono font-bold text-sm"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block font-semibold text-foreground mb-1">
-                      Billing Cycle
+                    <label className="block font-semibold text-neutral-700 mb-1">
+                      Customer Account
                     </label>
                     <select
-                      value={editBillingFreq}
-                      onChange={(e) => setEditBillingFreq(e.target.value)}
-                      className="w-full rounded border border-border bg-background p-2 text-foreground"
+                      value={editCustomerId}
+                      onChange={(e) => setEditCustomerId(Number(e.target.value))}
+                      className="w-full h-10 px-3 rounded-lg border border-neutral-300 bg-white text-xs text-neutral-900 focus:outline-none focus:ring-2 focus:ring-[#A20A3A]/20 focus:border-[#A20A3A]"
                     >
-                      <option value="MONTHLY">Monthly Recurring</option>
-                      <option value="ANNUAL">Annual Prepaid</option>
+                      {customers.map((c) => (
+                        <option key={c.ref_id} value={c.ref_id}>
+                          {c.legal_name || c.customer_name || c.legal_company_name} ({c.state})
+                        </option>
+                      ))}
                     </select>
                   </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                      <label className="block font-semibold text-neutral-700 mb-1">
+                        Server Hostname
+                      </label>
+                      <input
+                        type="text"
+                        value={editHostname}
+                        onChange={(e) => setEditHostname(e.target.value)}
+                        placeholder="app01.clientnode.sathus.cloud"
+                        className="w-full h-10 px-3 rounded-lg border border-neutral-300 bg-white text-xs text-neutral-900 font-mono focus:outline-none focus:ring-2 focus:ring-[#A20A3A]/20 focus:border-[#A20A3A]"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block font-semibold text-neutral-700 mb-1">
+                        Server IP Address
+                      </label>
+                      <input
+                        type="text"
+                        value={editServerIp}
+                        onChange={(e) => setEditServerIp(e.target.value)}
+                        placeholder="185.199.108.153"
+                        className="w-full h-10 px-3 rounded-lg border border-neutral-300 bg-white text-xs text-neutral-900 font-mono focus:outline-none focus:ring-2 focus:ring-[#A20A3A]/20 focus:border-[#A20A3A]"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block font-semibold text-neutral-700 mb-1">
+                      Server Hardware Specs & Environment
+                    </label>
+                    <input
+                      type="text"
+                      value={editServerSpecs}
+                      onChange={(e) => setEditServerSpecs(e.target.value)}
+                      placeholder="e.g. 8 vCPU, 32GB RAM, 100GB NVMe SSD, Ubuntu 24.04 LTS"
+                      className="w-full h-10 px-3 rounded-lg border border-neutral-300 bg-white text-xs text-neutral-900 font-mono focus:outline-none focus:ring-2 focus:ring-[#A20A3A]/20 focus:border-[#A20A3A]"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block font-semibold text-neutral-700 mb-1">
+                      Plan / Service Description
+                    </label>
+                    <input
+                      type="text"
+                      value={editPlanName}
+                      onChange={(e) => setEditPlanName(e.target.value)}
+                      placeholder="e.g. Dual Server Bundle (App + DB)"
+                      className="w-full h-10 px-3 rounded-lg border border-neutral-300 bg-white text-xs text-neutral-900 focus:outline-none focus:ring-2 focus:ring-[#A20A3A]/20 focus:border-[#A20A3A]"
+                      required
+                    />
+                  </div>
                 </div>
 
-                <div>
-                  <label className="block font-semibold text-foreground mb-1">
-                    Next Billing Scheduled Date
-                  </label>
-                  <input
-                    type="date"
-                    value={editNextBillingDate}
-                    onChange={(e) => setEditNextBillingDate(e.target.value)}
-                    className="w-full rounded border border-border bg-background p-2 text-foreground font-mono"
-                    required
-                  />
-                </div>
+                {/* SECTION 2: AMOUNT & PRICING DETAILS */}
+                <div className="rounded-xl border border-neutral-200 p-4 space-y-3 bg-[#FAF8F9]">
+                  <p className="font-bold text-neutral-900 uppercase tracking-wider text-[11px] flex items-center gap-1.5">
+                    <Database className="h-3.5 w-3.5 text-[#A20A3A]" /> Billing & Amount Details
+                  </p>
 
-                {/* Real-time Dynamic Calculation */}
-                <div className="rounded border border-border bg-card p-3 space-y-1.5">
-                  <div className="flex justify-between text-muted-foreground">
-                    <span>Taxable Base Value:</span>
-                    <span className="font-mono font-medium">{fmt(editBaseAmount)}</span>
+                  {/* Quick amount presets */}
+                  <div>
+                    <label className="block font-semibold text-neutral-700 mb-1.5">
+                      Standard Presets or Custom Amount:
+                    </label>
+                    <div className="grid grid-cols-3 gap-2">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setEditBaseAmount(5500);
+                          setEditPlanName('Application Server Hosting (₹5,500/mo)');
+                        }}
+                        className={`rounded-lg border p-2 text-center transition-all ${
+                          editBaseAmount === 5500
+                            ? 'border-[#A20A3A] bg-[#A20A3A]/10 font-bold text-[#A20A3A]'
+                            : 'border-neutral-200 bg-white text-neutral-700 hover:border-neutral-300'
+                        }`}
+                      >
+                        <p className="font-bold">App Server</p>
+                        <p className="text-[10px] text-neutral-500">₹5,500/mo</p>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setEditBaseAmount(3000);
+                          setEditPlanName('Database Server Hosting (₹3,000/mo)');
+                        }}
+                        className={`rounded-lg border p-2 text-center transition-all ${
+                          editBaseAmount === 3000
+                            ? 'border-[#A20A3A] bg-[#A20A3A]/10 font-bold text-[#A20A3A]'
+                            : 'border-neutral-200 bg-white text-neutral-700 hover:border-neutral-300'
+                        }`}
+                      >
+                        <p className="font-bold">DB Server</p>
+                        <p className="text-[10px] text-neutral-500">₹3,000/mo</p>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setEditBaseAmount(8500);
+                          setEditPlanName('Dual Server Bundle: App Server + DB Server');
+                        }}
+                        className={`rounded-lg border p-2 text-center transition-all ${
+                          editBaseAmount === 8500
+                            ? 'border-[#A20A3A] bg-[#A20A3A]/10 font-bold text-[#A20A3A]'
+                            : 'border-neutral-200 bg-white text-neutral-700 hover:border-neutral-300'
+                        }`}
+                      >
+                        <p className="font-bold">Dual Bundle</p>
+                        <p className="text-[10px] text-neutral-500">₹8,500/mo</p>
+                      </button>
+                    </div>
                   </div>
-                  <div className="flex justify-between text-muted-foreground">
-                    <span>GST (18% SAC 998315):</span>
-                    <span className="font-mono font-medium">{fmt(Math.round(editBaseAmount * 0.18))}</span>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                      <label className="block font-semibold text-neutral-700 mb-1">
+                        Monthly Taxable Amount (₹)
+                      </label>
+                      <input
+                        type="number"
+                        value={editBaseAmount}
+                        onChange={(e) => setEditBaseAmount(Number(e.target.value))}
+                        className="w-full h-10 px-3 rounded-lg border border-neutral-300 bg-white text-sm font-mono font-bold text-[#A20A3A] focus:outline-none focus:ring-2 focus:ring-[#A20A3A]/20 focus:border-[#A20A3A]"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block font-semibold text-neutral-700 mb-1">
+                        Billing Cycle
+                      </label>
+                      <select
+                        value={editBillingFreq}
+                        onChange={(e) => setEditBillingFreq(e.target.value)}
+                        className="w-full h-10 px-3 rounded-lg border border-neutral-300 bg-white text-xs text-neutral-900 focus:outline-none focus:ring-2 focus:ring-[#A20A3A]/20 focus:border-[#A20A3A]"
+                      >
+                        <option value="MONTHLY">Monthly Recurring</option>
+                        <option value="ANNUAL">Annual Prepaid</option>
+                      </select>
+                    </div>
                   </div>
-                  <div className="flex justify-between font-bold text-foreground border-t border-border pt-1">
-                    <span>Total Invoiced per Cycle:</span>
-                    <span className="font-mono text-[#A20A3A] text-sm">
-                      {fmt(Math.round(editBaseAmount * 1.18))}
-                    </span>
+
+                  <div>
+                    <label className="block font-semibold text-neutral-700 mb-1">
+                      Next Billing Scheduled Date
+                    </label>
+                    <input
+                      type="date"
+                      value={editNextBillingDate}
+                      onChange={(e) => setEditNextBillingDate(e.target.value)}
+                      className="w-full h-10 px-3 rounded-lg border border-neutral-300 bg-white text-xs font-mono text-neutral-900 focus:outline-none focus:ring-2 focus:ring-[#A20A3A]/20 focus:border-[#A20A3A]"
+                      required
+                    />
+                  </div>
+
+                  {/* Real-time Dynamic Calculation */}
+                  <div className="rounded-lg border border-neutral-200 bg-white p-3 space-y-1.5 text-xs">
+                    <div className="flex justify-between text-neutral-600">
+                      <span>Taxable Base Value:</span>
+                      <span className="font-mono font-medium">{fmt(editBaseAmount)}</span>
+                    </div>
+                    <div className="flex justify-between text-neutral-600">
+                      <span>GST (18% SAC 998315):</span>
+                      <span className="font-mono font-medium">{fmt(Math.round(editBaseAmount * 0.18))}</span>
+                    </div>
+                    <div className="flex justify-between font-bold text-neutral-900 border-t border-neutral-200 pt-1.5">
+                      <span>Total Invoiced per Cycle:</span>
+                      <span className="font-mono text-[#A20A3A] text-sm font-bold">
+                        {fmt(Math.round(editBaseAmount * 1.18))}
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </form>
+            </div>
 
-              <div className="flex justify-end gap-2 pt-2">
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="sm"
-                  onClick={() => {
-                    setShowEditModal(false);
-                    setEditingSub(null);
-                  }}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  type="submit"
-                  size="sm"
-                  className="bg-[#A20A3A] hover:bg-[#85082e] text-white"
-                >
-                  Save Server & Amount Details
-                </Button>
-              </div>
-            </form>
+            {/* Fixed Sticky Footer */}
+            <div className="flex items-center justify-end gap-3 px-6 py-4 border-t border-neutral-200 bg-[#FAF8F9] shrink-0">
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  setShowEditModal(false);
+                  setEditingSub(null);
+                }}
+                className="border-neutral-300 text-neutral-700 hover:bg-neutral-100 h-9"
+              >
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                form="edit-sub-form"
+                size="sm"
+                className="bg-[#A20A3A] hover:bg-[#85082e] text-white shadow-sm font-semibold px-5 h-9"
+              >
+                Save Server & Amount Details
+              </Button>
+            </div>
           </div>
         </div>
       )}
 
       {/* PROVISION SUBSCRIPTION MODAL */}
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <div className="w-full max-w-lg rounded-lg border border-border bg-card p-6 shadow-xl space-y-4">
-            <div className="flex items-center justify-between border-b border-border pb-3">
-              <h2 className="text-lg font-bold text-foreground flex items-center gap-2">
-                <Server className="h-5 w-5 text-[#A20A3A]" /> Provision Server Hosting
-              </h2>
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto"
+          role="dialog"
+          aria-modal="true"
+        >
+          {/* Separate Dark Backdrop */}
+          <div
+            className="fixed inset-0 bg-black/50 transition-opacity"
+            aria-hidden="true"
+            onClick={() => setShowModal(false)}
+          />
+
+          {/* Modal Container: Solid White #FFFFFF, max-w-[640px], max-h-[90vh], rounded-2xl, shadow-2xl */}
+          <div
+            className="relative z-10 w-full max-w-[640px] max-h-[90vh] flex flex-col rounded-2xl bg-white border border-neutral-200 shadow-2xl overflow-hidden text-neutral-900"
+            style={{ backgroundColor: '#FFFFFF' }}
+          >
+            {/* Fixed Sticky Header */}
+            <div className="flex items-center justify-between px-6 py-4 border-b border-neutral-200 bg-white shrink-0">
+              <div className="flex items-center gap-3">
+                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#A20A3A]/10 text-[#A20A3A] shrink-0">
+                  <Server className="h-5 w-5 text-[#A20A3A]" />
+                </div>
+                <div>
+                  <h2 className="text-base font-bold text-neutral-900">
+                    Provision Server Hosting
+                  </h2>
+                  <p className="text-xs text-neutral-500">
+                    Deploy Application Server (₹5,500) and/or Database Server (₹3,000) contract
+                  </p>
+                </div>
+              </div>
               <button
+                type="button"
                 onClick={() => setShowModal(false)}
-                className="text-muted-foreground hover:text-foreground"
+                className="rounded-lg p-1.5 text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 transition-colors"
+                aria-label="Close modal"
               >
                 ✕
               </button>
             </div>
 
-            <form onSubmit={handleCreateSubscription} className="space-y-4 text-xs">
-              {/* Customer Selector */}
-              <div>
-                <label className="block font-semibold text-foreground mb-1">
-                  Select Customer
-                </label>
-                <select
-                  value={customerId}
-                  onChange={(e) => setCustomerId(Number(e.target.value))}
-                  className="w-full rounded border border-border bg-background p-2 text-foreground"
-                >
-                  {customers.map((c) => (
-                    <option key={c.ref_id} value={c.ref_id}>
-                      {c.legal_name || c.customer_name || c.legal_company_name} (GSTIN: {c.gstin || 'B2C'})
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Hosting Plan Selector */}
-              <div>
-                <label className="block font-semibold text-foreground mb-1">
-                  Hosting Plan
-                </label>
-                <div className="grid grid-cols-3 gap-2">
-                  <button
-                    type="button"
-                    onClick={() => setPlanType('APP_ONLY')}
-                    className={`rounded border p-2 text-center transition-colors ${
-                      planType === 'APP_ONLY'
-                        ? 'border-[#A20A3A] bg-[#A20A3A]/10 font-bold text-[#A20A3A]'
-                        : 'border-border'
-                    }`}
-                  >
-                    <p className="font-semibold">App Server</p>
-                    <p className="text-[11px] text-muted-foreground">₹5,500/mo</p>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => setPlanType('DB_ONLY')}
-                    className={`rounded border p-2 text-center transition-colors ${
-                      planType === 'DB_ONLY'
-                        ? 'border-[#A20A3A] bg-[#A20A3A]/10 font-bold text-[#A20A3A]'
-                        : 'border-border'
-                    }`}
-                  >
-                    <p className="font-semibold">DB Server</p>
-                    <p className="text-[11px] text-muted-foreground">₹3,000/mo</p>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => setPlanType('DUAL_BUNDLE')}
-                    className={`rounded border p-2 text-center transition-colors ${
-                      planType === 'DUAL_BUNDLE'
-                        ? 'border-[#A20A3A] bg-[#A20A3A]/10 font-bold text-[#A20A3A]'
-                        : 'border-border'
-                    }`}
-                  >
-                    <p className="font-semibold">Dual Bundle</p>
-                    <p className="text-[11px] text-muted-foreground">₹8,500/mo</p>
-                  </button>
-                </div>
-              </div>
-
-              {/* Billing Cycle */}
-              <div>
-                <label className="block font-semibold text-foreground mb-1">
-                  Billing Cycle
-                </label>
-                <div className="flex gap-4">
-                  <label className="flex items-center gap-1.5 cursor-pointer">
-                    <input
-                      type="radio"
-                      name="cycle"
-                      checked={billingCycle === 'MONTHLY'}
-                      onChange={() => setBillingCycle('MONTHLY')}
-                    />
-                    <span>Monthly (₹{pricingPreview.monthlyTaxable.toLocaleString()}/mo)</span>
-                  </label>
-                  <label className="flex items-center gap-1.5 cursor-pointer">
-                    <input
-                      type="radio"
-                      name="cycle"
-                      checked={billingCycle === 'ANNUAL'}
-                      onChange={() => setBillingCycle('ANNUAL')}
-                    />
-                    <span>Annual (₹{(pricingPreview.monthlyTaxable * 12).toLocaleString()}/yr)</span>
-                  </label>
-                </div>
-              </div>
-
-              {/* Server Details */}
-              <div className="grid grid-cols-2 gap-2">
+            {/* Scrollable Form Body */}
+            <div className="flex-1 overflow-y-auto px-6 py-5 admin-scrollbar bg-white">
+              <form id="provision-sub-form" onSubmit={handleCreateSubscription} className="space-y-4 text-xs">
+                {/* Customer Selector */}
                 <div>
-                  <label className="block font-semibold text-foreground mb-1">
-                    Hostname
+                  <label className="block font-semibold text-neutral-700 mb-1">
+                    Select Customer
                   </label>
-                  <input
-                    type="text"
-                    value={hostname}
-                    onChange={(e) => setHostname(e.target.value)}
-                    className="w-full rounded border border-border bg-background p-2 text-foreground font-mono"
-                    required
-                  />
+                  <select
+                    value={customerId}
+                    onChange={(e) => setCustomerId(Number(e.target.value))}
+                    className="w-full h-10 px-3 rounded-lg border border-neutral-300 bg-white text-xs text-neutral-900 focus:outline-none focus:ring-2 focus:ring-[#A20A3A]/20 focus:border-[#A20A3A]"
+                  >
+                    {customers.map((c) => (
+                      <option key={c.ref_id} value={c.ref_id}>
+                        {c.legal_name || c.customer_name || c.legal_company_name} (GSTIN: {c.gstin || 'B2C'})
+                      </option>
+                    ))}
+                  </select>
                 </div>
+
+                {/* Hosting Plan Selector */}
                 <div>
-                  <label className="block font-semibold text-foreground mb-1">
-                    IP Address
+                  <label className="block font-semibold text-neutral-700 mb-1">
+                    Hosting Plan
                   </label>
-                  <input
-                    type="text"
-                    value={serverIp}
-                    onChange={(e) => setServerIp(e.target.value)}
-                    className="w-full rounded border border-border bg-background p-2 text-foreground font-mono"
-                    required
-                  />
-                </div>
-              </div>
+                  <div className="grid grid-cols-3 gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setPlanType('APP_ONLY')}
+                      className={`rounded-lg border p-2 text-center transition-all ${
+                        planType === 'APP_ONLY'
+                          ? 'border-[#A20A3A] bg-[#A20A3A]/10 font-bold text-[#A20A3A]'
+                          : 'border-neutral-200 bg-white text-neutral-700 hover:border-neutral-300'
+                      }`}
+                    >
+                      <p className="font-bold">App Server</p>
+                      <p className="text-[11px] text-neutral-500">₹5,500/mo</p>
+                    </button>
 
-              {/* Financial Calculation Breakdown */}
-              <div className="rounded border border-border bg-muted/40 p-3 space-y-1">
-                <div className="flex justify-between text-muted-foreground">
-                  <span>Taxable Base Value:</span>
-                  <span className="font-mono">{fmt(pricingPreview.taxableTotal)}</span>
-                </div>
-                <div className="flex justify-between text-muted-foreground">
-                  <span>Applicable GST (18% SAC 998315):</span>
-                  <span className="font-mono">{fmt(pricingPreview.gstTotal)}</span>
-                </div>
-                <div className="flex justify-between font-bold text-foreground border-t border-border pt-1">
-                  <span>Total Recurring Invoice Value:</span>
-                  <span className="font-mono text-[#A20A3A]">{fmt(pricingPreview.grandTotal)}</span>
-                </div>
-              </div>
+                    <button
+                      type="button"
+                      onClick={() => setPlanType('DB_ONLY')}
+                      className={`rounded-lg border p-2 text-center transition-all ${
+                        planType === 'DB_ONLY'
+                          ? 'border-[#A20A3A] bg-[#A20A3A]/10 font-bold text-[#A20A3A]'
+                          : 'border-neutral-200 bg-white text-neutral-700 hover:border-neutral-300'
+                      }`}
+                    >
+                      <p className="font-bold">DB Server</p>
+                      <p className="text-[11px] text-neutral-500">₹3,000/mo</p>
+                    </button>
 
-              <div className="flex justify-end gap-2 pt-2">
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setShowModal(false)}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  type="submit"
-                  size="sm"
-                  className="bg-[#A20A3A] hover:bg-[#85082e] text-white"
-                >
-                  Confirm & Provision Contract
-                </Button>
-              </div>
-            </form>
+                    <button
+                      type="button"
+                      onClick={() => setPlanType('DUAL_BUNDLE')}
+                      className={`rounded-lg border p-2 text-center transition-all ${
+                        planType === 'DUAL_BUNDLE'
+                          ? 'border-[#A20A3A] bg-[#A20A3A]/10 font-bold text-[#A20A3A]'
+                          : 'border-neutral-200 bg-white text-neutral-700 hover:border-neutral-300'
+                      }`}
+                    >
+                      <p className="font-bold">Dual Bundle</p>
+                      <p className="text-[11px] text-neutral-500">₹8,500/mo</p>
+                    </button>
+                  </div>
+                </div>
+
+                {/* Billing Cycle */}
+                <div>
+                  <label className="block font-semibold text-neutral-700 mb-1">
+                    Billing Cycle
+                  </label>
+                  <div className="flex gap-4">
+                    <label className="flex items-center gap-1.5 cursor-pointer">
+                      <input
+                        type="radio"
+                        name="cycle"
+                        checked={billingCycle === 'MONTHLY'}
+                        onChange={() => setBillingCycle('MONTHLY')}
+                      />
+                      <span className="text-neutral-800">Monthly (₹{pricingPreview.monthlyTaxable.toLocaleString()}/mo)</span>
+                    </label>
+                    <label className="flex items-center gap-1.5 cursor-pointer">
+                      <input
+                        type="radio"
+                        name="cycle"
+                        checked={billingCycle === 'ANNUAL'}
+                        onChange={() => setBillingCycle('ANNUAL')}
+                      />
+                      <span className="text-neutral-800">Annual (₹{(pricingPreview.monthlyTaxable * 12).toLocaleString()}/yr)</span>
+                    </label>
+                  </div>
+                </div>
+
+                {/* Server Details */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label className="block font-semibold text-neutral-700 mb-1">
+                      Hostname
+                    </label>
+                    <input
+                      type="text"
+                      value={hostname}
+                      onChange={(e) => setHostname(e.target.value)}
+                      className="w-full h-10 px-3 rounded-lg border border-neutral-300 bg-white text-xs text-neutral-900 font-mono focus:outline-none focus:ring-2 focus:ring-[#A20A3A]/20 focus:border-[#A20A3A]"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block font-semibold text-neutral-700 mb-1">
+                      IP Address
+                    </label>
+                    <input
+                      type="text"
+                      value={serverIp}
+                      onChange={(e) => setServerIp(e.target.value)}
+                      className="w-full h-10 px-3 rounded-lg border border-neutral-300 bg-white text-xs text-neutral-900 font-mono focus:outline-none focus:ring-2 focus:ring-[#A20A3A]/20 focus:border-[#A20A3A]"
+                      required
+                    />
+                  </div>
+                </div>
+
+                {/* Financial Calculation Breakdown */}
+                <div className="rounded-xl border border-neutral-200 bg-[#FAF8F9] p-4 space-y-2 text-xs">
+                  <div className="flex justify-between text-neutral-600">
+                    <span>Taxable Base Value:</span>
+                    <span className="font-mono">{fmt(pricingPreview.taxableTotal)}</span>
+                  </div>
+                  <div className="flex justify-between text-neutral-600">
+                    <span>Applicable GST (18% SAC 998315):</span>
+                    <span className="font-mono">{fmt(pricingPreview.gstTotal)}</span>
+                  </div>
+                  <div className="flex justify-between font-bold text-neutral-900 border-t border-neutral-200 pt-1.5">
+                    <span>Total Recurring Invoice Value:</span>
+                    <span className="font-mono text-[#A20A3A] text-sm">{fmt(pricingPreview.grandTotal)}</span>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            {/* Fixed Sticky Footer */}
+            <div className="flex items-center justify-end gap-3 px-6 py-4 border-t border-neutral-200 bg-[#FAF8F9] shrink-0">
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => setShowModal(false)}
+                className="border-neutral-300 text-neutral-700 hover:bg-neutral-100 h-9"
+              >
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                form="provision-sub-form"
+                size="sm"
+                className="bg-[#A20A3A] hover:bg-[#85082e] text-white shadow-sm font-semibold px-5 h-9"
+              >
+                Confirm & Provision Contract
+              </Button>
+            </div>
           </div>
         </div>
       )}

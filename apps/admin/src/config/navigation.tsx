@@ -17,37 +17,43 @@ import {
   Server,
   Receipt,
   ShoppingCart,
+  Building,
+  CreditCard,
+  FileSpreadsheet,
 } from 'lucide-react';
 
 import type { NavItem } from '@/types/admin';
 
 /**
  * Primary navigation for the Sathus Admin CMS.
- *
- * Modules that are not part of this foundation sprint are flagged
- * `comingSoon` so the UI communicates intent without creating dead routes.
  */
-export const navItems: NavItem[] = [
+export const platformNavItems: NavItem[] = [
   { label: 'Dashboard', href: '/admin/dashboard', icon: LayoutDashboard },
-  { label: 'Finance & Billing', href: '/admin/finance', icon: IndianRupee },
-  { label: 'Server Subscriptions', href: '/admin/finance/subscriptions', icon: Server },
-  { label: 'Sales Invoices', href: '/admin/finance/invoices', icon: Receipt },
-  { label: 'Vendor Purchases', href: '/admin/finance/purchases', icon: ShoppingCart },
   { label: 'Products', href: '/admin/content?contentType=Product', icon: Package },
-  { label: 'Services', href: '/admin/finance/services', icon: Briefcase },
-  { label: 'Sathus Labs', href: '/admin/labs', icon: FlaskConical, comingSoon: true },
-  { label: 'Sathus X', href: '/admin/x', icon: Boxes, comingSoon: true },
   { label: 'Documentation', href: '/admin/content?contentType=DocPage', icon: BookOpen },
-  { label: 'Learning Center', href: '/admin/learning', icon: GraduationCap, comingSoon: true },
   { label: 'Blog', href: '/admin/content?contentType=Article', icon: Newspaper },
   { label: 'Media', href: '/admin/media', icon: Image },
   { label: 'Navigation', href: '/admin/navigation', icon: Navigation },
   { label: 'Search', href: '/admin/search', icon: Search },
-  { label: 'SEO', href: '/admin/seo', icon: Search, comingSoon: true },
-  { label: 'Analytics', href: '/admin/analytics', icon: BarChart3, comingSoon: true },
-  { label: 'Users', href: '/admin/finance/customers', icon: Users },
+];
+
+export const financeNavItems: NavItem[] = [
+  { label: 'Finance Overview', href: '/admin/finance', icon: IndianRupee },
+  { label: 'Server Subscriptions', href: '/admin/finance/subscriptions', icon: Server },
+  { label: 'Sales Invoices', href: '/admin/finance/invoices', icon: Receipt },
+  { label: 'Vendor Purchases', href: '/admin/finance/purchases', icon: ShoppingCart },
+  { label: 'Customers', href: '/admin/finance/customers', icon: Users },
+  { label: 'Vendors', href: '/admin/finance/vendors', icon: Building },
+  { label: 'Services Catalogue', href: '/admin/finance/services', icon: Briefcase },
+  { label: 'Payments', href: '/admin/finance/payments', icon: CreditCard },
+  { label: 'GST Reports', href: '/admin/finance/reports', icon: FileSpreadsheet },
   { label: 'Settings', href: '/admin/finance/settings', icon: Settings },
-].filter(item => !item.comingSoon);
+];
+
+export const navItems: NavItem[] = [
+  ...platformNavItems,
+  ...financeNavItems,
+];
 
 /** The dashboard home route used for redirects and active-state roots. */
 export const DASHBOARD_ROUTE = '/admin/dashboard';
@@ -64,7 +70,7 @@ const labelOverrides: Record<string, string> = {
   services: 'Services Catalogue',
   payments: 'Payments',
   reports: 'GST Reports',
-  settings: 'Settings & Profile',
+  settings: 'Settings',
 };
 
 /**
@@ -89,7 +95,7 @@ export function getBreadcrumb(pathname: string): { label: string; href?: string 
   });
 }
 
-/** Placeholder profile for the foundation sprint (no real auth yet). */
+/** Administrator profile for the session. */
 export const currentUser = {
   name: 'Ava Mercer',
   email: 'ava.mercer@sathusplatform.com',

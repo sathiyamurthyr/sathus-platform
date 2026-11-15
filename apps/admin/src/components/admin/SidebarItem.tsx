@@ -24,7 +24,11 @@ export const SidebarItem = React.forwardRef<HTMLLIElement, SidebarItemProps>(
   ({ item, onNavigate }, ref) => {
     const pathname = usePathname();
     const isActive =
-      pathname === item.href || pathname.startsWith(item.href + '/');
+      item.href === '/admin/finance'
+        ? pathname === '/admin/finance'
+        : item.href === '/admin/dashboard'
+        ? pathname === '/admin/dashboard'
+        : pathname === item.href || pathname.startsWith(item.href + '/');
     const Icon = item.icon;
 
     const base = cn(

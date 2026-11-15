@@ -56,6 +56,16 @@ export default function InvoicesPage() {
     loadData();
   }, []);
 
+  useEffect(() => {
+    if (showCreateModal) {
+      const original = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = original;
+      };
+    }
+  }, [showCreateModal]);
+
   const fmt = (val: number) =>
     new Intl.NumberFormat('en-IN', {
       style: 'currency',
@@ -349,109 +359,143 @@ export default function InvoicesPage() {
 
       {/* CREATE MANUAL INVOICE MODAL */}
       {showCreateModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <div className="w-full max-w-lg rounded-lg border border-border bg-card p-6 shadow-xl space-y-4">
-            <div className="flex items-center justify-between border-b border-border pb-3">
-              <h2 className="text-lg font-bold text-foreground flex items-center gap-2">
-                <Receipt className="h-5 w-5 text-[#A20A3A]" /> Create Manual Tax Invoice
-              </h2>
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto"
+          role="dialog"
+          aria-modal="true"
+        >
+          {/* Separate Dark Backdrop */}
+          <div
+            className="fixed inset-0 bg-black/50 transition-opacity"
+            aria-hidden="true"
+            onClick={() => setShowCreateModal(false)}
+          />
+
+          {/* Modal Container: Solid White #FFFFFF, max-w-[640px], max-h-[90vh], rounded-2xl, shadow-2xl */}
+          <div
+            className="relative z-10 w-full max-w-[640px] max-h-[90vh] flex flex-col rounded-2xl bg-white border border-neutral-200 shadow-2xl overflow-hidden text-neutral-900"
+            style={{ backgroundColor: '#FFFFFF' }}
+          >
+            {/* Fixed Sticky Header */}
+            <div className="flex items-center justify-between px-6 py-4 border-b border-neutral-200 bg-white shrink-0">
+              <div className="flex items-center gap-3">
+                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#A20A3A]/10 text-[#A20A3A] shrink-0">
+                  <Receipt className="h-5 w-5 text-[#A20A3A]" />
+                </div>
+                <div>
+                  <h2 className="text-base font-bold text-neutral-900">
+                    Create Manual Tax Invoice
+                  </h2>
+                  <p className="text-xs text-neutral-500">
+                    Generate sequential FY series GST tax invoice for hosted services
+                  </p>
+                </div>
+              </div>
               <button
+                type="button"
                 onClick={() => setShowCreateModal(false)}
-                className="text-muted-foreground hover:text-foreground"
+                className="rounded-lg p-1.5 text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 transition-colors"
+                aria-label="Close modal"
               >
                 ✕
               </button>
             </div>
 
-            <form onSubmit={handleCreateManualInvoice} className="space-y-4 text-xs">
-              <div>
-                <label className="block font-semibold text-foreground mb-1">
-                  Customer
-                </label>
-                <select
-                  value={customerId}
-                  onChange={(e) => setCustomerId(Number(e.target.value))}
-                  className="w-full rounded border border-border bg-background p-2 text-foreground"
-                >
-                  {customers.map((c) => (
-                    <option key={c.ref_id} value={c.ref_id}>
-                      {c.legal_name || c.customer_name || c.legal_company_name} ({c.state} - Code {c.state_code})
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div>
-                <label className="block font-semibold text-foreground mb-1">
-                  Services to Bill
-                </label>
-                <div className="grid grid-cols-3 gap-2">
-                  <button
-                    type="button"
-                    onClick={() => setServerType('APP')}
-                    className={`rounded border p-2 text-center transition-colors ${
-                      serverType === 'APP'
-                        ? 'border-[#A20A3A] bg-[#A20A3A]/10 font-bold text-[#A20A3A]'
-                        : 'border-border'
-                    }`}
+            {/* Scrollable Form Body */}
+            <div className="flex-1 overflow-y-auto px-6 py-5 admin-scrollbar bg-white">
+              <form id="create-invoice-form" onSubmit={handleCreateManualInvoice} className="space-y-4 text-xs">
+                <div>
+                  <label className="block font-semibold text-neutral-700 mb-1">
+                    Select Customer <span className="text-[#A20A3A]">*</span>
+                  </label>
+                  <select
+                    value={customerId}
+                    onChange={(e) => setCustomerId(Number(e.target.value))}
+                    className="w-full h-10 px-3 rounded-lg border border-neutral-300 bg-white text-xs text-neutral-900 focus:outline-none focus:ring-2 focus:ring-[#A20A3A]/20 focus:border-[#A20A3A]"
                   >
-                    <p>App Server</p>
-                    <p className="text-[10px] text-muted-foreground">₹5,500 + GST</p>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => setServerType('DB')}
-                    className={`rounded border p-2 text-center transition-colors ${
-                      serverType === 'DB'
-                        ? 'border-[#A20A3A] bg-[#A20A3A]/10 font-bold text-[#A20A3A]'
-                        : 'border-border'
-                    }`}
-                  >
-                    <p>DB Server</p>
-                    <p className="text-[10px] text-muted-foreground">₹3,000 + GST</p>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => setServerType('DUAL')}
-                    className={`rounded border p-2 text-center transition-colors ${
-                      serverType === 'DUAL'
-                        ? 'border-[#A20A3A] bg-[#A20A3A]/10 font-bold text-[#A20A3A]'
-                        : 'border-border'
-                    }`}
-                  >
-                    <p>Dual Bundle</p>
-                    <p className="text-[10px] text-muted-foreground">₹8,500 + GST</p>
-                  </button>
+                    {customers.map((c) => (
+                      <option key={c.ref_id} value={c.ref_id}>
+                        {c.legal_name || c.customer_name || c.legal_company_name} ({c.state} - Code {c.state_code})
+                      </option>
+                    ))}
+                  </select>
                 </div>
-              </div>
 
-              <div className="rounded border border-border bg-muted/40 p-3 space-y-1">
-                <p className="font-semibold text-foreground">Tax Determination:</p>
-                <p className="text-[11px] text-muted-foreground">
-                  Intra-state (Tamil Nadu) incurs CGST 9% + SGST 9%. Inter-state incurs IGST 18%.
-                </p>
-              </div>
+                <div>
+                  <label className="block font-semibold text-neutral-700 mb-1.5">
+                    Services to Bill <span className="text-[#A20A3A]">*</span>
+                  </label>
+                  <div className="grid grid-cols-3 gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setServerType('APP')}
+                      className={`rounded-lg border p-2.5 text-center transition-all ${
+                        serverType === 'APP'
+                          ? 'border-[#A20A3A] bg-[#A20A3A]/10 font-bold text-[#A20A3A]'
+                          : 'border-neutral-200 bg-white text-neutral-700 hover:border-neutral-300'
+                      }`}
+                    >
+                      <p className="font-bold">App Server</p>
+                      <p className="text-[10px] text-neutral-500">₹5,500 + GST</p>
+                    </button>
 
-              <div className="flex justify-end gap-2 pt-2">
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setShowCreateModal(false)}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  type="submit"
-                  size="sm"
-                  className="bg-[#A20A3A] hover:bg-[#85082e] text-white"
-                >
-                  Create Invoice Draft
-                </Button>
-              </div>
-            </form>
+                    <button
+                      type="button"
+                      onClick={() => setServerType('DB')}
+                      className={`rounded-lg border p-2.5 text-center transition-all ${
+                        serverType === 'DB'
+                          ? 'border-[#A20A3A] bg-[#A20A3A]/10 font-bold text-[#A20A3A]'
+                          : 'border-neutral-200 bg-white text-neutral-700 hover:border-neutral-300'
+                      }`}
+                    >
+                      <p className="font-bold">DB Server</p>
+                      <p className="text-[10px] text-neutral-500">₹3,000 + GST</p>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => setServerType('DUAL')}
+                      className={`rounded-lg border p-2.5 text-center transition-all ${
+                        serverType === 'DUAL'
+                          ? 'border-[#A20A3A] bg-[#A20A3A]/10 font-bold text-[#A20A3A]'
+                          : 'border-neutral-200 bg-white text-neutral-700 hover:border-neutral-300'
+                      }`}
+                    >
+                      <p className="font-bold">Dual Bundle</p>
+                      <p className="text-[10px] text-neutral-500">₹8,500 + GST</p>
+                    </button>
+                  </div>
+                </div>
+
+                <div className="rounded-xl border border-neutral-200 bg-[#FAF8F9] p-4 space-y-1.5">
+                  <p className="font-semibold text-neutral-900">Tax Determination:</p>
+                  <p className="text-[11px] text-neutral-600">
+                    Intra-state (Tamil Nadu) incurs CGST 9% + SGST 9%. Inter-state incurs IGST 18%.
+                  </p>
+                </div>
+              </form>
+            </div>
+
+            {/* Fixed Sticky Footer */}
+            <div className="flex items-center justify-end gap-3 px-6 py-4 border-t border-neutral-200 bg-[#FAF8F9] shrink-0">
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => setShowCreateModal(false)}
+                className="border-neutral-300 text-neutral-700 hover:bg-neutral-100 h-9"
+              >
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                form="create-invoice-form"
+                size="sm"
+                className="bg-[#A20A3A] hover:bg-[#85082e] text-white shadow-sm font-semibold px-5 h-9"
+              >
+                Create Invoice Draft
+              </Button>
+            </div>
           </div>
         </div>
       )}

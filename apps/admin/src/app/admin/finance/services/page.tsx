@@ -37,6 +37,16 @@ export default function ServicesPage() {
     loadData();
   }, []);
 
+  useEffect(() => {
+    if (editingService) {
+      const original = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = original;
+      };
+    }
+  }, [editingService]);
+
   const fmt = (val: number) =>
     new Intl.NumberFormat('en-IN', {
       style: 'currency',
@@ -191,119 +201,148 @@ export default function ServicesPage() {
 
       {/* EDIT SERVICE MODAL */}
       {editingService && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <div className="w-full max-w-lg rounded-lg border border-border bg-card p-6 shadow-xl space-y-4">
-            <div className="flex items-center justify-between border-b border-border pb-3">
-              <div>
-                <h2 className="text-lg font-bold text-foreground flex items-center gap-2">
-                  <Edit className="h-5 w-5 text-[#A20A3A]" /> Edit Service Details & Selling Rate
-                </h2>
-                <p className="text-xs text-muted-foreground mt-0.5">
-                  Code: <span className="font-mono font-bold text-foreground">{editingService.service_code}</span>
-                </p>
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto"
+          role="dialog"
+          aria-modal="true"
+        >
+          {/* Separate Dark Backdrop */}
+          <div
+            className="fixed inset-0 bg-black/50 transition-opacity"
+            aria-hidden="true"
+            onClick={() => setEditingService(null)}
+          />
+
+          {/* Modal Container: Solid White #FFFFFF, max-w-[640px], max-h-[90vh], rounded-2xl, shadow-2xl */}
+          <div
+            className="relative z-10 w-full max-w-[640px] max-h-[90vh] flex flex-col rounded-2xl bg-white border border-neutral-200 shadow-2xl overflow-hidden text-neutral-900"
+            style={{ backgroundColor: '#FFFFFF' }}
+          >
+            {/* Fixed Sticky Header */}
+            <div className="flex items-center justify-between px-6 py-4 border-b border-neutral-200 bg-white shrink-0">
+              <div className="flex items-center gap-3">
+                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#A20A3A]/10 text-[#A20A3A] shrink-0">
+                  <Edit className="h-5 w-5 text-[#A20A3A]" />
+                </div>
+                <div>
+                  <h2 className="text-base font-bold text-neutral-900">
+                    Edit Service Details & Selling Rate
+                  </h2>
+                  <p className="text-xs text-neutral-500">
+                    Code: <span className="font-mono font-bold text-neutral-900">{editingService.service_code}</span>
+                  </p>
+                </div>
               </div>
               <button
+                type="button"
                 onClick={() => setEditingService(null)}
-                className="text-muted-foreground hover:text-foreground"
+                className="rounded-lg p-1.5 text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 transition-colors"
+                aria-label="Close modal"
               >
                 ✕
               </button>
             </div>
 
-            <form onSubmit={handleSaveEdit} className="space-y-3 text-xs">
-              <div>
-                <label className="block font-semibold text-foreground mb-1">
-                  Service Display Name
-                </label>
-                <input
-                  type="text"
-                  value={editName}
-                  onChange={(e) => setEditName(e.target.value)}
-                  className="w-full rounded border border-border bg-background p-2 text-foreground font-semibold"
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="block font-semibold text-foreground mb-1">
-                  Service Description
-                </label>
-                <textarea
-                  value={editDesc}
-                  onChange={(e) => setEditDesc(e.target.value)}
-                  rows={2}
-                  className="w-full rounded border border-border bg-background p-2 text-foreground"
-                  required
-                />
-              </div>
-
-              <div className="grid grid-cols-2 gap-2">
+            {/* Scrollable Form Body */}
+            <div className="flex-1 overflow-y-auto px-6 py-5 admin-scrollbar bg-white">
+              <form id="edit-service-form" onSubmit={handleSaveEdit} className="space-y-4 text-xs">
                 <div>
-                  <label className="block font-semibold text-foreground mb-1">
-                    SAC Code
+                  <label className="block font-semibold text-neutral-700 mb-1">
+                    Service Display Name <span className="text-[#A20A3A]">*</span>
                   </label>
                   <input
                     type="text"
-                    value={editSac}
-                    onChange={(e) => setEditSac(e.target.value)}
-                    className="w-full rounded border border-border bg-background p-2 text-foreground font-mono"
+                    value={editName}
+                    onChange={(e) => setEditName(e.target.value)}
+                    className="w-full h-10 px-3 rounded-lg border border-neutral-300 bg-white text-sm text-neutral-900 font-semibold focus:outline-none focus:ring-2 focus:ring-[#A20A3A]/20 focus:border-[#A20A3A]"
                     required
                   />
                 </div>
+
                 <div>
-                  <label className="block font-semibold text-foreground mb-1">
-                    GST Rate (%)
+                  <label className="block font-semibold text-neutral-700 mb-1">
+                    Service Description <span className="text-[#A20A3A]">*</span>
                   </label>
-                  <input
-                    type="number"
-                    value={editGstRate}
-                    onChange={(e) => setEditGstRate(Number(e.target.value))}
-                    className="w-full rounded border border-border bg-background p-2 text-foreground font-mono"
-                    required
-                  />
-                </div>
-              </div>
-
-              <div className="rounded-lg border border-border bg-muted/20 p-3 space-y-2">
-                <div>
-                  <label className="block font-semibold text-foreground mb-1">
-                    Standard Monthly Taxable Selling Rate (₹)
-                  </label>
-                  <input
-                    type="number"
-                    value={editPrice}
-                    onChange={(e) => setEditPrice(Number(e.target.value))}
-                    className="w-full rounded border border-border bg-background p-2 text-foreground font-mono text-base font-bold text-[#A20A3A]"
+                  <textarea
+                    value={editDesc}
+                    onChange={(e) => setEditDesc(e.target.value)}
+                    rows={2}
+                    className="w-full p-3 rounded-lg border border-neutral-300 bg-white text-xs text-neutral-900 focus:outline-none focus:ring-2 focus:ring-[#A20A3A]/20 focus:border-[#A20A3A]"
                     required
                   />
                 </div>
 
-                <div className="flex justify-between items-center text-muted-foreground pt-1 border-t border-border">
-                  <span>Gross with 18% GST:</span>
-                  <span className="font-mono font-bold text-foreground">
-                    {fmt(Math.round(editPrice * 1.18))} / month
-                  </span>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label className="block font-semibold text-neutral-700 mb-1">
+                      SAC Code <span className="text-[#A20A3A]">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      value={editSac}
+                      onChange={(e) => setEditSac(e.target.value)}
+                      className="w-full h-10 px-3 rounded-lg border border-neutral-300 bg-white text-xs font-mono text-neutral-900 focus:outline-none focus:ring-2 focus:ring-[#A20A3A]/20 focus:border-[#A20A3A]"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block font-semibold text-neutral-700 mb-1">
+                      GST Rate (%) <span className="text-[#A20A3A]">*</span>
+                    </label>
+                    <input
+                      type="number"
+                      value={editGstRate}
+                      onChange={(e) => setEditGstRate(Number(e.target.value))}
+                      className="w-full h-10 px-3 rounded-lg border border-neutral-300 bg-white text-xs font-mono text-neutral-900 focus:outline-none focus:ring-2 focus:ring-[#A20A3A]/20 focus:border-[#A20A3A]"
+                      required
+                    />
+                  </div>
                 </div>
-              </div>
 
-              <div className="flex justify-end gap-2 pt-2">
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setEditingService(null)}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  type="submit"
-                  size="sm"
-                  className="bg-[#A20A3A] hover:bg-[#85082e] text-white gap-1"
-                >
-                  <Save className="h-3.5 w-3.5" /> Save Service Changes
-                </Button>
-              </div>
-            </form>
+                <div className="rounded-xl border border-neutral-200 bg-[#FAF8F9] p-4 space-y-2">
+                  <div>
+                    <label className="block font-semibold text-neutral-700 mb-1">
+                      Standard Monthly Taxable Selling Rate (₹) <span className="text-[#A20A3A]">*</span>
+                    </label>
+                    <input
+                      type="number"
+                      value={editPrice}
+                      onChange={(e) => setEditPrice(Number(e.target.value))}
+                      className="w-full h-10 px-3 rounded-lg border border-neutral-300 bg-white text-sm font-mono font-bold text-[#A20A3A] focus:outline-none focus:ring-2 focus:ring-[#A20A3A]/20 focus:border-[#A20A3A]"
+                      required
+                    />
+                  </div>
+
+                  <div className="flex justify-between items-center text-neutral-600 pt-2 border-t border-neutral-200 text-xs">
+                    <span>Gross Invoiced with 18% GST:</span>
+                    <span className="font-mono font-bold text-neutral-900 text-sm">
+                      {fmt(Math.round(editPrice * 1.18))} <span className="text-xs font-normal text-neutral-500">/ month</span>
+                    </span>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            {/* Fixed Sticky Footer */}
+            <div className="flex items-center justify-end gap-3 px-6 py-4 border-t border-neutral-200 bg-[#FAF8F9] shrink-0">
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => setEditingService(null)}
+                className="border-neutral-300 text-neutral-700 hover:bg-neutral-100 h-9"
+              >
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                form="edit-service-form"
+                size="sm"
+                className="bg-[#A20A3A] hover:bg-[#85082e] text-white shadow-sm font-semibold px-5 h-9 gap-1.5"
+              >
+                <Save className="h-3.5 w-3.5" /> Save Service Changes
+              </Button>
+            </div>
           </div>
         </div>
       )}
