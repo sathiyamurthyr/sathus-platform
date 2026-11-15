@@ -37,6 +37,8 @@ export const DEFAULT_COMPANY_PROFILE: CompanyProfile = {
   email: 'billing@sathus.in',
   phone: '+91 44 2828 9000',
   website: 'https://sathus.in',
+  logo_url: '/brand/sathus-logo.png',
+  seal_url: '/brand/sathus-seal.png',
   locations: [
     {
       ref_id: 2001,
@@ -384,7 +386,13 @@ class FinanceClient {
         // Fallback
       }
     }
-    return this.getStorage('company_profile', DEFAULT_COMPANY_PROFILE);
+    const stored = this.getStorage<CompanyProfile>('company_profile', DEFAULT_COMPANY_PROFILE);
+    return {
+      ...DEFAULT_COMPANY_PROFILE,
+      ...stored,
+      logo_url: stored.logo_url || DEFAULT_COMPANY_PROFILE.logo_url,
+      seal_url: stored.seal_url || DEFAULT_COMPANY_PROFILE.seal_url,
+    };
   }
 
   async updateCompanyProfile(updates: Partial<CompanyProfile>): Promise<CompanyProfile> {

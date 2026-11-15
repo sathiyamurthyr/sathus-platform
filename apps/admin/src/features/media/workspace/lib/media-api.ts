@@ -73,21 +73,43 @@ const DEFAULT_FOLDERS: FolderTreeResponse = {
 const SEED_ASSETS: MediaAsset[] = [
   {
     id: 'asset_sathus_logo',
-    fileName: 'sathus-logo-burgundy.png',
+    fileName: 'sathus-logo.png',
     fileExtension: 'png',
     mimeType: 'image/png',
-    sizeBytes: 42120,
+    sizeBytes: 114342,
     checksum: 'sha256:sathuslogo001',
-    storageKey: 'branding/sathus-logo-burgundy.png',
-    title: 'Sathus Technology Official Brandmark',
+    storageKey: '/brand/sathus-logo.png',
+    title: 'Sathus Technology Official Brand Emblem',
     type: 'Image',
     status: 'Ready',
     language: 'en',
     tags: [{ id: 't1', name: 'Branding', slug: 'branding' }],
-    usageCount: 12,
+    usageCount: 24,
     versionCount: 1,
-    metadataCount: 2,
-    createdAt: new Date().toISOString(),
+    metadataCount: 3,
+    createdAt: '2026-01-01T00:00:00.000Z',
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: 'asset_sathus_seal',
+    fileName: 'sathus-seal.png',
+    fileExtension: 'png',
+    mimeType: 'image/png',
+    sizeBytes: 196000,
+    checksum: 'sha256:sathusseal001',
+    storageKey: '/brand/sathus-seal.png',
+    title: 'Sathus Technology Official Round Seal & Stamp',
+    type: 'Image',
+    status: 'Ready',
+    language: 'en',
+    tags: [
+      { id: 't1', name: 'Branding', slug: 'branding' },
+      { id: 't3', name: 'Legal', slug: 'legal' },
+    ],
+    usageCount: 18,
+    versionCount: 1,
+    metadataCount: 3,
+    createdAt: '2026-01-01T00:00:00.000Z',
     updatedAt: new Date().toISOString(),
   },
   {
@@ -119,7 +141,18 @@ export function getStoredMediaAssets(): MediaAsset[] {
       localStorage.setItem('sathus_media_assets', JSON.stringify(SEED_ASSETS));
       return SEED_ASSETS;
     }
-    return JSON.parse(raw);
+    const parsed: MediaAsset[] = JSON.parse(raw);
+    const hasLogo = parsed.some((a) => a.id === 'asset_sathus_logo' || a.fileName === 'sathus-logo.png');
+    const hasSeal = parsed.some((a) => a.id === 'asset_sathus_seal' || a.fileName === 'sathus-seal.png');
+    if (!hasLogo || !hasSeal) {
+      const merged = [
+        ...SEED_ASSETS.filter((s) => !parsed.some((p) => p.id === s.id)),
+        ...parsed,
+      ];
+      localStorage.setItem('sathus_media_assets', JSON.stringify(merged));
+      return merged;
+    }
+    return parsed;
   } catch {
     return SEED_ASSETS;
   }

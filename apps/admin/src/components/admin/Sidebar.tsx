@@ -44,9 +44,15 @@ export function Sidebar({
           className="flex items-center gap-2.5 rounded-md outline-none focus-visible:ring-2 focus-visible:ring-ring"
           onClick={onNavigate}
         >
-          <span className="flex h-8 w-8 items-center justify-center rounded-md bg-[#A20A3A] text-sm font-bold text-white shadow-sm">
-            S
-          </span>
+          {/* Official Sathus Brand Emblem */}
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-md bg-white border border-border/80 shadow-xs">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/brand/sathus-logo.png"
+              alt="Sathus"
+              className="h-7 w-7 object-contain"
+            />
+          </div>
           <span className="text-sm font-semibold tracking-tight">
             Sathus<span className="text-muted-foreground"> Admin</span>
           </span>
