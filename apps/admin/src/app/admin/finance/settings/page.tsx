@@ -23,12 +23,76 @@ import {
   ExternalLink,
   Stamp,
   Camera,
+  Loader2,
+  Link2,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { FinanceNavHeader } from '@/components/finance/FinanceNavHeader';
 import { financeClient, DEFAULT_COMPANY_PROFILE } from '@/lib/finance-client';
 import { CompanyProfile, CompanyBankAccount, CompanyPaymentQR, CompanyLocation, CompanySignatory } from '@/types/finance';
+
+/**
+ * Client-side high performance image compressor and optimizer.
+ * Scales down large images (e.g. 5MB-15MB phone photos) to crisp web-ready dimensions (max 800px)
+ * preserving transparency for PNGs. Reduces payload size to ~30-60KB so it never exceeds
+ * localStorage quota and renders instantly on invoices.
+ */
+async function optimizeImage(
+  file: File,
+  maxWidth = 800,
+  maxHeight = 800,
+  quality = 0.88
+): Promise<string> {
+  if (file.type === 'image/svg+xml') {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = () => reject(new Error('Failed to read SVG file.'));
+      reader.readAsDataURL(file);
+    });
+  }
+
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        let width = img.width;
+        let height = img.height;
+
+        if (width > maxWidth || height > maxHeight) {
+          if (width / height > maxWidth / maxHeight) {
+            height = Math.round((height * maxWidth) / width);
+            width = maxWidth;
+          } else {
+            width = Math.round((width * maxHeight) / height);
+            height = maxHeight;
+          }
+        }
+
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) {
+          resolve(e.target?.result as string);
+          return;
+        }
+
+        // Preserve transparency for PNGs
+        const isPng = file.type === 'image/png';
+        ctx.drawImage(img, 0, 0, width, height);
+        const dataUrl = canvas.toDataURL(isPng ? 'image/png' : 'image/jpeg', quality);
+        resolve(dataUrl);
+      };
+      img.onerror = () => reject(new Error('Invalid or corrupted image file.'));
+      img.src = e.target?.result as string;
+    };
+    reader.onerror = () => reject(new Error('Failed to read image file.'));
+    reader.readAsDataURL(file);
+  });
+}
 
 export default function FinanceSettingsPage() {
   const [profile, setProfile] = useState<CompanyProfile>(DEFAULT_COMPANY_PROFILE);
@@ -108,54 +172,103 @@ export default function FinanceSettingsPage() {
     }
   }, [showEditCorporate, showBankModal, showQRModal, showSignatoryModal]);
 
-  // Handle Logo File Upload (PNG/JPG/SVG converted to DataURL)
-  const handleLogoFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  // Upload and URL states
+  const [isUploadingLogo, setIsUploadingLogo] = useState(false);
+  const [isUploadingSeal, setIsUploadingSeal] = useState(false);
+  const [isUploadingQR, setIsUploadingQR] = useState(false);
+  const [showLogoUrlInput, setShowLogoUrlInput] = useState(false);
+  const [customLogoUrl, setCustomLogoUrl] = useState('');
+  const [showSealUrlInput, setShowSealUrlInput] = useState(false);
+  const [customSealUrl, setCustomSealUrl] = useState('');
+
+  // Handle Logo File Upload (PNG/JPG/SVG converted to optimized DataURL)
+  const handleLogoFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    const reader = new FileReader();
-    reader.onload = async () => {
-      const dataUrl = reader.result as string;
-      try {
-        const updated = await financeClient.updateCompanyProfile({ logo_url: dataUrl });
-        setProfile(updated);
-        setStatusMsg('Company Logo uploaded and updated successfully.');
-      } catch {
-        setStatusMsg('Failed to update Company Logo.');
-      }
-    };
-    reader.readAsDataURL(file);
+    try {
+      setIsUploadingLogo(true);
+      setStatusMsg('Optimizing and uploading company logo...');
+      const dataUrl = await optimizeImage(file, 800, 800);
+      const updated = await financeClient.updateCompanyProfile({ logo_url: dataUrl });
+      setProfile(updated);
+      setStatusMsg('Company Logo uploaded and updated successfully.');
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Failed to update Company Logo.';
+      setStatusMsg(msg);
+    } finally {
+      setIsUploadingLogo(false);
+      if (e.target) e.target.value = '';
+    }
+  };
+
+  const handleSaveLogoUrl = async () => {
+    if (!customLogoUrl.trim()) return;
+    try {
+      setIsUploadingLogo(true);
+      const updated = await financeClient.updateCompanyProfile({ logo_url: customLogoUrl.trim() });
+      setProfile(updated);
+      setStatusMsg('Company Logo URL saved successfully.');
+      setShowLogoUrlInput(false);
+    } catch {
+      setStatusMsg('Failed to update Company Logo URL.');
+    } finally {
+      setIsUploadingLogo(false);
+    }
   };
 
   // Handle Seal / Stamp File Upload
-  const handleSealFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSealFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    const reader = new FileReader();
-    reader.onload = async () => {
-      const dataUrl = reader.result as string;
-      try {
-        const updated = await financeClient.updateCompanyProfile({ seal_url: dataUrl });
-        setProfile(updated);
-        setStatusMsg('Company Official Seal / Stamp uploaded and updated successfully.');
-      } catch {
-        setStatusMsg('Failed to update Official Seal.');
-      }
-    };
-    reader.readAsDataURL(file);
+    try {
+      setIsUploadingSeal(true);
+      setStatusMsg('Optimizing and uploading official seal...');
+      const dataUrl = await optimizeImage(file, 500, 500);
+      const updated = await financeClient.updateCompanyProfile({ seal_url: dataUrl });
+      setProfile(updated);
+      setStatusMsg('Company Official Seal / Stamp uploaded and updated successfully.');
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Failed to update Official Seal.';
+      setStatusMsg(msg);
+    } finally {
+      setIsUploadingSeal(false);
+      if (e.target) e.target.value = '';
+    }
+  };
+
+  const handleSaveSealUrl = async () => {
+    if (!customSealUrl.trim()) return;
+    try {
+      setIsUploadingSeal(true);
+      const updated = await financeClient.updateCompanyProfile({ seal_url: customSealUrl.trim() });
+      setProfile(updated);
+      setStatusMsg('Official Seal URL saved successfully.');
+      setShowSealUrlInput(false);
+    } catch {
+      setStatusMsg('Failed to update Official Seal URL.');
+    } finally {
+      setIsUploadingSeal(false);
+    }
   };
 
   // Handle Custom QR Code Image Upload
-  const handleQRImageFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleQRImageFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    const reader = new FileReader();
-    reader.onload = () => {
-      setQrImageUrl(reader.result as string);
-    };
-    reader.readAsDataURL(file);
+    try {
+      setIsUploadingQR(true);
+      const dataUrl = await optimizeImage(file, 600, 600);
+      setQrImageUrl(dataUrl);
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Failed to process QR image.';
+      setStatusMsg(msg);
+    } finally {
+      setIsUploadingQR(false);
+      if (e.target) e.target.value = '';
+    }
   };
 
   // Open Corporate Details Modal
@@ -422,7 +535,7 @@ export default function FinanceSettingsPage() {
 
             <div className="space-y-2 flex-1">
               <p className="text-xs text-neutral-600">
-                Supports transparent PNG, SVG, or high-res JPG (Max 5MB).
+                Supports PNG, SVG, or high-res JPG. Automatically optimized for web & invoices.
               </p>
               <div className="flex flex-wrap gap-2">
                 <input
@@ -434,11 +547,28 @@ export default function FinanceSettingsPage() {
                 />
                 <Button
                   size="sm"
+                  disabled={isUploadingLogo}
                   onClick={() => logoInputRef.current?.click()}
                   className="bg-[#A20A3A] hover:bg-[#85082e] text-white text-xs h-8 gap-1.5 font-semibold"
                 >
-                  <Upload className="h-3.5 w-3.5" /> Upload Company Logo
+                  {isUploadingLogo ? (
+                    <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                  ) : (
+                    <Upload className="h-3.5 w-3.5" />
+                  )}
+                  {isUploadingLogo ? 'Optimizing...' : 'Upload Company Logo'}
                 </Button>
+
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setShowLogoUrlInput(!showLogoUrlInput)}
+                  className="border-neutral-200 text-neutral-700 hover:text-[#A20A3A] text-xs h-8 gap-1"
+                >
+                  <Link2 className="h-3.5 w-3.5" />
+                  {showLogoUrlInput ? 'Hide URL' : 'Paste URL'}
+                </Button>
+
                 {profile.logo_url && (
                   <Button
                     variant="outline"
@@ -454,6 +584,26 @@ export default function FinanceSettingsPage() {
                   </Button>
                 )}
               </div>
+
+              {showLogoUrlInput && (
+                <div className="mt-2 flex items-center gap-2 pt-1">
+                  <input
+                    type="url"
+                    value={customLogoUrl}
+                    onChange={(e) => setCustomLogoUrl(e.target.value)}
+                    placeholder="https://example.com/logo.png"
+                    className="h-8 flex-1 rounded-md border border-neutral-300 px-2.5 text-xs focus:border-[#A20A3A] focus:outline-none"
+                  />
+                  <Button
+                    size="sm"
+                    disabled={isUploadingLogo || !customLogoUrl.trim()}
+                    onClick={handleSaveLogoUrl}
+                    className="bg-[#A20A3A] hover:bg-[#85082e] text-white text-xs h-8"
+                  >
+                    Save URL
+                  </Button>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -502,7 +652,7 @@ export default function FinanceSettingsPage() {
 
             <div className="space-y-2 flex-1">
               <p className="text-xs text-neutral-600">
-                Upload official circular company seal or signature stamp (PNG with transparency recommended).
+                Upload circular seal or signature stamp (transparent PNG recommended).
               </p>
               <div className="flex flex-wrap gap-2">
                 <input
@@ -514,11 +664,28 @@ export default function FinanceSettingsPage() {
                 />
                 <Button
                   size="sm"
+                  disabled={isUploadingSeal}
                   onClick={() => sealInputRef.current?.click()}
                   className="bg-[#A20A3A] hover:bg-[#85082e] text-white text-xs h-8 gap-1.5 font-semibold"
                 >
-                  <Upload className="h-3.5 w-3.5" /> Upload Digital Seal
+                  {isUploadingSeal ? (
+                    <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                  ) : (
+                    <Upload className="h-3.5 w-3.5" />
+                  )}
+                  {isUploadingSeal ? 'Optimizing...' : 'Upload Digital Seal'}
                 </Button>
+
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setShowSealUrlInput(!showSealUrlInput)}
+                  className="border-neutral-200 text-neutral-700 hover:text-[#A20A3A] text-xs h-8 gap-1"
+                >
+                  <Link2 className="h-3.5 w-3.5" />
+                  {showSealUrlInput ? 'Hide URL' : 'Paste URL'}
+                </Button>
+
                 {profile.seal_url && (
                   <Button
                     variant="outline"
@@ -534,6 +701,26 @@ export default function FinanceSettingsPage() {
                   </Button>
                 )}
               </div>
+
+              {showSealUrlInput && (
+                <div className="mt-2 flex items-center gap-2 pt-1">
+                  <input
+                    type="url"
+                    value={customSealUrl}
+                    onChange={(e) => setCustomSealUrl(e.target.value)}
+                    placeholder="https://example.com/seal.png"
+                    className="h-8 flex-1 rounded-md border border-neutral-300 px-2.5 text-xs focus:border-[#A20A3A] focus:outline-none"
+                  />
+                  <Button
+                    size="sm"
+                    disabled={isUploadingSeal || !customSealUrl.trim()}
+                    onClick={handleSaveSealUrl}
+                    className="bg-[#A20A3A] hover:bg-[#85082e] text-white text-xs h-8"
+                  >
+                    Save URL
+                  </Button>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -1332,10 +1519,16 @@ export default function FinanceSettingsPage() {
                         type="button"
                         variant="outline"
                         size="sm"
+                        disabled={isUploadingQR}
                         onClick={() => qrImageInputRef.current?.click()}
                         className="text-xs h-8 border-neutral-300 gap-1.5"
                       >
-                        <Upload className="h-3.5 w-3.5 text-[#A20A3A]" /> Choose Image
+                        {isUploadingQR ? (
+                          <Loader2 className="h-3.5 w-3.5 animate-spin text-[#A20A3A]" />
+                        ) : (
+                          <Upload className="h-3.5 w-3.5 text-[#A20A3A]" />
+                        )}
+                        {isUploadingQR ? 'Optimizing...' : 'Choose Image'}
                       </Button>
                       {qrImageUrl && (
                         <Button

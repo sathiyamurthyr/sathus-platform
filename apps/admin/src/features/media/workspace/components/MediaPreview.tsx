@@ -6,7 +6,10 @@ import { Button } from '@/components/ui/button';
 import type { MediaAsset } from '../lib/media-types';
 
 export function MediaPreview({ asset, onClose }: { asset: MediaAsset; onClose: () => void }) {
-  const previewUrl = `/api/v1/media/preview/${asset.storageKey}`;
+  const previewUrl =
+    asset.storageKey?.startsWith('data:') || asset.storageKey?.startsWith('http') || asset.storageKey?.startsWith('/')
+      ? asset.storageKey
+      : `/api/v1/media/preview/${asset.storageKey}`;
   const isImage = asset.mimeType.startsWith('image/');
   const isVideo = asset.mimeType.startsWith('video/');
   const isAudio = asset.mimeType.startsWith('audio/');

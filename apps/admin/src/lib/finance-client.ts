@@ -16,6 +16,14 @@ import {
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:5000';
 
+function shouldFetchApi(): boolean {
+  if (typeof window === 'undefined') return true;
+  if (window.location.protocol === 'https:' && API_BASE.startsWith('http://localhost')) {
+    return false;
+  }
+  return true;
+}
+
 // ==============================================================================
 // SEED DATA
 // ==============================================================================
@@ -368,25 +376,29 @@ class FinanceClient {
 
   // --- Company Profile ---
   async getCompanyProfile(): Promise<CompanyProfile> {
-    try {
-      const res = await fetch(`${API_BASE}/api/v1/finance/company-profile`);
-      if (res.ok) return await res.json();
-    } catch {
-      // Fallback
+    if (shouldFetchApi()) {
+      try {
+        const res = await fetch(`${API_BASE}/api/v1/finance/company-profile`);
+        if (res.ok) return await res.json();
+      } catch {
+        // Fallback
+      }
     }
     return this.getStorage('company_profile', DEFAULT_COMPANY_PROFILE);
   }
 
   async updateCompanyProfile(updates: Partial<CompanyProfile>): Promise<CompanyProfile> {
-    try {
-      const res = await fetch(`${API_BASE}/api/v1/finance/company-profile`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(updates),
-      });
-      if (res.ok) return await res.json();
-    } catch {
-      // Fallback
+    if (shouldFetchApi()) {
+      try {
+        const res = await fetch(`${API_BASE}/api/v1/finance/company-profile`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(updates),
+        });
+        if (res.ok) return await res.json();
+      } catch {
+        // Fallback
+      }
     }
     const current = await this.getCompanyProfile();
     const updated = { ...current, ...updates };

@@ -16,6 +16,14 @@ import type {
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:5000';
 
+function shouldFetchApi(): boolean {
+  if (typeof window === 'undefined') return true;
+  if (window.location.protocol === 'https:' && API_BASE.startsWith('http://localhost')) {
+    return false;
+  }
+  return true;
+}
+
 function getAuthHeaders(): HeadersInit {
   if (typeof window === 'undefined') return { 'Content-Type': 'application/json' };
   const token = localStorage.getItem('accessToken');
@@ -53,9 +61,89 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   return response.json() as Promise<T>;
 }
 
+const DEFAULT_FOLDERS: FolderTreeResponse = {
+  roots: [
+    { id: 'branding', name: 'Logos & Branding', slug: 'branding', sortOrder: 0, children: [] },
+    { id: 'invoices', name: 'Invoices & Documents', slug: 'invoices', sortOrder: 1, children: [] },
+    { id: 'servers', name: 'Server Architecture', slug: 'servers', sortOrder: 2, children: [] },
+    { id: 'products', name: 'Product Graphics', slug: 'products', sortOrder: 3, children: [] },
+  ],
+};
+
+const SEED_ASSETS: MediaAsset[] = [
+  {
+    id: 'asset_sathus_logo',
+    fileName: 'sathus-logo-burgundy.png',
+    fileExtension: 'png',
+    mimeType: 'image/png',
+    sizeBytes: 42120,
+    checksum: 'sha256:sathuslogo001',
+    storageKey: 'branding/sathus-logo-burgundy.png',
+    title: 'Sathus Technology Official Brandmark',
+    type: 'Image',
+    status: 'Ready',
+    language: 'en',
+    tags: [{ id: 't1', name: 'Branding', slug: 'branding' }],
+    usageCount: 12,
+    versionCount: 1,
+    metadataCount: 2,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: 'asset_server_spec',
+    fileName: 'server-architecture-topology.png',
+    fileExtension: 'png',
+    mimeType: 'image/png',
+    sizeBytes: 85200,
+    checksum: 'sha256:serverarch002',
+    storageKey: 'servers/server-architecture-topology.png',
+    title: 'Enterprise Application & DB Server Topology',
+    type: 'Image',
+    status: 'Ready',
+    language: 'en',
+    tags: [{ id: 't2', name: 'Infrastructure', slug: 'infra' }],
+    usageCount: 5,
+    versionCount: 1,
+    metadataCount: 1,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+];
+
+export function getStoredMediaAssets(): MediaAsset[] {
+  if (typeof window === 'undefined') return SEED_ASSETS;
+  try {
+    const raw = localStorage.getItem('sathus_media_assets');
+    if (!raw) {
+      localStorage.setItem('sathus_media_assets', JSON.stringify(SEED_ASSETS));
+      return SEED_ASSETS;
+    }
+    return JSON.parse(raw);
+  } catch {
+    return SEED_ASSETS;
+  }
+}
+
+export function saveStoredMediaAssets(assets: MediaAsset[]): void {
+  if (typeof window === 'undefined') return;
+  try {
+    localStorage.setItem('sathus_media_assets', JSON.stringify(assets));
+  } catch (err) {
+    console.warn('[Media] Failed to persist assets to localStorage:', err);
+  }
+}
+
 export async function getFolderTree(tenantId?: string): Promise<FolderTreeResponse> {
-  const qs = tenantId ? `?tenantId=${tenantId}` : '';
-  return request<FolderTreeResponse>(`/api/v1/media/folders${qs}`);
+  if (shouldFetchApi()) {
+    try {
+      const qs = tenantId ? `?tenantId=${tenantId}` : '';
+      return await request<FolderTreeResponse>(`/api/v1/media/folders${qs}`);
+    } catch {
+      // Fall through
+    }
+  }
+  return DEFAULT_FOLDERS;
 }
 
 export async function getMediaAssets(params: {
@@ -67,16 +155,40 @@ export async function getMediaAssets(params: {
   page?: number;
   pageSize?: number;
 }): Promise<MediaListResponse> {
-  const qs = new URLSearchParams();
-  if (params.folderId) qs.set('folderId', params.folderId);
-  if (params.type) qs.set('type', params.type);
-  if (params.status) qs.set('status', params.status);
-  if (params.tagId) qs.set('tagId', params.tagId);
-  if (params.term) qs.set('term', params.term);
-  if (params.page) qs.set('page', String(params.page));
-  if (params.pageSize) qs.set('pageSize', String(params.pageSize));
-  const query = qs.toString();
-  return request<MediaListResponse>(`/api/v1/media${query ? `?${query}` : ''}`);
+  if (shouldFetchApi()) {
+    try {
+      const qs = new URLSearchParams();
+      if (params.folderId) qs.set('folderId', params.folderId);
+      if (params.type) qs.set('type', params.type);
+      if (params.status) qs.set('status', params.status);
+      if (params.tagId) qs.set('tagId', params.tagId);
+      if (params.term) qs.set('term', params.term);
+      if (params.page) qs.set('page', String(params.page));
+      if (params.pageSize) qs.set('pageSize', String(params.pageSize));
+      const query = qs.toString();
+      return await request<MediaListResponse>(`/api/v1/media${query ? `?${query}` : ''}`);
+    } catch {
+      // Fall through
+    }
+  }
+
+  let assets = getStoredMediaAssets();
+  if (params.term) {
+    const t = params.term.toLowerCase();
+    assets = assets.filter((a) => (a.title || a.fileName).toLowerCase().includes(t));
+  }
+  if (params.type) {
+    assets = assets.filter((a) => a.type === params.type);
+  }
+  if (params.folderId) {
+    assets = assets.filter((a) => a.folderId === params.folderId);
+  }
+  return {
+    items: assets,
+    page: params.page ?? 1,
+    pageSize: params.pageSize ?? 25,
+    total: assets.length,
+  };
 }
 
 export async function getMediaAssetById(id: string): Promise<MediaAsset> {
@@ -127,15 +239,46 @@ export async function getMediaMetadata(id: string): Promise<MediaMetadata[]> {
 }
 
 export async function archiveMedia(id: string): Promise<void> {
-  return request<void>(`/api/v1/media/${id}/archive`, { method: 'POST' });
+  if (shouldFetchApi()) {
+    try {
+      await request<void>(`/api/v1/media/${id}/archive`, { method: 'POST' });
+      return;
+    } catch {
+      // Fall through
+    }
+  }
+  const assets = getStoredMediaAssets().map((a) =>
+    a.id === id ? { ...a, status: 'Archived' as const } : a
+  );
+  saveStoredMediaAssets(assets);
 }
 
 export async function restoreMedia(id: string): Promise<void> {
-  return request<void>(`/api/v1/media/${id}/restore`, { method: 'POST' });
+  if (shouldFetchApi()) {
+    try {
+      await request<void>(`/api/v1/media/${id}/restore`, { method: 'POST' });
+      return;
+    } catch {
+      // Fall through
+    }
+  }
+  const assets = getStoredMediaAssets().map((a) =>
+    a.id === id ? { ...a, status: 'Ready' as const } : a
+  );
+  saveStoredMediaAssets(assets);
 }
 
 export async function deleteMedia(id: string): Promise<void> {
-  return request<void>(`/api/v1/media/${id}`, { method: 'DELETE' });
+  if (shouldFetchApi()) {
+    try {
+      await request<void>(`/api/v1/media/${id}`, { method: 'DELETE' });
+      return;
+    } catch {
+      // Fall through
+    }
+  }
+  const assets = getStoredMediaAssets().filter((a) => a.id !== id);
+  saveStoredMediaAssets(assets);
 }
 
 export async function updateMediaMetadata(id: string, data: {

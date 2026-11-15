@@ -61,6 +61,21 @@ export function useUpload(options: UseUploadOptions = {}) {
       const checksum = await computeFileChecksum(file);
       const chunkSize = overrides?.chunkSize ?? DEFAULT_CHUNK_SIZE;
 
+      // Generate preview data URL for image files
+      let previewUrl = '';
+      if (file.type.startsWith('image/')) {
+        try {
+          previewUrl = await new Promise<string>((resolve) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result as string);
+            reader.onerror = () => resolve('');
+            reader.readAsDataURL(file);
+          });
+        } catch {
+          // Ignore
+        }
+      }
+
       const session = await startMutation.mutateAsync({
         fileName: file.name,
         fileExtension: file.name.split('.').pop() || 'bin',
@@ -74,8 +89,12 @@ export function useUpload(options: UseUploadOptions = {}) {
         folderPath: overrides?.folderPath,
       });
 
+      if (previewUrl) {
+        session.storageKey = previewUrl;
+      }
+
       setActiveSession(session);
-      await uploadChunks(session, file, chunkSize);
+      await uploadChunks(session, file, chunkSize, previewUrl);
       return session;
     } catch (error) {
       options.onError?.(error as Error);
@@ -83,7 +102,7 @@ export function useUpload(options: UseUploadOptions = {}) {
     }
   }
 
-  async function uploadChunks(session: UploadSession, file: File, chunkSize: number) {
+  async function uploadChunks(session: UploadSession, file: File, chunkSize: number, previewUrl?: string) {
     const totalChunks = Math.ceil(file.size / chunkSize);
 
     for (let i = 0; i < totalChunks; i++) {
@@ -112,7 +131,48 @@ export function useUpload(options: UseUploadOptions = {}) {
     }
 
     const completed = await completeMutation.mutateAsync(session.id);
-    setActiveSession((prev) => prev ? { ...prev, status: 'Completed', storageKey: completed.storageKey } : null);
+    const storageKey = previewUrl || completed.storageKey || `local/${file.name}`;
+    setActiveSession((prev) => prev ? { ...prev, status: 'Completed', storageKey } : null);
+
+    // Save newly uploaded asset into local media store so it immediately shows in the grid
+    try {
+      const stored = typeof window !== 'undefined' ? localStorage.getItem('sathus_media_assets') : null;
+      const list = stored ? JSON.parse(stored) : [];
+      const newAsset = {
+        id: `asset_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
+        fileName: file.name,
+        fileExtension: file.name.split('.').pop() || 'bin',
+        mimeType: file.type || 'application/octet-stream',
+        sizeBytes: file.size,
+        checksum: session.checksum || `sha256:${Date.now()}`,
+        storageKey,
+        title: file.name.replace(/\.[^/.]+$/, ''),
+        altText: file.name,
+        type: file.type.startsWith('image/')
+          ? 'Image'
+          : file.type.startsWith('video/')
+          ? 'Video'
+          : file.type.startsWith('audio/')
+          ? 'Audio'
+          : 'Document',
+        status: 'Ready',
+        language: 'en',
+        tags: [{ id: 'user_upload', name: 'Uploaded', slug: 'uploaded' }],
+        usageCount: 0,
+        versionCount: 1,
+        metadataCount: 0,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      };
+      list.unshift(newAsset);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('sathus_media_assets', JSON.stringify(list));
+      }
+    } catch {
+      // Ignore
+    }
+
+    queryClient.invalidateQueries({ queryKey: ['media-assets'] });
     options.onComplete?.(session);
   }
 

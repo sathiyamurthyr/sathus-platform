@@ -31,7 +31,9 @@ export function MediaCard({
 }) {
   const TypeIcon = typeIcons[asset.type] ?? FileQuestion;
   const previewUrl = asset.mimeType.startsWith('image/')
-    ? `/api/v1/media/preview/${asset.storageKey}`
+    ? (asset.storageKey.startsWith('data:') || asset.storageKey.startsWith('http') || asset.storageKey.startsWith('/')
+        ? asset.storageKey
+        : `/api/v1/media/preview/${asset.storageKey}`)
     : undefined;
 
   if (viewMode === 'list') {
