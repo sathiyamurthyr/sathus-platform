@@ -1,9 +1,10 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Printer, Download, ArrowLeft, CheckCircle2, ShieldCheck, QrCode } from 'lucide-react';
 import { SalesInvoice, CompanyProfile } from '@/types/finance';
 import { Button } from '@/components/ui/button';
+import { financeClient, DEFAULT_COMPANY_PROFILE } from '@/lib/finance-client';
 
 interface PrintableGSTInvoiceProps {
   invoice: SalesInvoice;
@@ -13,10 +14,19 @@ interface PrintableGSTInvoiceProps {
 
 export function PrintableGSTInvoice({
   invoice,
-  companyProfile,
+  companyProfile: initialProfile,
   onClose,
 }: PrintableGSTInvoiceProps) {
   const printRef = useRef<HTMLDivElement>(null);
+  const [profile, setProfile] = useState<CompanyProfile>(initialProfile || DEFAULT_COMPANY_PROFILE);
+
+  useEffect(() => {
+    if (!initialProfile) {
+      financeClient.getCompanyProfile().then((p) => {
+        if (p) setProfile(p);
+      });
+    }
+  }, [initialProfile]);
 
   const handlePrint = () => {
     window.print();
@@ -26,6 +36,11 @@ export function PrintableGSTInvoice({
     invoice.supply_type === 'INTER_STATE' || (invoice.total_igst ?? invoice.igst_amount ?? 0) > 0;
   const isPaid = invoice.status === 'PAID';
   const invoiceNumber = invoice.invoice_number || invoice.invoice_no;
+
+  const primaryLoc = profile.locations?.find((l) => l.is_default) || profile.locations?.[0];
+  const primaryBank = profile.bank_accounts?.find((b) => b.is_default) || profile.bank_accounts?.[0];
+  const primaryQR = profile.payment_qrs?.find((q) => q.is_default) || profile.payment_qrs?.[0];
+  const primarySignatory = profile.signatories?.find((s) => s.is_default) || profile.signatories?.[0];
 
   // Format currency helper
   const fmt = (val: number) =>
@@ -92,12 +107,20 @@ export function PrintableGSTInvoice({
           <div className="flex items-start justify-between border-b-2 border-[#A20A3A] pb-4">
             <div className="space-y-1">
               <div className="flex items-center gap-2.5">
-                <div className="flex h-10 w-10 items-center justify-center rounded-md bg-[#A20A3A] text-xl font-bold text-white shadow">
-                  S
-                </div>
+                {profile.logo_url ? (
+                  <img
+                    src={profile.logo_url}
+                    alt={profile.display_name || 'Company Logo'}
+                    className="h-10 max-w-[140px] object-contain rounded"
+                  />
+                ) : (
+                  <div className="flex h-10 w-10 items-center justify-center rounded-md bg-[#A20A3A] text-xl font-bold text-white shadow">
+                    S
+                  </div>
+                )}
                 <div>
                   <h1 className="text-xl font-black tracking-tight text-[#A20A3A]">
-                    SATHUS TECHNOLOGY
+                    {profile.display_name || profile.legal_name || 'SATHUS TECHNOLOGY'}
                   </h1>
                   <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
                     Cloud Infrastructure & Technology Services
@@ -106,18 +129,20 @@ export function PrintableGSTInvoice({
               </div>
 
               <div className="pt-2 text-[10px] text-slate-600 space-y-0.5">
-                <p className="font-semibold text-slate-800">Sathus Technology Private Limited</p>
-                <p>Sathus Technology Tower, 45 Mount Road, Guindy Industrial Estate</p>
-                <p>Chennai, Tamil Nadu - 600032, India</p>
+                <p className="font-semibold text-slate-800">{profile.legal_name || 'Sathus Technology Private Limited'}</p>
+                <p>{primaryLoc?.address_line1 || 'Sathus Technology Tower, 45 Mount Road, Guindy Industrial Estate'}</p>
                 <p>
-                  <span className="font-semibold">GSTIN:</span> 33AAECS1234F1Z5 &nbsp;|&nbsp;{' '}
-                  <span className="font-semibold">PAN:</span> AAECS1234F &nbsp;|&nbsp;{' '}
-                  <span className="font-semibold">State Code:</span> 33 (Tamil Nadu)
+                  {primaryLoc?.city || 'Chennai'}, {primaryLoc?.state || 'Tamil Nadu'} - {primaryLoc?.pincode || '600032'}, India
                 </p>
                 <p>
-                  <span className="font-semibold">Email:</span> billing@sathus.in &nbsp;|&nbsp;{' '}
-                  <span className="font-semibold">Phone:</span> +91 44 2828 9000 &nbsp;|&nbsp;{' '}
-                  <span className="font-semibold">Web:</span> https://sathus.in
+                  <span className="font-semibold">GSTIN:</span> {primaryLoc?.gstin || '33AAECS1234F1Z5'} &nbsp;|&nbsp;{' '}
+                  <span className="font-semibold">PAN:</span> {profile.pan || 'AAECS1234F'} &nbsp;|&nbsp;{' '}
+                  <span className="font-semibold">State Code:</span> {primaryLoc?.state_code || '33'} ({primaryLoc?.state || 'Tamil Nadu'})
+                </p>
+                <p>
+                  <span className="font-semibold">Email:</span> {profile.email || 'billing@sathus.in'} &nbsp;|&nbsp;{' '}
+                  <span className="font-semibold">Phone:</span> {profile.phone || '+91 44 2828 9000'} &nbsp;|&nbsp;{' '}
+                  <span className="font-semibold">Web:</span> {profile.website || 'https://sathus.in'}
                 </p>
               </div>
             </div>
@@ -297,12 +322,12 @@ export function PrintableGSTInvoice({
                   <ShieldCheck className="h-3.5 w-3.5 text-[#A20A3A]" /> Direct Bank Remittance (RTGS / NEFT / IMPS):
                 </p>
                 <div className="grid grid-cols-2 gap-x-2 gap-y-0.5 text-slate-600">
-                  <p><span className="font-semibold text-slate-800">Beneficiary:</span> Sathus Technology Private Limited</p>
-                  <p><span className="font-semibold text-slate-800">Bank:</span> HDFC Bank</p>
-                  <p><span className="font-semibold text-slate-800">A/C No:</span> **** **** 1122 (Current A/C)</p>
-                  <p><span className="font-semibold text-slate-800">IFSC Code:</span> HDFC0001234</p>
-                  <p><span className="font-semibold text-slate-800">Branch:</span> Guindy Industrial Estate, Chennai</p>
-                  <p><span className="font-semibold text-slate-800">UPI ID:</span> sathustechnology@hdfcbank</p>
+                  <p><span className="font-semibold text-slate-800">Beneficiary:</span> {primaryBank?.account_holder || profile.legal_name || 'Sathus Technology Private Limited'}</p>
+                  <p><span className="font-semibold text-slate-800">Bank:</span> {primaryBank?.bank_name || 'HDFC Bank'}</p>
+                  <p><span className="font-semibold text-slate-800">A/C No:</span> {primaryBank?.account_number || primaryBank?.account_number_masked || '**** **** 1122'}</p>
+                  <p><span className="font-semibold text-slate-800">IFSC Code:</span> {primaryBank?.ifsc_code || 'HDFC0001234'}</p>
+                  <p><span className="font-semibold text-slate-800">Branch:</span> {primaryBank?.branch || 'Guindy Industrial Estate, Chennai'}</p>
+                  <p><span className="font-semibold text-slate-800">UPI ID:</span> {primaryBank?.upi_id || primaryQR?.upi_id || 'sathustechnology@hdfcbank'}</p>
                 </div>
               </div>
             </div>
@@ -362,62 +387,82 @@ export function PrintableGSTInvoice({
             {/* UPI SCAN & PAY */}
             <div className="flex items-center gap-3 rounded border border-slate-200 p-2.5 bg-slate-50/70">
               <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded border border-slate-300 bg-white p-1">
-                {/* Crisp SVG QR Code visualization */}
-                <svg viewBox="0 0 100 100" className="h-full w-full text-slate-800" fill="currentColor">
-                  {/* Position detection squares */}
-                  <rect x="5" y="5" width="30" height="30" rx="3" fill="#A20A3A" />
-                  <rect x="10" y="10" width="20" height="20" fill="white" />
-                  <rect x="15" y="15" width="10" height="10" fill="#A20A3A" />
+                {primaryQR?.qr_image_url ? (
+                  <img
+                    src={primaryQR.qr_image_url}
+                    alt="Payment QR Code"
+                    className="h-full w-full object-contain"
+                  />
+                ) : (
+                  /* Crisp SVG QR Code visualization */
+                  <svg viewBox="0 0 100 100" className="h-full w-full text-slate-800" fill="currentColor">
+                    {/* Position detection squares */}
+                    <rect x="5" y="5" width="30" height="30" rx="3" fill="#A20A3A" />
+                    <rect x="10" y="10" width="20" height="20" fill="white" />
+                    <rect x="15" y="15" width="10" height="10" fill="#A20A3A" />
 
-                  <rect x="65" y="5" width="30" height="30" rx="3" fill="#A20A3A" />
-                  <rect x="70" y="10" width="20" height="20" fill="white" />
-                  <rect x="75" y="15" width="10" height="10" fill="#A20A3A" />
+                    <rect x="65" y="5" width="30" height="30" rx="3" fill="#A20A3A" />
+                    <rect x="70" y="10" width="20" height="20" fill="white" />
+                    <rect x="75" y="15" width="10" height="10" fill="#A20A3A" />
 
-                  <rect x="5" y="65" width="30" height="30" rx="3" fill="#A20A3A" />
-                  <rect x="10" y="70" width="20" height="20" fill="white" />
-                  <rect x="15" y="75" width="10" height="10" fill="#A20A3A" />
+                    <rect x="5" y="65" width="30" height="30" rx="3" fill="#A20A3A" />
+                    <rect x="10" y="70" width="20" height="20" fill="white" />
+                    <rect x="15" y="75" width="10" height="10" fill="#A20A3A" />
 
-                  {/* QR Data Pattern Grid */}
-                  <rect x="42" y="12" width="6" height="6" />
-                  <rect x="52" y="12" width="6" height="6" />
-                  <rect x="42" y="24" width="6" height="6" />
-                  <rect x="12" y="44" width="6" height="6" />
-                  <rect x="24" y="44" width="6" height="6" />
-                  <rect x="42" y="42" width="16" height="16" fill="#A20A3A" />
-                  <rect x="46" y="46" width="8" height="8" fill="white" />
-                  <rect x="68" y="44" width="6" height="6" />
-                  <rect x="80" y="44" width="6" height="6" />
-                  <rect x="44" y="68" width="6" height="6" />
-                  <rect x="56" y="68" width="6" height="6" />
-                  <rect x="44" y="80" width="6" height="6" />
-                  <rect x="68" y="68" width="6" height="6" />
-                  <rect x="80" y="80" width="6" height="6" />
-                </svg>
+                    {/* QR Data Pattern Grid */}
+                    <rect x="42" y="12" width="6" height="6" />
+                    <rect x="52" y="12" width="6" height="6" />
+                    <rect x="42" y="24" width="6" height="6" />
+                    <rect x="12" y="44" width="6" height="6" />
+                    <rect x="24" y="44" width="6" height="6" />
+                    <rect x="42" y="42" width="16" height="16" fill="#A20A3A" />
+                    <rect x="46" y="46" width="8" height="8" fill="white" />
+                    <rect x="68" y="44" width="6" height="6" />
+                    <rect x="80" y="44" width="6" height="6" />
+                    <rect x="44" y="68" width="6" height="6" />
+                    <rect x="56" y="68" width="6" height="6" />
+                    <rect x="44" y="80" width="6" height="6" />
+                    <rect x="68" y="68" width="6" height="6" />
+                    <rect x="80" y="80" width="6" height="6" />
+                  </svg>
+                )}
               </div>
               <div className="space-y-0.5 text-[9.5px]">
                 <p className="font-bold text-slate-800 flex items-center gap-1">
                   <QrCode className="h-3 w-3 text-[#A20A3A]" /> Scan to Pay via UPI
                 </p>
                 <p className="text-slate-500">Supports GPay, PhonePe, Paytm, BHIM</p>
-                <p className="font-mono font-semibold text-slate-700">sathustechnology@hdfcbank</p>
-                <p className="text-[9px] text-slate-400">Merchant: Sathus Technology Pvt Ltd</p>
+                <p className="font-mono font-semibold text-slate-700">
+                  {primaryQR?.upi_id || primaryBank?.upi_id || 'sathustechnology@hdfcbank'}
+                </p>
+                <p className="text-[9px] text-slate-400">
+                  Merchant: {primaryQR?.merchant_name || profile.display_name || profile.legal_name || 'Sathus Technology Pvt Ltd'}
+                </p>
               </div>
             </div>
 
             {/* AUTHORIZED SIGNATORY */}
             <div className="flex flex-col items-end justify-between text-right">
               <p className="text-[9.5px] font-bold text-slate-800">
-                For SATHUS TECHNOLOGY PRIVATE LIMITED
+                For {(profile.legal_name || 'SATHUS TECHNOLOGY PRIVATE LIMITED').toUpperCase()}
               </p>
               <div className="relative my-2 flex items-center justify-end pr-4">
-                {/* Official Stamp graphic */}
-                <div className="rounded-full border-2 border-dashed border-[#A20A3A]/40 px-3 py-1 text-center text-[8px] font-bold text-[#A20A3A]/70 uppercase tracking-widest">
-                  Sathus Technology Pvt Ltd<br />CHENNAI · SEAL
-                </div>
+                {profile.seal_url ? (
+                  <img
+                    src={profile.seal_url}
+                    alt="Official Digital Seal"
+                    className="h-16 w-16 object-contain"
+                  />
+                ) : (
+                  /* Official Stamp graphic */
+                  <div className="rounded-full border-2 border-dashed border-[#A20A3A]/40 px-3 py-1 text-center text-[8px] font-bold text-[#A20A3A]/70 uppercase tracking-widest">
+                    {profile.display_name || 'Sathus Technology'}<br />{primaryLoc?.city?.toUpperCase() || 'CHENNAI'} · SEAL
+                  </div>
+                )}
               </div>
               <div>
-                <p className="font-bold text-slate-900">Sathiya Murthy</p>
-                <p className="text-[9px] text-slate-500">Managing Director & Authorized Signatory</p>
+                <p className="font-bold text-slate-900">{primarySignatory?.signatory_name || 'Sathiya Murthy'}</p>
+                <p className="text-[9px] text-slate-500">{primarySignatory?.designation || 'Managing Director & Authorized Signatory'}</p>
               </div>
             </div>
           </div>

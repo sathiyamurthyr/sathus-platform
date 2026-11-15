@@ -56,6 +56,7 @@ export interface CompanyBankAccount {
   bank_name: string;
   branch: string;
   account_number_masked: string;
+  account_number?: string;
   ifsc_code: string;
   swift_code?: string;
   upi_id?: string;
@@ -71,6 +72,7 @@ export interface CompanySignatory {
   designation: string;
   effective_from: string;
   effective_to?: string;
+  signature_url?: string;
   is_default: boolean;
   status: string;
 }
@@ -82,6 +84,7 @@ export interface CompanyPaymentQR {
   qr_payload: string;
   upi_id: string;
   merchant_name: string;
+  qr_image_url?: string;
   is_default: boolean;
   status: string;
 }
@@ -95,6 +98,8 @@ export interface CompanyProfile {
   email: string;
   phone: string;
   website: string;
+  logo_url?: string;
+  seal_url?: string;
   locations: CompanyLocation[];
   bank_accounts: CompanyBankAccount[];
   signatories: CompanySignatory[];
