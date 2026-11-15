@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { AnimatePresence, motion, type Transition } from 'motion/react';
-import { cn } from '../../lib/cn';
+import { cn } from '@sathus-platform/utils';
 
 interface PageTransitionProps extends React.HTMLAttributes<HTMLDivElement> {
   transition?: 'fade' | 'slide' | 'scale' | 'none';

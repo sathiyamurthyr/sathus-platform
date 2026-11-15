@@ -1,13 +1,13 @@
 'use client';
 
 import * as React from 'react';
-import { Button } from '@/components/ui/button';
+import { Button } from '@sathus-platform/uibutton';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from '@sathus-platform/uidropdown-menu';
 import { ChevronDown, ArrowUp, ArrowDown } from 'lucide-react';
 
 export type SortField = 'name' | 'createdAt' | 'updatedAt' | 'size' | 'type';

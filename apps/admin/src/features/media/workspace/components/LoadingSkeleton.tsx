@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { Skeleton } from '@/components/ui/skeleton';
+import { Skeleton } from '@sathus-platform/uiskeleton';
 
 export function LoadingSkeleton({ count = 12 }: { count?: number }) {
   return (

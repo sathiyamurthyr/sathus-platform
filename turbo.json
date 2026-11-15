@@ -12,6 +12,13 @@
         ".next/**",
         "!.next/cache/**",
         "dist/**"
+      ],
+      "inputs": [
+        "src/**/*.ts",
+        "src/**/*.tsx",
+        "src/**/*.js",
+        "src/**/*.jsx",
+        "package.json"
       ]
     },
     "dev": {

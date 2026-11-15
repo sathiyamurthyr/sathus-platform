@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { cn } from '../../lib/cn';
+import { cn } from '@sathus-platform/utils';
 
 interface LoadingStateProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?: 'spinner' | 'dots' | 'skeleton';

@@ -2,8 +2,8 @@
 
 import * as React from 'react';
 import { Upload, FolderPlus, LayoutGrid, List, LayoutTemplate } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
+import { Button } from '@sathus-platform/uibutton';
+import { cn } from '@sathus-platform/utils';
 import { MediaSearch } from './MediaSearch';
 import { FilterPanel, type FilterPanelFilters } from './FilterPanel';
 import { SortMenu } from './SortMenu';

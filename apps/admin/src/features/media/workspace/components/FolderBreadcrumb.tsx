@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { ChevronRight } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Button } from '@sathus-platform/uibutton';
 
 interface FolderBreadcrumbProps {
   folderId?: string;

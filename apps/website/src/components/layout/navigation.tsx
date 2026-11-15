@@ -3,9 +3,9 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { motion } from 'motion/react';
-import { cn } from '@/lib/utils';
+import { cn } from '@sathus-platform/utils';
 import { MegaMenu } from '@/components/layout/mega-menu';
-import { navItems, megaMenuSections } from '@/constants';
+import { navItems, megaMenuSections } from '@sathus-platform/config';
 
 const Navigation = () => {
   const [activeIndex, setActiveIndex] = React.useState<number | null>(null);

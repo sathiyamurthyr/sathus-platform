@@ -2,7 +2,7 @@ import React from 'react';
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { MegaMenu } from '@/components/layout/mega-menu';
-import { megaMenuSections } from '@/constants';
+import { megaMenuSections } from '@sathus-platform/config';
 import { ThemeProvider } from '@/providers/theme-provider';
 import { TooltipProvider } from '@/providers/tooltip-provider';
 

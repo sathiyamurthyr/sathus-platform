@@ -4,7 +4,7 @@ import * as React from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'motion/react';
 import { ChevronRight, Settings, HelpCircle, LogOut } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Button } from '@sathus-platform/ui';
 
 interface ProfileMenuProps {
   open: boolean;

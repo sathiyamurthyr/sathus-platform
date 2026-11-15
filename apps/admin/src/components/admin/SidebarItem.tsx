@@ -4,8 +4,8 @@ import * as React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import { cn } from '@/lib/utils';
-import { Badge } from '@/components/ui/badge';
+import { cn } from '@sathus-platform/utils';
+import { Badge } from '@sathus-platform/uibadge';
 import type { NavItem } from '@/types/admin';
 
 export interface SidebarItemProps {

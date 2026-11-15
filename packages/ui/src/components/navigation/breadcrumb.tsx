@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ChevronRight } from 'lucide-react';
-import { cn } from '../../lib/cn';
+import { cn } from '@sathus-platform/utils';
 
 interface BreadcrumbProps extends React.HTMLAttributes<HTMLElement> {
   items: {

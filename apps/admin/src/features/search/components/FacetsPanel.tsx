@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@sathus-platform/utils';
 import type { FacetValue, SearchFacetResponse } from '../lib/search-api';
 
 export interface FacetsPanelProps {

@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { SearchX } from 'lucide-react';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@sathus-platform/utils';
 
 export interface SearchEmptyStateProps {
   query?: string;

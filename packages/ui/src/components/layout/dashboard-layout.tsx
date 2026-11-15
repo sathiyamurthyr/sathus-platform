@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { cn } from '../../lib/cn';
+import { cn } from '@sathus-platform/utils';
 
 interface DashboardLayoutProps extends React.HTMLAttributes<HTMLDivElement> {
   sidebar?: React.ReactNode;

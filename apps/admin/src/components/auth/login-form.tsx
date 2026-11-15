@@ -5,8 +5,8 @@ import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { loginSchema } from '@/lib/auth-validation';
-import { login as authLogin } from '@/lib/auth-client';
+import { loginSchema } from '@sathus-platform/auth';
+import { login as authLogin } from '@sathus-platform/auth';
 
 import { EmailInput } from './email-input';
 import { PasswordInput } from './password-input';

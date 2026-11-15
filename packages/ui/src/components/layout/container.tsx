@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { cn } from '../../lib/cn';
+import { cn } from '@sathus-platform/utils';
 
 interface ContainerProps extends React.HTMLAttributes<HTMLDivElement> {
   size?: 'default' | 'wide' | 'narrow' | 'full';

@@ -3,8 +3,8 @@
 import * as React from 'react';
 import { Search, X } from 'lucide-react';
 
-import { cn } from '@/lib/utils';
-import { Input } from '@/components/ui/input';
+import { cn } from '@sathus-platform/utils';
+import { Input } from '@sathus-platform/uiinput';
 
 export interface SearchBarProps {
   value: string;

@@ -3,7 +3,7 @@ import { ArrowRight, Lock, Eye, FileCheck2, Network, Scale } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react';
 import { Reveal } from '@/components/sections/reveal';
 import { SectionIntro } from '@/components/sections/section-intro';
-import { cn } from '@/lib/utils';
+import { cn } from '@sathus-platform/utils';
 
 interface TrustItem {
   icon: LucideIcon;

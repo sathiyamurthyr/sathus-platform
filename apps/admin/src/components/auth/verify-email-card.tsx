@@ -2,10 +2,10 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import { verifyEmail } from '@/lib/auth-client';
+import { verifyEmail } from '@sathus-platform/auth';
 import { AlertCircle, CheckCircle2, Loader2 } from 'lucide-react';
 
-import { Alert } from '@/components/ui/alert';
+import { Alert } from '@sathus-platform/uialert';
 
 interface VerifyEmailCardProps {
   token: string;

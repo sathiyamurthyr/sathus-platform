@@ -4,7 +4,7 @@ import * as React from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowRight, ExternalLink } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn } from '@sathus-platform/utils';
 import { MegaMenuSection } from '@/types';
 import { useReducedMotion } from '@/providers/motion-provider';
 import { getIcon } from './icon-map';

@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { motion } from 'motion/react';
 
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@sathus-platform/uicard';
 
 interface AuthCardProps {
   title: string;

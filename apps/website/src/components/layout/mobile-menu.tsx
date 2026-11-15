@@ -4,10 +4,10 @@ import * as React from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, ChevronRight, Search } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn } from '@sathus-platform/utils';
 import { ThemeToggle } from '@/components/layout/theme-toggle';
-import { Button } from '@/components/ui/button';
-import { navItems, megaMenuSections } from '@/constants';
+import { Button } from '@sathus-platform/ui';
+import { navItems, megaMenuSections } from '@sathus-platform/config';
 
 interface MobileMenuProps {
   open: boolean;

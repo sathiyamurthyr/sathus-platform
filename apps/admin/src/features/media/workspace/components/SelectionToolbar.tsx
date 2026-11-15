@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { Download, Archive, Trash2, Copy, FolderOpen, Tag, Share2, X } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Button } from '@sathus-platform/uibutton';
 
 export function SelectionToolbar({
   count,

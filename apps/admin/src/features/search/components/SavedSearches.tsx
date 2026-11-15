@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { Bookmark, X, Search } from 'lucide-react';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@sathus-platform/utils';
 import type { SavedSearch } from '../hooks/use-search';
 
 export interface SavedSearchesProps {

@@ -3,8 +3,8 @@
 import * as React from 'react';
 import { FileText } from 'lucide-react';
 
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
+import { Button } from '@sathus-platform/uibutton';
+import { Badge } from '@sathus-platform/uibadge';
 import type { ContentItem } from '@/types/content';
 
 const contentTypeLabels: Record<string, string> = {

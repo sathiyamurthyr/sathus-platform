@@ -4,10 +4,10 @@ import * as React from 'react';
 import Link from 'next/link';
 import { X, Megaphone, Briefcase, Sparkles, CalendarDays, Newspaper, ArrowRight } from 'lucide-react';
 import { motion } from 'motion/react';
-import { cn } from '@/lib/utils';
-import { useAnnouncementDismiss } from '@/hooks/use-announcement-dismiss';
-import { announcements } from '@/constants';
-import { Button } from '@/components/ui/button';
+import { cn } from '@sathus-platform/utils';
+import { useAnnouncementDismiss } from '@sathus-platform/hooks';
+import { announcements } from '@sathus-platform/config';
+import { Button } from '@sathus-platform/ui';
 
 const iconMap: Record<string, React.ElementType> = {
   Megaphone,

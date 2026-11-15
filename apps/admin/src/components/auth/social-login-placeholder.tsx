@@ -3,8 +3,8 @@
 import * as React from 'react';
 import { Globe, Monitor, GitBranch } from 'lucide-react';
 
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
+import { Button } from '@sathus-platform/uibutton';
+import { cn } from '@sathus-platform/utils';
 
 interface SocialLoginPlaceholderProps {
   className?: string;

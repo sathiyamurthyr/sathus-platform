@@ -10,9 +10,9 @@ import {
   Search as SearchIcon,
 } from 'lucide-react';
 
-import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
+import { cn } from '@sathus-platform/utils';
+import { Button } from '@sathus-platform/uibutton';
+import { Badge } from '@sathus-platform/uibadge';
 import { useSearch, type SearchFilters } from '../hooks/use-search';
 import { getStatus, rebuildIndex, type SearchIndexStatusResponse } from '../lib/search-api';
 import {

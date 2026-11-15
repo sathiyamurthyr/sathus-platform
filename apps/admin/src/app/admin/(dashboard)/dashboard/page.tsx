@@ -4,7 +4,7 @@ import { StatCard } from '@/components/dashboard/StatCard';
 import { QuickActionCard } from '@/components/dashboard/QuickActionCard';
 import { RecentActivity } from '@/components/dashboard/RecentActivity';
 import { SystemStatus } from '@/components/dashboard/SystemStatus';
-import { Button } from '@/components/ui/button';
+import { Button } from '@sathus-platform/uibutton';
 import { stats, quickActions, recentActivity, services } from '@/config/dashboard-data';
 
 export default function DashboardPage() {

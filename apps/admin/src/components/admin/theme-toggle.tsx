@@ -4,9 +4,9 @@ import * as React from 'react';
 import { useTheme } from 'next-themes';
 import { Check, Computer, Moon, Sun } from 'lucide-react';
 
-import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
-import { useClickOutside } from '@/hooks/use-click-outside';
+import { cn } from '@sathus-platform/utils';
+import { Button } from '@sathus-platform/uibutton';
+import { useClickOutside } from '@sathus-platform/hooks';
 
 const options = [
   { value: 'light', label: 'Light', icon: Sun },

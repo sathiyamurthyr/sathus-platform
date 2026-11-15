@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { Command, Search, CornerDownLeft, ArrowUp, ArrowDown } from 'lucide-react';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@sathus-platform/utils';
 import { SearchBar } from './SearchBar';
 import type { SavedSearch } from '../hooks/use-search';
 

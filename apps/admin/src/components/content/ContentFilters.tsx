@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { Button } from '@/components/ui/button';
+import { Button } from '@sathus-platform/uibutton';
 import { CONTENT_TYPES, CONTENT_STATUSES, SORT_OPTIONS } from '@/types/content';
 
 export interface ContentFiltersProps {

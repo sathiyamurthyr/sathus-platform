@@ -3,11 +3,11 @@
 import * as React from 'react';
 import { Bell } from 'lucide-react';
 
-import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { EmptyState } from '@/components/shared/EmptyState';
-import { useClickOutside } from '@/hooks/use-click-outside';
+import { cn } from '@sathus-platform/utils';
+import { Button } from '@sathus-platform/uibutton';
+import { Badge } from '@sathus-platform/uibadge';
+import { EmptyState } from '@sathus-platform/ui';
+import { useClickOutside } from '@sathus-platform/hooks';
 
 /**
  * Notifications placeholder.

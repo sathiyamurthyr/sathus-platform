@@ -5,8 +5,8 @@ import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { forgotPasswordSchema } from '@/lib/auth-validation';
-import { forgotPassword } from '@/lib/auth-client';
+import { forgotPasswordSchema } from '@sathus-platform/auth';
+import { forgotPassword } from '@sathus-platform/auth';
 
 import { EmailInput } from './email-input';
 import { LoadingButton } from './loading-button';

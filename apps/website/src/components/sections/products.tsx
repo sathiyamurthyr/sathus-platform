@@ -3,7 +3,7 @@ import { ArrowUpRight, BrainCircuit, FileStack, Share2, Fingerprint, FlaskConica
 import type { LucideIcon } from 'lucide-react';
 import { Reveal } from '@/components/sections/reveal';
 import { SectionIntro } from '@/components/sections/section-intro';
-import { cn } from '@/lib/utils';
+import { cn } from '@sathus-platform/utils';
 
 type Status = 'GA' | 'Beta' | 'Research';
 

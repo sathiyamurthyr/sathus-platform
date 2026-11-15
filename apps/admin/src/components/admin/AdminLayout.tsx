@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@sathus-platform/utils';
 import { Sidebar } from './Sidebar';
 import { TopNavigation } from './TopNavigation';
 

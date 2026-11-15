@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { ChevronRight, FolderOpen, Folder, Star, Clock, Share2, Trash2, FolderTree as FolderTreeIcon } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn } from '@sathus-platform/utils';
 import type { FolderTreeNode } from '../lib/media-types';
 
 type ActiveView = 'all' | 'favorites' | 'recent' | 'shared' | 'trash' | 'collections' | 'orphans' | 'broken' | string;

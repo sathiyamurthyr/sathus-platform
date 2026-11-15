@@ -18,9 +18,9 @@ import { SeoPanel } from './SeoPanel';
 import { ContentWorkflow } from './ContentWorkflow';
 import { VersionHistory } from './VersionHistory';
 
-import { useAutosave, type AutosaveStatus } from '@/hooks/use-autosave';
-import { useUnsavedChanges } from '@/hooks/use-unsaved-changes';
-import { useKeyboardShortcuts, EDITOR_SHORTCUTS } from '@/hooks/use-keyboard-shortcuts';
+import { useAutosave, type AutosaveStatus } from '@sathus-platform/hooks';
+import { useUnsavedChanges } from '@sathus-platform/hooks';
+import { useKeyboardShortcuts, EDITOR_SHORTCUTS } from '@sathus-platform/hooks';
 import { slugify } from '@/lib/slug';
 
 export interface ContentSaveData {

@@ -6,8 +6,8 @@ import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { mfaVerifySchema } from '@/lib/auth-validation';
-import { verifyMFA } from '@/lib/auth-client';
+import { mfaVerifySchema } from '@sathus-platform/auth';
+import { verifyMFA } from '@sathus-platform/auth';
 
 import { PasswordInput } from './password-input';
 import { LoadingButton } from './loading-button';

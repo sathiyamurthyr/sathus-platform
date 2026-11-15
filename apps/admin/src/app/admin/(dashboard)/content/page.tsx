@@ -4,10 +4,10 @@ import * as React from 'react';
 import { useRouter } from 'next/navigation';
 import { FileText, Plus, Search } from 'lucide-react';
 
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { Button } from '@sathus-platform/uibutton';
+import { Input } from '@sathus-platform/uiinput';
 import { PageHeader } from '@/components/admin/PageHeader';
-import { EmptyState } from '@/components/shared/EmptyState';
+import { EmptyState } from '@sathus-platform/ui';
 import { ContentTable } from '@/components/content/ContentTable';
 import { ContentFilters } from '@/components/content/ContentFilters';
 import { DeleteContentDialog } from '@/components/content/DeleteContentDialog';

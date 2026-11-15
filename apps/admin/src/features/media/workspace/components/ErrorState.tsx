@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { AlertCircle } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Button } from '@sathus-platform/uibutton';
 
 export function ErrorState({
   title = 'Something went wrong',

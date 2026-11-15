@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { ArrowRight, CalendarClock } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Button } from '@sathus-platform/ui';
 
 export function FinalCta() {
   return (

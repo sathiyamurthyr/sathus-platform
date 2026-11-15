@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { CheckCircle2 } from 'lucide-react';
 
-import { Alert, type AlertProps } from '@/components/ui/alert';
+import { Alert, type AlertProps } from '@sathus-platform/uialert';
 
 interface SuccessAlertProps extends Omit<AlertProps, 'variant' | 'title' | 'icon'> {
   message: string;

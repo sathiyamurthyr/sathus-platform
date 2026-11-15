@@ -4,9 +4,9 @@ import * as React from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'motion/react';
 import { Bell, CheckCheck } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
-import { notifications } from '@/constants';
+import { cn } from '@sathus-platform/utils';
+import { Button } from '@sathus-platform/ui';
+import { notifications } from '@sathus-platform/config';
 
 interface NotificationsProps {
   open: boolean;

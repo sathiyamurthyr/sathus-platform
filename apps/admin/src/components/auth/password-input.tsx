@@ -3,9 +3,9 @@
 import * as React from 'react';
 import { Eye, EyeOff } from 'lucide-react';
 
-import { Button, type ButtonProps } from '@/components/ui/button';
-import { Input, type InputProps } from '@/components/ui/input';
-import { cn } from '@/lib/utils';
+import { Button, type ButtonProps } from '@sathus-platform/uibutton';
+import { Input, type InputProps } from '@sathus-platform/uiinput';
+import { cn } from '@sathus-platform/utils';
 
 interface PasswordInputProps extends Omit<InputProps, 'type'> {
   rightButtonProps?: Omit<ButtonProps, 'size' | 'variant' | 'aria-label' | 'onClick' | 'type'>;

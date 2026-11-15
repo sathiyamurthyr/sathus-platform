@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ArrowRight } from 'lucide-react';
-import { cn } from '../../lib/cn';
+import { cn } from '@sathus-platform/utils';
 
 interface ProductCardProps extends React.HTMLAttributes<HTMLDivElement> {
   title: string;

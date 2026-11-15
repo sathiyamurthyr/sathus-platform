@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { FileX } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Button } from '@sathus-platform/uibutton';
 
 export function EmptyState({
   title = 'No assets found',

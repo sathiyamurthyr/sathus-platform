@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { Trash2 } from 'lucide-react';
 
-import { Button } from '@/components/ui/button';
+import { Button } from '@sathus-platform/uibutton';
 import type { ContentItem } from '@/types/content';
 
 export interface DeleteContentDialogProps {

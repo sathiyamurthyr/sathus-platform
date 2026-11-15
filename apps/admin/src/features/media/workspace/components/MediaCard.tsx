@@ -2,8 +2,8 @@
 
 import * as React from 'react';
 import { Image, Film, Music, FileText, Archive, FileQuestion, MoreHorizontal } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
+import { Button } from '@sathus-platform/uibutton';
+import { cn } from '@sathus-platform/utils';
 import type { MediaAsset, MediaViewMode } from '../lib/media-types';
 import { formatFileSize, formatDuration } from '../lib/media-utils';
 

@@ -1,0 +1,14 @@
+{
+  "projects": [
+    {
+      "name": "website",
+      "root": "apps/website",
+      "framework": "nextjs"
+    },
+    {
+      "name": "admin",
+      "root": "apps/admin",
+      "framework": "nextjs"
+    }
+  ]
+}

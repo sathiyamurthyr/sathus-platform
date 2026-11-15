@@ -1,54 +1,51 @@
 import * as React from 'react';
-import { cn } from '../../lib/cn';
 
-interface AvatarProps extends React.HTMLAttributes<HTMLDivElement> {
+import { cn } from '@sathus-platform/utils';
+
+export interface AvatarProps extends React.HTMLAttributes<HTMLSpanElement> {
   src?: string;
   alt?: string;
-  fallback?: string;
-  size?: 'default' | 'sm' | 'lg' | 'xl';
-  shape?: 'circle' | 'square';
+  fallback: string;
+  size?: 'sm' | 'md' | 'lg';
 }
 
 const sizeClasses = {
   sm: 'h-8 w-8 text-xs',
-  default: 'h-10 w-10 text-sm',
-  lg: 'h-12 w-12 text-base',
-  xl: 'h-16 w-16 text-lg',
+  md: 'h-9 w-9 text-sm',
+  lg: 'h-10 w-10 text-base',
 };
 
-const shapeClasses = {
-  circle: 'rounded-full',
-  square: 'rounded-md',
-};
-
-const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
-  ({ className, src, alt, fallback, size = 'default', shape = 'circle', ...props }, ref) => {
-    const [imgError, setImgError] = React.useState(false);
+/**
+ * Image avatar with graceful fallback to initials.
+ * Renders as a `span` (decorative) so it can sit inside buttons/menus.
+ */
+const Avatar = React.forwardRef<HTMLSpanElement, AvatarProps>(
+  ({ className, src, alt, fallback, size = 'md', ...props }, ref) => {
+    const [errored, setErrored] = React.useState(false);
+    const showImage = src && !errored;
 
     return (
-      <div
+      <span
         ref={ref}
         className={cn(
-          'relative inline-flex shrink-0 items-center justify-center overflow-hidden bg-muted',
+          'inline-flex shrink-0 select-none items-center justify-center overflow-hidden rounded-full bg-primary/10 font-medium text-primary',
           sizeClasses[size],
-          shapeClasses[shape],
           className
         )}
         {...props}
       >
-        {src && !imgError ? (
+        {showImage ? (
+          // eslint-disable-next-line @next/next/no-img-element
           <img
             src={src}
-            alt={alt || 'Avatar'}
+            alt={alt ?? ''}
             className="h-full w-full object-cover"
-            onError={() => setImgError(true)}
+            onError={() => setErrored(true)}
           />
         ) : (
-          <span className="font-medium text-muted-foreground select-none">
-            {fallback || alt?.charAt(0).toUpperCase() || '?'}
-          </span>
+          <span aria-hidden="true">{fallback}</span>
         )}
-      </div>
+      </span>
     );
   }
 );

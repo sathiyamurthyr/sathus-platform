@@ -3,10 +3,10 @@
 import * as React from 'react';
 import { CreditCard, LogOut, Settings, User } from 'lucide-react';
 
-import { cn } from '@/lib/utils';
-import { Avatar } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
-import { useClickOutside } from '@/hooks/use-click-outside';
+import { cn } from '@sathus-platform/utils';
+import { Avatar } from '@sathus-platform/uiavatar';
+import { Button } from '@sathus-platform/uibutton';
+import { useClickOutside } from '@sathus-platform/hooks';
 import { currentUser } from '@/config/navigation';
 
 const menuItems = [

@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { motion, type Transition } from 'motion/react';
-import { cn } from '../../lib/cn';
+import { cn } from '@sathus-platform/utils';
 
 interface FadeProps extends React.HTMLAttributes<HTMLDivElement> {
   show?: boolean;

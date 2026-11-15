@@ -4,9 +4,9 @@ import * as React from 'react';
 import Link from 'next/link';
 import { Search, Command, Menu, Bell, ArrowRight } from 'lucide-react';
 import { motion } from 'motion/react';
-import { cn } from '@/lib/utils';
+import { cn } from '@sathus-platform/utils';
 import { BrandLogo } from '@/components/brand-logo';
-import { Button } from '@/components/ui/button';
+import { Button } from '@sathus-platform/ui';
 import { ThemeToggle } from '@/components/layout/theme-toggle';
 import { Navigation } from '@/components/layout/navigation';
 import { MobileMenu } from '@/components/layout/mobile-menu';
@@ -14,8 +14,8 @@ import { SearchDialog } from '@/components/layout/search';
 import { CommandPalette } from '@/components/layout/command-palette';
 import { Notifications } from '@/components/layout/notifications';
 import { ProfileMenu } from '@/components/layout/profile-menu';
-import { useScroll } from '@/hooks/use-scroll';
-import { useKeyboardShortcut } from '@/hooks/use-keyboard-shortcut';
+import { useScroll } from '@sathus-platform/hooks';
+import { useKeyboardShortcut } from '@sathus-platform/hooks';
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);

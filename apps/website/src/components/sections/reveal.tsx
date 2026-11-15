@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { motion, useReducedMotion, type Variants } from 'motion/react';
-import { cn } from '@/lib/utils';
+import { cn } from '@sathus-platform/utils';
 
 interface RevealProps extends React.HTMLAttributes<HTMLDivElement> {
   delay?: number;

@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { X, Download } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Button } from '@sathus-platform/uibutton';
 import type { MediaAsset } from '../lib/media-types';
 
 export function MediaPreview({ asset, onClose }: { asset: MediaAsset; onClose: () => void }) {

@@ -3,8 +3,8 @@
 import * as React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Command, CornerDownLeft } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { commandActions } from '@/constants';
+import { cn } from '@sathus-platform/utils';
+import { commandActions } from '@sathus-platform/config';
 
 interface CommandPaletteProps {
   open: boolean;

@@ -1,1 +1,1 @@
-export { IconWrapper } from './icon-wrapper';
+export { IconWrapper } from '@sathus-platform/icons';

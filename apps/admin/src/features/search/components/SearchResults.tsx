@@ -3,8 +3,8 @@
 import * as React from 'react';
 import { ExternalLink, Calendar, User } from 'lucide-react';
 
-import { cn } from '@/lib/utils';
-import { Badge, type BadgeProps } from '@/components/ui/badge';
+import { cn } from '@sathus-platform/utils';
+import { Badge, type BadgeProps } from '@sathus-platform/uibadge';
 import { SearchHighlight } from './SearchHighlight';
 import type { SearchResultItem, SearchSourceType } from '../lib/search-api';
 

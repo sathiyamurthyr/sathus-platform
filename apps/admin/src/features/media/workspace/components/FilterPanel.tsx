@@ -1,12 +1,12 @@
 'use client';
 
 import * as React from 'react';
-import { Button } from '@/components/ui/button';
+import { Button } from '@sathus-platform/uibutton';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from '@sathus-platform/uidropdown-menu';
 import { ChevronDown, X } from 'lucide-react';
 import type { MediaType, MediaStatus } from '../lib/media-types';
 

@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { ArrowDownRight, ArrowUpRight } from 'lucide-react';
 
-import { cn } from '@/lib/utils';
-import { Card } from '@/components/ui/card';
+import { cn } from '@sathus-platform/utils';
+import { Card } from '@sathus-platform/uicard';
 import type { Stat } from '@/types/admin';
 
 export interface StatCardProps {

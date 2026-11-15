@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { Loader2 } from 'lucide-react';
 
-import { Button, type ButtonProps } from '@/components/ui/button';
+import { Button, type ButtonProps } from '@sathus-platform/uibutton';
 
 interface LoadingButtonProps extends ButtonProps {
   isLoading?: boolean;

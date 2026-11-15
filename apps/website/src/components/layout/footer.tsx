@@ -3,9 +3,9 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn } from '@sathus-platform/utils';
 import { BrandLogo } from '@/components/brand-logo';
-import { footerSections, socialLinks, siteConfig } from '@/constants';
+import { footerSections, socialLinks, siteConfig } from '@sathus-platform/config';
 
 export function Footer({ className }: { className?: string }) {
   return (

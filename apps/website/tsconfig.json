@@ -17,7 +17,14 @@
     "paths": {
       "@/*": ["./src/*"],
       "@sathus-platform/ui": ["../../packages/ui/src/index.ts"],
-      "@sathus-platform/types": ["../../packages/types/src/index.ts"]
+      "@sathus-platform/types": ["../../packages/types/src/index.ts"],
+      "@sathus-platform/config": ["../../packages/config/src/index.ts"],
+      "@sathus-platform/utils": ["../../packages/utils/src/index.ts"],
+      "@sathus-platform/hooks": ["../../packages/hooks/src/index.ts"],
+      "@sathus-platform/icons": ["../../packages/icons/src/index.ts"],
+      "@sathus-platform/design-tokens": ["../../packages/design-tokens/src/index.ts"],
+      "@sathus-platform/auth": ["../../packages/auth/src/index.ts"],
+      "@sathus-platform/api-client": ["../../packages/api-client/src/index.ts"]
     },
     "plugins": [
       {

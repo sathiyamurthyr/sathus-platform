@@ -1,6 +1,9 @@
+'use client';
+
 import * as React from 'react';
 import { AlertCircle, CheckCircle2, Info, AlertTriangle } from 'lucide-react';
-import { cn } from '../../lib/cn';
+
+import { cn } from '@sathus-platform/utils';
 
 const alertIcons = {
   default: Info,
@@ -10,7 +13,7 @@ const alertIcons = {
   info: Info,
 };
 
-interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?: 'default' | 'destructive' | 'warning' | 'success' | 'info';
   title?: string;
   icon?: React.ReactNode;
@@ -20,7 +23,7 @@ interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
   ({ className, variant = 'default', title, icon, action, children, ...props }, ref) => {
     const Icon = icon ? null : alertIcons[variant];
-    
+
     return (
       <div
         ref={ref}

@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { motion } from 'motion/react';
-import { cn } from '@/lib/utils';
+import { cn } from '@sathus-platform/utils';
 import { SectionIntro } from '@/components/sections/section-intro';
 
 interface Tech {

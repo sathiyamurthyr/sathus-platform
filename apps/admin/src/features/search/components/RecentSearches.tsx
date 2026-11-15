@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { History } from 'lucide-react';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@sathus-platform/utils';
 
 export interface RecentSearchesProps {
   items: string[];

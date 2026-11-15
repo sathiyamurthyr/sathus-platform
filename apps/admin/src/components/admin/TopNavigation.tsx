@@ -5,8 +5,8 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ChevronRight, Menu } from 'lucide-react';
 
-import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
+import { cn } from '@sathus-platform/utils';
+import { Button } from '@sathus-platform/uibutton';
 import { getBreadcrumb } from '@/config/navigation';
 import { GlobalSearch } from './GlobalSearch';
 import { NotificationMenu } from './NotificationMenu';

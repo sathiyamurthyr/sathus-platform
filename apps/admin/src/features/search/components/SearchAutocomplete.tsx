@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { Loader2, Search, CornerDownLeft } from 'lucide-react';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@sathus-platform/utils';
 import { suggest, type SearchSuggestionResponse } from '../lib/search-api';
 
 export interface SearchAutocompleteProps {
