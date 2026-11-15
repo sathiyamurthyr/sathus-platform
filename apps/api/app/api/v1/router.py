@@ -74,3 +74,7 @@ api_router.include_router(pipelines_router, prefix="/pipelines", tags=["pipeline
 api_router.include_router(iac_router, prefix="/iac", tags=["iac"])
 api_router.include_router(infrastructure_router, prefix="/infrastructure", tags=["infrastructure"])
 
+# Finance, GST & Server Billing Management Router
+from app.finance.api.endpoints import router as finance_router
+api_router.include_router(finance_router, prefix="/finance", tags=["finance"])
+

@@ -13,6 +13,10 @@ import {
   Users,
   Briefcase,
   Navigation,
+  IndianRupee,
+  Server,
+  Receipt,
+  ShoppingCart,
 } from 'lucide-react';
 
 import type { NavItem } from '@/types/admin';
@@ -25,8 +29,12 @@ import type { NavItem } from '@/types/admin';
  */
 export const navItems: NavItem[] = [
   { label: 'Dashboard', href: '/admin/dashboard', icon: LayoutDashboard },
+  { label: 'Finance & Billing', href: '/admin/finance', icon: IndianRupee },
+  { label: 'Server Subscriptions', href: '/admin/finance/subscriptions', icon: Server },
+  { label: 'Sales Invoices', href: '/admin/finance/invoices', icon: Receipt },
+  { label: 'Vendor Purchases', href: '/admin/finance/purchases', icon: ShoppingCart },
   { label: 'Products', href: '/admin/content?contentType=Product', icon: Package },
-  { label: 'Services', href: '/admin/services', icon: Briefcase, comingSoon: true },
+  { label: 'Services', href: '/admin/finance/services', icon: Briefcase },
   { label: 'Sathus Labs', href: '/admin/labs', icon: FlaskConical, comingSoon: true },
   { label: 'Sathus X', href: '/admin/x', icon: Boxes, comingSoon: true },
   { label: 'Documentation', href: '/admin/content?contentType=DocPage', icon: BookOpen },
@@ -37,8 +45,8 @@ export const navItems: NavItem[] = [
   { label: 'Search', href: '/admin/search', icon: Search },
   { label: 'SEO', href: '/admin/seo', icon: Search, comingSoon: true },
   { label: 'Analytics', href: '/admin/analytics', icon: BarChart3, comingSoon: true },
-  { label: 'Users', href: '/admin/users', icon: Users, comingSoon: true },
-  { label: 'Settings', href: '/admin/settings', icon: Settings, comingSoon: true },
+  { label: 'Users', href: '/admin/finance/customers', icon: Users },
+  { label: 'Settings', href: '/admin/finance/settings', icon: Settings },
 ].filter(item => !item.comingSoon);
 
 /** The dashboard home route used for redirects and active-state roots. */
@@ -47,6 +55,16 @@ export const DASHBOARD_ROUTE = '/admin/dashboard';
 const labelOverrides: Record<string, string> = {
   admin: 'Admin',
   dashboard: 'Dashboard',
+  finance: 'Finance & Billing',
+  subscriptions: 'Server Subscriptions',
+  invoices: 'Sales Invoices',
+  purchases: 'Vendor Purchases',
+  customers: 'Customers',
+  vendors: 'Vendors',
+  services: 'Services Catalogue',
+  payments: 'Payments',
+  reports: 'GST Reports',
+  settings: 'Settings & Profile',
 };
 
 /**

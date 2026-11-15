@@ -7,6 +7,10 @@ import {
   Plus,
   UserPlus,
   Users,
+  IndianRupee,
+  Server,
+  Receipt,
+  ShieldCheck,
 } from 'lucide-react';
 
 import type {
@@ -23,6 +27,15 @@ import type {
  * can be swapped for live queries without touching the view layer.
  */
 export const stats: Stat[] = [
+  {
+    id: 'mrr',
+    label: 'Hosting MRR',
+    value: '₹8,500',
+    change: '+18% GST',
+    changeType: 'positive',
+    icon: IndianRupee,
+    hint: 'App & DB Server billing',
+  },
   {
     id: 'products',
     label: 'Total Products',
@@ -51,15 +64,6 @@ export const stats: Stat[] = [
     hint: 'active experiments',
   },
   {
-    id: 'visitors',
-    label: 'Visitors',
-    value: '24.8k',
-    change: '-1.1%',
-    changeType: 'negative',
-    icon: BarChart3,
-    hint: 'last 30 days',
-  },
-  {
     id: 'users',
     label: 'Users',
     value: '1,904',
@@ -72,32 +76,32 @@ export const stats: Stat[] = [
 
 export const quickActions: QuickAction[] = [
   {
-    id: 'add-product',
-    label: 'Add Product',
-    description: 'Create a new catalogue item',
-    icon: Plus,
-    href: '/admin/products',
+    id: 'server-billing',
+    label: 'Server Subscriptions',
+    description: 'App Server (₹5,500) & DB (₹3,000)',
+    icon: Server,
+    href: '/admin/finance/subscriptions',
   },
   {
-    id: 'new-article',
-    label: 'New Article',
-    description: 'Draft a blog post',
-    icon: FileText,
-    href: '/admin/blog',
+    id: 'tax-invoices',
+    label: 'GST Tax Invoices',
+    description: 'Printable A4 GST Tax Invoices',
+    icon: Receipt,
+    href: '/admin/finance/invoices',
   },
   {
-    id: 'invite-user',
-    label: 'Invite User',
-    description: 'Send a team invitation',
-    icon: UserPlus,
-    href: '/admin/users',
+    id: 'company-contact',
+    label: 'Company & Contact Info',
+    description: 'Phone, Email, Bank & GSTIN',
+    icon: ShieldCheck,
+    href: '/admin/finance/settings',
   },
   {
-    id: 'view-analytics',
-    label: 'View Analytics',
-    description: 'Open the insights panel',
-    icon: BarChart3,
-    href: '/admin/analytics',
+    id: 'finance-overview',
+    label: 'Finance & GST Hub',
+    description: 'MRR, ITC & GSTR compliance',
+    icon: IndianRupee,
+    href: '/admin/finance',
   },
 ];
 
