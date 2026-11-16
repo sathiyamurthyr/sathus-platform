@@ -17,6 +17,17 @@ export const metadata: Metadata = {
     template: '%s · Sathus Admin',
   },
   description: 'Enterprise administration console for the Sathus Platform.',
+  icons: {
+    icon: [
+      { url: '/brand/sathus-logo.png', sizes: 'any', type: 'image/png' },
+      { url: '/favicon.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon.ico', sizes: 'any' },
+    ],
+    apple: [
+      { url: '/brand/sathus-logo.png', sizes: '180x180', type: 'image/png' },
+    ],
+    shortcut: ['/brand/sathus-logo.png'],
+  },
 };
 
 export const viewport: Viewport = {
