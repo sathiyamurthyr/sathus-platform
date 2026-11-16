@@ -3,7 +3,6 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { motion } from 'motion/react';
-import { LockKeyhole } from 'lucide-react';
 
 import { ThemeSwitcher } from './theme-switcher';
 
@@ -15,7 +14,7 @@ interface AuthLayoutProps {
 
 function AuthLayout({ children, title, subtitle }: AuthLayoutProps) {
   return (
-    <div className="relative flex min-h-screen items-center justify-center bg-background px-4">
+    <div className="relative flex min-h-screen items-center justify-center bg-muted/20 px-4 py-8">
       <div className="absolute right-4 top-4">
         <ThemeSwitcher />
       </div>
@@ -26,18 +25,23 @@ function AuthLayout({ children, title, subtitle }: AuthLayoutProps) {
         transition={{ duration: 0.4 }}
         className="w-full max-w-md"
       >
-        <div className="mb-8 flex flex-col items-center text-center">
-          <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary text-primary-foreground">
-            <LockKeyhole className="h-6 w-6" aria-hidden="true" />
-          </span>
-          <h1 className="mt-4 text-2xl font-semibold tracking-tight">{title}</h1>
+        <div className="mb-6 flex flex-col items-center text-center">
+          <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white border border-border/80 shadow-xs p-1.5 overflow-hidden">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/brand/sathus-logo.png"
+              alt="Sathus Technology"
+              className="h-full w-full object-contain"
+            />
+          </div>
+          <h1 className="mt-4 text-2xl font-bold tracking-tight text-foreground">{title}</h1>
           <p className="mt-1 text-sm text-muted-foreground">{subtitle}</p>
         </div>
 
         {children}
 
         <p className="mt-6 text-center text-xs text-muted-foreground">
-          © {new Date().getFullYear()} Sathus Platform. <Link href="/" className="hover:underline underline-offset-4">Return to site</Link>
+          © {new Date().getFullYear()} Sathus Technology Pvt Ltd. All rights reserved.
         </p>
       </motion.div>
     </div>

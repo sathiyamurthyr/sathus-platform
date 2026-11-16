@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import { X } from 'lucide-react';
+import { X, LogOut } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -103,9 +103,30 @@ export function Sidebar({
         </div>
       </nav>
 
-      <div className="shrink-0 border-t border-border p-4">
-        <div className="rounded-md bg-muted/50 px-3 py-2 text-xs text-muted-foreground">
-          Sathus Technology · v1.0
+      <div className="shrink-0 border-t border-border p-3 space-y-2">
+        <button
+          type="button"
+          onClick={async () => {
+            try {
+              await fetch('/api/auth/logout', { method: 'POST' });
+            } catch {
+              // Ignore
+            }
+            if (typeof window !== 'undefined') {
+              localStorage.removeItem('accessToken');
+              localStorage.removeItem('refreshToken');
+              localStorage.removeItem('sathus_admin_uid');
+              window.location.href = '/login';
+            }
+          }}
+          className="flex w-full items-center gap-2 rounded-md px-3 py-1.5 text-xs font-medium text-muted-foreground hover:bg-destructive/10 hover:text-destructive transition-colors outline-none"
+        >
+          <LogOut className="h-3.5 w-3.5" />
+          <span>Sign Out</span>
+        </button>
+        <div className="rounded-md bg-muted/40 px-3 py-1.5 text-[11px] text-muted-foreground flex items-center justify-between">
+          <span>Sathus Technology</span>
+          <span>v1.0</span>
         </div>
       </div>
     </div>

@@ -36,6 +36,21 @@ export function ProfileMenu({ className }: { className?: string }) {
     triggerRef.current?.focus();
   };
 
+  const handleSignOut = async () => {
+    setOpen(false);
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' });
+    } catch {
+      // Ignore
+    }
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+      localStorage.removeItem('sathus_admin_uid');
+      window.location.href = '/login';
+    }
+  };
+
   return (
     <div ref={ref} className={cn('relative', className)}>
       <Button
@@ -85,7 +100,7 @@ export function ProfileMenu({ className }: { className?: string }) {
             type="button"
             role="menuitem"
             className="flex w-full items-center gap-2 rounded-sm px-3 py-2 text-sm text-destructive outline-none transition-colors hover:bg-destructive/10 focus-visible:bg-destructive/10"
-            onClick={close}
+            onClick={handleSignOut}
           >
             <LogOut className="h-4 w-4" aria-hidden="true" />
             Sign out
