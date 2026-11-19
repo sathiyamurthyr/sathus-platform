@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useRef, useState, useEffect } from 'react';
-import { Printer, ArrowLeft, ShieldCheck, QrCode } from 'lucide-react';
+import { Printer, ArrowLeft, ShieldCheck, QrCode, CreditCard, CheckCircle2 } from 'lucide-react';
 import { SalesInvoice, CompanyProfile } from '@/types/finance';
 import { Button } from '@/components/ui/button';
 import { financeClient, DEFAULT_COMPANY_PROFILE } from '@/lib/finance-client';
@@ -10,6 +10,7 @@ interface PrintableGSTInvoiceProps {
   invoice: SalesInvoice;
   companyProfile?: CompanyProfile;
   onClose?: () => void;
+  onInvoiceUpdate?: (updated: SalesInvoice) => void;
 }
 
 const printStyles = `
@@ -71,12 +72,19 @@ const printStyles = `
 `;
 
 export function PrintableGSTInvoice({
-  invoice,
+  invoice: initialInvoice,
   companyProfile: initialProfile,
   onClose,
+  onInvoiceUpdate,
 }: PrintableGSTInvoiceProps) {
   const printRef = useRef<HTMLDivElement>(null);
+  const [invoice, setInvoice] = useState<SalesInvoice>(initialInvoice);
+  const [isUpdatingStatus, setIsUpdatingStatus] = useState(false);
   const [profile, setProfile] = useState<CompanyProfile>(initialProfile || DEFAULT_COMPANY_PROFILE);
+
+  useEffect(() => {
+    setInvoice(initialInvoice);
+  }, [initialInvoice]);
 
   useEffect(() => {
     if (!initialProfile) {
@@ -88,6 +96,34 @@ export function PrintableGSTInvoice({
 
   const handlePrint = () => {
     window.print();
+  };
+
+  const handleMarkAsPaid = async () => {
+    if (invoice.status === 'PAID') return;
+    setIsUpdatingStatus(true);
+    try {
+      await financeClient.recordPayment({
+        payment_type: 'CLIENT_RECEIPT',
+        party_type: 'CUSTOMER',
+        party_ref_id: invoice.customer_ref_id,
+        amount: invoice.balance_due > 0 ? invoice.balance_due : invoice.grand_total,
+        payment_mode: 'BANK_TRANSFER',
+        transaction_reference: `UTR-${Math.floor(100000000000 + Math.random() * 900000000000)}`,
+        invoice_ref_ids: [invoice.ref_id],
+      });
+      const updated: SalesInvoice = {
+        ...invoice,
+        status: 'PAID',
+        paid_amount: invoice.grand_total,
+        balance_due: 0,
+      };
+      setInvoice(updated);
+      if (onInvoiceUpdate) onInvoiceUpdate(updated);
+    } catch (err) {
+      console.error('Failed to mark invoice as paid', err);
+    } finally {
+      setIsUpdatingStatus(false);
+    }
   };
 
   const isInterState =
@@ -137,6 +173,19 @@ export function PrintableGSTInvoice({
         </div>
 
         <div className="flex items-center gap-2">
+          {!isPaid && (
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={isUpdatingStatus}
+              onClick={handleMarkAsPaid}
+              className="h-8 gap-1.5 border-emerald-600 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-xs font-semibold shadow-xs"
+              title="Record full payment and mark invoice as Paid in Full"
+            >
+              <CreditCard className="h-4 w-4 text-emerald-600" />
+              {isUpdatingStatus ? 'Recording...' : 'Mark as Paid'}
+            </Button>
+          )}
           <Button
             variant="default"
             size="sm"

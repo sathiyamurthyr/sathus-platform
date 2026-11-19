@@ -1,7 +1,9 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { CreditCard, ArrowDownLeft, ArrowUpRight, CheckCircle2, Search } from 'lucide-react';
+import Link from 'next/link';
+import { CreditCard, ArrowDownLeft, ArrowUpRight, CheckCircle2, Search, ArrowRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { FinanceNavHeader } from '@/components/finance/FinanceNavHeader';
 import { financeClient } from '@/lib/finance-client';
@@ -38,13 +40,21 @@ export default function PaymentsPage() {
     <div className="mx-auto w-full max-w-7xl p-4 md:p-6 lg:p-8 space-y-6">
       <FinanceNavHeader />
 
-      <div>
-        <h1 className="text-2xl font-bold tracking-tight text-foreground">
-          Payment Transactions & Settlements
-        </h1>
-        <p className="text-sm text-muted-foreground">
-          Audit ledger of client remittances received and vendor payments disbursed.
-        </p>
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <h1 className="text-2xl font-bold tracking-tight text-foreground">
+            Payment Transactions & Settlements
+          </h1>
+          <p className="text-sm text-muted-foreground">
+            Audit ledger of client remittances received and vendor payments disbursed.
+          </p>
+        </div>
+
+        <Link href="/admin/finance/invoices">
+          <Button size="sm" className="gap-1.5 bg-[#A20A3A] hover:bg-[#85082e] text-white">
+            <CreditCard className="h-4 w-4" /> Settle Sales Invoices <ArrowRight className="h-3.5 w-3.5" />
+          </Button>
+        </Link>
       </div>
 
       <Card className="border-border">

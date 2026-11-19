@@ -35,6 +35,14 @@ export default function InvoicesPage() {
   const [customerId, setCustomerId] = useState<number>(0);
   const [serverType, setServerType] = useState<'APP' | 'DB' | 'DUAL'>('DUAL');
 
+  // Record Payment Modal state
+  const [paymentModalInvoice, setPaymentModalInvoice] = useState<SalesInvoice | null>(null);
+  const [paymentAmount, setPaymentAmount] = useState<number>(0);
+  const [paymentMode, setPaymentMode] = useState<string>('BANK_TRANSFER');
+  const [paymentRef, setPaymentRef] = useState<string>('');
+  const [paymentDate, setPaymentDate] = useState<string>(new Date().toISOString().split('T')[0]);
+  const [paymentSubmitting, setPaymentSubmitting] = useState(false);
+
   const loadData = async () => {
     setLoading(true);
     try {
@@ -57,14 +65,14 @@ export default function InvoicesPage() {
   }, []);
 
   useEffect(() => {
-    if (showCreateModal) {
+    if (showCreateModal || paymentModalInvoice) {
       const original = document.body.style.overflow;
       document.body.style.overflow = 'hidden';
       return () => {
         document.body.style.overflow = original;
       };
     }
-  }, [showCreateModal]);
+  }, [showCreateModal, paymentModalInvoice]);
 
   const fmt = (val: number) =>
     new Intl.NumberFormat('en-IN', {
@@ -93,21 +101,46 @@ export default function InvoicesPage() {
     }
   };
 
-  const handleRecordPayment = async (invoice: SalesInvoice) => {
+  const openPaymentModal = (invoice: SalesInvoice) => {
+    setPaymentModalInvoice(invoice);
+    setPaymentAmount(invoice.balance_due > 0 ? invoice.balance_due : invoice.grand_total);
+    setPaymentMode('BANK_TRANSFER');
+    setPaymentRef(`UTR-${Math.floor(100000000000 + Math.random() * 900000000000)}`);
+    setPaymentDate(new Date().toISOString().split('T')[0]);
+  };
+
+  const handleQuickStatusChange = async (invoiceRefId: number, newStatus: InvoiceStatus) => {
     try {
-      await financeClient.createPayment({
+      await financeClient.updateInvoiceStatus(invoiceRefId, newStatus);
+      setStatusMsg(`Invoice #${invoiceRefId} status updated to ${newStatus}.`);
+      await loadData();
+    } catch {
+      setStatusMsg('Failed to update invoice status.');
+    }
+  };
+
+  const handleSavePayment = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!paymentModalInvoice) return;
+    setPaymentSubmitting(true);
+    try {
+      const amt = Number(paymentAmount) || 0;
+      await financeClient.recordPayment({
         payment_type: 'CLIENT_RECEIPT',
         party_type: 'CUSTOMER',
-        party_ref_id: invoice.customer_ref_id,
-        amount: invoice.balance_due,
-        payment_mode: 'BANK_TRANSFER',
-        transaction_reference: `HDFC-${Math.floor(100000 + Math.random() * 900000)}`,
-        invoice_ref_ids: [invoice.ref_id],
+        party_ref_id: paymentModalInvoice.customer_ref_id,
+        amount: amt,
+        payment_mode: paymentMode as any,
+        transaction_reference: paymentRef.trim() || `UTR-${Date.now().toString().slice(-8)}`,
+        invoice_ref_ids: [paymentModalInvoice.ref_id],
       });
-      setStatusMsg(`Full payment recorded for ${invoice.invoice_number || invoice.invoice_no}.`);
+      setStatusMsg(`Payment of ${fmt(amt)} recorded for invoice ${paymentModalInvoice.invoice_number || paymentModalInvoice.invoice_no}. Status updated.`);
+      setPaymentModalInvoice(null);
       await loadData();
     } catch {
       setStatusMsg('Failed to record payment.');
+    } finally {
+      setPaymentSubmitting(false);
     }
   };
 
@@ -165,7 +198,14 @@ export default function InvoicesPage() {
       <div className="mx-auto w-full max-w-7xl p-4 md:p-6 lg:p-8">
         <PrintableGSTInvoice
           invoice={selectedInvoice}
-          onClose={() => setSelectedInvoice(null)}
+          onClose={() => {
+            setSelectedInvoice(null);
+            loadData();
+          }}
+          onInvoiceUpdate={(updated) => {
+            setSelectedInvoice(updated);
+            loadData();
+          }}
         />
       </div>
     );
@@ -305,22 +345,22 @@ export default function InvoicesPage() {
                       </span>
                     </td>
                     <td className="p-3 text-right">
-                      <div className="flex items-center justify-end gap-1">
+                      <div className="flex items-center justify-end gap-1.5">
                         <Button
                           variant="ghost"
                           size="sm"
                           onClick={() => setSelectedInvoice(inv)}
-                          className="h-7 px-2 text-xs gap-1 text-primary"
+                          className="h-7 px-2 text-xs gap-1 text-primary hover:bg-primary/10"
                         >
                           <Eye className="h-3.5 w-3.5" /> View / Print
                         </Button>
 
-                        {inv.status === 'PENDING_APPROVAL' && (
+                        {['DRAFT', 'PENDING_APPROVAL'].includes(inv.status) && (
                           <Button
                             variant="ghost"
                             size="sm"
                             onClick={() => handleApproveInvoice(inv.ref_id)}
-                            className="h-7 px-2 text-xs gap-1 text-emerald-600"
+                            className="h-7 px-2 text-xs gap-1 text-emerald-600 hover:bg-emerald-50"
                           >
                             <ShieldCheck className="h-3.5 w-3.5" /> Approve
                           </Button>
@@ -331,22 +371,39 @@ export default function InvoicesPage() {
                             variant="ghost"
                             size="sm"
                             onClick={() => handleIssueInvoice(inv.ref_id)}
-                            className="h-7 px-2 text-xs gap-1 text-blue-600"
+                            className="h-7 px-2 text-xs gap-1 text-blue-600 hover:bg-blue-50"
                           >
                             <FileCheck className="h-3.5 w-3.5" /> Issue
                           </Button>
                         )}
 
-                        {['ISSUED', 'PARTIALLY_PAID'].includes(inv.status) && (
+                        {['ISSUED', 'PARTIALLY_PAID', 'OVERDUE'].includes(inv.status) && (
                           <Button
                             variant="ghost"
                             size="sm"
-                            onClick={() => handleRecordPayment(inv)}
-                            className="h-7 px-2 text-xs gap-1 text-emerald-600"
+                            onClick={() => openPaymentModal(inv)}
+                            className="h-7 px-2 text-xs gap-1 text-emerald-700 font-semibold hover:bg-emerald-50"
                           >
                             <CreditCard className="h-3.5 w-3.5" /> Pay
                           </Button>
                         )}
+
+                        {/* Quick Status Dropdown */}
+                        <select
+                          value={inv.status}
+                          onChange={(e) => handleQuickStatusChange(inv.ref_id, e.target.value as InvoiceStatus)}
+                          className="h-7 rounded border border-border bg-background px-1 text-[11px] font-medium text-muted-foreground hover:text-foreground cursor-pointer focus:outline-none focus:ring-1 focus:ring-primary"
+                          title="Change invoice status directly"
+                        >
+                          <option value="DRAFT">Draft</option>
+                          <option value="PENDING_APPROVAL">Pending Approval</option>
+                          <option value="APPROVED">Approved</option>
+                          <option value="ISSUED">Issued</option>
+                          <option value="PARTIALLY_PAID">Partially Paid</option>
+                          <option value="PAID">Paid</option>
+                          <option value="OVERDUE">Overdue</option>
+                          <option value="CANCELLED">Cancelled</option>
+                        </select>
                       </div>
                     </td>
                   </tr>
@@ -494,6 +551,173 @@ export default function InvoicesPage() {
                 className="bg-[#A20A3A] hover:bg-[#85082e] text-white shadow-sm font-semibold px-5 h-9"
               >
                 Create Invoice Draft
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* RECORD CUSTOMER PAYMENT MODAL */}
+      {paymentModalInvoice && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto"
+          role="dialog"
+          aria-modal="true"
+        >
+          {/* Backdrop */}
+          <div
+            className="fixed inset-0 bg-black/50 transition-opacity"
+            aria-hidden="true"
+            onClick={() => !paymentSubmitting && setPaymentModalInvoice(null)}
+          />
+
+          {/* Modal Container: Solid White #FFFFFF, max-w-[560px], rounded-2xl, shadow-2xl */}
+          <div
+            className="relative z-10 w-full max-w-[560px] flex flex-col rounded-2xl bg-white border border-neutral-200 shadow-2xl overflow-hidden text-neutral-900"
+            style={{ backgroundColor: '#FFFFFF' }}
+          >
+            {/* Fixed Sticky Header */}
+            <div className="flex items-center justify-between px-6 py-4 border-b border-neutral-200 bg-white shrink-0">
+              <div className="flex items-center gap-3">
+                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-50 text-emerald-700 shrink-0">
+                  <CreditCard className="h-5 w-5 text-emerald-700" />
+                </div>
+                <div>
+                  <h2 className="text-base font-bold text-neutral-900">
+                    Record Customer Payment
+                  </h2>
+                  <p className="text-xs text-neutral-500 font-mono">
+                    {paymentModalInvoice.invoice_number || paymentModalInvoice.invoice_no} · {paymentModalInvoice.customer_name}
+                  </p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => !paymentSubmitting && setPaymentModalInvoice(null)}
+                className="text-neutral-400 hover:text-neutral-600 text-lg leading-none p-1"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Scrollable Form Body */}
+            <form id="record-payment-form" onSubmit={handleSavePayment} className="p-6 space-y-4">
+              {/* Financial Summary Pill Box */}
+              <div className="grid grid-cols-3 gap-3 rounded-xl border border-neutral-200 bg-[#FAF8F9] p-3 text-center">
+                <div>
+                  <span className="text-[10px] font-semibold text-neutral-500 uppercase tracking-wider">Grand Total</span>
+                  <p className="text-sm font-bold font-mono text-neutral-900">{fmt(paymentModalInvoice.grand_total)}</p>
+                </div>
+                <div>
+                  <span className="text-[10px] font-semibold text-neutral-500 uppercase tracking-wider">Paid to Date</span>
+                  <p className="text-sm font-bold font-mono text-emerald-600">{fmt(paymentModalInvoice.paid_amount || 0)}</p>
+                </div>
+                <div>
+                  <span className="text-[10px] font-semibold text-neutral-500 uppercase tracking-wider">Balance Due</span>
+                  <p className="text-sm font-bold font-mono text-rose-600">{fmt(paymentModalInvoice.balance_due)}</p>
+                </div>
+              </div>
+
+              {/* Amount to Record */}
+              <div className="space-y-1.5">
+                <div className="flex items-center justify-between">
+                  <label className="text-xs font-semibold text-neutral-700">
+                    Payment Amount (₹) <span className="text-rose-500">*</span>
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => setPaymentAmount(paymentModalInvoice.balance_due > 0 ? paymentModalInvoice.balance_due : paymentModalInvoice.grand_total)}
+                    className="text-[11px] font-semibold text-[#A20A3A] hover:underline"
+                  >
+                    Pay Full Balance ({fmt(paymentModalInvoice.balance_due > 0 ? paymentModalInvoice.balance_due : paymentModalInvoice.grand_total)})
+                  </button>
+                </div>
+                <input
+                  type="number"
+                  required
+                  min={1}
+                  max={paymentModalInvoice.balance_due > 0 ? paymentModalInvoice.balance_due : paymentModalInvoice.grand_total}
+                  value={paymentAmount}
+                  onChange={(e) => setPaymentAmount(Number(e.target.value))}
+                  className="w-full rounded-lg border border-neutral-300 px-3 py-2 text-sm font-mono text-neutral-900 focus:border-[#A20A3A] focus:outline-none focus:ring-1 focus:ring-[#A20A3A]"
+                />
+              </div>
+
+              {/* Payment Mode & Date */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-1.5">
+                  <label className="text-xs font-semibold text-neutral-700">
+                    Payment Mode <span className="text-rose-500">*</span>
+                  </label>
+                  <select
+                    value={paymentMode}
+                    onChange={(e) => setPaymentMode(e.target.value)}
+                    className="w-full rounded-lg border border-neutral-300 px-3 py-2 text-xs text-neutral-900 bg-white focus:border-[#A20A3A] focus:outline-none focus:ring-1 focus:ring-[#A20A3A]"
+                  >
+                    <option value="BANK_TRANSFER">Bank Transfer (NEFT / RTGS / IMPS)</option>
+                    <option value="UPI">UPI / QR (GPay / PhonePe / Paytm)</option>
+                    <option value="CREDIT_CARD">Credit / Debit Card</option>
+                    <option value="CHEQUE">Cheque</option>
+                    <option value="CASH">Cash</option>
+                  </select>
+                </div>
+
+                <div className="space-y-1.5">
+                  <label className="text-xs font-semibold text-neutral-700">
+                    Payment Date <span className="text-rose-500">*</span>
+                  </label>
+                  <input
+                    type="date"
+                    required
+                    value={paymentDate}
+                    onChange={(e) => setPaymentDate(e.target.value)}
+                    className="w-full rounded-lg border border-neutral-300 px-3 py-2 text-xs font-mono text-neutral-900 focus:border-[#A20A3A] focus:outline-none focus:ring-1 focus:ring-[#A20A3A]"
+                  />
+                </div>
+              </div>
+
+              {/* Transaction Reference / UTR */}
+              <div className="space-y-1.5">
+                <label className="text-xs font-semibold text-neutral-700">
+                  Transaction Reference / UTR Number
+                </label>
+                <input
+                  type="text"
+                  placeholder="e.g. HDFC0012938491, UPI/309182390192"
+                  value={paymentRef}
+                  onChange={(e) => setPaymentRef(e.target.value)}
+                  className="w-full rounded-lg border border-neutral-300 px-3 py-2 text-xs font-mono text-neutral-900 focus:border-[#A20A3A] focus:outline-none focus:ring-1 focus:ring-[#A20A3A]"
+                />
+                <p className="text-[11px] text-neutral-500">
+                  Audit reference saved to Payment Transactions ledger.
+                </p>
+              </div>
+
+              <div className="rounded-xl border border-neutral-200 bg-[#FAF8F9] p-3 text-[11px] text-neutral-600">
+                Settling this amount will credit the invoice. If the remaining balance reaches ₹0, the status transitions to <strong className="text-emerald-700">PAID</strong> and activates the green watermark stamp.
+              </div>
+            </form>
+
+            {/* Footer */}
+            <div className="flex items-center justify-end gap-3 px-6 py-4 border-t border-neutral-200 bg-[#FAF8F9] shrink-0">
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                disabled={paymentSubmitting}
+                onClick={() => setPaymentModalInvoice(null)}
+                className="border-neutral-300 text-neutral-700 hover:bg-neutral-100 h-9"
+              >
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                form="record-payment-form"
+                size="sm"
+                disabled={paymentSubmitting}
+                className="bg-[#A20A3A] hover:bg-[#85082e] text-white shadow-sm font-semibold px-5 h-9"
+              >
+                {paymentSubmitting ? 'Recording...' : `Record Payment (${fmt(Number(paymentAmount) || 0)})`}
               </Button>
             </div>
           </div>

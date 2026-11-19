@@ -965,6 +965,38 @@ class FinanceClient {
     throw new Error('Invoice not found');
   }
 
+  async updateInvoiceStatus(
+    ref_id: number,
+    status: SalesInvoice['status'],
+    paid_amount?: number
+  ): Promise<SalesInvoice> {
+    try {
+      const res = await fetch(`${API_BASE}/api/v1/finance/sales-invoices/${ref_id}/status`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status, paid_amount }),
+      });
+      if (res.ok) return await res.json();
+    } catch {
+      // Fallback
+    }
+    const invoices = await this.getInvoices();
+    const inv = invoices.find((i) => i.ref_id === ref_id);
+    if (inv) {
+      inv.status = status;
+      if (status === 'PAID') {
+        inv.paid_amount = inv.grand_total;
+        inv.balance_due = 0;
+      } else if (paid_amount !== undefined) {
+        inv.paid_amount = paid_amount;
+        inv.balance_due = Math.max(inv.grand_total - paid_amount, 0);
+      }
+      this.setStorage('invoices', invoices);
+      return inv;
+    }
+    throw new Error('Invoice not found');
+  }
+
   // --- Purchase Bills ---
   async getPurchaseBills(): Promise<PurchaseBill[]> {
     try {
