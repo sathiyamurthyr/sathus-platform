@@ -156,7 +156,7 @@ export function ArticleCommentsSection({
           <h3 className="text-xl sm:text-2xl font-black text-foreground tracking-tight">
             Discussion & Personal Study Notes
           </h3>
-          <p className="text-xs sm:text-sm text-slate-800 dark:text-slate-200">
+          <p className="text-xs sm:text-sm text-slate-950">
             Share technical insights or save private notes stored in PostgreSQL.
           </p>
         </div>
@@ -194,16 +194,16 @@ export function ArticleCommentsSection({
           {/* Post Comment Form */}
           <form
             onSubmit={handlePostComment}
-            className="rounded-xl border border-border/80 bg-slate-50/80 dark:bg-slate-900/60 p-4 sm:p-5 space-y-4"
+            className="rounded-xl border border-border/80 bg-slate-50/80  p-4 sm:p-5 space-y-4"
           >
-            <div className="flex items-center gap-2 text-xs font-bold text-slate-900 dark:text-slate-100">
+            <div className="flex items-center gap-2 text-xs font-bold text-slate-950">
               <Sparkles className="h-4 w-4 text-primary" />
               <span>Add to Community Discussion</span>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs font-semibold text-slate-900 dark:text-slate-100 mb-1">
+                <label className="block text-xs font-semibold text-slate-950 mb-1">
                   Your Name *
                 </label>
                 <input
@@ -216,7 +216,7 @@ export function ArticleCommentsSection({
                 />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-slate-900 dark:text-slate-100 mb-1">
+                <label className="block text-xs font-semibold text-slate-950 mb-1">
                   Email (Optional, not published)
                 </label>
                 <input
@@ -230,7 +230,7 @@ export function ArticleCommentsSection({
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-900 dark:text-slate-100 mb-1">
+              <label className="block text-xs font-semibold text-slate-950 mb-1">
                 Your Technical Comment or Experience *
               </label>
               <textarea
@@ -287,7 +287,7 @@ export function ArticleCommentsSection({
                         {comment.author_name.charAt(0).toUpperCase()}
                       </div>
                       <div>
-                        <span className="font-bold text-slate-900 dark:text-slate-100">
+                        <span className="font-bold text-slate-950">
                           {comment.author_name}
                         </span>
                         <span className="text-[10px] text-muted-foreground ml-2">
@@ -302,7 +302,7 @@ export function ArticleCommentsSection({
 
                     <button
                       onClick={() => handleUpvote(comment.id)}
-                      className="inline-flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-semibold text-slate-800 dark:text-slate-200 bg-muted/50 hover:bg-muted transition-colors"
+                      className="inline-flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-semibold text-slate-950 bg-muted/50 hover:bg-muted transition-colors"
                       title="Helpful technical insight"
                     >
                       <ThumbsUp className="h-3 w-3 text-primary" />
@@ -310,7 +310,7 @@ export function ArticleCommentsSection({
                     </button>
                   </div>
 
-                  <p className="text-xs sm:text-sm text-slate-900 dark:text-slate-100 font-normal leading-relaxed whitespace-pre-line pl-9">
+                  <p className="text-xs sm:text-sm text-slate-950 font-normal leading-relaxed whitespace-pre-line pl-9">
                     {comment.content}
                   </p>
                 </div>
@@ -324,9 +324,9 @@ export function ArticleCommentsSection({
       {activeTab === 'notes' && (
         <div className="space-y-6">
           {/* Article-Level Note Editor */}
-          <div className="rounded-xl border border-amber-300 dark:border-amber-700/60 bg-amber-50/70 dark:bg-amber-950/40 p-4 sm:p-5 space-y-3">
+          <div className="rounded-xl border border-amber-300 /60 bg-amber-50/70  p-4 sm:p-5 space-y-3">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2 text-xs font-bold text-amber-950 dark:text-amber-200">
+              <div className="flex items-center gap-2 text-xs font-bold text-amber-950 ">
                 <StickyNote className="h-4 w-4 text-amber-700" />
                 <span>Overall Study & Revision Notes (Private to You)</span>
               </div>
@@ -343,7 +343,7 @@ export function ArticleCommentsSection({
               placeholder="Jot down key takeaways, salary expectations, target companies (e.g. Netflix, Databricks, Uber), or interview dates..."
               value={articleNoteText}
               onChange={(e) => setArticleNoteText(e.target.value)}
-              className="w-full rounded-lg border border-amber-300/80 dark:border-amber-700 bg-background/90 p-3 text-xs sm:text-sm text-slate-950 dark:text-slate-100 placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-amber-500 font-medium"
+              className="w-full rounded-lg border border-amber-300/80  bg-background/90 p-3 text-xs sm:text-sm text-slate-950  placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-amber-500 font-medium"
             />
 
             <div className="flex items-center justify-between">
@@ -393,7 +393,7 @@ export function ArticleCommentsSection({
                         {new Date(item.updated_at).toLocaleDateString()}
                       </span>
                     </div>
-                    <p className="text-xs sm:text-sm text-slate-900 dark:text-slate-100 font-medium whitespace-pre-line">
+                    <p className="text-xs sm:text-sm text-slate-950 font-medium whitespace-pre-line">
                       {item.note_text}
                     </p>
                   </div>

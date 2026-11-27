@@ -63,13 +63,13 @@ export function SparkArchitectureDiagram() {
 
           {/* AQE Badge */}
           <rect x="35" y="348" width="230" height="56" rx="6" className="fill-emerald-500/10 stroke-emerald-500/40" strokeWidth="1" />
-          <text x="45" y="368" className="fill-emerald-600 dark:fill-emerald-400 font-bold text-[11px]">Adaptive Query Execution (AQE)</text>
+          <text x="45" y="368" className="fill-emerald-600  font-bold text-[11px]">Adaptive Query Execution (AQE)</text>
           <text x="45" y="384" className="fill-muted-foreground text-[9px]">• Dynamic coalesce • Skewed join handling</text>
           <text x="45" y="396" className="fill-muted-foreground text-[9px]">• Runtime sort-merge to broadcast join switch</text>
 
           {/* CLUSTER MANAGER (Center) */}
           <rect x="320" y="180" width="130" height="100" rx="8" className="fill-card stroke-amber-500/50" strokeWidth="1.5" />
-          <text x="330" y="205" className="fill-amber-600 dark:fill-amber-400 font-bold text-[11px]">CLUSTER MANAGER</text>
+          <text x="330" y="205" className="fill-amber-600  font-bold text-[11px]">CLUSTER MANAGER</text>
           <text x="330" y="222" className="fill-muted-foreground text-[9px] font-mono">Kubernetes</text>
           <text x="330" y="236" className="fill-muted-foreground text-[9px] font-mono">Databricks</text>
           <text x="330" y="250" className="fill-muted-foreground text-[9px] font-mono">YARN / Standalone</text>
@@ -144,12 +144,12 @@ export function SparkArchitectureDiagram() {
           <text x="622" y="385" className="fill-emerald-600 text-[8px] font-bold">Running</text>
 
           <rect x="700" y="357" width="185" height="36" rx="4" className="fill-rose-500/10 border stroke-rose-500/30" />
-          <text x="708" y="372" className="fill-rose-600 dark:fill-rose-400 font-mono text-[9px]">Shuffle Spill Area</text>
+          <text x="708" y="372" className="fill-rose-600  font-mono text-[9px]">Shuffle Spill Area</text>
           <text x="708" y="385" className="fill-muted-foreground text-[8px]">Local NVMe Scratch Disk</text>
 
           {/* SHUFFLE ARROW (Connecting Worker 1 and Worker 2) */}
           <path d="M 680 200 L 680 275" className="stroke-amber-500" strokeWidth="2" strokeDasharray="3 3" />
-          <text x="690" y="242" className="fill-amber-600 dark:fill-amber-400 font-bold text-[9px] font-mono">
+          <text x="690" y="242" className="fill-amber-600  font-bold text-[9px] font-mono">
             SHUFFLE EXCHANGE (Wide Dependency)
           </text>
         </svg>
@@ -181,7 +181,7 @@ export function MedallionLakehouseDiagram() {
           <span className="text-[11px] font-bold uppercase tracking-wider text-primary">Architecture Visual Blueprint 02</span>
           <h4 className="text-base font-bold text-foreground">Databricks Delta Lake / Apache Iceberg Medallion Lakehouse</h4>
         </div>
-        <span className="rounded-full bg-emerald-500/10 px-2.5 py-1 text-[10px] font-mono font-semibold text-emerald-600 dark:text-emerald-400">
+        <span className="rounded-full bg-emerald-500/10 px-2.5 py-1 text-[10px] font-mono font-semibold text-emerald-600 ">
           ACID • Time Travel • OCC
         </span>
       </div>
@@ -230,7 +230,7 @@ export function MedallionLakehouseDiagram() {
           <g transform="translate(225, 30)">
             <rect width="200" height="320" rx="10" className="fill-amber-950/20 stroke-amber-500/50" strokeWidth="2" />
             <rect width="200" height="34" rx="10" className="fill-amber-500/20" />
-            <text x="14" y="23" className="fill-amber-600 dark:fill-amber-400 font-bold text-xs uppercase tracking-wide">
+            <text x="14" y="23" className="fill-amber-600  font-bold text-xs uppercase tracking-wide">
               BRONZE LAYER (RAW)
             </text>
 
@@ -250,7 +250,7 @@ export function MedallionLakehouseDiagram() {
             <text x="20" y="220" className="fill-amber-600 font-bold text-[8px]">No Data Loss Guarantee</text>
 
             <rect x="12" y="240" width="176" height="68" rx="6" className="fill-amber-500/10 stroke-amber-500/30" />
-            <text x="20" y="258" className="fill-amber-600 dark:fill-amber-400 font-bold text-[10px]">Downstream Contract</text>
+            <text x="20" y="258" className="fill-amber-600  font-bold text-[10px]">Downstream Contract</text>
             <text x="20" y="274" className="fill-foreground text-[8px]">Source of Truth for Replays,</text>
             <text x="20" y="286" className="fill-foreground text-[8px]">Backfills & Incident Recovery</text>
           </g>
@@ -262,7 +262,7 @@ export function MedallionLakehouseDiagram() {
 
           {/* SILVER LAYER */}
           <g transform="translate(475, 30)">
-            <rect width="200" height="320" rx="10" className="fill-slate-800/10 dark:fill-slate-700/20 stroke-slate-400" strokeWidth="2" />
+            <rect width="200" height="320" rx="10" className="fill-slate-800/10  stroke-slate-400" strokeWidth="2" />
             <rect width="200" height="34" rx="10" className="fill-slate-400/20" />
             <text x="14" y="23" className="fill-foreground font-bold text-xs uppercase tracking-wide">
               SILVER LAYER (CURATED)
@@ -299,7 +299,7 @@ export function MedallionLakehouseDiagram() {
           <g transform="translate(725, 30)">
             <rect width="180" height="320" rx="10" className="fill-yellow-500/10 stroke-yellow-500/60" strokeWidth="2" />
             <rect width="180" height="34" rx="10" className="fill-yellow-500/20" />
-            <text x="14" y="23" className="fill-yellow-600 dark:fill-yellow-400 font-bold text-xs uppercase tracking-wide">
+            <text x="14" y="23" className="fill-yellow-600  font-bold text-xs uppercase tracking-wide">
               GOLD (BUSINESS)
             </text>
 
@@ -320,7 +320,7 @@ export function MedallionLakehouseDiagram() {
             <text x="18" y="222" className="fill-purple-600 font-semibold text-[8px]">• Executive Financial Reporting</text>
 
             <rect x="10" y="240" width="160" height="68" rx="6" className="fill-yellow-500/10 stroke-yellow-500/40" />
-            <text x="18" y="258" className="fill-yellow-600 dark:fill-yellow-400 font-bold text-[10px]">Governance Guard</text>
+            <text x="18" y="258" className="fill-yellow-600  font-bold text-[10px]">Governance Guard</text>
             <text x="18" y="272" className="fill-foreground text-[8px]">Unity Catalog / RLS / Masking</text>
             <text x="18" y="284" className="fill-foreground text-[8px]">Sub-second SLA Serving</text>
           </g>
@@ -344,7 +344,7 @@ export function StreamingCdcDiagram() {
           <span className="text-[11px] font-bold uppercase tracking-wider text-primary">Architecture Visual Blueprint 03</span>
           <h4 className="text-base font-bold text-foreground">Real-Time Event Streaming, Debezium CDC & Watermark Mechanics</h4>
         </div>
-        <span className="rounded-full bg-blue-500/10 px-2.5 py-1 text-[10px] font-mono font-semibold text-blue-600 dark:text-blue-400">
+        <span className="rounded-full bg-blue-500/10 px-2.5 py-1 text-[10px] font-mono font-semibold text-blue-600 ">
           Sub-Minute Latency • Exactly-Once
         </span>
       </div>
@@ -385,7 +385,7 @@ export function StreamingCdcDiagram() {
           {/* 2. DEBEZIUM CONNECTOR */}
           <g transform="translate(225, 60)">
             <rect width="130" height="200" rx="8" className="fill-card stroke-blue-500/50" strokeWidth="1.5" />
-            <text x="12" y="25" className="fill-blue-600 dark:fill-blue-400 font-bold text-xs">DEBEZIUM</text>
+            <text x="12" y="25" className="fill-blue-600  font-bold text-xs">DEBEZIUM</text>
             <text x="12" y="40" className="fill-muted-foreground text-[9px] font-mono">Kafka Connect</text>
 
             <rect x="10" y="55" width="110" height="130" rx="4" className="fill-background stroke-border" />
@@ -434,7 +434,7 @@ export function StreamingCdcDiagram() {
           {/* 4. STREAMING ENGINE */}
           <g transform="translate(625, 40)">
             <rect width="275" height="240" rx="8" className="fill-card stroke-emerald-500/50" strokeWidth="1.5" />
-            <text x="15" y="25" className="fill-emerald-600 dark:fill-emerald-400 font-bold text-xs">
+            <text x="15" y="25" className="fill-emerald-600  font-bold text-xs">
               SPARK STRUCTURED STREAMING / FLINK
             </text>
             <text x="15" y="40" className="fill-muted-foreground text-[9px] font-mono">Micro-Batch / Continuous Ingestion</text>
@@ -454,7 +454,7 @@ export function StreamingCdcDiagram() {
             <text x="18" y="157" className="fill-muted-foreground text-[8px]">Guarantees Exactly-Once idempotent output</text>
 
             <rect x="12" y="173" width="250" height="55" rx="4" className="fill-emerald-500/10 stroke-emerald-500/30" />
-            <text x="18" y="191" className="fill-emerald-600 dark:fill-emerald-400 font-bold text-[9px]">
+            <text x="18" y="191" className="fill-emerald-600  font-bold text-[9px]">
               Sink: foreachBatch → Delta MERGE INTO
             </text>
             <text x="18" y="205" className="fill-foreground text-[8px]">
@@ -489,7 +489,7 @@ export function SqlWindowFunctionDiagram() {
           <span className="text-[11px] font-bold uppercase tracking-wider text-primary">Architecture Visual Blueprint 04</span>
           <h4 className="text-base font-bold text-foreground">SQL Logical Execution Order & Window Function Frame Mechanics</h4>
         </div>
-        <span className="rounded-full bg-purple-500/10 px-2.5 py-1 text-[10px] font-mono font-semibold text-purple-600 dark:text-purple-400">
+        <span className="rounded-full bg-purple-500/10 px-2.5 py-1 text-[10px] font-mono font-semibold text-purple-600 ">
           Query Optimizer Internal Pipeline
         </span>
       </div>
@@ -535,7 +535,7 @@ export function SqlWindowFunctionDiagram() {
 
           {/* 5. WINDOW */}
           <rect x="515" y="30" width="115" height="50" rx="6" className="fill-purple-500/15 stroke-purple-500/50" strokeWidth="1.5" />
-          <text x="525" y="50" className="fill-purple-600 dark:fill-purple-400 font-bold text-[10px]">5. OVER()</text>
+          <text x="525" y="50" className="fill-purple-600  font-bold text-[10px]">5. OVER()</text>
           <text x="525" y="65" className="fill-foreground font-semibold text-[8px]">Window Framing</text>
 
           <path d="M 630 55 L 650 55" className="stroke-primary" strokeWidth="2" />
@@ -549,7 +549,7 @@ export function SqlWindowFunctionDiagram() {
 
           {/* 7. QUALIFY / ORDER */}
           <rect x="765" y="30" width="135" height="50" rx="6" className="fill-emerald-500/10 stroke-emerald-500/40" />
-          <text x="775" y="50" className="fill-emerald-600 dark:fill-emerald-400 font-bold text-[10px]">7. QUALIFY / ORDER</text>
+          <text x="775" y="50" className="fill-emerald-600  font-bold text-[10px]">7. QUALIFY / ORDER</text>
           <text x="775" y="65" className="fill-muted-foreground text-[8px]">Window Filter & Limit</text>
 
           {/* COMPARISON TABLE OF ROW_NUMBER vs RANK vs DENSE_RANK */}
@@ -616,7 +616,7 @@ export function AiFeatureStoreDiagram() {
           <span className="text-[11px] font-bold uppercase tracking-wider text-primary">Architecture Visual Blueprint 05</span>
           <h4 className="text-base font-bold text-foreground">Dual-Path Enterprise Feature Store & AI Agent Grounding Architecture</h4>
         </div>
-        <span className="rounded-full bg-rose-500/10 px-2.5 py-1 text-[10px] font-mono font-semibold text-rose-600 dark:text-rose-400">
+        <span className="rounded-full bg-rose-500/10 px-2.5 py-1 text-[10px] font-mono font-semibold text-rose-600 ">
           Zero Training-Serving Skew
         </span>
       </div>
@@ -671,7 +671,7 @@ export function AiFeatureStoreDiagram() {
 
           <g transform="translate(670, 75)">
             <rect width="230" height="150" rx="8" className="fill-card stroke-rose-500/40" strokeWidth="1.5" />
-            <text x="14" y="25" className="fill-rose-600 dark:fill-rose-400 font-bold text-xs">
+            <text x="14" y="25" className="fill-rose-600  font-bold text-xs">
               AI AGENTS & ML SERVING
             </text>
             <text x="14" y="42" className="fill-muted-foreground font-mono text-[9px]">Inference Time & Evaluation</text>
@@ -681,7 +681,7 @@ export function AiFeatureStoreDiagram() {
             <text x="18" y="82" className="fill-muted-foreground text-[8px]">Identical feature logic in training and live agent inference</text>
 
             <rect x="12" y="98" width="206" height="40" rx="4" className="fill-emerald-500/10 stroke-emerald-500/30" />
-            <text x="18" y="114" className="fill-emerald-600 dark:fill-emerald-400 font-bold text-[9px]">RAG Grounding & Tool Call</text>
+            <text x="18" y="114" className="fill-emerald-600  font-bold text-[9px]">RAG Grounding & Tool Call</text>
             <text x="18" y="128" className="fill-foreground text-[8px]">Hybrid Vector Search + Fresh Lakehouse Attributes</text>
           </g>
         </svg>

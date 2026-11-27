@@ -271,12 +271,12 @@ export function DataEngineeringInterviewGuide() {
               onClick={() => setFilterOnlyNotes(!filterOnlyNotes)}
               className={`flex items-center gap-1.5 rounded-xl border px-3 py-2 text-xs font-bold transition-all ${
                 filterOnlyNotes
-                  ? 'border-amber-500 bg-amber-50 text-amber-950 dark:bg-amber-950/80 dark:text-amber-200 shadow-sm'
-                  : 'border-border bg-background text-slate-800 dark:text-slate-200 hover:bg-muted'
+                  ? 'border-amber-500 bg-amber-50 text-amber-950   shadow-sm'
+                  : 'border-border bg-background text-slate-950 hover:bg-muted'
               }`}
               title="Filter to view only questions with personal notes"
             >
-              <StickyNote className="h-3.5 w-3.5 text-amber-600 dark:text-amber-400" />
+              <StickyNote className="h-3.5 w-3.5 text-amber-600 " />
               <span>My Notes ({Object.keys(userNotes).filter((k) => k !== 'article').length})</span>
             </button>
             <select
@@ -297,10 +297,10 @@ export function DataEngineeringInterviewGuide() {
         <div className="flex flex-wrap items-center gap-1.5 pt-1 text-xs">
           <button
             onClick={() => setSelectedSectionId('all')}
-            className={`rounded-lg px-3 py-1.5 font-bold transition-all ${
+            className={`rounded-lg px-3.5 py-1.5 text-xs font-black transition-all ${
               selectedSectionId === 'all'
-                ? 'bg-primary text-primary-foreground shadow-sm'
-                : 'bg-muted/70 text-slate-800 dark:text-slate-200 font-semibold hover:bg-muted hover:text-foreground'
+                ? 'bg-[#A20A3A] text-white shadow-md border-2 border-[#A20A3A]'
+                : 'border-2 border-slate-300 bg-white text-slate-950 hover:bg-slate-100 hover:border-slate-400 shadow-xs'
             }`}
           >
             All Sections (500 Qs)
@@ -309,10 +309,10 @@ export function DataEngineeringInterviewGuide() {
             <button
               key={sec.id}
               onClick={() => setSelectedSectionId(sec.id)}
-              className={`rounded-lg px-2.5 py-1.5 text-xs transition-all ${
+              className={`rounded-lg px-2.5 py-1.5 text-xs font-bold transition-all ${
                 selectedSectionId === sec.id
-                  ? 'bg-primary text-primary-foreground font-bold shadow-sm'
-                  : 'bg-muted/50 text-slate-800 dark:text-slate-200 font-medium hover:bg-muted hover:text-foreground'
+                  ? 'bg-[#A20A3A] text-white shadow-md border-2 border-[#A20A3A]'
+                  : 'border-2 border-slate-300 bg-white text-slate-950 hover:bg-slate-100 hover:border-slate-400 shadow-xs'
               }`}
             >
               Sec {idx + 1}: {sec.range}
@@ -362,7 +362,7 @@ export function DataEngineeringInterviewGuide() {
               <h3 className="text-xl sm:text-2xl font-extrabold text-foreground tracking-tight">
                 {sec.title}
               </h3>
-              <p className="text-sm sm:text-base text-slate-800 dark:text-slate-200 leading-relaxed font-normal">
+              <p className="text-sm sm:text-base text-slate-900 leading-relaxed font-semibold">
                 {sec.summary}
               </p>
 
@@ -371,7 +371,7 @@ export function DataEngineeringInterviewGuide() {
                 {sec.keyTopics.map((topic) => (
                   <span
                     key={topic}
-                    className="rounded-md border border-border/60 bg-muted/40 px-2 py-0.5 text-[11px] font-semibold text-slate-800 dark:text-slate-200"
+                    className="rounded-md border-2 border-slate-300 bg-slate-100 px-2.5 py-1 text-xs font-bold text-slate-950"
                   >
                     #{topic}
                   </span>
@@ -380,16 +380,16 @@ export function DataEngineeringInterviewGuide() {
             </div>
 
             {/* HIGH-YIELD CHEAT SHEET SUMMARY */}
-            <div className="rounded-2xl border border-border/80 bg-slate-50/80 dark:bg-slate-900/50 p-4 sm:p-5 space-y-3">
-              <div className="flex items-center gap-2 text-xs font-bold text-primary uppercase tracking-wider">
-                <Lightbulb className="h-4 w-4" />
+            <div className="rounded-2xl border-2 border-slate-300 bg-white p-5 sm:p-6 space-y-4 shadow-sm">
+              <div className="flex items-center gap-2 text-xs font-black text-[#A20A3A] uppercase tracking-wider">
+                <Lightbulb className="h-4 w-4 text-[#A20A3A]" />
                 <span>Executive Cheat Sheet & Critical Interview Rules</span>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 text-xs">
                 {sec.cheatSheet.map((item, idx) => (
-                  <div key={idx} className="rounded-xl border border-border/80 bg-card p-3.5 shadow-xs">
-                    <strong className="text-slate-900 dark:text-slate-100 block font-bold text-xs mb-1">{item.label}</strong>
-                    <span className="text-slate-700 dark:text-slate-300 font-medium text-xs leading-relaxed">{item.value}</span>
+                  <div key={idx} className="rounded-xl border-2 border-slate-200 bg-slate-50 p-4 shadow-xs">
+                    <strong className="text-slate-950 block font-black text-xs sm:text-sm mb-1">{item.label}</strong>
+                    <span className="text-slate-900 font-semibold text-xs sm:text-sm leading-relaxed">{item.value}</span>
                   </div>
                 ))}
               </div>
@@ -405,7 +405,7 @@ export function DataEngineeringInterviewGuide() {
             {/* DETAILED QUESTION ACCORDIONS */}
             <div className="space-y-4 pt-2">
               <div className="flex items-center justify-between">
-                <h4 className="text-sm font-bold uppercase tracking-wider text-slate-900 dark:text-slate-100 flex items-center gap-2">
+                <h4 className="text-sm font-bold uppercase tracking-wider text-slate-950 flex items-center gap-2">
                   <BookOpen className="h-4 w-4 text-primary" />
                   Key Interview Questions & Deep Technical Explanations ({sec.questions.length})
                 </h4>
@@ -436,21 +436,21 @@ export function DataEngineeringInterviewGuide() {
                                 : q.difficulty === 'Mid'
                                 ? 'bg-blue-500/15 text-blue-700 dark:text-blue-400'
                                 : q.difficulty === 'Senior'
-                                ? 'bg-amber-500/15 text-amber-800 dark:text-amber-300'
+                                ? 'bg-amber-500/15 text-amber-800 '
                                 : 'bg-rose-500/15 text-rose-800 dark:text-rose-300'
                             }`}
                           >
                             {q.difficulty}
                           </span>
-                          <span className="text-[11px] text-slate-700 dark:text-slate-300 font-semibold">• {q.category}</span>
+                          <span className="text-[11px] text-slate-700  font-semibold">• {q.category}</span>
                         </div>
 
-                        <h5 className="text-base sm:text-lg font-bold text-slate-900 dark:text-slate-100 leading-snug">
+                        <h5 className="text-base sm:text-lg font-bold text-slate-950 leading-snug">
                           {q.question}
                         </h5>
 
                         {!isExpanded && (
-                          <p className="text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-400 line-clamp-1">
+                          <p className="text-xs sm:text-sm font-medium text-slate-600  line-clamp-1">
                             {q.shortAnswer}
                           </p>
                         )}
@@ -467,17 +467,17 @@ export function DataEngineeringInterviewGuide() {
                         {/* Short TL;DR Answer */}
                         <div className="rounded-xl border border-rose-300 dark:border-rose-900/60 bg-rose-50/80 dark:bg-rose-950/30 p-4 space-y-1.5 shadow-xs">
                           <span className="text-xs font-extrabold uppercase tracking-wider text-[#A20A3A] dark:text-rose-400">Direct Executive Summary</span>
-                          <p className="text-sm sm:text-base font-bold text-slate-900 dark:text-slate-100 leading-relaxed">
+                          <p className="text-sm sm:text-base font-bold text-slate-950 leading-relaxed">
                             {q.shortAnswer}
                           </p>
                         </div>
 
                         {/* Detailed In-Depth Breakdown */}
                         <div className="space-y-3 pt-1">
-                          <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-900 dark:text-slate-100 flex items-center gap-2 border-b border-border/80 pb-1.5">
+                          <span className="text-xs sm:text-sm font-black uppercase tracking-wider text-slate-950 flex items-center gap-2 border-b-2 border-slate-200 pb-1.5">
                             Under the Hood / Deep Mechanics
                           </span>
-                          <div className="whitespace-pre-line text-slate-900 dark:text-slate-100 font-normal text-sm sm:text-base leading-relaxed space-y-3">
+                          <div className="whitespace-pre-line text-slate-950 font-medium text-sm sm:text-base leading-relaxed space-y-3">
                             {q.detailedAnswer}
                           </div>
                         </div>
@@ -485,7 +485,7 @@ export function DataEngineeringInterviewGuide() {
                         {/* Optional Code Snippet */}
                         {q.codeSnippet && (
                           <div className="space-y-1.5 pt-1">
-                            <div className="flex items-center justify-between text-xs font-mono font-semibold text-slate-800 dark:text-slate-200">
+                            <div className="flex items-center justify-between text-xs font-mono font-semibold text-slate-950">
                               <span className="uppercase tracking-wider font-bold text-primary">{q.codeLanguage || 'Code Example'}</span>
                               <button
                                 onClick={() => handleCopyCode(q.id, q.codeSnippet!)}
@@ -510,12 +510,12 @@ export function DataEngineeringInterviewGuide() {
 
                         {/* Interviewer Tip Box */}
                         {q.interviewerTip && (
-                          <div className="rounded-xl border-2 border-amber-400 dark:border-amber-600 bg-amber-50 dark:bg-amber-950/60 p-4 space-y-2 shadow-sm">
-                            <strong className="block font-black flex items-center gap-1.5 text-amber-950 dark:text-amber-200 text-xs sm:text-sm">
-                              <Sparkles className="h-4 w-4 text-amber-700 dark:text-amber-400" />
+                          <div className="rounded-xl border-2 border-amber-400 bg-amber-50 p-4 sm:p-5 space-y-2 shadow-sm">
+                            <strong className="block font-black flex items-center gap-1.5 text-amber-950 text-xs sm:text-sm">
+                              <Sparkles className="h-4 w-4 text-amber-700" />
                               Staff Engineer Interviewer Tip & Trap Alert
                             </strong>
-                            <p className="text-xs sm:text-sm font-semibold text-slate-950 dark:text-amber-50 leading-relaxed">
+                            <p className="text-xs sm:text-sm font-bold text-slate-950 leading-relaxed">
                               {q.interviewerTip}
                             </p>
                           </div>
@@ -538,18 +538,18 @@ export function DataEngineeringInterviewGuide() {
                               }}
                               className={`inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-bold transition-all ${
                                 userNotes[`q${q.id}`]
-                                  ? 'bg-amber-100 text-amber-900 border border-amber-400 dark:bg-amber-950/80 dark:text-amber-200 dark:border-amber-700'
-                                  : 'bg-muted/70 text-slate-800 dark:text-slate-200 hover:bg-muted'
+                                  ? 'bg-amber-100 text-amber-900 border border-amber-400   '
+                                  : 'bg-muted/70 text-slate-950 hover:bg-muted'
                               }`}
                             >
-                              <StickyNote className="h-3.5 w-3.5 text-amber-600 dark:text-amber-400" />
+                              <StickyNote className="h-3.5 w-3.5 text-amber-600 " />
                               <span>{userNotes[`q${q.id}`] ? 'Note Saved' : 'Add Note'}</span>
                             </button>
 
                             {/* Discussion Button */}
                             <button
                               onClick={() => handleToggleComments(q.id)}
-                              className="inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-bold bg-muted/70 text-slate-800 dark:text-slate-200 hover:bg-muted transition-all"
+                              className="inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-bold bg-muted/70 text-slate-950 hover:bg-muted transition-all"
                             >
                               <MessageSquare className="h-3.5 w-3.5 text-primary" />
                               <span>Discussion {questionComments[q.id]?.length ? `(${questionComments[q.id].length})` : ''}</span>
@@ -571,8 +571,8 @@ export function DataEngineeringInterviewGuide() {
 
                         {/* Inline Note Editor */}
                         {openNotesForQ[q.id] && (
-                          <div className="rounded-xl border border-amber-300 dark:border-amber-700 bg-amber-50/90 dark:bg-amber-950/40 p-3.5 space-y-2">
-                            <div className="flex items-center justify-between text-xs font-bold text-amber-950 dark:text-amber-200">
+                          <div className="rounded-xl border border-amber-300  bg-amber-50/90  p-3.5 space-y-2">
+                            <div className="flex items-center justify-between text-xs font-bold text-amber-950 ">
                               <span className="flex items-center gap-1.5">
                                 <StickyNote className="h-3.5 w-3.5 text-amber-600" />
                                 My Private Study Note for Q{q.id} (Stored in PostgreSQL)
@@ -588,7 +588,7 @@ export function DataEngineeringInterviewGuide() {
                               placeholder={`Write your study notes, key formulas, or interview reminder for Q${q.id}...`}
                               value={editingNoteText[q.id] ?? userNotes[`q${q.id}`]?.note_text ?? ''}
                               onChange={(e) => setEditingNoteText((prev) => ({ ...prev, [q.id]: e.target.value }))}
-                              className="w-full rounded-lg border border-amber-300 dark:border-amber-700 bg-background p-2.5 text-xs text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-amber-500 font-medium"
+                              className="w-full rounded-lg border border-amber-300  bg-background p-2.5 text-xs text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-amber-500 font-medium"
                             />
                             <div className="flex items-center justify-between text-[11px]">
                               <span className="text-muted-foreground">
@@ -660,7 +660,7 @@ export function DataEngineeringInterviewGuide() {
                                       <span className="font-bold text-foreground">{cm.author_name}</span>
                                       <span>{new Date(cm.created_at).toLocaleDateString()}</span>
                                     </div>
-                                    <p className="text-slate-800 dark:text-slate-200 text-xs font-normal leading-relaxed">
+                                    <p className="text-slate-950 text-xs font-normal leading-relaxed">
                                       {cm.content}
                                     </p>
                                   </div>
