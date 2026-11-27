@@ -20,12 +20,31 @@ export const authors: Author[] = [
 export const tags: Tag[] = [
   { id: 'ai', name: 'AI & Agents', slug: 'ai' },
   { id: 'data', name: 'Data Engineering', slug: 'data' },
+  { id: 'career', name: 'Data Engineering & Career', slug: 'career' },
   { id: 'cloud', name: 'Cloud & Infrastructure', slug: 'cloud' },
   { id: 'security', name: 'Security & Trust', slug: 'security' },
   { id: 'architecture', name: 'Software Architecture', slug: 'architecture' },
 ];
 
 export const resources: Resource[] = [
+  {
+    id: '500-data-engineering-interview-guide',
+    title: '500+ Data Engineering Interview Questions and Answers for 2026 (With Architecture Diagrams)',
+    slug: '500-data-engineering-interview-questions-answers-2026',
+    description: 'The definitive 2026 technical interview question bank and architectural masterclass covering Apache Spark internals, Databricks Delta Lake, SQL query tuning, dimensional modeling, Kafka CDC streaming, and AI feature pipelines.',
+    excerpt: 'Comprehensive 500-question guide with clear technical answers, internal engine mechanics, code snippets, and crisp architecture diagrams designed for senior engineers and architects.',
+    category: 'blog',
+    tags: [
+      { id: 'career', name: 'Data Engineering & Career', slug: 'career' },
+      { id: 'data', name: 'Data Engineering', slug: 'data' },
+      { id: 'architecture', name: 'Software Architecture', slug: 'architecture' },
+    ],
+    author: authors[2], // Marcus Vance (Data Platform Practice Director)
+    publishedAt: '2026-11-20',
+    readingTime: 95,
+    difficulty: 'advanced',
+    featured: true,
+  },
   {
     id: '1',
     title: 'Deterministic Evaluation Harnesses & Guardrail Engineering for Production Agent Swarms',

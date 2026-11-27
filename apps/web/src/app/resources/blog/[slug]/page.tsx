@@ -8,6 +8,7 @@ import { PdfDownloadButton } from '@/components/common/pdf-download-button';
 import { generatePageMetadata } from '@/lib/seo/metadata-builder';
 import Link from 'next/link';
 import { User, Clock, ArrowLeft, ArrowRight, FileText, Code2, BarChart2 } from 'lucide-react';
+import { DataEngineeringInterviewGuide } from '@/features/resources/components/DataEngineeringInterviewGuide';
 
 interface ArticlePageProps {
   params: Promise<{ slug: string }>;
@@ -124,67 +125,70 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
           ]}
         />
 
-        {/* Whitepaper Deep-Dive Article Body */}
-        <article className="prose dark:prose-invert max-w-none space-y-8 text-foreground">
-          <section className="rounded-xl border border-border bg-card p-6 md:p-8 space-y-4">
-            <h2 className="text-xl font-bold text-foreground flex items-center gap-2">
-              <FileText className="h-5 w-5 text-primary" />
-              1. Executive Summary & Problem Statement
-            </h2>
-            <p className="text-sm text-muted-foreground leading-relaxed">
-              In high-throughput enterprise platforms, scaling modern architectural patterns requires strict adherence to security boundaries, deterministic evaluation benchmarks, and zero-downtime execution. This technical paper presents our battle-tested implementation framework built and deployed across regulated enterprise clients.
-            </p>
-          </section>
+        {/* Whitepaper Deep-Dive Article Body or Flagship Guide */}
+        {slug === '500-data-engineering-interview-questions-answers-2026' ? (
+          <DataEngineeringInterviewGuide />
+        ) : (
+          <article className="prose dark:prose-invert max-w-none space-y-8 text-foreground">
+            <section className="rounded-xl border border-border bg-card p-6 md:p-8 space-y-4">
+              <h2 className="text-xl font-bold text-foreground flex items-center gap-2">
+                <FileText className="h-5 w-5 text-primary" />
+                1. Executive Summary & Problem Statement
+              </h2>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                In high-throughput enterprise platforms, scaling modern architectural patterns requires strict adherence to security boundaries, deterministic evaluation benchmarks, and zero-downtime execution. This technical paper presents our battle-tested implementation framework built and deployed across regulated enterprise clients.
+              </p>
+            </section>
 
-          <section className="rounded-xl border border-border bg-card p-6 md:p-8 space-y-4">
-            <h2 className="text-xl font-bold text-foreground flex items-center gap-2">
-              <BarChart2 className="h-5 w-5 text-primary" />
-              2. Technical Architecture & Performance Benchmarks
-            </h2>
-            <p className="text-sm text-muted-foreground leading-relaxed">
-              Empirical load-testing and benchmark results measured under production peak throughput workloads:
-            </p>
-            <div className="overflow-x-auto rounded-lg border border-border">
-              <table className="w-full text-xs text-left text-muted-foreground">
-                <thead className="text-xs uppercase bg-muted/50 text-foreground font-semibold">
-                  <tr>
-                    <th className="px-4 py-3">Metric Benchmark</th>
-                    <th className="px-4 py-3">Legacy Framework</th>
-                    <th className="px-4 py-3">Sathus Modern Architecture</th>
-                    <th className="px-4 py-3">Improvement</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-border">
-                  <tr className="hover:bg-muted/30">
-                    <td className="px-4 py-3 font-semibold text-foreground">P99 Request Latency</td>
-                    <td className="px-4 py-3">480ms</td>
-                    <td className="px-4 py-3 text-emerald-500 font-bold">14ms</td>
-                    <td className="px-4 py-3 font-bold text-primary">34.2x Faster</td>
-                  </tr>
-                  <tr className="hover:bg-muted/30">
-                    <td className="px-4 py-3 font-semibold text-foreground">Throughput (RPS / Node)</td>
-                    <td className="px-4 py-3">1,200 RPS</td>
-                    <td className="px-4 py-3 text-emerald-500 font-bold">12,500 RPS</td>
-                    <td className="px-4 py-3 font-bold text-primary">10.4x Scale</td>
-                  </tr>
-                  <tr className="hover:bg-muted/30">
-                    <td className="px-4 py-3 font-semibold text-foreground">Hallucination Rate (Agent RAG)</td>
-                    <td className="px-4 py-3">14.2%</td>
-                    <td className="px-4 py-3 text-emerald-500 font-bold">&lt; 0.01%</td>
-                    <td className="px-4 py-3 font-bold text-primary">Zero-Hallucination</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </section>
+            <section className="rounded-xl border border-border bg-card p-6 md:p-8 space-y-4">
+              <h2 className="text-xl font-bold text-foreground flex items-center gap-2">
+                <BarChart2 className="h-5 w-5 text-primary" />
+                2. Technical Architecture & Performance Benchmarks
+              </h2>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Empirical load-testing and benchmark results measured under production peak throughput workloads:
+              </p>
+              <div className="overflow-x-auto rounded-lg border border-border">
+                <table className="w-full text-xs text-left text-muted-foreground">
+                  <thead className="text-xs uppercase bg-muted/50 text-foreground font-semibold">
+                    <tr>
+                      <th className="px-4 py-3">Metric Benchmark</th>
+                      <th className="px-4 py-3">Legacy Framework</th>
+                      <th className="px-4 py-3">Sathus Modern Architecture</th>
+                      <th className="px-4 py-3">Improvement</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-border">
+                    <tr className="hover:bg-muted/30">
+                      <td className="px-4 py-3 font-semibold text-foreground">P99 Request Latency</td>
+                      <td className="px-4 py-3">480ms</td>
+                      <td className="px-4 py-3 text-emerald-500 font-bold">14ms</td>
+                      <td className="px-4 py-3 font-bold text-primary">34.2x Faster</td>
+                    </tr>
+                    <tr className="hover:bg-muted/30">
+                      <td className="px-4 py-3 font-semibold text-foreground">Throughput (RPS / Node)</td>
+                      <td className="px-4 py-3">1,200 RPS</td>
+                      <td className="px-4 py-3 text-emerald-500 font-bold">12,500 RPS</td>
+                      <td className="px-4 py-3 font-bold text-primary">10.4x Scale</td>
+                    </tr>
+                    <tr className="hover:bg-muted/30">
+                      <td className="px-4 py-3 font-semibold text-foreground">Hallucination Rate (Agent RAG)</td>
+                      <td className="px-4 py-3">14.2%</td>
+                      <td className="px-4 py-3 text-emerald-500 font-bold">&lt; 0.01%</td>
+                      <td className="px-4 py-3 font-bold text-primary">Zero-Hallucination</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
 
-          <section className="rounded-xl border border-border bg-card p-6 md:p-8 space-y-4">
-            <h2 className="text-xl font-bold text-foreground flex items-center gap-2">
-              <Code2 className="h-5 w-5 text-primary" />
-              3. Reference Implementation Blueprint
-            </h2>
-            <div className="rounded-lg bg-zinc-950 p-4 text-xs font-mono text-zinc-200 overflow-x-auto">
-              <pre>{`// Sathus Production Reference Implementation Blueprint
+            <section className="rounded-xl border border-border bg-card p-6 md:p-8 space-y-4">
+              <h2 className="text-xl font-bold text-foreground flex items-center gap-2">
+                <Code2 className="h-5 w-5 text-primary" />
+                3. Reference Implementation Blueprint
+              </h2>
+              <div className="rounded-lg bg-zinc-950 p-4 text-xs font-mono text-zinc-200 overflow-x-auto">
+                <pre>{`// Sathus Production Reference Implementation Blueprint
 import { createAgentSupervisor, executeGuardrailAudit } from '@sathus-platform/ai';
 
 export async function processEnterpriseTask(inputPayload) {
@@ -199,9 +203,10 @@ export async function processEnterpriseTask(inputPayload) {
 
   return await createAgentSupervisor().dispatch(inputPayload);
 }`}</pre>
-            </div>
-          </section>
-        </article>
+              </div>
+            </section>
+          </article>
+        )}
 
         {/* CTA Footer */}
         <div className="rounded-2xl border border-primary/30 bg-card p-8 text-center space-y-4">
