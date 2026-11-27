@@ -244,6 +244,22 @@ export function DataEngineeringInterviewGuide() {
 
   const totalFilteredCount = filteredSections.reduce((acc, sec) => acc + sec.questions.length, 0);
 
+  // Flattened list of all matching questions for instant search results view
+  const allMatchingQuestions = useMemo(() => {
+    const list: Array<{ question: QuestionItem; sectionTitle: string; sectionRange: string; sectionId: string }> = [];
+    filteredSections.forEach((sec) => {
+      sec.questions.forEach((q) => {
+        list.push({
+          question: q,
+          sectionTitle: sec.title,
+          sectionRange: sec.range,
+          sectionId: sec.id,
+        });
+      });
+    });
+    return list;
+  }, [filteredSections]);
+
   return (
     <div className="w-full space-y-10 text-foreground selection:bg-primary/20">
       {/* GUIDE HEADER HERO */}
@@ -431,9 +447,225 @@ export function DataEngineeringInterviewGuide() {
         </div>
       )}
 
-      {/* SECTIONS RENDERING */}
-      <div className="space-y-14">
-        {filteredSections.map((sec, secIndex) => (
+      {/* DEDICATED INSTANT SEARCH RESULTS VIEW WHEN SEARCHING */}
+      {searchQuery.trim() && totalFilteredCount > 0 ? (
+        <div className="space-y-6">
+          <div className="rounded-2xl border-2 border-slate-300 bg-white p-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 shadow-sm">
+            <div>
+              <h3 className="text-lg sm:text-xl font-black text-slate-950 flex items-center gap-2">
+                <Sparkles className="h-5 w-5 text-[#A20A3A]" />
+                Found {totalFilteredCount} matching question{totalFilteredCount > 1 ? 's' : ''} for &ldquo;<span className="text-[#A20A3A]">{searchQuery}</span>&rdquo;
+              </h3>
+              <p className="text-xs text-slate-600 font-medium mt-0.5">
+                Questions are auto-expanded with full answers, deep mechanics, and interview tips.
+              </p>
+            </div>
+            <button
+              onClick={() => setSearchQuery('')}
+              className="self-start sm:self-auto inline-flex items-center gap-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-900 border border-slate-300 px-3.5 py-1.5 text-xs font-bold transition-colors"
+            >
+              Clear Search & Show Full Guide
+            </button>
+          </div>
+
+          <div className="space-y-4">
+            {allMatchingQuestions.map(({ question: q, sectionTitle }) => {
+              const isExpanded = expandedQuestions[q.id] !== false; // Default expanded in search
+
+              return (
+                <div
+                  key={q.id}
+                  className="overflow-hidden rounded-2xl border-2 border-slate-300 bg-white transition-all shadow-sm hover:border-[#A20A3A]/60"
+                >
+                  {/* Search Card Header */}
+                  <button
+                    onClick={() => toggleQuestion(q.id)}
+                    className="w-full text-left p-4 sm:p-5 flex items-start justify-between gap-3 bg-slate-50 hover:bg-slate-100/80 transition-colors"
+                  >
+                    <div className="space-y-1.5 flex-1">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span className="rounded bg-[#A20A3A]/10 border border-[#A20A3A]/30 px-2 py-0.5 font-mono text-xs font-black text-[#A20A3A]">
+                          Q{q.id}
+                        </span>
+                        <span
+                          className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${
+                            q.difficulty === 'Junior'
+                              ? 'bg-emerald-100 text-emerald-950 border border-emerald-300'
+                              : q.difficulty === 'Mid'
+                              ? 'bg-blue-100 text-blue-950 border border-blue-300'
+                              : q.difficulty === 'Senior'
+                              ? 'bg-purple-100 text-purple-950 border border-purple-300'
+                              : 'bg-rose-100 text-rose-950 border border-rose-300'
+                          }`}
+                        >
+                          {q.difficulty}
+                        </span>
+                        <span className="text-xs text-slate-800 font-bold">• {sectionTitle.split(':')[0]} • {q.category}</span>
+                      </div>
+
+                      <h4 className="text-base sm:text-lg font-black text-slate-950 leading-snug">
+                        {q.question}
+                      </h4>
+
+                      {!isExpanded && (
+                        <p className="text-xs sm:text-sm font-semibold text-slate-700 line-clamp-1">
+                          {q.shortAnswer}
+                        </p>
+                      )}
+                    </div>
+
+                    <div className="p-1 rounded-md text-slate-700 hover:text-slate-950 shrink-0 mt-0.5">
+                      {isExpanded ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
+                    </div>
+                  </button>
+
+                  {/* Search Card Body */}
+                  {isExpanded && (
+                    <div className="p-4 sm:p-6 border-t-2 border-slate-200 space-y-5 bg-white text-xs sm:text-sm">
+                      {/* Short Executive Summary */}
+                      <div className="rounded-xl border-2 border-rose-300 bg-rose-50 p-4 sm:p-5 space-y-1.5 shadow-xs">
+                        <span className="text-xs font-black uppercase tracking-wider text-rose-950 block">
+                          Direct Executive Summary
+                        </span>
+                        <p className="text-sm sm:text-base font-black text-slate-950 leading-relaxed">
+                          {q.shortAnswer}
+                        </p>
+                      </div>
+
+                      {/* Detailed In-Depth Breakdown */}
+                      <div className="space-y-3 pt-1">
+                        <span className="text-xs sm:text-sm font-black uppercase tracking-wider text-slate-950 flex items-center gap-2 border-b-2 border-slate-200 pb-1.5">
+                          Under the Hood / Deep Mechanics
+                        </span>
+                        <div className="whitespace-pre-line text-slate-950 font-medium text-sm sm:text-base leading-relaxed space-y-3">
+                          {q.detailedAnswer}
+                        </div>
+                      </div>
+
+                      {/* Optional Code Snippet */}
+                      {q.codeSnippet && (
+                        <div className="space-y-1.5 pt-1">
+                          <div className="flex items-center justify-between text-xs font-mono font-semibold text-slate-950">
+                            <span className="uppercase tracking-wider font-bold text-primary">{q.codeLanguage || 'Code Example'}</span>
+                            <button
+                              onClick={() => handleCopyCode(q.id, q.codeSnippet!)}
+                              className="inline-flex items-center gap-1.5 text-xs font-bold text-primary hover:underline px-2.5 py-1 rounded bg-muted/60"
+                            >
+                              {copiedCodeId === q.id ? (
+                                <>
+                                  <Check className="h-3.5 w-3.5 text-emerald-600" /> Copied!
+                                </>
+                              ) : (
+                                <>
+                                  <Copy className="h-3.5 w-3.5" /> Copy Snippet
+                                </>
+                              )}
+                            </button>
+                          </div>
+                          <div className="overflow-x-auto rounded-xl bg-zinc-950 p-4 sm:p-5 font-mono text-xs sm:text-sm text-zinc-100 border border-zinc-800 shadow-md">
+                            <pre>{q.codeSnippet}</pre>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Interviewer Tip Box */}
+                      {q.interviewerTip && (
+                        <div className="rounded-xl border-2 border-amber-400 bg-amber-50 p-4 sm:p-5 space-y-2 shadow-sm">
+                          <strong className="block font-black flex items-center gap-1.5 text-amber-950 text-xs sm:text-sm">
+                            <Sparkles className="h-4 w-4 text-amber-700" />
+                            Staff Engineer Interviewer Tip & Trap Alert
+                          </strong>
+                          <p className="text-xs sm:text-sm font-bold text-slate-950 leading-relaxed">
+                            {q.interviewerTip}
+                          </p>
+                        </div>
+                      )}
+
+                      {/* Notes & Comments Actions Bar */}
+                      <div className="flex flex-wrap items-center justify-between gap-2 pt-3 border-t border-border/60">
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={() => {
+                              const isOpen = !openNotesForQ[q.id];
+                              setOpenNotesForQ((prev) => ({ ...prev, [q.id]: isOpen }));
+                              if (isOpen && editingNoteText[q.id] === undefined) {
+                                setEditingNoteText((prev) => ({
+                                  ...prev,
+                                  [q.id]: userNotes[`q${q.id}`]?.note_text || '',
+                                }));
+                              }
+                            }}
+                            className={`inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-bold transition-all ${
+                              userNotes[`q${q.id}`]
+                                ? 'bg-amber-100 text-amber-900 border border-amber-400'
+                                : 'bg-muted/70 text-slate-950 hover:bg-muted'
+                            }`}
+                          >
+                            <StickyNote className="h-3.5 w-3.5 text-amber-600" />
+                            <span>{userNotes[`q${q.id}`] ? 'Note Saved' : 'Add Note'}</span>
+                          </button>
+
+                          <button
+                            onClick={() => handleToggleComments(q.id)}
+                            className="inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-bold bg-muted/70 text-slate-950 hover:bg-muted transition-all"
+                          >
+                            <MessageSquare className="h-3.5 w-3.5 text-primary" />
+                            <span>Discussion {questionComments[q.id]?.length ? `(${questionComments[q.id].length})` : ''}</span>
+                          </button>
+                        </div>
+
+                        <div className="flex flex-wrap gap-1">
+                          {q.relatedTags.map((tag) => (
+                            <span
+                              key={tag}
+                              className="rounded bg-muted px-2 py-0.5 text-[10px] text-muted-foreground font-mono font-medium"
+                            >
+                              #{tag}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Inline Note Editor */}
+                      {openNotesForQ[q.id] && (
+                        <div className="rounded-xl border border-amber-300 bg-amber-50/90 p-3.5 space-y-2">
+                          <div className="flex items-center justify-between text-xs font-bold text-amber-950">
+                            <span className="flex items-center gap-1.5">
+                              <StickyNote className="h-3.5 w-3.5 text-amber-600" />
+                              My Private Study Note for Q{q.id} (Stored in PostgreSQL)
+                            </span>
+                          </div>
+                          <textarea
+                            rows={2}
+                            placeholder={`Write your study notes for Q${q.id}...`}
+                            value={editingNoteText[q.id] ?? userNotes[`q${q.id}`]?.note_text ?? ''}
+                            onChange={(e) => setEditingNoteText((prev) => ({ ...prev, [q.id]: e.target.value }))}
+                            className="w-full rounded-lg border border-amber-300 bg-background p-2.5 text-xs text-foreground font-medium"
+                          />
+                          <div className="flex items-center justify-between text-[11px]">
+                            <span className="text-muted-foreground">Saved to PostgreSQL</span>
+                            <button
+                              onClick={() => handleSaveQuestionNote(q.id)}
+                              disabled={savingNoteId === q.id}
+                              className="inline-flex items-center gap-1 rounded-md bg-amber-600 hover:bg-amber-700 px-3 py-1 text-xs font-bold text-white shadow-xs"
+                            >
+                              <BookmarkCheck className="h-3.5 w-3.5" />
+                              {savingNoteId === q.id ? 'Saving...' : 'Save Note'}
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      ) : (
+        /* NORMAL SECTION-BY-SECTION VIEW WITH ARCHITECTURE DIAGRAMS & CHEAT SHEETS */
+        <div className="space-y-14">
+          {filteredSections.map((sec, secIndex) => (
           <section
             key={sec.id}
             id={sec.id}
@@ -767,7 +999,8 @@ export function DataEngineeringInterviewGuide() {
             </div>
           </section>
         ))}
-      </div>
+        </div>
+      )}
 
       {/* FULL 500 QUESTIONS DIRECTORY LIST (COLLAPSIBLE MASTER INDEX) */}
       <div className="rounded-3xl border border-border bg-card p-6 sm:p-10 space-y-6 shadow-md">
