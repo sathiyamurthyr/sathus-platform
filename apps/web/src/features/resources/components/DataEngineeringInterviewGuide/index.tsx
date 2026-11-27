@@ -155,10 +155,17 @@ export function DataEngineeringInterviewGuide() {
     setTimeout(() => setCopiedCodeId(null), 2000);
   };
 
-  // Filter logic
+  // Filter & Comprehensive Search Engine
   const filteredSections = useMemo(() => {
+    const rawQuery = searchQuery.trim().toLowerCase();
+    const isQNum = /^q[\s-]?(\d+)$/i.exec(rawQuery);
+    const targetQNum = isQNum ? parseInt(isQNum[1], 10) : (/^\d+$/.test(rawQuery) ? parseInt(rawQuery, 10) : null);
+    const tokens = rawQuery.split(/[\s,+/]+/).filter(Boolean);
+
     return SECTIONS_DATA.map((section) => {
-      const isSectionMatch = selectedSectionId === 'all' || section.id === selectedSectionId;
+      // When a search query is entered, search across all sections globally.
+      // If no search query, honor the selected section tab.
+      const isSectionMatch = rawQuery ? true : (selectedSectionId === 'all' || section.id === selectedSectionId);
       if (!isSectionMatch) {
         return { ...section, questions: [] };
       }
@@ -168,25 +175,72 @@ export function DataEngineeringInterviewGuide() {
           selectedDifficulty === 'all' || q.difficulty.toLowerCase() === selectedDifficulty.toLowerCase();
         const matchesNotes = !filterOnlyNotes || Boolean(userNotes[`q${q.id}`]);
 
-        const query = searchQuery.trim().toLowerCase();
-        if (!query) return matchesDifficulty;
+        if (!matchesDifficulty || !matchesNotes) return false;
+        if (!rawQuery) return true;
 
-        const matchesQuery =
-          q.id.toString() === query ||
-          q.question.toLowerCase().includes(query) ||
-          q.shortAnswer.toLowerCase().includes(query) ||
-          q.detailedAnswer.toLowerCase().includes(query) ||
-          q.relatedTags.some((t) => t.toLowerCase().includes(query));
+        // 1. Direct Question ID match: "88", "q88", "Q-88", "q 88"
+        if (targetQNum !== null && q.id === targetQNum) {
+          return true;
+        }
 
-        return matchesDifficulty && matchesQuery && matchesNotes;
+        if (`q${q.id}` === rawQuery || `q ${q.id}` === rawQuery) {
+          return true;
+        }
+
+        // 2. Full searchable corpus across all fields
+        const corpus = [
+          `q${q.id}`,
+          `question ${q.id}`,
+          q.question,
+          q.category,
+          q.shortAnswer,
+          q.detailedAnswer,
+          q.interviewerTip || '',
+          q.codeSnippet || '',
+          q.codeLanguage || '',
+          q.relatedTags.join(' '),
+          q.difficulty,
+          section.title,
+        ].join(' ').toLowerCase();
+
+        // 3. Exact query in corpus
+        if (corpus.includes(rawQuery)) {
+          return true;
+        }
+
+        // 4. Tokenized match: every word in search query must exist in corpus
+        return tokens.length > 0 && tokens.every((token) => corpus.includes(token));
       });
 
       return {
         ...section,
         questions: matchingQuestions,
       };
-    }).filter((section) => selectedSectionId === 'all' || section.id === selectedSectionId);
+    }).filter((section) => {
+      // Hide sections with 0 matching questions when a filter or search is active
+      if (rawQuery || selectedDifficulty !== 'all' || filterOnlyNotes) {
+        return section.questions.length > 0;
+      }
+      return selectedSectionId === 'all' || section.id === selectedSectionId;
+    });
   }, [selectedSectionId, searchQuery, selectedDifficulty, filterOnlyNotes, userNotes]);
+
+  // Auto-expand top matching questions when searching so answers are immediately visible
+  useEffect(() => {
+    if (searchQuery.trim()) {
+      const autoExpanded: Record<number, boolean> = {};
+      let count = 0;
+      for (const sec of filteredSections) {
+        for (const q of sec.questions) {
+          autoExpanded[q.id] = true;
+          count++;
+          if (count >= 12) break;
+        }
+        if (count >= 12) break;
+      }
+      setExpandedQuestions((prev) => ({ ...prev, ...autoExpanded }));
+    }
+  }, [searchQuery, filteredSections]);
 
   const totalFilteredCount = filteredSections.reduce((acc, sec) => acc + sec.questions.length, 0);
 
@@ -338,6 +392,42 @@ export function DataEngineeringInterviewGuide() {
           >
             Reset Filters
           </button>
+        </div>
+      )}
+
+      {/* NO RESULTS EMPTY STATE */}
+      {totalFilteredCount === 0 && (
+        <div className="rounded-3xl border-2 border-dashed border-slate-300 bg-white p-10 text-center space-y-4 shadow-sm">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-rose-50 text-rose-900 border border-rose-200">
+            <Search className="h-6 w-6 text-[#A20A3A]" />
+          </div>
+          <div className="space-y-1.5">
+            <h4 className="text-xl font-black text-slate-950">
+              No interview questions found matching &ldquo;{searchQuery}&rdquo;
+            </h4>
+            <p className="text-xs sm:text-sm text-slate-700 max-w-lg mx-auto font-medium">
+              Try searching with popular keywords like{' '}
+              <button onClick={() => setSearchQuery('Spark')} className="font-bold text-[#A20A3A] underline">Spark</button>,{' '}
+              <button onClick={() => setSearchQuery('Delta Lake')} className="font-bold text-[#A20A3A] underline">Delta Lake</button>,{' '}
+              <button onClick={() => setSearchQuery('Kafka')} className="font-bold text-[#A20A3A] underline">Kafka</button>,{' '}
+              <button onClick={() => setSearchQuery('SQL')} className="font-bold text-[#A20A3A] underline">SQL</button>,{' '}
+              <button onClick={() => setSearchQuery('Liquid Clustering')} className="font-bold text-[#A20A3A] underline">Liquid Clustering</button>, or{' '}
+              <button onClick={() => setSearchQuery('Q1')} className="font-bold text-[#A20A3A] underline">Q1</button>.
+            </p>
+          </div>
+          <div className="pt-2">
+            <button
+              onClick={() => {
+                setSearchQuery('');
+                setSelectedDifficulty('all');
+                setSelectedSectionId('all');
+                setFilterOnlyNotes(false);
+              }}
+              className="inline-flex items-center gap-1.5 rounded-xl bg-[#A20A3A] hover:bg-[#85082e] px-5 py-2.5 text-xs font-black text-white transition-colors shadow-md"
+            >
+              Clear All Filters & Reset (Show 500 Questions)
+            </button>
+          </div>
         </div>
       )}
 
