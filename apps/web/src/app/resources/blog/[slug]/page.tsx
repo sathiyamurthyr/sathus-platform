@@ -9,6 +9,7 @@ import { generatePageMetadata } from '@/lib/seo/metadata-builder';
 import Link from 'next/link';
 import { User, Clock, ArrowLeft, ArrowRight, FileText, Code2, BarChart2 } from 'lucide-react';
 import { DataEngineeringInterviewGuide } from '@/features/resources/components/DataEngineeringInterviewGuide';
+import { ArticleCommentsSection } from '@/features/resources/components/ArticleCommentsSection';
 
 interface ArticlePageProps {
   params: Promise<{ slug: string }>;
@@ -207,6 +208,12 @@ export async function processEnterpriseTask(inputPayload) {
             </section>
           </article>
         )}
+
+        {/* PostgreSQL Comments & Notes Discussion Section */}
+        <ArticleCommentsSection
+          articleSlug={resource.slug}
+          articleTitle={resource.title}
+        />
 
         {/* CTA Footer */}
         <div className="rounded-2xl border border-primary/30 bg-card p-8 text-center space-y-4">

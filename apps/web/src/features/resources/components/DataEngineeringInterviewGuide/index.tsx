@@ -1,6 +1,20 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
+import {
+  StickyNote,
+  MessageSquare,
+  BookmarkCheck,
+} from 'lucide-react';
+import {
+  fetchNotes,
+  saveNote,
+  fetchComments,
+  submitComment,
+  getOrCreateUserId,
+  NoteItem,
+  CommentItem,
+} from '../../lib/notesAndCommentsClient';
 import Link from 'next/link';
 import {
   Search,
@@ -36,6 +50,88 @@ import {
 
 export function DataEngineeringInterviewGuide() {
   const [selectedSectionId, setSelectedSectionId] = useState<string>('all');
+  // PostgreSQL Notes & Comments state
+  const [userId, setUserId] = useState<string>('');
+  const [userNotes, setUserNotes] = useState<Record<string, NoteItem>>({});
+  const [openNotesForQ, setOpenNotesForQ] = useState<Record<number, boolean>>({});
+  const [editingNoteText, setEditingNoteText] = useState<Record<number, string>>({});
+  const [savingNoteId, setSavingNoteId] = useState<number | null>(null);
+
+  // Question comments state
+  const [openCommentsForQ, setOpenCommentsForQ] = useState<Record<number, boolean>>({});
+  const [questionComments, setQuestionComments] = useState<Record<number, CommentItem[]>>({});
+  const [loadingCommentsForQ, setLoadingCommentsForQ] = useState<Record<number, boolean>>({});
+  const [newCommentName, setNewCommentName] = useState<string>('');
+  const [newCommentText, setNewCommentText] = useState<Record<number, string>>({});
+  const [submittingCommentForQ, setSubmittingCommentForQ] = useState<number | null>(null);
+  const [filterOnlyNotes, setFilterOnlyNotes] = useState<boolean>(false);
+
+  useEffect(() => {
+    const uid = getOrCreateUserId();
+    setUserId(uid);
+    fetchNotes('500-data-engineering-interview-questions-answers-2026', uid).then((notes) => {
+      setUserNotes(notes);
+    });
+  }, []);
+
+  const handleSaveQuestionNote = async (qNumber: number) => {
+    const qKey = `q${qNumber}`;
+    const text = editingNoteText[qNumber] ?? userNotes[qKey]?.note_text ?? '';
+    setSavingNoteId(qNumber);
+    const res = await saveNote({
+      articleSlug: '500-data-engineering-interview-questions-answers-2026',
+      questionId: qKey,
+      userId,
+      noteText: text,
+      colorTag: 'yellow',
+    });
+    setSavingNoteId(null);
+    if (res) {
+      setUserNotes((prev) => ({ ...prev, [qKey]: res }));
+    } else if (!text.trim()) {
+      setUserNotes((prev) => {
+        const next = { ...prev };
+        delete next[qKey];
+        return next;
+      });
+    }
+  };
+
+  const handleToggleComments = async (qNumber: number) => {
+    const willOpen = !openCommentsForQ[qNumber];
+    setOpenCommentsForQ((prev) => ({ ...prev, [qNumber]: willOpen }));
+    if (willOpen && !questionComments[qNumber]) {
+      setLoadingCommentsForQ((prev) => ({ ...prev, [qNumber]: true }));
+      const comments = await fetchComments(
+        '500-data-engineering-interview-questions-answers-2026',
+        `q${qNumber}`
+      );
+      setQuestionComments((prev) => ({ ...prev, [qNumber]: comments }));
+      setLoadingCommentsForQ((prev) => ({ ...prev, [qNumber]: false }));
+    }
+  };
+
+  const handlePostQuestionComment = async (qNumber: number) => {
+    const text = newCommentText[qNumber]?.trim();
+    const author = newCommentName.trim() || 'Data Engineer';
+    if (!text) return;
+
+    setSubmittingCommentForQ(qNumber);
+    const comment = await submitComment({
+      articleSlug: '500-data-engineering-interview-questions-answers-2026',
+      questionId: `q${qNumber}`,
+      authorName: author,
+      content: text,
+    });
+    setSubmittingCommentForQ(null);
+    if (comment) {
+      setQuestionComments((prev) => ({
+        ...prev,
+        [qNumber]: [comment, ...(prev[qNumber] || [])],
+      }));
+      setNewCommentText((prev) => ({ ...prev, [qNumber]: '' }));
+    }
+  };
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedDifficulty, setSelectedDifficulty] = useState<string>('all');
   const [expandedQuestions, setExpandedQuestions] = useState<Record<number, boolean>>({
@@ -70,6 +166,7 @@ export function DataEngineeringInterviewGuide() {
       const matchingQuestions = section.questions.filter((q) => {
         const matchesDifficulty =
           selectedDifficulty === 'all' || q.difficulty.toLowerCase() === selectedDifficulty.toLowerCase();
+        const matchesNotes = !filterOnlyNotes || Boolean(userNotes[`q${q.id}`]);
 
         const query = searchQuery.trim().toLowerCase();
         if (!query) return matchesDifficulty;
@@ -81,7 +178,7 @@ export function DataEngineeringInterviewGuide() {
           q.detailedAnswer.toLowerCase().includes(query) ||
           q.relatedTags.some((t) => t.toLowerCase().includes(query));
 
-        return matchesDifficulty && matchesQuery;
+        return matchesDifficulty && matchesQuery && matchesNotes;
       });
 
       return {
@@ -89,7 +186,7 @@ export function DataEngineeringInterviewGuide() {
         questions: matchingQuestions,
       };
     }).filter((section) => selectedSectionId === 'all' || section.id === selectedSectionId);
-  }, [selectedSectionId, searchQuery, selectedDifficulty]);
+  }, [selectedSectionId, searchQuery, selectedDifficulty, filterOnlyNotes, userNotes]);
 
   const totalFilteredCount = filteredSections.reduce((acc, sec) => acc + sec.questions.length, 0);
 
@@ -170,6 +267,18 @@ export function DataEngineeringInterviewGuide() {
 
           <div className="flex items-center gap-2 w-full sm:w-auto">
             <Filter className="h-4 w-4 text-muted-foreground shrink-0" />
+            <button
+              onClick={() => setFilterOnlyNotes(!filterOnlyNotes)}
+              className={`flex items-center gap-1.5 rounded-xl border px-3 py-2 text-xs font-bold transition-all ${
+                filterOnlyNotes
+                  ? 'border-amber-500 bg-amber-50 text-amber-950 dark:bg-amber-950/80 dark:text-amber-200 shadow-sm'
+                  : 'border-border bg-background text-slate-800 dark:text-slate-200 hover:bg-muted'
+              }`}
+              title="Filter to view only questions with personal notes"
+            >
+              <StickyNote className="h-3.5 w-3.5 text-amber-600 dark:text-amber-400" />
+              <span>My Notes ({Object.keys(userNotes).filter((k) => k !== 'article').length})</span>
+            </button>
             <select
               value={selectedDifficulty}
               onChange={(e) => setSelectedDifficulty(e.target.value)}
@@ -412,17 +521,154 @@ export function DataEngineeringInterviewGuide() {
                           </div>
                         )}
 
-                        {/* Tags */}
-                        <div className="flex flex-wrap gap-1 pt-1 border-t border-border/40">
-                          {q.relatedTags.map((tag) => (
-                            <span
-                              key={tag}
-                              className="rounded bg-muted px-2 py-0.5 text-[10px] text-muted-foreground font-mono"
+                        {/* Notes & Comments Actions Bar */}
+                        <div className="flex flex-wrap items-center justify-between gap-2 pt-3 border-t border-border/60">
+                          <div className="flex items-center gap-2">
+                            {/* Personal Note Button */}
+                            <button
+                              onClick={() => {
+                                const isOpen = !openNotesForQ[q.id];
+                                setOpenNotesForQ((prev) => ({ ...prev, [q.id]: isOpen }));
+                                if (isOpen && editingNoteText[q.id] === undefined) {
+                                  setEditingNoteText((prev) => ({
+                                    ...prev,
+                                    [q.id]: userNotes[`q${q.id}`]?.note_text || '',
+                                  }));
+                                }
+                              }}
+                              className={`inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-bold transition-all ${
+                                userNotes[`q${q.id}`]
+                                  ? 'bg-amber-100 text-amber-900 border border-amber-400 dark:bg-amber-950/80 dark:text-amber-200 dark:border-amber-700'
+                                  : 'bg-muted/70 text-slate-800 dark:text-slate-200 hover:bg-muted'
+                              }`}
                             >
-                              #{tag}
-                            </span>
-                          ))}
+                              <StickyNote className="h-3.5 w-3.5 text-amber-600 dark:text-amber-400" />
+                              <span>{userNotes[`q${q.id}`] ? 'Note Saved' : 'Add Note'}</span>
+                            </button>
+
+                            {/* Discussion Button */}
+                            <button
+                              onClick={() => handleToggleComments(q.id)}
+                              className="inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-bold bg-muted/70 text-slate-800 dark:text-slate-200 hover:bg-muted transition-all"
+                            >
+                              <MessageSquare className="h-3.5 w-3.5 text-primary" />
+                              <span>Discussion {questionComments[q.id]?.length ? `(${questionComments[q.id].length})` : ''}</span>
+                            </button>
+                          </div>
+
+                          {/* Tags */}
+                          <div className="flex flex-wrap gap-1">
+                            {q.relatedTags.map((tag) => (
+                              <span
+                                key={tag}
+                                className="rounded bg-muted px-2 py-0.5 text-[10px] text-muted-foreground font-mono font-medium"
+                              >
+                                #{tag}
+                              </span>
+                            ))}
+                          </div>
                         </div>
+
+                        {/* Inline Note Editor */}
+                        {openNotesForQ[q.id] && (
+                          <div className="rounded-xl border border-amber-300 dark:border-amber-700 bg-amber-50/90 dark:bg-amber-950/40 p-3.5 space-y-2">
+                            <div className="flex items-center justify-between text-xs font-bold text-amber-950 dark:text-amber-200">
+                              <span className="flex items-center gap-1.5">
+                                <StickyNote className="h-3.5 w-3.5 text-amber-600" />
+                                My Private Study Note for Q{q.id} (Stored in PostgreSQL)
+                              </span>
+                              {userNotes[`q${q.id}`] && (
+                                <span className="text-[10px] text-muted-foreground font-normal">
+                                  Updated {new Date(userNotes[`q${q.id}`].updated_at).toLocaleDateString()}
+                                </span>
+                              )}
+                            </div>
+                            <textarea
+                              rows={2}
+                              placeholder={`Write your study notes, key formulas, or interview reminder for Q${q.id}...`}
+                              value={editingNoteText[q.id] ?? userNotes[`q${q.id}`]?.note_text ?? ''}
+                              onChange={(e) => setEditingNoteText((prev) => ({ ...prev, [q.id]: e.target.value }))}
+                              className="w-full rounded-lg border border-amber-300 dark:border-amber-700 bg-background p-2.5 text-xs text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-amber-500 font-medium"
+                            />
+                            <div className="flex items-center justify-between text-[11px]">
+                              <span className="text-muted-foreground">
+                                Saved to PostgreSQL via persistent profile
+                              </span>
+                              <button
+                                onClick={() => handleSaveQuestionNote(q.id)}
+                                disabled={savingNoteId === q.id}
+                                className="inline-flex items-center gap-1 rounded-md bg-amber-600 hover:bg-amber-700 px-3 py-1 text-xs font-bold text-white transition-colors disabled:opacity-50 shadow-xs"
+                              >
+                                <BookmarkCheck className="h-3.5 w-3.5" />
+                                {savingNoteId === q.id ? 'Saving...' : 'Save Note'}
+                              </button>
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Inline Question Discussion */}
+                        {openCommentsForQ[q.id] && (
+                          <div className="rounded-xl border border-border/80 bg-slate-50/90 dark:bg-slate-900/50 p-4 space-y-3">
+                            <div className="flex items-center gap-1.5 text-xs font-bold text-foreground">
+                              <MessageSquare className="h-3.5 w-3.5 text-primary" />
+                              <span>Discussion & Community Answers for Q{q.id}</span>
+                            </div>
+
+                            <div className="flex flex-col sm:flex-row gap-2">
+                              <input
+                                type="text"
+                                placeholder="Your name (e.g. Senior DE)"
+                                value={newCommentName}
+                                onChange={(e) => setNewCommentName(e.target.value)}
+                                className="sm:w-1/3 rounded-lg border border-border bg-background px-3 py-1.5 text-xs text-foreground focus:outline-none focus:ring-2 focus:ring-primary font-medium"
+                              />
+                              <input
+                                type="text"
+                                placeholder={`Add an insight or your interview experience for Q${q.id}...`}
+                                value={newCommentText[q.id] || ''}
+                                onChange={(e) => setNewCommentText((prev) => ({ ...prev, [q.id]: e.target.value }))}
+                                onKeyDown={(e) => {
+                                  if (e.key === 'Enter') handlePostQuestionComment(q.id);
+                                }}
+                                className="flex-1 rounded-lg border border-border bg-background px-3 py-1.5 text-xs text-foreground focus:outline-none focus:ring-2 focus:ring-primary font-medium"
+                              />
+                              <button
+                                onClick={() => handlePostQuestionComment(q.id)}
+                                disabled={submittingCommentForQ === q.id || !newCommentText[q.id]?.trim()}
+                                className="rounded-lg bg-primary px-3 py-1.5 text-xs font-bold text-primary-foreground hover:bg-primary/90 transition-colors disabled:opacity-50"
+                              >
+                                {submittingCommentForQ === q.id ? 'Saving...' : 'Post'}
+                              </button>
+                            </div>
+
+                            <div className="space-y-2 pt-1">
+                              {loadingCommentsForQ[q.id] ? (
+                                <div className="text-xs text-muted-foreground animate-pulse py-1">
+                                  Loading discussion from PostgreSQL...
+                                </div>
+                              ) : !questionComments[q.id] || questionComments[q.id].length === 0 ? (
+                                <div className="text-[11px] text-muted-foreground py-1">
+                                  No comments yet on Q{q.id}. Be the first to share an insight!
+                                </div>
+                              ) : (
+                                questionComments[q.id].map((cm) => (
+                                  <div
+                                    key={cm.id}
+                                    className="rounded-lg border border-border/70 bg-card p-2.5 text-xs space-y-1"
+                                  >
+                                    <div className="flex items-center justify-between text-[11px] text-muted-foreground">
+                                      <span className="font-bold text-foreground">{cm.author_name}</span>
+                                      <span>{new Date(cm.created_at).toLocaleDateString()}</span>
+                                    </div>
+                                    <p className="text-slate-800 dark:text-slate-200 text-xs font-normal leading-relaxed">
+                                      {cm.content}
+                                    </p>
+                                  </div>
+                                ))
+                              )}
+                            </div>
+                          </div>
+                        )}
                       </div>
                     )}
                   </div>
