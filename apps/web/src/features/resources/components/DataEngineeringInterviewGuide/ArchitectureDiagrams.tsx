@@ -23,7 +23,7 @@ export function SparkArchitectureDiagram() {
       <div className="overflow-x-auto">
         <svg
           viewBox="0 0 920 460"
-          className="w-full min-w-[760px] text-foreground select-none"
+          className="w-full max-w-full text-foreground select-none"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -46,7 +46,7 @@ export function SparkArchitectureDiagram() {
           <text x="45" y="160" className="fill-primary font-bold text-[11px]">Catalyst Query Optimizer</text>
           
           <rect x="45" y="170" width="210" height="20" rx="4" className="fill-background stroke-border/70" />
-          <text x="52" y="184" className="fill-foreground text-[9px]">1. Unresolved Logical Plan &rarr; Analysis</text>
+          <text x="52" y="184" className="fill-foreground text-[9px]">1. Unresolved Logical Plan → Analysis</text>
 
           <rect x="45" y="195" width="210" height="20" rx="4" className="fill-background stroke-border/70" />
           <text x="52" y="209" className="fill-foreground text-[9px]">2. Optimized Logical Plan (Filter Pushdown)</text>
@@ -92,7 +92,7 @@ export function SparkArchitectureDiagram() {
           {/* Memory breakdown */}
           <rect x="520" y="100" width="170" height="42" rx="4" className="fill-primary/10 stroke-primary/20" />
           <text x="528" y="116" className="fill-foreground text-[9px] font-semibold">Execution Memory (Shuffles/Joins)</text>
-          <text x="528" y="132" className="fill-muted-foreground text-[8px]">Unified Storage Pool &bull; Tungsten Off-Heap</text>
+          <text x="528" y="132" className="fill-muted-foreground text-[8px]">Unified Storage Pool • Tungsten Off-Heap</text>
 
           <rect x="700" y="100" width="185" height="42" rx="4" className="fill-muted/40 stroke-border" />
           <text x="708" y="116" className="fill-foreground text-[9px] font-semibold">Storage Memory (Cached RDD/DF)</text>
@@ -189,7 +189,7 @@ export function MedallionLakehouseDiagram() {
       <div className="overflow-x-auto">
         <svg
           viewBox="0 0 920 380"
-          className="w-full min-w-[760px] text-foreground select-none"
+          className="w-full max-w-full text-foreground select-none"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -315,9 +315,9 @@ export function MedallionLakehouseDiagram() {
 
             <rect x="10" y="166" width="160" height="66" rx="6" className="fill-background stroke-border" />
             <text x="18" y="184" className="fill-foreground font-semibold text-[10px]">Downstream Consumers</text>
-            <text x="18" y="198" className="fill-emerald-600 font-semibold text-[8px]">&bull; BI Dashboards (PowerBI)</text>
-            <text x="18" y="210" className="fill-blue-600 font-semibold text-[8px]">&bull; ML Features / AI Agents</text>
-            <text x="18" y="222" className="fill-purple-600 font-semibold text-[8px]">&bull; Executive Financial Reporting</text>
+            <text x="18" y="198" className="fill-emerald-600 font-semibold text-[8px]">• BI Dashboards (PowerBI)</text>
+            <text x="18" y="210" className="fill-blue-600 font-semibold text-[8px]">• ML Features / AI Agents</text>
+            <text x="18" y="222" className="fill-purple-600 font-semibold text-[8px]">• Executive Financial Reporting</text>
 
             <rect x="10" y="240" width="160" height="68" rx="6" className="fill-yellow-500/10 stroke-yellow-500/40" />
             <text x="18" y="258" className="fill-yellow-600 dark:fill-yellow-400 font-bold text-[10px]">Governance Guard</text>
@@ -328,9 +328,9 @@ export function MedallionLakehouseDiagram() {
       </div>
 
       <div className="mt-3 flex flex-wrap items-center justify-between gap-2 border-t border-border/50 pt-2 text-[10px] text-muted-foreground font-mono">
-        <span>&bull; Transaction Log: `_delta_log/` keeps serial commit history</span>
-        <span>&bull; Concurrency: Optimistic Concurrency Control (OCC) with atomic multi-file commits</span>
-        <span>&bull; Maintenance: Regular `VACUUM` (default 7 days) + `OPTIMIZE` prevents small file degradation</span>
+        <span>• Transaction Log: `_delta_log/` keeps serial commit history</span>
+        <span>• Concurrency: Optimistic Concurrency Control (OCC) with atomic multi-file commits</span>
+        <span>• Maintenance: Regular `VACUUM` (default 7 days) + `OPTIMIZE` prevents small file degradation</span>
       </div>
     </div>
   );
@@ -345,14 +345,14 @@ export function StreamingCdcDiagram() {
           <h4 className="text-base font-bold text-foreground">Real-Time Event Streaming, Debezium CDC & Watermark Mechanics</h4>
         </div>
         <span className="rounded-full bg-blue-500/10 px-2.5 py-1 text-[10px] font-mono font-semibold text-blue-600 dark:text-blue-400">
-          Sub-Minute Latency &bull; Exactly-Once
+          Sub-Minute Latency • Exactly-Once
         </span>
       </div>
 
       <div className="overflow-x-auto">
         <svg
           viewBox="0 0 920 320"
-          className="w-full min-w-[760px] text-foreground select-none"
+          className="w-full max-w-full text-foreground select-none"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -374,8 +374,8 @@ export function StreamingCdcDiagram() {
             <text x="20" y="142" className="fill-foreground text-[8px] font-mono">[LSN 101] INSERT id=1</text>
             <text x="20" y="158" className="fill-foreground text-[8px] font-mono">[LSN 102] UPDATE id=1</text>
             <text x="20" y="174" className="fill-foreground text-[8px] font-mono">[LSN 103] DELETE id=2</text>
-            <text x="20" y="195" className="fill-emerald-600 text-[8px] font-semibold">&bull; Zero query overhead on DB</text>
-            <text x="20" y="207" className="fill-emerald-600 text-[8px] font-semibold">&bull; Catches hard deletes</text>
+            <text x="20" y="195" className="fill-emerald-600 text-[8px] font-semibold">• Zero query overhead on DB</text>
+            <text x="20" y="207" className="fill-emerald-600 text-[8px] font-semibold">• Catches hard deletes</text>
           </g>
 
           {/* ARROW */}
@@ -411,20 +411,20 @@ export function StreamingCdcDiagram() {
             {/* Partition 0 */}
             <rect x="12" y="55" width="156" height="46" rx="4" className="fill-primary/5 stroke-primary/30" />
             <text x="18" y="70" className="fill-foreground font-mono text-[9px] font-semibold">Partition 0 (Key: A-H)</text>
-            <text x="18" y="85" className="fill-muted-foreground font-mono text-[8px]">Offset: [0] &bull; [1] &bull; [2] &bull; [3]...</text>
+            <text x="18" y="85" className="fill-muted-foreground font-mono text-[8px]">Offset: [0] • [1] • [2] • [3]...</text>
             <text x="18" y="95" className="fill-emerald-600 font-mono text-[7px]">Ordered per Partition Key</text>
 
             {/* Partition 1 */}
             <rect x="12" y="108" width="156" height="46" rx="4" className="fill-primary/5 stroke-primary/30" />
             <text x="18" y="123" className="fill-foreground font-mono text-[9px] font-semibold">Partition 1 (Key: I-P)</text>
-            <text x="18" y="138" className="fill-muted-foreground font-mono text-[8px]">Offset: [0] &bull; [1] &bull; [2] &bull; [3]...</text>
+            <text x="18" y="138" className="fill-muted-foreground font-mono text-[8px]">Offset: [0] • [1] • [2] • [3]...</text>
 
             {/* Partition 2 */}
             <rect x="12" y="161" width="156" height="46" rx="4" className="fill-primary/5 stroke-primary/30" />
             <text x="18" y="176" className="fill-foreground font-mono text-[9px] font-semibold">Partition 2 (Key: Q-Z)</text>
-            <text x="18" y="191" className="fill-muted-foreground font-mono text-[8px]">Offset: [0] &bull; [1] &bull; [2] &bull; [3]...</text>
+            <text x="18" y="191" className="fill-muted-foreground font-mono text-[8px]">Offset: [0] • [1] • [2] • [3]...</text>
 
-            <text x="15" y="224" className="fill-muted-foreground text-[8px]">&bull; Replay Retention: 7 Days</text>
+            <text x="15" y="224" className="fill-muted-foreground text-[8px]">• Replay Retention: 7 Days</text>
           </g>
 
           {/* ARROW */}
@@ -455,13 +455,13 @@ export function StreamingCdcDiagram() {
 
             <rect x="12" y="173" width="250" height="55" rx="4" className="fill-emerald-500/10 stroke-emerald-500/30" />
             <text x="18" y="191" className="fill-emerald-600 dark:fill-emerald-400 font-bold text-[9px]">
-              Sink: foreachBatch &rarr; Delta MERGE INTO
+              Sink: foreachBatch → Delta MERGE INTO
             </text>
             <text x="18" y="205" className="fill-foreground text-[8px]">
               WHEN MATCHED AND cdc.op = 'd' THEN DELETE
             </text>
             <text x="18" y="217" className="fill-foreground text-[8px]">
-              WHEN MATCHED THEN UPDATE &bull; WHEN NOT MATCHED THEN INSERT
+              WHEN MATCHED THEN UPDATE • WHEN NOT MATCHED THEN INSERT
             </text>
           </g>
         </svg>
@@ -497,7 +497,7 @@ export function SqlWindowFunctionDiagram() {
       <div className="overflow-x-auto">
         <svg
           viewBox="0 0 920 280"
-          className="w-full min-w-[760px] text-foreground select-none"
+          className="w-full max-w-full text-foreground select-none"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -624,7 +624,7 @@ export function AiFeatureStoreDiagram() {
       <div className="overflow-x-auto">
         <svg
           viewBox="0 0 920 300"
-          className="w-full min-w-[760px] text-foreground select-none"
+          className="w-full max-w-full text-foreground select-none"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -647,8 +647,8 @@ export function AiFeatureStoreDiagram() {
             <rect width="260" height="90" rx="8" className="fill-card stroke-border" strokeWidth="1.5" />
             <text x="14" y="22" className="fill-foreground font-bold text-xs">OFFLINE STORE (LAKEHOUSE)</text>
             <text x="14" y="38" className="fill-muted-foreground font-mono text-[9px]">Delta Lake / Iceberg on S3 / ADLS</text>
-            <text x="14" y="55" className="fill-muted-foreground text-[9px]">&bull; Terabytes / Petabytes historical features</text>
-            <text x="14" y="70" className="fill-emerald-600 font-bold text-[9px]">&bull; Point-in-Time Correct (Time-Travel Joins)</text>
+            <text x="14" y="55" className="fill-muted-foreground text-[9px]">• Terabytes / Petabytes historical features</text>
+            <text x="14" y="70" className="fill-emerald-600 font-bold text-[9px]">• Point-in-Time Correct (Time-Travel Joins)</text>
             <text x="14" y="84" className="fill-primary text-[8px]">Output: Model Training Data & Offline Evaluation</text>
           </g>
 
@@ -660,8 +660,8 @@ export function AiFeatureStoreDiagram() {
             <rect width="260" height="90" rx="8" className="fill-card stroke-border" strokeWidth="1.5" />
             <text x="14" y="22" className="fill-foreground font-bold text-xs">ONLINE STORE (LOW-LATENCY)</text>
             <text x="14" y="38" className="fill-muted-foreground font-mono text-[9px]">Redis Cluster / DynamoDB / pgvector</text>
-            <text x="14" y="55" className="fill-muted-foreground text-[9px]">&bull; Sub-10ms key-value lookup (user_id &rarr; vector)</text>
-            <text x="14" y="70" className="fill-emerald-600 font-bold text-[9px]">&bull; Synchronized via Streaming CDC</text>
+            <text x="14" y="55" className="fill-muted-foreground text-[9px]">• Sub-10ms key-value lookup (user_id → vector)</text>
+            <text x="14" y="70" className="fill-emerald-600 font-bold text-[9px]">• Synchronized via Streaming CDC</text>
             <text x="14" y="84" className="fill-primary text-[8px]">Output: Real-Time Inference & AI Agent Tools</text>
           </g>
 

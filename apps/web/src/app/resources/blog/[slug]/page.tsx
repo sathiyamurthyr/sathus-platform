@@ -60,7 +60,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
         authorName={resource.author.name}
       />
 
-      <div className="container mx-auto px-4 py-8 space-y-10 max-w-5xl">
+      <div className={`mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10 w-full ${slug === '500-data-engineering-interview-questions-answers-2026' ? 'max-w-[1400px]' : 'max-w-5xl'}`}>
         <div className="flex flex-wrap items-center justify-between gap-4">
           <Breadcrumb
             items={[

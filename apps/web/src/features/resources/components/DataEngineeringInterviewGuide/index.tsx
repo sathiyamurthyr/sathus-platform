@@ -184,14 +184,14 @@ export function DataEngineeringInterviewGuide() {
           </div>
         </div>
 
-        {/* Section Pill Selectors */}
-        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs no-scrollbar">
+        {/* Section Pill Selectors - Clean wrap without horizontal clipping */}
+        <div className="flex flex-wrap items-center gap-1.5 pt-1 text-xs">
           <button
             onClick={() => setSelectedSectionId('all')}
-            className={`whitespace-nowrap rounded-lg px-3 py-1.5 font-bold transition-all ${
+            className={`rounded-lg px-3 py-1.5 font-bold transition-all ${
               selectedSectionId === 'all'
                 ? 'bg-primary text-primary-foreground shadow-sm'
-                : 'bg-muted/60 text-muted-foreground hover:bg-muted hover:text-foreground'
+                : 'bg-muted/70 text-slate-800 dark:text-slate-200 font-semibold hover:bg-muted hover:text-foreground'
             }`}
           >
             All Sections (500 Qs)
@@ -200,13 +200,13 @@ export function DataEngineeringInterviewGuide() {
             <button
               key={sec.id}
               onClick={() => setSelectedSectionId(sec.id)}
-              className={`whitespace-nowrap rounded-lg px-3 py-1.5 font-medium transition-all ${
+              className={`rounded-lg px-2.5 py-1.5 text-xs transition-all ${
                 selectedSectionId === sec.id
                   ? 'bg-primary text-primary-foreground font-bold shadow-sm'
-                  : 'bg-muted/60 text-muted-foreground hover:bg-muted hover:text-foreground'
+                  : 'bg-muted/50 text-slate-800 dark:text-slate-200 font-medium hover:bg-muted hover:text-foreground'
               }`}
             >
-              Section {idx + 1}: {sec.range}
+              Sec {idx + 1}: {sec.range}
             </button>
           ))}
         </div>
@@ -253,7 +253,7 @@ export function DataEngineeringInterviewGuide() {
               <h3 className="text-xl sm:text-2xl font-extrabold text-foreground tracking-tight">
                 {sec.title}
               </h3>
-              <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+              <p className="text-sm sm:text-base text-slate-800 dark:text-slate-200 leading-relaxed font-normal">
                 {sec.summary}
               </p>
 
@@ -262,7 +262,7 @@ export function DataEngineeringInterviewGuide() {
                 {sec.keyTopics.map((topic) => (
                   <span
                     key={topic}
-                    className="rounded-md border border-border/60 bg-muted/30 px-2 py-0.5 text-[11px] font-medium text-foreground"
+                    className="rounded-md border border-border/60 bg-muted/40 px-2 py-0.5 text-[11px] font-semibold text-slate-800 dark:text-slate-200"
                   >
                     #{topic}
                   </span>
@@ -271,16 +271,16 @@ export function DataEngineeringInterviewGuide() {
             </div>
 
             {/* HIGH-YIELD CHEAT SHEET SUMMARY */}
-            <div className="rounded-2xl border border-border/80 bg-background/60 p-4 sm:p-5 space-y-3">
+            <div className="rounded-2xl border border-border/80 bg-slate-50/80 dark:bg-slate-900/50 p-4 sm:p-5 space-y-3">
               <div className="flex items-center gap-2 text-xs font-bold text-primary uppercase tracking-wider">
                 <Lightbulb className="h-4 w-4" />
                 <span>Executive Cheat Sheet & Critical Interview Rules</span>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
                 {sec.cheatSheet.map((item, idx) => (
-                  <div key={idx} className="rounded-lg border border-border/40 bg-card p-2.5">
-                    <strong className="text-foreground block font-semibold mb-0.5">{item.label}</strong>
-                    <span className="text-muted-foreground leading-relaxed">{item.value}</span>
+                  <div key={idx} className="rounded-xl border border-border/80 bg-card p-3.5 shadow-xs">
+                    <strong className="text-slate-900 dark:text-slate-100 block font-bold text-xs mb-1">{item.label}</strong>
+                    <span className="text-slate-700 dark:text-slate-300 font-medium text-xs leading-relaxed">{item.value}</span>
                   </div>
                 ))}
               </div>
@@ -296,7 +296,7 @@ export function DataEngineeringInterviewGuide() {
             {/* DETAILED QUESTION ACCORDIONS */}
             <div className="space-y-4 pt-2">
               <div className="flex items-center justify-between">
-                <h4 className="text-sm font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-2">
+                <h4 className="text-sm font-bold uppercase tracking-wider text-slate-900 dark:text-slate-100 flex items-center gap-2">
                   <BookOpen className="h-4 w-4 text-primary" />
                   Key Interview Questions & Deep Technical Explanations ({sec.questions.length})
                 </h4>
@@ -308,12 +308,12 @@ export function DataEngineeringInterviewGuide() {
                 return (
                   <div
                     key={q.id}
-                    className="overflow-hidden rounded-2xl border border-border bg-background transition-all hover:border-primary/40 shadow-xs"
+                    className="overflow-hidden rounded-2xl border border-border bg-card transition-all hover:border-primary/40 shadow-xs"
                   >
                     {/* Accordion Trigger Header */}
                     <button
                       onClick={() => toggleQuestion(q.id)}
-                      className="w-full text-left p-4 sm:p-5 flex items-start justify-between gap-3 bg-card/40 hover:bg-card transition-colors"
+                      className="w-full text-left p-4 sm:p-5 flex items-start justify-between gap-3 bg-muted/20 hover:bg-muted/40 transition-colors"
                     >
                       <div className="space-y-1.5 flex-1">
                         <div className="flex flex-wrap items-center gap-2">
@@ -321,27 +321,27 @@ export function DataEngineeringInterviewGuide() {
                             Q{q.id}
                           </span>
                           <span
-                            className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ${
+                            className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${
                               q.difficulty === 'Junior'
-                                ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
+                                ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-400'
                                 : q.difficulty === 'Mid'
-                                ? 'bg-blue-500/10 text-blue-600 dark:text-blue-400'
+                                ? 'bg-blue-500/15 text-blue-700 dark:text-blue-400'
                                 : q.difficulty === 'Senior'
-                                ? 'bg-amber-500/10 text-amber-600 dark:text-amber-400'
-                                : 'bg-rose-500/10 text-rose-600 dark:text-rose-400'
+                                ? 'bg-amber-500/15 text-amber-800 dark:text-amber-300'
+                                : 'bg-rose-500/15 text-rose-800 dark:text-rose-300'
                             }`}
                           >
                             {q.difficulty}
                           </span>
-                          <span className="text-[11px] text-muted-foreground font-medium">• {q.category}</span>
+                          <span className="text-[11px] text-slate-700 dark:text-slate-300 font-semibold">• {q.category}</span>
                         </div>
 
-                        <h5 className="text-sm sm:text-base font-bold text-foreground leading-snug">
+                        <h5 className="text-base sm:text-lg font-bold text-slate-900 dark:text-slate-100 leading-snug">
                           {q.question}
                         </h5>
 
                         {!isExpanded && (
-                          <p className="text-xs text-muted-foreground line-clamp-1">
+                          <p className="text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-400 line-clamp-1">
                             {q.shortAnswer}
                           </p>
                         )}
@@ -356,44 +356,44 @@ export function DataEngineeringInterviewGuide() {
                     {isExpanded && (
                       <div className="p-4 sm:p-6 border-t border-border/60 space-y-5 bg-background text-xs sm:text-sm">
                         {/* Short TL;DR Answer */}
-                        <div className="rounded-xl border border-primary/20 bg-primary/5 p-3.5 space-y-1">
-                          <span className="text-[10px] font-bold uppercase tracking-wider text-primary">Direct Executive Summary</span>
-                          <p className="text-xs font-semibold text-foreground leading-relaxed">
+                        <div className="rounded-xl border border-rose-300 dark:border-rose-900/60 bg-rose-50/80 dark:bg-rose-950/30 p-4 space-y-1.5 shadow-xs">
+                          <span className="text-xs font-extrabold uppercase tracking-wider text-[#A20A3A] dark:text-rose-400">Direct Executive Summary</span>
+                          <p className="text-sm sm:text-base font-bold text-slate-900 dark:text-slate-100 leading-relaxed">
                             {q.shortAnswer}
                           </p>
                         </div>
 
                         {/* Detailed In-Depth Breakdown */}
-                        <div className="space-y-3">
-                          <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground block">
+                        <div className="space-y-3 pt-1">
+                          <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-900 dark:text-slate-100 flex items-center gap-2 border-b border-border/80 pb-1.5">
                             Under the Hood / Deep Mechanics
                           </span>
-                          <div className="whitespace-pre-line text-muted-foreground leading-relaxed text-xs sm:text-sm font-sans space-y-2">
+                          <div className="whitespace-pre-line text-slate-900 dark:text-slate-100 font-normal text-sm sm:text-base leading-relaxed space-y-3">
                             {q.detailedAnswer}
                           </div>
                         </div>
 
                         {/* Optional Code Snippet */}
                         {q.codeSnippet && (
-                          <div className="space-y-1.5">
-                            <div className="flex items-center justify-between text-[11px] font-mono text-muted-foreground">
-                              <span className="uppercase font-semibold">{q.codeLanguage || 'Code Example'}</span>
+                          <div className="space-y-1.5 pt-1">
+                            <div className="flex items-center justify-between text-xs font-mono font-semibold text-slate-800 dark:text-slate-200">
+                              <span className="uppercase tracking-wider font-bold text-primary">{q.codeLanguage || 'Code Example'}</span>
                               <button
                                 onClick={() => handleCopyCode(q.id, q.codeSnippet!)}
-                                className="inline-flex items-center gap-1 text-primary hover:underline"
+                                className="inline-flex items-center gap-1.5 text-xs font-bold text-primary hover:underline px-2.5 py-1 rounded bg-muted/60"
                               >
                                 {copiedCodeId === q.id ? (
                                   <>
-                                    <Check className="h-3 w-3 text-emerald-500" /> Copied!
+                                    <Check className="h-3.5 w-3.5 text-emerald-600" /> Copied!
                                   </>
                                 ) : (
                                   <>
-                                    <Copy className="h-3 w-3" /> Copy Snippet
+                                    <Copy className="h-3.5 w-3.5" /> Copy Snippet
                                   </>
                                 )}
                               </button>
                             </div>
-                            <div className="overflow-x-auto rounded-xl bg-zinc-950 p-4 font-mono text-xs text-zinc-100 border border-zinc-800 shadow-inner">
+                            <div className="overflow-x-auto rounded-xl bg-zinc-950 p-4 sm:p-5 font-mono text-xs sm:text-sm text-zinc-100 border border-zinc-800 shadow-md">
                               <pre>{q.codeSnippet}</pre>
                             </div>
                           </div>
@@ -401,12 +401,14 @@ export function DataEngineeringInterviewGuide() {
 
                         {/* Interviewer Tip Box */}
                         {q.interviewerTip && (
-                          <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 p-3.5 text-xs text-amber-900 dark:text-amber-200 space-y-1">
-                            <strong className="block font-bold flex items-center gap-1.5 text-amber-600 dark:text-amber-400">
-                              <Sparkles className="h-3.5 w-3.5" />
+                          <div className="rounded-xl border-2 border-amber-400 dark:border-amber-600 bg-amber-50 dark:bg-amber-950/60 p-4 space-y-2 shadow-sm">
+                            <strong className="block font-black flex items-center gap-1.5 text-amber-950 dark:text-amber-200 text-xs sm:text-sm">
+                              <Sparkles className="h-4 w-4 text-amber-700 dark:text-amber-400" />
                               Staff Engineer Interviewer Tip & Trap Alert
                             </strong>
-                            <p className="leading-relaxed">{q.interviewerTip}</p>
+                            <p className="text-xs sm:text-sm font-semibold text-slate-950 dark:text-amber-50 leading-relaxed">
+                              {q.interviewerTip}
+                            </p>
                           </div>
                         )}
 

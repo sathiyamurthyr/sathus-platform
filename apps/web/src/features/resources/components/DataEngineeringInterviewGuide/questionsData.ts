@@ -107,7 +107,7 @@ df_grouped = df_clean.groupBy("user_id").agg({"amount": "sum"})`,
 2. Logical Optimization: Applies standard relational algebraic rule transformations:
    - Predicate Pushdown: Pushes filter() operations as close to the storage source (Parquet/Delta) as possible.
    - Column Pruning (Projection Pushdown): Drops unused columns so they are never read into memory.
-   - Constant Folding: Computes static expressions (e.g. 1 + 1 &rarr; 2) ahead of runtime.
+   - Constant Folding: Computes static expressions (e.g. 1 + 1 → 2) ahead of runtime.
    - Null propagation and Boolean simplifications.
 3. Physical Planning: Generates multiple physical execution candidates and chooses the lowest-cost plan using Cost-Based Optimization (CBO) (e.g., choosing Broadcast Hash Join over Sort-Merge Join based on table size statistics).
 4. Whole-Stage Code Generation (Tungsten): Compiles the entire physical query pipeline into optimized Java bytecode (Janino compiler), collapsing multiple iterator stages into a single flat Java while-loop that runs at bare-metal CPU speed.`,
@@ -362,7 +362,7 @@ Core Architectural Pillars of Unity Catalog:
     diagramType: 'sql',
     keyTopics: ['Logical Query Order', 'ROWS vs RANGE Frame', 'Star Schema & Grain', 'SCD Type 2 Modeling', 'Islands and Gaps', 'SARGability'],
     cheatSheet: [
-      { label: 'Logical Order of Execution', value: 'FROM/JOIN &rarr; WHERE &rarr; GROUP BY &rarr; HAVING &rarr; WINDOW OVER() &rarr; SELECT &rarr; DISTINCT &rarr; QUALIFY &rarr; ORDER BY &rarr; LIMIT' },
+      { label: 'Logical Order of Execution', value: 'FROM/JOIN → WHERE → GROUP BY → HAVING → WINDOW OVER() → SELECT → DISTINCT → QUALIFY → ORDER BY → LIMIT' },
       { label: 'ROWS vs RANGE', value: 'ROWS treats physical row offsets strictly; RANGE treats duplicate ORDER BY values as a single tied peer group' },
       { label: 'SCD Type 2 Columns', value: 'surrogate_key (PK), natural_key, effective_start_date, effective_end_date, is_current (boolean), row_hash' },
       { label: 'Non-SARGable Anti-pattern', value: 'WHERE YEAR(order_date) = 2026 breaks index pruning. Rewrite to SARGable: WHERE order_date >= "2026-01-01" AND order_date < "2027-01-01"' },
@@ -478,7 +478,7 @@ ORDER BY consecutive_days DESC;`,
    - Types of Fact Tables:
      - Transaction Fact: Records a discrete event at an instant in time (e.g., purchase swipe).
      - Periodic Snapshot Fact: Captures status at recurring intervals (e.g., end-of-month bank account balance).
-     - Accumulating Snapshot Fact: Tracks milestones across an order fulfillment lifecycle (order placed &rarr; picked &rarr; shipped &rarr; delivered).
+     - Accumulating Snapshot Fact: Tracks milestones across an order fulfillment lifecycle (order placed → picked → shipped → delivered).
 
 3. Dimension Tables (Context):
    - Contain rich, textual context used for filtering (WHERE), grouping (GROUP BY), and labeling reports.
@@ -530,9 +530,9 @@ ORDER BY consecutive_days DESC;`,
     diagramType: 'lakehouse',
     keyTopics: ['Snowflake vs BigQuery vs Redshift', 'Parquet File Layout', 'FinOps & Cost Tuning', 'Data Observability', 'Data Mesh Principles'],
     cheatSheet: [
-      { label: 'Parquet File Layout', value: 'Magic bytes &rarr; Row Groups (typically 128MB-512MB) &rarr; Column Chunks &rarr; Data Pages (Dictionary & RLE encoded) &rarr; File Footer Metadata (Min/Max statistics)' },
+      { label: 'Parquet File Layout', value: 'Magic bytes → Row Groups (typically 128MB-512MB) → Column Chunks → Data Pages (Dictionary & RLE encoded) → File Footer Metadata (Min/Max statistics)' },
       { label: 'Data Observability Pillars', value: '1. Freshness (SLA delays) • 2. Volume (Row drops/spikes) • 3. Schema (Drift) • 4. Distribution (Nulls/Outliers) • 5. Lineage' },
-      { label: 'Snowflake Virtual Warehouses', value: 'Multi-cluster shared-data: decouple compute from centralized storage. Sizing doubles compute cost and performance per tier (XS &rarr; S &rarr; M &rarr; L)' },
+      { label: 'Snowflake Virtual Warehouses', value: 'Multi-cluster shared-data: decouple compute from centralized storage. Sizing doubles compute cost and performance per tier (XS → S → M → L)' },
       { label: 'Egress Cost Trap', value: 'Transferring data across cloud regions or out of AWS/GCP to third-party tools incurs heavy egress bandwidth charges. Colocate compute in same region.' },
     ],
     questions: [
@@ -747,8 +747,8 @@ JOIN customer_features_history f
     diagramType: 'streaming',
     keyTopics: ['System Design Framework', 'Clickstream Analytics', 'Financial Reconciliation', 'Legacy DWH Migration', 'Disaster Recovery (RPO/RTO)'],
     cheatSheet: [
-      { label: '5-Step System Design Formula', value: '1. Requirements & Scale Estimation (Throughput/SLA) &bull; 2. High-Level Architecture &bull; 3. Storage & Schema Modeling &bull; 4. Deep Dive & Bottlenecks &bull; 5. Failure Modes & Fault Tolerance' },
-      { label: 'Throughput Math', value: '100M events/day &divide; 86,400s &approx; 1,160 events/sec. Peak = 3x &approx; 3,500 events/sec. At 1KB/event = 3.5 MB/sec &rarr; 2-4 Kafka partitions suffice' },
+      { label: '5-Step System Design Formula', value: '1. Requirements & Scale Estimation (Throughput/SLA) • 2. High-Level Architecture • 3. Storage & Schema Modeling • 4. Deep Dive & Bottlenecks • 5. Failure Modes & Fault Tolerance' },
+      { label: 'Throughput Math', value: '100M events/day ÷ 86,400s ≈ 1,160 events/sec. Peak = 3x ≈ 3,500 events/sec. At 1KB/event = 3.5 MB/sec → 2-4 Kafka partitions suffice' },
       { label: 'RPO vs RTO', value: 'RPO (Recovery Point Objective): Max allowable data loss in time. RTO (Recovery Time Objective): Max allowable downtime before platform is restored' },
     ],
     questions: [
@@ -788,7 +788,7 @@ Step 2: Component Architecture:
     summary: 'Master the STAR framework (Situation, Task, Action, Result) for behavioral data leadership: production outages, tech debt pushback, cross-functional SLA negotiations, and mentoring.',
     keyTopics: ['STAR Framework', 'Post-Mortem & Blameless RCA', 'Technical Debt vs Velocity', 'Data Contract Negotiation', 'Engineering Leadership'],
     cheatSheet: [
-      { label: 'STAR Method', value: 'Situation (Context/Scale) &rarr; Task (The Challenge) &rarr; Action (Your specific technical & leadership actions) &rarr; Result (Quantifiable business/performance outcome)' },
+      { label: 'STAR Method', value: 'Situation (Context/Scale) → Task (The Challenge) → Action (Your specific technical & leadership actions) → Result (Quantifiable business/performance outcome)' },
       { label: 'Key Metrics to Mention', value: 'Pipeline runtime reduction (e.g., 6 hours to 45 mins), compute cost savings ($12,000/mo), SLA breach drop (99.9% uptime), data freshness improvement' },
     ],
     questions: [
