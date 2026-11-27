@@ -83,7 +83,7 @@ export function Navbar() {
   return (
     <nav
       ref={navRef}
-      className="hidden md:flex items-center gap-1 lg:gap-2 xl:gap-4 2xl:gap-6 relative"
+      className="hidden lg:flex items-center gap-1 lg:gap-2 xl:gap-4 2xl:gap-6 relative"
       aria-label="Main"
     >
       {navItems.map((item, index) => {

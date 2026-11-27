@@ -38,6 +38,7 @@ import {
   Compass,
   Users,
   Lightbulb,
+  Menu,
 } from 'lucide-react';
 import { SECTIONS_DATA, SectionData, QuestionItem } from './questionsData';
 import {
@@ -65,6 +66,7 @@ export function DataEngineeringInterviewGuide() {
   const [newCommentText, setNewCommentText] = useState<Record<number, string>>({});
   const [submittingCommentForQ, setSubmittingCommentForQ] = useState<number | null>(null);
   const [filterOnlyNotes, setFilterOnlyNotes] = useState<boolean>(false);
+  const [mobileSearchVisible, setMobileSearchVisible] = useState<boolean>(false);
 
   useEffect(() => {
     const uid = getOrCreateUserId();
@@ -313,81 +315,167 @@ export function DataEngineeringInterviewGuide() {
       </div>
 
       {/* INTERACTIVE CONTROLS (SEARCH & SECTION PILLS) */}
-      <div className="sticky top-16 z-20 rounded-2xl border border-border bg-card/95 p-4 shadow-lg backdrop-blur-md space-y-3">
-        {/* Search input + Difficulty filter */}
-        <div className="flex flex-col sm:flex-row items-center gap-3">
-          <div className="relative flex-1 w-full">
-            <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-            <input
-              type="text"
-              placeholder="Search 500+ questions (e.g. 'Liquid Clustering', 'AQE', 'Broadcast Join', 'Watermark', 'SCD Type 2', 'Q88')..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full rounded-xl border border-border bg-background py-2.5 pl-9 pr-4 text-xs sm:text-sm text-foreground outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
-            />
-            {searchQuery && (
-              <button
-                onClick={() => setSearchQuery('')}
-                className="absolute right-3 top-3 text-xs text-muted-foreground hover:text-foreground"
-              >
-                Clear
-              </button>
-            )}
-          </div>
-
-          <div className="flex items-center gap-2 w-full sm:w-auto">
-            <Filter className="h-4 w-4 text-muted-foreground shrink-0" />
-            <button
-              onClick={() => setFilterOnlyNotes(!filterOnlyNotes)}
-              className={`flex items-center gap-1.5 rounded-xl border px-3 py-2 text-xs font-bold transition-all ${
-                filterOnlyNotes
-                  ? 'border-amber-500 bg-amber-50 text-amber-950   shadow-sm'
-                  : 'border-border bg-background text-slate-950 hover:bg-muted'
-              }`}
-              title="Filter to view only questions with personal notes"
-            >
-              <StickyNote className="h-3.5 w-3.5 text-amber-600 " />
-              <span>My Notes ({Object.keys(userNotes).filter((k) => k !== 'article').length})</span>
-            </button>
+      <div className="sticky top-16 z-20 rounded-2xl border border-border bg-card/95 p-3 sm:p-4 shadow-lg backdrop-blur-md space-y-3">
+        {/* MOBILE VIEW (< md): Hide bulky search & pills, show sleek MENU STYLE section selector */}
+        <div className="flex md:hidden items-center justify-between gap-2">
+          <div className="flex items-center gap-2 flex-1 min-w-0">
+            <div className="flex items-center justify-center h-8 w-8 rounded-lg bg-[#A20A3A]/10 text-[#A20A3A] shrink-0">
+              <Menu className="h-4 w-4" />
+            </div>
             <select
-              value={selectedDifficulty}
-              onChange={(e) => setSelectedDifficulty(e.target.value)}
-              className="w-full sm:w-auto rounded-xl border border-border bg-background px-3 py-2 text-xs font-semibold text-foreground outline-none focus:border-primary cursor-pointer"
+              value={selectedSectionId}
+              onChange={(e) => setSelectedSectionId(e.target.value)}
+              className="flex-1 rounded-xl border border-slate-300 bg-white py-2 px-3 text-xs font-bold text-slate-950 outline-none focus:border-[#A20A3A] shadow-xs truncate"
+              aria-label="Select section menu"
             >
-              <option value="all">All Levels</option>
-              <option value="junior">Junior</option>
-              <option value="mid">Mid-Level</option>
-              <option value="senior">Senior Engineer</option>
-              <option value="staff/principal">Staff / Principal Architect</option>
+              <option value="all">📚 Menu: All Sections (500 Qs)</option>
+              {SECTIONS_DATA.map((sec, idx) => (
+                <option key={sec.id} value={sec.id}>
+                  Sec {idx + 1} ({sec.range}): {sec.title.split('&')[0].trim()}
+                </option>
+              ))}
             </select>
           </div>
+
+          <button
+            onClick={() => setMobileSearchVisible(!mobileSearchVisible)}
+            className={`flex items-center justify-center h-9 w-9 rounded-xl border transition-all shrink-0 ${
+              mobileSearchVisible || searchQuery || filterOnlyNotes || selectedDifficulty !== 'all'
+                ? 'border-[#A20A3A] bg-[#A20A3A] text-white shadow-xs'
+                : 'border-slate-300 bg-white text-slate-700 hover:bg-slate-100'
+            }`}
+            aria-label="Toggle search options"
+            title="Search & Filters"
+          >
+            <Search className="h-4 w-4" />
+          </button>
         </div>
 
-        {/* Section Pill Selectors - Clean wrap without horizontal clipping */}
-        <div className="flex flex-wrap items-center gap-1.5 pt-1 text-xs">
-          <button
-            onClick={() => setSelectedSectionId('all')}
-            className={`rounded-lg px-3.5 py-1.5 text-xs font-black transition-all ${
-              selectedSectionId === 'all'
-                ? 'bg-[#A20A3A] text-white shadow-md border-2 border-[#A20A3A]'
-                : 'border-2 border-slate-300 bg-white text-slate-950 hover:bg-slate-100 hover:border-slate-400 shadow-xs'
-            }`}
-          >
-            All Sections (500 Qs)
-          </button>
-          {SECTIONS_DATA.map((sec, idx) => (
+        {/* Mobile Search/Filter options: hidden by default, visible only when user taps search toggle or active search */}
+        {mobileSearchVisible && (
+          <div className="md:hidden space-y-2 pt-2 border-t border-slate-200">
+            <div className="relative w-full">
+              <Search className="absolute left-3 top-2.5 h-3.5 w-3.5 text-muted-foreground" />
+              <input
+                type="text"
+                placeholder="Search 500+ questions..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full rounded-xl border border-border bg-background py-2 pl-9 pr-7 text-xs text-foreground outline-none focus:border-primary"
+              />
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery('')}
+                  className="absolute right-2.5 top-2 text-[10px] text-muted-foreground hover:text-foreground font-semibold"
+                >
+                  Clear
+                </button>
+              )}
+            </div>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setFilterOnlyNotes(!filterOnlyNotes)}
+                className={`flex-1 flex items-center justify-center gap-1 rounded-lg border py-1.5 text-[11px] font-bold ${
+                  filterOnlyNotes
+                    ? 'border-amber-500 bg-amber-50 text-amber-950'
+                    : 'border-border bg-background text-slate-950'
+                }`}
+              >
+                <StickyNote className="h-3 w-3 text-amber-600" />
+                <span>Notes ({Object.keys(userNotes).filter((k) => k !== 'article').length})</span>
+              </button>
+              <select
+                value={selectedDifficulty}
+                onChange={(e) => setSelectedDifficulty(e.target.value)}
+                className="flex-1 rounded-lg border border-border bg-background py-1.5 px-2 text-[11px] font-semibold text-foreground outline-none"
+              >
+                <option value="all">All Levels</option>
+                <option value="junior">Junior</option>
+                <option value="mid">Mid-Level</option>
+                <option value="senior">Senior</option>
+                <option value="staff/principal">Staff</option>
+              </select>
+            </div>
+          </div>
+        )}
+
+        {/* DESKTOP / WEB VIEW (md+): Show as usual! */}
+        <div className="hidden md:flex flex-col gap-3">
+          {/* Search input + Difficulty filter */}
+          <div className="flex flex-row items-center gap-3">
+            <div className="relative flex-1 w-full">
+              <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+              <input
+                type="text"
+                placeholder="Search 500+ questions (e.g. 'Liquid Clustering', 'AQE', 'Broadcast Join', 'Watermark', 'SCD Type 2', 'Q88')..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full rounded-xl border border-border bg-background py-2.5 pl-9 pr-4 text-xs sm:text-sm text-foreground outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+              />
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery('')}
+                  className="absolute right-3 top-3 text-xs text-muted-foreground hover:text-foreground"
+                >
+                  Clear
+                </button>
+              )}
+            </div>
+
+            <div className="flex items-center gap-2">
+              <Filter className="h-4 w-4 text-muted-foreground shrink-0" />
+              <button
+                onClick={() => setFilterOnlyNotes(!filterOnlyNotes)}
+                className={`flex items-center gap-1.5 rounded-xl border px-3 py-2 text-xs font-bold transition-all ${
+                  filterOnlyNotes
+                    ? 'border-amber-500 bg-amber-50 text-amber-950   shadow-sm'
+                    : 'border-border bg-background text-slate-950 hover:bg-muted'
+                }`}
+                title="Filter to view only questions with personal notes"
+              >
+                <StickyNote className="h-3.5 w-3.5 text-amber-600 " />
+                <span>My Notes ({Object.keys(userNotes).filter((k) => k !== 'article').length})</span>
+              </button>
+              <select
+                value={selectedDifficulty}
+                onChange={(e) => setSelectedDifficulty(e.target.value)}
+                className="rounded-xl border border-border bg-background px-3 py-2 text-xs font-semibold text-foreground outline-none focus:border-primary cursor-pointer"
+              >
+                <option value="all">All Levels</option>
+                <option value="junior">Junior</option>
+                <option value="mid">Mid-Level</option>
+                <option value="senior">Senior Engineer</option>
+                <option value="staff/principal">Staff / Principal Architect</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Section Pill Selectors - Clean wrap without horizontal clipping */}
+          <div className="flex flex-wrap items-center gap-1.5 pt-1 text-xs">
             <button
-              key={sec.id}
-              onClick={() => setSelectedSectionId(sec.id)}
-              className={`rounded-lg px-2.5 py-1.5 text-xs font-bold transition-all ${
-                selectedSectionId === sec.id
+              onClick={() => setSelectedSectionId('all')}
+              className={`rounded-lg px-3.5 py-1.5 text-xs font-black transition-all ${
+                selectedSectionId === 'all'
                   ? 'bg-[#A20A3A] text-white shadow-md border-2 border-[#A20A3A]'
                   : 'border-2 border-slate-300 bg-white text-slate-950 hover:bg-slate-100 hover:border-slate-400 shadow-xs'
               }`}
             >
-              Sec {idx + 1}: {sec.range}
+              All Sections (500 Qs)
             </button>
-          ))}
+            {SECTIONS_DATA.map((sec, idx) => (
+              <button
+                key={sec.id}
+                onClick={() => setSelectedSectionId(sec.id)}
+                className={`rounded-lg px-2.5 py-1.5 text-xs font-bold transition-all ${
+                  selectedSectionId === sec.id
+                    ? 'bg-[#A20A3A] text-white shadow-md border-2 border-[#A20A3A]'
+                    : 'border-2 border-slate-300 bg-white text-slate-950 hover:bg-slate-100 hover:border-slate-400 shadow-xs'
+                }`}
+              >
+                Sec {idx + 1}: {sec.range}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 

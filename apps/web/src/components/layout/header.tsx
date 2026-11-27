@@ -86,7 +86,7 @@ export function Header() {
             <Button
               variant="ghost"
               size="icon"
-              className="flex text-[#635861] hover:text-[#A20A3A]"
+              className="hidden lg:flex text-[#635861] hover:text-[#A20A3A]"
               onClick={handleSearchClick}
               aria-label="Open search"
             >
@@ -96,7 +96,7 @@ export function Header() {
               variant="ghost"
               size="sm"
               className={cn(
-                'hidden md:flex h-8 gap-1.5 px-2.5 text-xs text-[#635861] hover:text-[#A20A3A] border-[#EDE1E6] bg-[#FAF8F9]',
+                'hidden lg:flex h-8 gap-1.5 px-2.5 text-xs text-[#635861] hover:text-[#A20A3A] border-[#EDE1E6] bg-[#FAF8F9]',
                 isScrolled ? 'border-[#EDE1E6]' : ''
               )}
               onClick={handleCommandClick}
@@ -128,7 +128,7 @@ export function Header() {
               <>
                 <div className="hidden lg:block h-4 w-px bg-border mx-1" aria-hidden="true" />
 
-                <div className="relative">
+                <div className="relative hidden lg:block">
                   <Button
                     variant="ghost"
                     size="icon"
@@ -152,14 +152,16 @@ export function Header() {
                   />
                 </div>
 
-                <ThemeToggle />
+                <div className="hidden lg:block">
+                  <ThemeToggle />
+                </div>
 
-                <div className="relative">
+                <div className="relative hidden lg:block">
                   <Button
                     variant="ghost"
                     size="icon"
                     className={cn(
-                      'hidden sm:flex text-muted-foreground hover:text-foreground',
+                      'text-muted-foreground hover:text-foreground',
                       profileOpen && 'text-foreground bg-muted/50'
                     )}
                     onClick={() => {
