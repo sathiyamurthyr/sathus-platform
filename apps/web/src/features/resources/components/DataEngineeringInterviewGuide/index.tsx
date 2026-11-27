@@ -41,6 +41,7 @@ import {
   Menu,
 } from 'lucide-react';
 import { SECTIONS_DATA, SectionData, QuestionItem } from './questionsData';
+import { PdfDownloadButton } from '@/components/common/pdf-download-button';
 import {
   SparkArchitectureDiagram,
   MedallionLakehouseDiagram,
@@ -291,6 +292,20 @@ export function DataEngineeringInterviewGuide() {
             dimensional star modeling, and enterprise AI feature pipelines. Includes high-resolution architectural
             diagrams, production code patterns, and interviewer expectations.
           </p>
+
+          <div className="flex flex-wrap items-center gap-3 pt-1">
+            <PdfDownloadButton
+              title="500+ Data Engineering Interview Questions and Answers (2026 Edition)"
+              slug="500-data-engineering-interview-questions-answers-2026"
+              downloadUrl="/downloads/500-data-engineering-interview-guide-2026.md"
+              variant="default"
+              buttonText="Download Full Handbook (PDF & Offline)"
+              className="bg-[#A20A3A] hover:bg-[#85082e] text-white shadow-md font-bold px-4 py-2.5 rounded-xl"
+            />
+            <span className="text-xs text-muted-foreground flex items-center gap-1.5 font-medium">
+              <span>🔒 Free instant access</span>
+            </span>
+          </div>
 
           {/* Quick Metrics Bar */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 border-t border-border/60">

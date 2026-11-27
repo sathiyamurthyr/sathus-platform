@@ -71,7 +71,11 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
             ]}
           />
           <div className="flex items-center gap-3">
-            <PdfDownloadButton title={resource.title} />
+            <PdfDownloadButton
+              title={resource.title}
+              slug={resource.slug}
+              downloadUrl={resource.slug === '500-data-engineering-interview-questions-answers-2026' ? '/downloads/500-data-engineering-interview-guide-2026.md' : undefined}
+            />
             <Link
               href="/resources/blog"
               className="inline-flex items-center gap-1.5 text-xs font-semibold text-muted-foreground hover:text-primary transition-colors"

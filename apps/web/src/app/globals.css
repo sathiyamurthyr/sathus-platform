@@ -432,3 +432,33 @@
 .animate-grid-scan {
   animation: grid-scan 10s linear infinite;
 }
+
+@media print {
+  header,
+  footer,
+  nav,
+  .no-print,
+  [role="banner"],
+  [role="dialog"],
+  .sticky,
+  button:not(.print-keep),
+  select,
+  input,
+  #comments-section {
+    display: none !important;
+  }
+  body, html {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    font-size: 11pt !important;
+  }
+  .card, article, section {
+    page-break-inside: avoid;
+    break-inside: avoid;
+    box-shadow: none !important;
+    border: 1px solid #cbd5e1 !important;
+  }
+  a[href]:after {
+    content: none !important;
+  }
+}
